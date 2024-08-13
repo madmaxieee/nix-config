@@ -5,6 +5,19 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
+  # This value determines the Home Manager release that your
+  # configuration is compatible with. This helps avoid breakage
+  # when a new Home Manager release introduces backwards
+  # incompatible changes.
+  #
+  # You can update Home Manager without changing this value. See
+  # the Home Manager release notes for a list of state version
+  # changes in each release.
+  home.stateVersion = "24.05";
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
   home.activation = let git = "${pkgs.git}/bin/git";
   in {
     clone_dotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -29,18 +42,5 @@ in {
     ".config/kitty".source = linkDotfile "kitty";
   };
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "24.05";
-
   programs.poetry.enable = true;
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
