@@ -89,6 +89,7 @@
           pkgs.jdk21_headless
           pkgs.micromamba
           pkgs.uv
+          pkgs.go
           pkgs.zig
           pkgs.fnm
 
