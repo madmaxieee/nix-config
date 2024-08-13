@@ -124,16 +124,11 @@
         # nix.package = pkgs.nix;
         services.yabai = {
           enable = true;
-          package = pkgs.yabai;
           enableScriptingAddition = true;
         };
-        services.skhd = {
-          enable = true;
-          package = pkgs.skhd;
-        };
+        services.skhd = { enable = true; };
         services.jankyborders = {
           enable = true;
-          package = pkgs.jankyborders;
           active_color = "0xaae1e3e4";
           inactive_color = "0x00494d64";
           width = 3.0;
