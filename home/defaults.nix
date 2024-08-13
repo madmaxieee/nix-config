@@ -40,6 +40,7 @@ in {
     ".gitconfig".source = linkDotfile "git/gitconfig";
     ".gitignore".source = linkDotfile "git/gitignore";
     ".config/kitty".source = linkDotfile "kitty";
+    ".config/nix".source = linkDotfile "nix";
   };
 
   programs.poetry.enable = true;
