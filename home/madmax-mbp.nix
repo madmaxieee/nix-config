@@ -8,7 +8,9 @@
 
   # Packages that should be installed to the user profile.
   home.packages = [ ];
-  home.file = { };
+  home.file = {
+    ".config/starship.toml".source = ../dotfiles/starship/starship.toml;
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

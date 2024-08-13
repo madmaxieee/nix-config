@@ -1,0 +1,55 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = "$all"
+
+[character]
+success_symbol = "[->](bold green)"
+error_symbol = "[->](bold red)"
+vimcmd_symbol = "[<-](bold green)"
+vimcmd_replace_one_symbol = "[<-](bold purple)"
+vimcmd_replace_symbol = "[<-](bold purple)"
+vimcmd_visual_symbol = "[<-](bold yellow)"
+
+[directory]
+truncate_to_repo = false
+style = "bold blue"
+repo_root_style = "bold cyan"
+repo_root_format = '[$before_root_path]($style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+
+[hostname]
+ssh_only = true
+ssh_symbol = ""
+style = "bold green"
+format = '@[$ssh_symbol$hostname]($style) in '
+
+[username]
+style_user = "bold yellow"
+format = '[$user]($style)'
+
+[gcloud]
+format = 'on [$symbol$account]($style) '
+disabled = true
+
+[git_branch]
+style = "green"
+ignore_branches = ["main"]
+
+[git_status]
+format = '([$all_status$ahead_behind]($style))'
+conflicted = "=$count "
+ahead = "⇡$count "
+behind = "⇣$count "
+diverged = "⇡${ahead_count}⇣${behind_count}"
+untracked = "[?$count](blue) "
+stashed = "*$count "
+modified = "[!$count](yellow) "
+staged = "[++$count](green) "
+renamed = "»$count "
+deleted = "[✘$count](red) "
+style = "green"
+
+[docker_context]
+disabled = true
+
+[jobs]
+disabled = true
