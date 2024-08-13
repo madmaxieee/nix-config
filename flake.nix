@@ -104,7 +104,7 @@
         homebrew = {
           enable = true;
           brews = [ "coreutils" "findutils" "imagemagick" ];
-          casks = [ "hammerspoon" "spotmenu" ];
+          casks = [ "hammerspoon" "spotmenu" "ubersicht" ];
           taps = builtins.attrNames taps;
           onActivation = {
             autoUpdate = true;
