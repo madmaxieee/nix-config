@@ -179,7 +179,6 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.madmax = import ./home/madmax-mbp.nix;
-            home-manager.backupFileExtension = "backup";
           }
         ];
       };
