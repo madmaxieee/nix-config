@@ -10,6 +10,8 @@
   home.packages = [ ];
   home.file = {
     ".config/starship.toml".source = ../dotfiles/starship/starship.toml;
+    ".gitconfig".source = ../dotfiles/git/gitconfig;
+    ".gitignore".source = ../dotfiles/git/gitignore;
   };
 
   # This value determines the Home Manager release that your
