@@ -36,11 +36,36 @@ in {
   home.packages = [ ];
 
   home.file = {
-    ".config/starship.toml".source = linkDotfile "starship/starship.toml";
     ".gitconfig".source = linkDotfile "git/gitconfig";
     ".gitignore".source = linkDotfile "git/gitignore";
-    ".config/kitty".source = linkDotfile "kitty";
-    ".config/nix".source = linkDotfile "nix";
+    ".hammerspoon" = {
+      source = linkDotfile "hammerspoon";
+      recursive = true;
+    };
+  };
+
+  xdg.configFile = {
+    "starship.toml".source = linkDotfile "starship/starship.toml";
+    "kitty" = {
+      source = linkDotfile "kitty";
+      recursive = true;
+    };
+    "nix" = {
+      source = linkDotfile "nix";
+      recursive = true;
+    };
+    "skhd" = {
+      source = linkDotfile "skhd";
+      recursive = true;
+    };
+    "yabai" = {
+      source = linkDotfile "yabai";
+      recursive = true;
+    };
+    "espanso" = {
+      source = linkDotfile "espanso";
+      recursive = true;
+    };
   };
 
   programs.poetry.enable = true;

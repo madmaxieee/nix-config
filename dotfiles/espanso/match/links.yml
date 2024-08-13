@@ -1,0 +1,9 @@
+matches:
+  - trigger: ":gh"
+    replace: "https://github.com/madmaxieee"
+  - trigger: ":files"
+    replace: "https://files.madmaxieee.dev"
+  - trigger: ":linkedin"
+    replace: "https://www.linkedin.com/in/chuangjiaxu"
+  - trigger: ":web"
+    replace: "https://www.madmaxieee.dev"
