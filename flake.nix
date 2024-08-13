@@ -66,6 +66,7 @@
           pkgs.lazygit
           pkgs.pass
           pkgs.gnupg
+          pkgs.git-lfs
 
           pkgs.ripgrep
           pkgs.fd
