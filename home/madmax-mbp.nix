@@ -12,6 +12,7 @@
     ".config/starship.toml".source = ../dotfiles/starship/starship.toml;
     ".gitconfig".source = ../dotfiles/git/gitconfig;
     ".gitignore".source = ../dotfiles/git/gitignore;
+    ".config/kitty".source = ../dotfiles/kitty;
   };
 
   # This value determines the Home Manager release that your
