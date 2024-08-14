@@ -28,7 +28,46 @@ in {
   };
 
   # Packages that should be installed to the user profile.
-  home.packages = [ pkgs.bun ];
+  home.packages = [
+    pkgs.sesh
+    pkgs.fzf
+    pkgs.jq
+    pkgs.mods
+    pkgs.gh
+    pkgs.lazygit
+    pkgs.pass
+    pkgs.gnupg
+    pkgs.git-lfs
+
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.eza
+    pkgs.bat
+    pkgs.difftastic
+    pkgs.wget
+
+    pkgs.rm-improved
+    pkgs.dust
+    pkgs.delta
+    pkgs.mprocs
+    pkgs.hyperfine
+    pkgs.tealdeer
+    pkgs.tokei
+    pkgs.typos
+
+    pkgs.llvm_17
+    pkgs.jdk21_headless
+    pkgs.micromamba
+    pkgs.uv
+    pkgs.go
+    pkgs.zig
+    pkgs.fnm
+    pkgs.bun
+
+    pkgs.kitty
+    pkgs.espanso
+    pkgs._1password
+  ];
 
   home.file = {
     ".gitconfig".source = linkDotfile "git/gitconfig";

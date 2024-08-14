@@ -29,7 +29,7 @@
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit system;
-        config = { allowUnfree = true; };
+        config.allowUnfree = true;
       };
       taps = {
         "homebrew/core" = homebrew-core;
@@ -50,51 +50,8 @@
 
         # List packages installed in system profile. To search by name, run:
         environment.systemPackages = [
-          pkgs.neovim
-          pkgs.fish
-          pkgs.tmux
           pkgs.git
           pkgs.vim
-          pkgs.stow
-
-          pkgs.sesh
-          pkgs.fzf
-          pkgs.jq
-          pkgs.mods
-          pkgs.gh
-          pkgs.lazygit
-          pkgs.pass
-          pkgs.gnupg
-          pkgs.git-lfs
-
-          pkgs.ripgrep
-          pkgs.fd
-          pkgs.eza
-          pkgs.bat
-          pkgs.difftastic
-
-          pkgs.rm-improved
-          pkgs.dust
-          pkgs.delta
-          pkgs.mprocs
-          pkgs.hyperfine
-          pkgs.tealdeer
-          pkgs.tokei
-          pkgs.typos
-
-          pkgs.llvm_17
-          pkgs.jdk21_headless
-          pkgs.micromamba
-          pkgs.uv
-          pkgs.go
-          pkgs.zig
-          pkgs.fnm
-
-          pkgs.kitty
-          pkgs.espanso
-          pkgs._1password
-
-          pkgs.nixfmt-classic
 
           pkgs.pam-reattach
         ];
@@ -111,9 +68,6 @@
             extraFlags = [ "--verbose" "--debug" ];
           };
         };
-
-        environment.shells = [ pkgs.fish ];
-        environment.variables = { EDITOR = "nvim"; };
 
         # Auto upgrade nix package and the daemon service.
         services.nix-daemon.enable = true;
@@ -139,7 +93,11 @@
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
 
+        programs.zsh.enable = true;
         programs.fish.enable = true;
+
+        environment.shells = [ pkgs.fish ];
+        environment.variables = { EDITOR = "nvim"; };
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -176,6 +134,7 @@
             };
           }
           (brew_config { username = "madmax"; })
+          { nixpkgs.config.allowUnfree = true; }
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

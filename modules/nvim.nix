@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = [ pkgs.bun pkgs.sqlite ];
+  home.packages = [ pkgs.nixfmt-classic pkgs.sqlite ];
 
   home.activation = let git = "${pkgs.git}/bin/git";
   in {
