@@ -63,6 +63,7 @@ in {
     pkgs.zig
     pkgs.fnm
     pkgs.bun
+    pkgs.rustup
 
     pkgs.kitty
     pkgs.espanso
