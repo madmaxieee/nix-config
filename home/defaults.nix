@@ -25,15 +25,10 @@ in {
         ${git} clone https://github.com/madmaxieee/nix-config.git ${nix_config_path}
       fi
     '';
-    clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d ${config.xdg.configHome}/nvim ]; then
-        ${git} clone https://github.com/madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
-      fi
-    '';
   };
 
   # Packages that should be installed to the user profile.
-  home.packages = [ pkgs.bun pkgs.sqlite ];
+  home.packages = [ pkgs.bun ];
 
   home.file = {
     ".gitconfig".source = linkDotfile "git/gitconfig";
@@ -271,11 +266,5 @@ in {
     flags = [ "--disable-up-arrow" ];
   };
 
-  programs.neovim = {
-    enable = true;
-    extraLuaPackages = ps: with ps; [ sqlite luv magick ];
-  };
-  home.sessionVariables = {
-    "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
-  };
+  imports = [ ../modules/nvim.nix ];
 }
