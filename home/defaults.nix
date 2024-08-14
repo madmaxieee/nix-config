@@ -47,6 +47,7 @@ in {
 
   xdg.configFile = {
     "starship.toml".source = linkDotfile "starship/starship.toml";
+    "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
     "kitty" = {
       source = linkDotfile "kitty";
       recursive = true;
@@ -115,6 +116,7 @@ in {
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
+      clear = "flush";
       fish_greeting = "flush";
     };
     interactiveShellInit = ''
@@ -123,6 +125,10 @@ in {
       set fish_cursor_insert line
       set fish_cursor_replace_one underscore
       set fish_cursor_visual block
+
+      if type -q fnm
+        fnm env --use-on-cd | source
+      end
 
       if [ $TERM = xterm-kitty ]
           alias ssh='TERM=xterm-256color /usr/bin/ssh'
@@ -176,6 +182,16 @@ in {
           sha256 = "sha256-JvlCRZECUXMk9D5jPWvJkzwFq1N5G3q+KTwUXlSJSTw=";
         };
       }
+    ];
+  };
+
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs; [
+      tmuxPlugins.yank
+      tmuxPlugins.sensible
+      tmuxPlugins.copycat
+      tmuxPlugins.catppuccin
     ];
   };
 
