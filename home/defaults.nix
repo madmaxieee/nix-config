@@ -33,7 +33,7 @@ in {
   };
 
   # Packages that should be installed to the user profile.
-  home.packages = [ pkgs.bun ];
+  home.packages = [ pkgs.bun pkgs.sqlite ];
 
   home.file = {
     ".gitconfig".source = linkDotfile "git/gitconfig";
@@ -269,5 +269,13 @@ in {
   programs.atuin = {
     enable = true;
     flags = [ "--disable-up-arrow" ];
+  };
+
+  programs.neovim = {
+    enable = true;
+    extraLuaPackages = ps: with ps; [ sqlite luv magick ];
+  };
+  home.sessionVariables = {
+    "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
 }

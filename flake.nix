@@ -94,8 +94,6 @@
           pkgs.espanso
           pkgs._1password
 
-          pkgs.luajitPackages.luv
-          pkgs.luajitPackages.sqlite
           pkgs.nixfmt-classic
 
           pkgs.pam-reattach
@@ -103,7 +101,7 @@
 
         homebrew = {
           enable = true;
-          brews = [ "coreutils" "findutils" "imagemagick" ];
+          brews = [ ];
           casks = [ "hammerspoon" "spotmenu" "ubersicht" ];
           taps = builtins.attrNames taps;
           onActivation = {
