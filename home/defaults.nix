@@ -50,23 +50,27 @@ in {
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
     "kitty" = {
       source = linkDotfile "kitty";
-      recursive = true;
+      recursive = false;
     };
     "nix" = {
       source = linkDotfile "nix";
-      recursive = true;
+      recursive = false;
     };
     "skhd" = {
       source = linkDotfile "skhd";
-      recursive = true;
+      recursive = false;
     };
     "yabai" = {
       source = linkDotfile "yabai";
-      recursive = true;
+      recursive = false;
     };
     "espanso" = {
       source = linkDotfile "espanso";
-      recursive = true;
+      recursive = false;
+    };
+    "gh" = {
+      source = linkDotfile "gh";
+      recursive = false;
     };
     "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
       url = "git@github.com:madmaxieee/simple-bar.git";
