@@ -86,10 +86,6 @@ in {
       source = linkDotfile "kitty";
       recursive = false;
     };
-    "nix" = {
-      source = linkDotfile "nix";
-      recursive = false;
-    };
     "skhd" = {
       source = linkDotfile "skhd";
       recursive = false;
