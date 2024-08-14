@@ -42,6 +42,7 @@ in {
       source = linkDotfile "hammerspoon";
       recursive = true;
     };
+    ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
   };
 
   xdg.configFile = {
@@ -65,6 +66,10 @@ in {
     "espanso" = {
       source = linkDotfile "espanso";
       recursive = true;
+    };
+    "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
+      url = "git@github.com:madmaxieee/simple-bar.git";
+      rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
     };
   };
 
