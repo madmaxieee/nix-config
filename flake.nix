@@ -58,7 +58,6 @@
           pkgs.stow
 
           pkgs.sesh
-          pkgs.atuin
           pkgs.fzf
           pkgs.jq
           pkgs.mods
@@ -79,11 +78,9 @@
           pkgs.delta
           pkgs.mprocs
           pkgs.hyperfine
-          pkgs.starship
           pkgs.tealdeer
           pkgs.tokei
           pkgs.typos
-          pkgs.zoxide
 
           pkgs.llvm_17
           pkgs.jdk21_headless
