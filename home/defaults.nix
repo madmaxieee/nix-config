@@ -29,8 +29,8 @@ in {
 
   # Packages that should be installed to the user profile.
   home.packages = [
-    pkgs.findutils
-    pkgs.coreutils-full
+    pkgs.parallel
+    pkgs.entr
     pkgs.fzf
     pkgs.jq
     pkgs.mods

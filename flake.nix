@@ -40,7 +40,7 @@
           lib = nix-darwin.lib;
           nix-homebrew = {
             enable = true;
-            enableRosetta = true;
+            enableRosetta = false;
             user = username;
             taps = taps;
             autoMigrate = true;
