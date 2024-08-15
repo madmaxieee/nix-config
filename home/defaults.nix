@@ -86,6 +86,12 @@ in {
   xdg.configFile = {
     "starship.toml".source = linkDotfile "starship/starship.toml";
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
+    "fish/completions/brew.fish".source = builtins.fetchurl {
+      url =
+        "https://raw.githubusercontent.com/Homebrew/brew/4.3.15/completions/fish/brew.fish";
+      sha256 =
+        "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
+    };
     "kitty" = {
       source = linkDotfile "kitty";
       recursive = false;
