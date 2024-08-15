@@ -143,6 +143,10 @@ in {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";
       fish_greeting = "flush";
+      modsq = ''
+        set -x OPENAI_API_KEY (pass openai/mods)
+        mods $argv
+      '';
     };
     interactiveShellInit = ''
       fish_vi_key_bindings
