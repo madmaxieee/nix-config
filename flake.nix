@@ -56,6 +56,7 @@
         environment.systemPackages = [
           pkgs.git
           pkgs.vim
+          pkgs.fish
 
           pkgs.pam-reattach
         ];

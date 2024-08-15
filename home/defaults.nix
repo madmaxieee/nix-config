@@ -144,7 +144,6 @@ in {
       rsync = "rsync --progress --archive";
       dequarantine = "xattr -d com.apple.quarantine";
       icat = "kitten icat";
-      t = "${config.xdg.configHome}/tmux/scripts/sesh.sh";
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";

@@ -38,6 +38,10 @@ in {
     extraConfig = "source-file ${nix_config_path}/dotfiles/tmux/tmux.conf";
   };
 
+  programs.fish.shellAliases = {
+    t = "${config.xdg.configHome}/tmux/scripts/sesh.sh";
+  };
+
   xdg.configFile = {
     "tmux/scripts" = {
       source = linkDotfile "tmux/scripts";
