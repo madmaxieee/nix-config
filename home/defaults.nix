@@ -29,6 +29,7 @@ in {
 
   # Packages that should be installed to the user profile.
   home.packages = [
+    pkgs.coreutils
     pkgs.fzf
     pkgs.jq
     pkgs.mods
@@ -53,12 +54,10 @@ in {
     pkgs.typos
 
     pkgs.llvm_17
-    pkgs.gradle
     pkgs.micromamba
     pkgs.uv
     pkgs.zig
     pkgs.fnm
-    pkgs.bun
     pkgs.rustup
 
     pkgs.kitty
@@ -98,8 +97,6 @@ in {
       rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
     };
   };
-
-  programs.poetry.enable = true;
 
   programs.fish = {
     enable = true;
@@ -228,8 +225,13 @@ in {
     flags = [ "--disable-up-arrow" ];
   };
 
+  programs.bun.enable = true;
   programs.java.enable = true;
+  programs.gradle.enable = true;
   programs.go.enable = true;
+  programs.poetry.enable = true;
+
+  programs.fastfetch.enable = true;
 
   imports = [ ../modules/nvim.nix ../modules/tmux.nix ../modules/git.nix ];
 }
