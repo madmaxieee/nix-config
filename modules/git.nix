@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  home.packages = with pkgs; [ git gh git-lfs delta bat neovim ];
+
   programs.git = {
     enable = true;
     userName = "madmaxieee";
@@ -81,6 +83,7 @@
 
       core = {
         editor = "nvim";
+        pager = "bat. -p";
         autocrlf = "false";
       };
 

@@ -28,47 +28,47 @@ in {
   };
 
   # Packages that should be installed to the user profile.
-  home.packages = [
-    pkgs.parallel
-    pkgs.entr
-    pkgs.fzf
-    pkgs.jq
-    pkgs.mods
-    pkgs.lazygit
-    pkgs.pass
-    pkgs.gnupg
+  home.packages = with pkgs; [
+    parallel
+    entr
+    fzf
+    jq
+    mods
+    lazygit
+    pass
+    gnupg
 
-    pkgs.eza
-    pkgs.bat
-    pkgs.ripgrep
-    pkgs.fd
-    pkgs.sd
-    pkgs.difftastic
-    pkgs.wget
-    pkgs.rm-improved
-    pkgs.dust
+    eza
+    bat
+    ripgrep
+    fd
+    sd
+    difftastic
+    wget
+    rm-improved
+    dust
 
-    pkgs.mprocs
-    pkgs.hyperfine
-    pkgs.tealdeer
-    pkgs.tokei
-    pkgs.ffmpeg_7
-    pkgs.typos
+    mprocs
+    hyperfine
+    tealdeer
+    tokei
+    ffmpeg_7
+    typos
 
-    pkgs.clang
-    pkgs.clang-tools
-    pkgs.cmake
-    pkgs.bear
+    clang
+    clang-tools
+    cmake
+    bear
 
-    pkgs.micromamba
-    pkgs.uv
-    pkgs.zig
-    pkgs.fnm
-    pkgs.rustup
+    micromamba
+    uv
+    zig
+    fnm
+    rustup
 
-    pkgs.kitty
-    pkgs.espanso
-    pkgs._1password
+    kitty
+    espanso
+    _1password
   ];
 
   home.file = {
