@@ -55,10 +55,9 @@ in {
     pkgs.typos
 
     pkgs.llvm_17
-    pkgs.jdk21_headless
+    pkgs.gradle
     pkgs.micromamba
     pkgs.uv
-    pkgs.go
     pkgs.zig
     pkgs.fnm
     pkgs.bun
@@ -175,7 +174,7 @@ in {
 
       # >>> mamba initialize >>>
       # !! Contents within this block are managed by 'mamba init' !!
-      set -gx MAMBA_EXE "/run/current-system/sw/bin/micromamba"
+      set -gx MAMBA_EXE "/etc/profiles/per-user/madmax/bin/micromamba"
       set -gx MAMBA_ROOT_PREFIX "/Users/madmax/micromamba"
       $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
       # <<< mamba initialize <<<
@@ -263,6 +262,9 @@ in {
     enable = true;
     flags = [ "--disable-up-arrow" ];
   };
+
+  programs.java.enable = true;
+  programs.go.enable = true;
 
   imports = [ ../modules/nvim.nix ../modules/tmux.nix ];
 }
