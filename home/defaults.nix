@@ -32,11 +32,9 @@ in {
     pkgs.fzf
     pkgs.jq
     pkgs.mods
-    pkgs.gh
     pkgs.lazygit
     pkgs.pass
     pkgs.gnupg
-    pkgs.git-lfs
 
     pkgs.ripgrep
     pkgs.fd
@@ -47,11 +45,11 @@ in {
 
     pkgs.rm-improved
     pkgs.dust
-    pkgs.delta
     pkgs.mprocs
     pkgs.hyperfine
     pkgs.tealdeer
     pkgs.tokei
+    pkgs.ffmpeg_7
     pkgs.typos
 
     pkgs.llvm_17
@@ -69,7 +67,7 @@ in {
   ];
 
   home.file = {
-    ".gitconfig".source = linkDotfile "git/gitconfig";
+    # ".gitconfig".source = linkDotfile "git/gitconfig";
     ".gitignore".source = linkDotfile "git/gitignore";
     ".hammerspoon" = {
       source = linkDotfile "hammerspoon";
@@ -97,10 +95,10 @@ in {
       source = linkDotfile "espanso";
       recursive = false;
     };
-    "gh" = {
-      source = linkDotfile "gh";
-      recursive = false;
-    };
+    # "gh" = {
+    #   source = linkDotfile "gh";
+    #   recursive = true;
+    # };
     "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
       url = "git@github.com:madmaxieee/simple-bar.git";
       rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
@@ -167,11 +165,6 @@ in {
           alias ssh='TERM=xterm-256color /usr/bin/ssh'
       end
 
-      # if not in tmux, start a new session
-      if [ -z "$TMUX" ]
-          tmux new-session -A -s main >/dev/null 2>&1
-      end
-
       # >>> mamba initialize >>>
       # !! Contents within this block are managed by 'mamba init' !!
       set -gx MAMBA_EXE "/etc/profiles/per-user/madmax/bin/micromamba"
@@ -185,6 +178,11 @@ in {
 
       if test -d (brew --prefix)"/share/fish/vendor_completions.d"
           set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+      end
+
+      # if not in tmux, start a new session
+      if [ -z "$TMUX" ]
+          tmux new-session -A -s main >/dev/null 2>&1
       end
     '';
     plugins = [
@@ -218,37 +216,6 @@ in {
     ];
   };
 
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "linode" = {
-        hostname = "linode.madmaxieee.dev";
-        user = "madmax";
-      };
-      "soft" = {
-        hostname = "soft.madmaxieee.dev";
-        port = 23231;
-        identityFile = "${config.home.homeDirectory}/.ssh/id_ed25519";
-      };
-      "cthulhu" = {
-        hostname = "cthulhu.ee.ntu.edu.tw";
-        user = "madmax";
-      };
-      "athena" = {
-        hostname = "athena.ee.ntu.edu.tw";
-        user = "madmax";
-      };
-      "valkyrie" = {
-        hostname = "valkyrie.ee.ntu.edu.tw";
-        user = "madmax";
-      };
-      "zeus" = {
-        hostname = "zeus.ee.ntu.edu.tw";
-        user = "madmax";
-      };
-    };
-  };
-
   programs.starship.enable = true;
 
   programs.zoxide.enable = true;
@@ -266,5 +233,5 @@ in {
   programs.java.enable = true;
   programs.go.enable = true;
 
-  imports = [ ../modules/nvim.nix ../modules/tmux.nix ];
+  imports = [ ../modules/nvim.nix ../modules/tmux.nix ../modules/git.nix ];
 }
