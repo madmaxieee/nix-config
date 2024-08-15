@@ -29,15 +29,6 @@ in {
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    parallel
-    entr
-    fzf
-    jq
-    mods
-    lazygit
-    pass
-    gnupg
-
     eza
     bat
     ripgrep
@@ -47,6 +38,15 @@ in {
     wget
     rm-improved
     dust
+
+    parallel
+    entr
+    fzf
+    jq
+    mods
+    lazygit
+    pass
+    gnupg
 
     mprocs
     hyperfine
