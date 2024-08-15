@@ -50,6 +50,7 @@
         };
       };
       configuration = { ... }: {
+        nixpkgs.config.allowUnfree = true;
 
         # List packages installed in system profile. To search by name, run:
         environment.systemPackages = [
@@ -115,6 +116,14 @@
       # $ darwin-rebuild build --flake .#madmax-mbp
       darwinConfigurations."madmax-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
+          configuration
+          {
+            users.users.madmax = {
+              home = "/Users/madmax";
+              shell = pkgs.fish;
+            };
+          }
+
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "madmax"; })
           {
@@ -130,14 +139,7 @@
               };
             };
           }
-          { nixpkgs.config.allowUnfree = true; }
-          configuration
-          {
-            users.users.madmax = {
-              home = "/Users/madmax";
-              shell = pkgs.fish;
-            };
-          }
+
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

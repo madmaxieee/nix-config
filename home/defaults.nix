@@ -38,16 +38,16 @@ in {
     pkgs.pass
     pkgs.gnupg
 
-    pkgs.ripgrep
-    pkgs.fd
     pkgs.eza
     pkgs.bat
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.sd
     pkgs.difftastic
     pkgs.wget
-    pkgs.rsync
-
     pkgs.rm-improved
     pkgs.dust
+
     pkgs.mprocs
     pkgs.hyperfine
     pkgs.tealdeer
