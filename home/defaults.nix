@@ -67,11 +67,9 @@ in {
   ];
 
   home.file = {
-    # ".gitconfig".source = linkDotfile "git/gitconfig";
-    ".gitignore".source = linkDotfile "git/gitignore";
     ".hammerspoon" = {
       source = linkDotfile "hammerspoon";
-      recursive = true;
+      recursive = false;
     };
     ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
   };
@@ -95,10 +93,6 @@ in {
       source = linkDotfile "espanso";
       recursive = false;
     };
-    # "gh" = {
-    #   source = linkDotfile "gh";
-    #   recursive = true;
-    # };
     "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
       url = "git@github.com:madmaxieee/simple-bar.git";
       rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
