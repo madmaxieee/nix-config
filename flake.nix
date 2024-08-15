@@ -16,6 +16,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    hombrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -23,8 +27,8 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
-    , homebrew-cask, home-manager }:
+  outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
+    , homebrew-cask, hombrew-bundle, home-manager }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -34,18 +38,17 @@
       taps = {
         "homebrew/core" = homebrew-core;
         "homebrew/cask" = homebrew-cask;
+        "homebrew/bundle" = hombrew-bundle;
       };
-      brew_config = { username }:
-        inputs.nix-homebrew.darwinModules.nix-homebrew {
-          lib = nix-darwin.lib;
-          nix-homebrew = {
-            enable = true;
-            enableRosetta = false;
-            user = username;
-            taps = taps;
-            autoMigrate = true;
-          };
+      brew_config = { username }: {
+        nix-homebrew = {
+          enable = true;
+          enableRosetta = false;
+          user = username;
+          taps = taps;
+          mutableTaps = false;
         };
+      };
       configuration = { ... }: {
 
         # List packages installed in system profile. To search by name, run:
@@ -55,19 +58,6 @@
 
           pkgs.pam-reattach
         ];
-
-        homebrew = {
-          enable = true;
-          brews = [ ];
-          casks = [ "hammerspoon" "spotmenu" "ubersicht" ];
-          taps = builtins.attrNames taps;
-          onActivation = {
-            autoUpdate = true;
-            cleanup = "zap";
-            upgrade = true;
-            extraFlags = [ "--verbose" "--debug" ];
-          };
-        };
 
         # Auto upgrade nix package and the daemon service.
         services.nix-daemon.enable = true;
@@ -125,6 +115,22 @@
       # $ darwin-rebuild build --flake .#madmax-mbp
       darwinConfigurations."madmax-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
+          nix-homebrew.darwinModules.nix-homebrew
+          (brew_config { username = "madmax"; })
+          {
+            homebrew = {
+              enable = true;
+              brews = [ ];
+              casks = [ "hammerspoon" "spotmenu" "ubersicht" ];
+              onActivation = {
+                autoUpdate = true;
+                cleanup = "zap";
+                upgrade = true;
+                extraFlags = [ "--verbose" "--debug" ];
+              };
+            };
+          }
+          { nixpkgs.config.allowUnfree = true; }
           configuration
           {
             users.users.madmax = {
@@ -132,8 +138,6 @@
               shell = pkgs.fish;
             };
           }
-          (brew_config { username = "madmax"; })
-          { nixpkgs.config.allowUnfree = true; }
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
