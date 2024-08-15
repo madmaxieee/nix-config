@@ -1,4 +1,5 @@
-local YABAI = "/run/current-system/sw/bin/yabai"
+local path = "PATH=" .. PATH .. " "
+local yabai = path .. "yabai"
 
 local leader_mode = hs.hotkey.modal.new("shift", "space")
 
@@ -41,6 +42,17 @@ local function leader_bind(modifiers, key, callback)
 end
 
 leader_bind("", "escape", function()
+    leader_mode:exit()
+end)
+
+-- debug
+leader_bind("shift", "d", function()
+    local output, status, termType = hs.execute([[env | tee /tmp/hsdebug]])
+    print("output:\n" .. output)
+    print("status:")
+    print(status)
+    print("termType:")
+    print(termType)
     leader_mode:exit()
 end)
 
@@ -90,42 +102,42 @@ end)
 
 -- new kitty instance
 leader_bind("", "return", function()
-    os.execute([[/Applications/kitty.app/Contents/MacOS/kitty --single-instance --working-directory ~]])
+    os.execute(path .. [[kitty --single-instance --working-directory ~]])
     leader_mode:exit()
 end)
 
 -- yabai debug query
 leader_bind("shift", "q", function()
-    os.execute(YABAI .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]])
+    os.execute(yabai .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]])
     hs.alert("saved yabai query result")
     leader_mode:exit()
 end)
 
 -- toggle window float or sticky
 leader_bind("", "f", function()
-    os.execute(YABAI .. [[ -m window --toggle float]])
+    os.execute(yabai .. [[ -m window --toggle float]])
     leader_mode:exit()
 end)
 leader_bind("shift", "s", function()
-    os.execute(YABAI .. [[ -m window --toggle sticky]])
+    os.execute(yabai .. [[ -m window --toggle sticky]])
     leader_mode:exit()
 end)
 
 -- interact with spaces
 leader_bind("", "t", function()
-    os.execute([[~/.config/yabai/new_space.sh]])
+    os.execute(path .. [[~/.config/yabai/new_space.sh]])
     leader_mode:exit()
 end)
 leader_bind("", "x", function()
-    os.execute(YABAI .. [[ -m space --destroy mouse]])
+    os.execute(yabai .. [[ -m space --destroy mouse]])
     leader_mode:exit()
 end)
 
 local function go_to_space(space_index)
     os.execute(
-        ([[~/.config/yabai/focus_window_in_space.sh ]] .. space_index)
+        (path .. [[~/.config/yabai/focus_window_in_space.sh ]] .. space_index)
             .. [[ || ]]
-            .. (YABAI .. [[ -m space --focus ]] .. space_index)
+            .. (yabai .. [[ -m space --focus ]] .. space_index)
     )
 end
 leader_bind("", "r", function()

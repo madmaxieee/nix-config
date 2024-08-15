@@ -22,14 +22,15 @@ in {
   in {
     clone_dotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d ${nix_config_path} ]; then
-        ${git} clone https://github.com/madmaxieee/nix-config.git ${nix_config_path}
+        $DRY_RUN_CMD ${git} clone https://github.com/madmaxieee/nix-config.git ${nix_config_path}
       fi
     '';
   };
 
   # Packages that should be installed to the user profile.
   home.packages = [
-    pkgs.coreutils
+    pkgs.findutils
+    pkgs.coreutils-full
     pkgs.fzf
     pkgs.jq
     pkgs.mods
@@ -43,6 +44,7 @@ in {
     pkgs.bat
     pkgs.difftastic
     pkgs.wget
+    pkgs.rsync
 
     pkgs.rm-improved
     pkgs.dust
@@ -53,7 +55,11 @@ in {
     pkgs.ffmpeg_7
     pkgs.typos
 
-    pkgs.llvm_17
+    pkgs.clang
+    pkgs.clang-tools
+    pkgs.cmake
+    pkgs.bear
+
     pkgs.micromamba
     pkgs.uv
     pkgs.zig
@@ -66,11 +72,15 @@ in {
   ];
 
   home.file = {
+    ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
     ".hammerspoon" = {
       source = linkDotfile "hammerspoon";
       recursive = false;
     };
-    ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
+    # hack to make hammerspoon find nix binaries
+    "nix-config/dotfiles/hammerspoon/nix_path.lua".text = ''
+      NIX_PATH = "${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
+    '';
   };
 
   xdg.configFile = {
@@ -210,6 +220,8 @@ in {
       }
     ];
   };
+
+  home.sessionVariables.PAGER = "bat -p";
 
   programs.starship.enable = true;
 

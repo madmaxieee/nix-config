@@ -7,7 +7,7 @@
   in {
     clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d ${config.xdg.configHome}/nvim ]; then
-        ${git} clone https://github.com/madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
+        $DRY_RUN_CMD ${git} clone https://github.com/madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
       fi
     '';
   };
@@ -17,6 +17,7 @@
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
   };
   home.sessionVariables = {
+    EDITOR = "nvim";
     # for sqlite.lua
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };

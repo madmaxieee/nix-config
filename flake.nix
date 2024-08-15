@@ -97,7 +97,6 @@
         programs.fish.enable = true;
 
         environment.shells = [ pkgs.fish ];
-        environment.variables = { EDITOR = "nvim"; };
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
