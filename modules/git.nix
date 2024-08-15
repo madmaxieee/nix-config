@@ -1,14 +1,14 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ git gh git-lfs delta bat neovim ];
+  home.packages = with pkgs; [ bat difftastic ];
 
   programs.git = {
     enable = true;
     userName = "madmaxieee";
     userEmail = "76544194+madmaxieee@users.noreply.github.com";
     lfs.enable = true;
-    delta.enable = true;
+    difftastic.enable = true;
 
     aliases = {
       "st" = "status -sb";
@@ -81,11 +81,7 @@
     extraConfig = {
       init.defaultBranch = "main";
 
-      core = {
-        editor = "nvim";
-        pager = "bat. -p";
-        autocrlf = "false";
-      };
+      core = { autocrlf = "false"; };
 
       pull.rebase = "true";
       push.autoSetupRemote = "true";
