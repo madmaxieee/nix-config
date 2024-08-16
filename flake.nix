@@ -128,6 +128,7 @@
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "madmax"; })
           {
+            environment.systemPath = [ "/opt/homebrew/bin" ];
             homebrew = {
               enable = true;
               brews = [ ];
@@ -141,7 +142,14 @@
                 "spotmenu"
                 "spotify"
               ];
-              masApps = { };
+              masApps = {
+                "Things" = 904280696;
+                "PastePal" = 1503446680;
+                "RunCat" = 1429033973;
+                "Messenger" = 1480068668;
+                "LINE" = 539883307;
+                "Spark" = 1176895641;
+              };
               onActivation = {
                 autoUpdate = true;
                 cleanup = "zap";
