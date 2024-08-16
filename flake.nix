@@ -131,7 +131,17 @@
             homebrew = {
               enable = true;
               brews = [ ];
-              casks = [ "hammerspoon" "spotmenu" "ubersicht" "orbstack" ];
+              casks = [
+                "hammerspoon"
+                "ubersicht"
+                "orbstack"
+                "1password"
+                "arc"
+                "discord"
+                "spotmenu"
+                "spotify"
+              ];
+              masApps = { };
               onActivation = {
                 autoUpdate = true;
                 cleanup = "zap";
