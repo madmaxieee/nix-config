@@ -110,6 +110,7 @@
         system.defaults = {
           finder.AppleShowAllExtensions = true;
           finder.AppleShowAllFiles = true;
+          dock.autohide = true;
         };
       };
     in {
@@ -141,6 +142,7 @@
                 "discord"
                 "spotmenu"
                 "spotify"
+                "fantastical"
               ];
               masApps = {
                 "Things" = 904280696;
