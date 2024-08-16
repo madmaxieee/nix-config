@@ -27,6 +27,8 @@ in {
     '';
   };
 
+  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     eza
