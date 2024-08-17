@@ -145,6 +145,7 @@
                 "fantastical"
                 "bartender"
                 "cleanshot"
+                "heptabase"
               ];
               masApps = {
                 "Things" = 904280696;
