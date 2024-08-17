@@ -143,6 +143,8 @@
                 "spotmenu"
                 "spotify"
                 "fantastical"
+                "bartender"
+                "cleanshot"
               ];
               masApps = {
                 "Things" = 904280696;
