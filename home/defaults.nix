@@ -27,7 +27,10 @@ in {
     '';
   };
 
-  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.local/bin"
+    "${config.home.homeDirectory}/.cargo/bin"
+  ];
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [

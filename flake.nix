@@ -31,10 +31,7 @@
     , homebrew-cask, hombrew-bundle, home-manager }:
     let
       system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      pkgs = import nixpkgs { inherit system; };
       taps = {
         "homebrew/core" = homebrew-core;
         "homebrew/cask" = homebrew-cask;
