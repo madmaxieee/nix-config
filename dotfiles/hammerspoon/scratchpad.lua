@@ -18,7 +18,7 @@ local function toggle_scratchpad(app_name)
         return
     else
         local window_id = main_window:id()
-        os.execute([[~/.config/yabai/move_window_to_current_space.sh ]] .. window_id)
+        os.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. window_id)
         app:activate()
     end
 end
