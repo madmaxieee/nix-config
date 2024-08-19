@@ -105,9 +105,15 @@
         '';
 
         system.defaults = {
-          finder.AppleShowAllExtensions = true;
-          finder.AppleShowAllFiles = true;
-          dock.autohide = true;
+          finder = {
+            AppleShowAllExtensions = true;
+            AppleShowAllFiles = true;
+          };
+          dock = {
+            autohide = true;
+            showhidden = true;
+            show-recents = false;
+          };
         };
       };
     in {
