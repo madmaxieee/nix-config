@@ -183,7 +183,7 @@
         modules = [
           configuration
           {
-            users.users.madmax = {
+            users.users.maxcchuang = {
               home = "/Users/maxcchuang";
               shell = pkgs.fish;
             };

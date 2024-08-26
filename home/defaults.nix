@@ -182,8 +182,8 @@ in {
 
       # >>> mamba initialize >>>
       # !! Contents within this block are managed by 'mamba init' !!
-      set -gx MAMBA_EXE "/etc/profiles/per-user/madmax/bin/micromamba"
-      set -gx MAMBA_ROOT_PREFIX "/Users/madmax/micromamba"
+      set -gx MAMBA_EXE "${config.home.profileDirectory}/bin/micromamba"
+      set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
       $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
       # <<< mamba initialize <<<
 
