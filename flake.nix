@@ -115,6 +115,8 @@
             show-recents = false;
           };
         };
+        system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
+        system.startup.chime = false;
       };
     in {
       # Build darwin flake using:
