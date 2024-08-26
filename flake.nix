@@ -179,6 +179,60 @@
         ];
       };
 
+      darwinConfigurations."maxcchuang" = nix-darwin.lib.darwinSystem {
+        modules = [
+          configuration
+          {
+            users.users.madmax = {
+              home = "/Users/maxcchuang";
+              shell = pkgs.fish;
+            };
+          }
+
+          nix-homebrew.darwinModules.nix-homebrew
+          (brew_config { username = "maxcchuang"; })
+          {
+            environment.systemPath = [ "/opt/homebrew/bin" ];
+            homebrew = {
+              enable = true;
+              brews = [ ];
+              casks = [
+                "hammerspoon"
+                "ubersicht"
+                "orbstack"
+                "1password"
+                "arc"
+                "spotmenu"
+                "spotify"
+                "fantastical"
+                "bartender"
+                "cleanshot"
+                "heptabase"
+              ];
+              masApps = {
+                "Things" = 904280696;
+                "PastePal" = 1503446680;
+                "RunCat" = 1429033973;
+              };
+              onActivation = {
+                autoUpdate = true;
+                cleanup = "zap";
+                upgrade = true;
+                extraFlags = [ "--verbose" "--debug" ];
+              };
+            };
+          }
+
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.madmax = import ./home/maxcchuang.nix;
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."madmax-mbp".pkgs;
     };
