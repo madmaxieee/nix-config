@@ -227,7 +227,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.madmax = import ./home/maxcchuang.nix;
+            home-manager.users.maxcchuang = import ./home/maxcchuang.nix;
             home-manager.backupFileExtension = "backup";
           }
         ];
