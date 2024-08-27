@@ -14,10 +14,11 @@
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
+    extraPackages = [ pkgs.nodejs_20 ];
   };
   home.sessionVariables = {
-    EDITOR = "nvim";
     # for sqlite.lua
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
