@@ -204,6 +204,7 @@
                 "orbstack"
                 "1password"
                 "arc"
+                "discord"
                 "spotmenu"
                 "spotify"
                 "fantastical"
@@ -212,6 +213,11 @@
                 "heptabase"
                 "raycast"
               ];
+              masApps = {
+                "Things" = 904280696;
+                "PastePal" = 1503446680;
+                "RunCat" = 1429033973;
+              };
               onActivation = {
                 autoUpdate = true;
                 cleanup = "zap";
