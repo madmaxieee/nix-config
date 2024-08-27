@@ -212,6 +212,7 @@
                 "cleanshot"
                 "heptabase"
                 "raycast"
+                "thingsmacsandboxhelper"
               ];
               masApps = {
                 "Things" = 904280696;
