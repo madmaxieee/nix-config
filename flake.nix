@@ -82,11 +82,6 @@
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
 
-        programs.zsh.enable = true;
-        programs.fish.enable = true;
-
-        environment.shells = [ pkgs.fish ];
-
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -125,6 +120,9 @@
         modules = [
           configuration
           {
+            programs.zsh.enable = true;
+            programs.fish.enable = true;
+            environment.shells = [ pkgs.fish ];
             users.users.madmax = {
               home = "/Users/madmax";
               shell = pkgs.fish;
@@ -179,10 +177,14 @@
         ];
       };
 
-      darwinConfigurations."maxcchuang" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."maxcchuang-mac" = nix-darwin.lib.darwinSystem {
         modules = [
           configuration
           {
+            programs.zsh.enable = false;
+            programs.bash.enable = false;
+            programs.fish.enable = true;
+            environment.shells = [ pkgs.fish ];
             users.users.maxcchuang = {
               home = "/Users/maxcchuang";
               shell = pkgs.fish;
@@ -208,12 +210,8 @@
                 "bartender"
                 "cleanshot"
                 "heptabase"
+                "raycast"
               ];
-              masApps = {
-                "Things" = 904280696;
-                "PastePal" = 1503446680;
-                "RunCat" = 1429033973;
-              };
               onActivation = {
                 autoUpdate = true;
                 cleanup = "zap";
