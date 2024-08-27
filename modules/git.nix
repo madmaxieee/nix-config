@@ -18,6 +18,8 @@
       "cm" = "commit -m";
       "cam" = "commit -a -m";
       "amend" = "commit --amend";
+      "d" = "diff";
+      "ds" = "diff --staged";
       "f" = "fetch";
       "fa" = "fetch --all";
       "rb" = "rebase";
