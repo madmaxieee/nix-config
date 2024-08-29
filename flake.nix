@@ -157,6 +157,7 @@
                 "Messenger" = 1480068668;
                 "LINE" = 539883307;
                 "Spark" = 1176895641;
+                "Keymapp" = 6472865291;
               };
               onActivation = {
                 autoUpdate = true;
@@ -218,6 +219,7 @@
                 "Things" = 904280696;
                 "PastePal" = 1503446680;
                 "RunCat" = 1429033973;
+                "Keymapp" = 6472865291;
               };
               onActivation = {
                 autoUpdate = true;
