@@ -108,6 +108,7 @@
             autohide = true;
             showhidden = true;
             show-recents = false;
+            mru-spaces = false;
           };
         };
         system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";

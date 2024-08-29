@@ -255,5 +255,5 @@ in {
 
   programs.fastfetch.enable = true;
 
-  imports = [ ../modules/nvim.nix ../modules/tmux.nix ../modules/git.nix ];
+  imports = [ ./modules/nvim.nix ./modules/tmux.nix ./modules/git.nix ];
 }
