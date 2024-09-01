@@ -100,6 +100,10 @@
         '';
 
         system.defaults = {
+          WindowManager = {
+            EnableStandardClickToShowDesktop = false;
+            StandardHideDesktopIcons = true;
+          };
           finder = {
             AppleShowAllExtensions = true;
             AppleShowAllFiles = true;
