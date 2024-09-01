@@ -243,7 +243,7 @@
             home-manager.backupFileExtension = "backup";
           }
 
-          (import ./modules/dock.nix { pkgs = pkgs; })
+          (import ./modules/maxcchuang-dock.nix { pkgs = pkgs; })
         ];
       };
 
