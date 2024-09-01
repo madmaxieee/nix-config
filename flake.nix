@@ -238,6 +238,8 @@
             home-manager.users.maxcchuang = import ./home/maxcchuang.nix;
             home-manager.backupFileExtension = "backup";
           }
+
+          (import ./modules/dock.nix { pkgs = pkgs; })
         ];
       };
 
