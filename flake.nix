@@ -136,42 +136,7 @@
 
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "madmax"; })
-          {
-            environment.systemPath = [ "/opt/homebrew/bin" ];
-            homebrew = {
-              enable = true;
-              brews = [ ];
-              casks = [
-                "hammerspoon"
-                "ubersicht"
-                "orbstack"
-                "1password"
-                "arc"
-                "discord"
-                "spotmenu"
-                "spotify"
-                "fantastical"
-                "bartender"
-                "cleanshot"
-                "heptabase"
-              ];
-              masApps = {
-                "Things" = 904280696;
-                "PastePal" = 1503446680;
-                "RunCat" = 1429033973;
-                "Messenger" = 1480068668;
-                "LINE" = 539883307;
-                "Spark" = 1176895641;
-                "Keymapp" = 6472865291;
-              };
-              onActivation = {
-                autoUpdate = true;
-                cleanup = "zap";
-                upgrade = true;
-                extraFlags = [ "--verbose" "--debug" ];
-              };
-            };
-          }
+          (import ./modules/madmax-brew.nix)
 
           home-manager.darwinModules.home-manager
           {
@@ -204,41 +169,7 @@
 
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "maxcchuang"; })
-          {
-            environment.systemPath = [ "/opt/homebrew/bin" ];
-            homebrew = {
-              enable = true;
-              brews = [ ];
-              casks = [
-                "hammerspoon"
-                "ubersicht"
-                "orbstack"
-                "1password"
-                "arc"
-                "discord"
-                "spotmenu"
-                "spotify"
-                "fantastical"
-                "bartender"
-                "cleanshot"
-                "heptabase"
-                "raycast"
-                "thingsmacsandboxhelper"
-              ];
-              masApps = {
-                "Things" = 904280696;
-                "PastePal" = 1503446680;
-                "RunCat" = 1429033973;
-                "Keymapp" = 6472865291;
-              };
-              onActivation = {
-                autoUpdate = true;
-                cleanup = "zap";
-                upgrade = true;
-                extraFlags = [ "--verbose" "--debug" ];
-              };
-            };
-          }
+          (import ./modules/maxcchuang-brew.nix)
 
           home-manager.darwinModules.home-manager
           {
