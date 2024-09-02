@@ -180,6 +180,8 @@
             home-manager.users.madmax = import ./home/madmax-mbp.nix;
             home-manager.backupFileExtension = "backup";
           }
+
+          (import ./modules/madmax-dock.nix { pkgs = pkgs; })
         ];
       };
 
