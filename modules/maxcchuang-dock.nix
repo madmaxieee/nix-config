@@ -1,4 +1,4 @@
-{ pkgs }: {
+{ pkgs, homeDirectory }: {
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"
@@ -11,6 +11,7 @@
       "/System/Applications/Notes.app"
       "/Applications/Spotify.app"
     ];
-    persistent-others = [ "~/Downloads" "~/Desktop" ];
+    persistent-others =
+      [ "${homeDirectory}/Downloads" "${homeDirectory}/Desktop" ];
   };
 }

@@ -181,7 +181,10 @@
             home-manager.backupFileExtension = "backup";
           }
 
-          (import ./modules/madmax-dock.nix { pkgs = pkgs; })
+          (import ./modules/madmax-dock.nix {
+            pkgs = pkgs;
+            homeDirectory = "/Users/madmax";
+          })
         ];
       };
 
@@ -245,7 +248,10 @@
             home-manager.backupFileExtension = "backup";
           }
 
-          (import ./modules/maxcchuang-dock.nix { pkgs = pkgs; })
+          (import ./modules/maxcchuang-dock.nix {
+            pkgs = pkgs;
+            homeDirectory = "/Users/maxcchuang";
+          })
         ];
       };
 
