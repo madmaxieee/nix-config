@@ -114,8 +114,11 @@
             show-recents = false;
             mru-spaces = false;
           };
+          NSGlobalDomain = {
+            AppleICUForce24HourTime = true;
+            AppleInterfaceStyle = "Dark";
+          };
         };
-        system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
         system.startup.chime = false;
       };
     in {
