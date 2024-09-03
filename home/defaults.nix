@@ -76,17 +76,7 @@ in {
     _1password
   ];
 
-  home.file = {
-    ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
-    ".hammerspoon" = {
-      source = linkDotfile "hammerspoon";
-      recursive = false;
-    };
-    # hack to make hammerspoon find nix binaries
-    "nix-config/dotfiles/hammerspoon/nix_path.lua".text = ''
-      NIX_PATH = "${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
-    '';
-  };
+  home.file = { ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc"; };
 
   xdg.configFile = {
     "starship.toml".source = linkDotfile "starship/starship.toml";
@@ -101,21 +91,9 @@ in {
       source = linkDotfile "kitty";
       recursive = false;
     };
-    "skhd" = {
-      source = linkDotfile "skhd";
-      recursive = false;
-    };
-    "yabai" = {
-      source = linkDotfile "yabai";
-      recursive = false;
-    };
     "espanso" = {
       source = linkDotfile "espanso";
       recursive = false;
-    };
-    "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
-      url = "git@github.com:madmaxieee/simple-bar.git";
-      rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
     };
   };
 
@@ -255,5 +233,10 @@ in {
 
   programs.fastfetch.enable = true;
 
-  imports = [ ./modules/nvim.nix ./modules/tmux.nix ./modules/git.nix ];
+  imports = [
+    ./modules/nvim.nix
+    ./modules/tmux.nix
+    ./modules/git.nix
+    ./modules/window-management.nix
+  ];
 }
