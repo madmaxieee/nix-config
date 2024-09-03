@@ -133,12 +133,26 @@ leader_bind("", "x", function()
     leader_mode:exit()
 end)
 
-local function go_to_space(space_index)
-    os.execute(
-        (path .. [[~/.config/yabai/focus_window_in_space.sh ]] .. space_index)
+local function go_to_space(space_sel)
+    -- don't call ~/.config/yabai/focus_space.sh directly
+    -- calling hammerspoon in a script invoke by hammerspoon causes problem
+    local _, status = hs.execute(
+        (path .. [[~/.config/yabai/focus_window_in_space.sh ]] .. space_sel)
             .. [[ || ]]
-            .. (yabai .. [[ -m space --focus ]] .. space_index)
+            .. (yabai .. [[ -m space --focus ]] .. space_sel)
+            .. [[ || ]]
+            .. (yabai .. [[ -m query --spaces --space ]] .. space_sel .. [[ | ]] .. path .. [[jq -e '."has-focus"']])
     )
+
+    -- the previous command would fail with sip enabled
+    -- if that's the case use hammerspoon to focus space instead
+    print(status)
+    if not status then
+        local space_id =
+            hs.execute(yabai .. [[ -m query --spaces --space ]] .. space_sel .. [[ | ]] .. path .. [[jq .id]])
+        space_id = tonumber(space_id)
+        hs.spaces.gotoSpace(space_id)
+    end
 end
 leader_bind("", "r", function()
     go_to_space("recent")

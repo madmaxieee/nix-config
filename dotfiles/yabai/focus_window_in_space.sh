@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# focus a space while ignoring Arc PIP windows
+# focus a space while ignoring sticky windows
 
 PATH="/run/current-system/sw/bin:$PATH"
 
