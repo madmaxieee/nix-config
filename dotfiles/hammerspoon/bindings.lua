@@ -146,7 +146,6 @@ local function go_to_space(space_sel)
 
     -- the previous command would fail with sip enabled
     -- if that's the case use hammerspoon to focus space instead
-    print(status)
     if not status then
         local space_id =
             hs.execute(yabai .. [[ -m query --spaces --space ]] .. space_sel .. [[ | ]] .. path .. [[jq .id]])

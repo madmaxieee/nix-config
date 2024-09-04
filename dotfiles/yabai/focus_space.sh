@@ -12,6 +12,5 @@ yabai -m query --spaces --space "$SPACE_SEL" | jq -e '."has-focus"' && exit
 # if that's the case use hammerspoon to focus space instead
 if [ -f /opt/homebrew/bin/hs ]; then
     SPACE_ID=$(yabai -m query --spaces --space "$SPACE_SEL" | jq '.id')
-    /opt/homebrew/bin/hs -c "hs.alert('switching space')"
     /opt/homebrew/bin/hs -c "hs.spaces.gotoSpace($SPACE_ID)" > /dev/null 2>&1
 fi
