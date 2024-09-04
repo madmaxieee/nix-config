@@ -13,7 +13,7 @@
       "spotmenu"
       "spotify"
       "fantastical"
-      "bartender"
+      "jordanbaird-ice"
       "cleanshot"
       "heptabase"
     ];
