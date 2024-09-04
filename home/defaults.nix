@@ -77,7 +77,6 @@ in {
   ];
 
   xdg.configFile = {
-    "starship.toml".source = linkDotfile "starship/starship.toml";
     "kitty" = {
       source = linkDotfile "kitty";
       recursive = false;

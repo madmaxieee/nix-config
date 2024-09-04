@@ -31,6 +31,8 @@ in {
       sha256 =
         "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
     };
+    "starship.toml".source = linkDotfile "starship/starship.toml";
+    "starship_google.toml".source = linkDotfile "starship/starship_google.toml";
   };
 
   programs.fish = {
@@ -78,8 +80,22 @@ in {
         set -x OPENAI_API_KEY (pass openai/mods)
         mods $argv
       '';
+      __google_starship_config = {
+        body = ''
+          if path resolve $PWD | grep -q '^/Volumes/google/src'
+            set -gx STARSHIP_CONFIG ~/.config/starship_google.toml
+          else
+            set -gx STARSHIP_CONFIG ~/.config/starship.toml
+          end
+        '';
+        onVariable = "PWD";
+      };
     };
     interactiveShellInit = ''
+      if test -d /Volumes/google
+        __google_starship_config
+      end
+
       fish_vi_key_bindings
       set fish_cursor_default block
       set fish_cursor_insert line
