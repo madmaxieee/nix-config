@@ -15,5 +15,5 @@
     };
   };
 
-  imports = [ ./defaults.nix ./modules/git-google.nix ];
+  imports = [ ./mac.nix ./modules/git-google.nix ];
 }
