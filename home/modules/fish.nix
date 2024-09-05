@@ -14,10 +14,7 @@ in {
     rm-improved
 
     fzf
-    mods
     lazygit
-    pass
-    gnupg
 
     micromamba
     fnm
@@ -25,12 +22,6 @@ in {
 
   xdg.configFile = {
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
-    "fish/completions/brew.fish".source = builtins.fetchurl {
-      url =
-        "https://raw.githubusercontent.com/Homebrew/brew/4.3.15/completions/fish/brew.fish";
-      sha256 =
-        "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
-    };
     "starship.toml".source = linkDotfile "starship/starship.toml";
     "starship_google.toml".source = linkDotfile "starship/starship_google.toml";
   };
@@ -76,10 +67,6 @@ in {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";
       fish_greeting = "flush";
-      modsq = ''
-        set -x OPENAI_API_KEY (pass openai/mods)
-        mods $argv
-      '';
       __google_starship_config = {
         body = ''
           if path resolve $PWD | grep -q '^/Volumes/google/src'

@@ -5,14 +5,6 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "24.05";
 
   # Let Home Manager install and manage itself.
@@ -32,7 +24,6 @@ in {
     "${config.home.homeDirectory}/.cargo/bin"
   ];
 
-  # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     eza
     bat
@@ -77,6 +68,12 @@ in {
   ];
 
   xdg.configFile = {
+    "fish/completions/brew.fish".source = builtins.fetchurl {
+      url =
+        "https://raw.githubusercontent.com/Homebrew/brew/4.3.15/completions/fish/brew.fish";
+      sha256 =
+        "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
+    };
     "kitty" = {
       source = linkDotfile "kitty";
       recursive = false;

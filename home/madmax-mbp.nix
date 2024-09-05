@@ -35,5 +35,5 @@
     };
   };
 
-  imports = [ ./mac.nix ./modules/git.nix ];
+  imports = [ ./mac.nix ./modules/git.nix ./modules/mods.nix ];
 }

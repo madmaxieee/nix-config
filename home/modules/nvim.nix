@@ -19,7 +19,7 @@
     extraPackages = [ pkgs.nodejs_20 ];
   };
   home.sessionVariables = {
-    # for sqlite.lua
+    # for sqlite.lua on macos
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
 }

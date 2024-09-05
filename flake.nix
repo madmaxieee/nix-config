@@ -191,5 +191,13 @@
 
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."madmax-mbp".pkgs;
+
+      # cloudtop
+      homeConfigurations."maxcchuang" =
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { system = "x86_64-linux"; };
+
+          modules = [ ./home/maxcchuang.nix ];
+        };
     };
 }
