@@ -30,8 +30,7 @@
   outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
     , homebrew-cask, hombrew-bundle, home-manager }:
     let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs { system = "aarch64-darwin"; };
       taps = {
         "homebrew/core" = homebrew-core;
         "homebrew/cask" = homebrew-cask;
@@ -90,7 +89,7 @@
         system.stateVersion = 4;
 
         # The platform the configuration will be used on.
-        nixpkgs.hostPlatform = system;
+        nixpkgs.hostPlatform = "aarch64-darwin";
 
         security.pam.enableSudoTouchIdAuth = true;
         environment.etc."pam.d/sudo_local".text = ''

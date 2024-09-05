@@ -104,12 +104,13 @@ in {
       $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
       # <<< mamba initialize <<<
 
-      if test -d (brew --prefix)"/share/fish/completions"
-          set -p fish_complete_path (brew --prefix)/share/fish/completions
-      end
-
-      if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-          set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+      if type -q brew
+        if test -d (brew --prefix)"/share/fish/completions"
+            set -p fish_complete_path (brew --prefix)/share/fish/completions
+        end
+        if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+            set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+        end
       end
 
       # if not in tmux, start a new session
