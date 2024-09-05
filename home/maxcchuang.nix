@@ -30,5 +30,7 @@
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
-  imports = [ ./modules/fish.nix ./modules/nvim.nix ];
+  programs.fish.shellAbbrs = { hm = "home-manager"; };
+
+  imports = [ ./modules/fish.nix ./modules/nvim.nix ./modules/tmux.nix ];
 }
