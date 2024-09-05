@@ -113,7 +113,6 @@ in {
     ./modules/fish.nix
     ./modules/nvim.nix
     ./modules/tmux.nix
-    ./modules/git.nix
     ./modules/window-management.nix
   ];
 }
