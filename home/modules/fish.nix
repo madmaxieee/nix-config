@@ -8,17 +8,7 @@ in {
   programs.starship.enable = true;
   programs.tmux.enable = true;
 
-  home.packages = with pkgs; [
-    eza
-    bat
-    rm-improved
-
-    fzf
-    lazygit
-
-    micromamba
-    fnm
-  ];
+  home.packages = with pkgs; [ eza bat rm-improved fzf lazygit fnm ];
 
   xdg.configFile = {
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
@@ -37,12 +27,9 @@ in {
       y = "yarn";
       pm = "pnpm";
       py = "python3";
-      mm = "mamba";
-      mma = "mamba activate";
       rm = "rip";
       rmm = "rm -rf";
       n = "npm";
-      ta = "tmux attach";
       gr = "gradle";
       grr = "gradle -q --console plain run";
     };
@@ -54,9 +41,7 @@ in {
       ll = "eza --icons --long --group";
       lla = "eza --icons --long --group --all";
       tree = "eza -T -a -I .git";
-      mamba = "micromamba";
       rsync = "rsync --progress --archive";
-      dequarantine = "xattr -d com.apple.quarantine";
       icat = "kitten icat";
     };
     functions = {
@@ -75,7 +60,7 @@ in {
       };
     };
     interactiveShellInit = ''
-      if test -d /Volumes/google
+      if test -d /google
         __google_starship_config
       end
 
@@ -90,15 +75,17 @@ in {
       end
 
       if [ $TERM = xterm-kitty ]
-          alias ssh='TERM=xterm-256color /usr/bin/ssh'
+        alias ssh='TERM=xterm-256color /usr/bin/ssh'
       end
 
-      # >>> mamba initialize >>>
-      # !! Contents within this block are managed by 'mamba init' !!
-      set -gx MAMBA_EXE "${config.home.profileDirectory}/bin/micromamba"
-      set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
-      $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
-      # <<< mamba initialize <<<
+      if type -q micromamba
+        # >>> mamba initialize >>>
+        # !! Contents within this block are managed by 'mamba init' !!
+        set -gx MAMBA_EXE "${config.home.profileDirectory}/bin/micromamba"
+        set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
+        $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+        # <<< mamba initialize <<<
+      end
 
       if type -q brew
         if test -d (brew --prefix)"/share/fish/completions"

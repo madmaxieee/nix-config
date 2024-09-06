@@ -25,6 +25,7 @@
 
     clang
     clang-tools
+    uv
   ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -45,5 +46,10 @@
 
   programs.fish.shellAbbrs = { hm = "home-manager"; };
 
-  imports = [ ./modules/fish.nix ./modules/nvim.nix ./modules/git-google.nix ./modules/tmux-ssh-host.nix ];
+  imports = [
+    ./modules/fish.nix
+    ./modules/nvim.nix
+    ./modules/git-google.nix
+    ./modules/tmux-ssh-host.nix
+  ];
 }

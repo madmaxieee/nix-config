@@ -55,8 +55,6 @@ in {
     cmake
     bear
 
-    micromamba
-    uv
     zig
     fnm
     rustup
@@ -101,7 +99,6 @@ in {
   programs.java.enable = true;
   programs.gradle.enable = true;
   programs.go.enable = true;
-  programs.poetry.enable = true;
 
   programs.fastfetch.enable = true;
 
@@ -115,5 +112,7 @@ in {
     ./modules/nvim.nix
     ./modules/tmux.nix
     ./modules/window-management.nix
+
+    ./modules/python.nix
   ];
 }

@@ -41,8 +41,9 @@ in {
     extraConfig = "source-file ${nix_config_path}/dotfiles/tmux/tmux.conf";
   };
 
-  programs.fish.shellAliases = {
-    t = "${config.xdg.configHome}/tmux/scripts/sesh.sh";
+  programs.fish = {
+    shellAbbrs = { t = "${config.xdg.configHome}/tmux/scripts/sesh.sh"; };
+    shellAliases = { ta = "tmux attach"; };
   };
 
   xdg.configFile = {
