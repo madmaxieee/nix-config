@@ -105,6 +105,11 @@ in {
 
   programs.fastfetch.enable = true;
 
+  programs.fish.shellAbbrs = {
+    copy = "pbcopy";
+    paste = "pbpaste";
+  };
+
   imports = [
     ./modules/fish.nix
     ./modules/nvim.nix

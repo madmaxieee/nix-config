@@ -22,4 +22,9 @@
     # for sqlite.lua on macos
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
+
+  programs.fish.shellAbbrs = {
+    v = "nvim";
+    vi = "nvim";
+  };
 }

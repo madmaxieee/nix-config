@@ -37,10 +37,6 @@ in {
       y = "yarn";
       pm = "pnpm";
       py = "python3";
-      v = "nvim";
-      vi = "nvim";
-      copy = "pbcopy";
-      paste = "pbpaste";
       mm = "mamba";
       mma = "mamba activate";
       rm = "rip";
