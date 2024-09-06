@@ -45,7 +45,6 @@ in {
     gnupg
 
     mprocs
-    hyperfine
     tealdeer
     tokei
     ffmpeg_7

@@ -19,7 +19,6 @@
     wget
     rm-improved
 
-    hyperfine
     tealdeer
     tokei
     typos
