@@ -65,7 +65,7 @@ in {
       fish_greeting = "flush";
       __google_starship_config = {
         body = ''
-          if path resolve $PWD | grep -q '^/Volumes/google/src'
+          if path resolve $PWD | grep -q -E '^(/Volumes)?/google'
             set -gx STARSHIP_CONFIG ~/.config/starship_google.toml
           else
             set -gx STARSHIP_CONFIG ~/.config/starship.toml
