@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = [ pkgs.nixfmt-classic pkgs.sqlite ];
+  home.packages = [ ];
 
   home.activation = let git = "${pkgs.git}/bin/git";
   in {
@@ -16,7 +16,8 @@
     enable = true;
     defaultEditor = true;
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
-    extraPackages = [ pkgs.nodejs_20 ];
+    extraPackages =
+      [ pkgs.cargo pkgs.nodejs_20 pkgs.nixfmt-classic pkgs.sqlite ];
   };
   home.sessionVariables = if pkgs.stdenv.isDarwin then {
     # for sqlite.lua on macos
