@@ -18,10 +18,11 @@
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
     extraPackages = [ pkgs.nodejs_20 ];
   };
-  home.sessionVariables = {
+  home.sessionVariables = if pkgs.stdenv.isDarwin then {
     # for sqlite.lua on macos
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
-  };
+  } else
+    { };
 
   programs.fish.shellAbbrs = {
     v = "nvim";
