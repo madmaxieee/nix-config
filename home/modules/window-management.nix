@@ -5,7 +5,7 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = with pkgs; [ jq lua ];
+  home.packages = with pkgs; [ jq ];
 
   home.file = {
     ".hammerspoon" = {
@@ -27,9 +27,7 @@ in {
       source = linkDotfile "yabai";
       recursive = false;
     };
-    "sketchybar" = {
-      source = linkDotfile "sketchybar";
-      recursive = false;
-    };
   };
+
+  imports = [ ./sketchybar ];
 }

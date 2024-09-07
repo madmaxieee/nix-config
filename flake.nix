@@ -152,7 +152,7 @@
           }
 
           (import ./modules/madmax-dock.nix {
-            pkgs = pkgs;
+            inherit pkgs;
             homeDirectory = "/Users/madmax";
           })
         ];
@@ -185,7 +185,7 @@
           }
 
           (import ./modules/maxcchuang-dock.nix {
-            pkgs = pkgs;
+            inherit pkgs;
             homeDirectory = "/Users/maxcchuang";
           })
         ];
