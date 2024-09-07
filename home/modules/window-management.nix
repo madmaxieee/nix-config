@@ -27,7 +27,9 @@ in {
       source = linkDotfile "yabai";
       recursive = false;
     };
+    "sketchybar" = {
+      source = linkDotfile "sketchybar";
+      recursive = false;
+    };
   };
-
-  imports = [ ./sketchybar ];
 }

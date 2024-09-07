@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, pkgs }:
+{ lib, fetchFromGitHub, pkgs }:
 
 pkgs.lua54Packages.buildLuaPackage {
   name = "SbarLua";

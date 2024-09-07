@@ -94,5 +94,7 @@ sketchybar --add item chevron left \
 #            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
 #            --subscribe battery system_woke power_source_change
 
+lua -e 'require("init")' 2>&1 >> /tmp/sblog
+
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
