@@ -5,7 +5,7 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = with pkgs; [ jq ];
+  home.packages = with pkgs; [ jq lua ];
 
   home.file = {
     ".hammerspoon" = {
@@ -16,7 +16,6 @@ in {
     "nix-config/dotfiles/hammerspoon/nix_path.lua".text = ''
       NIX_PATH = "${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
     '';
-    ".simplebarrc".source = linkDotfile "simple-bar/simplebarrc";
   };
 
   xdg.configFile = {
@@ -28,9 +27,9 @@ in {
       source = linkDotfile "yabai";
       recursive = false;
     };
-    "ubersicht/widgets/simple-bar".source = builtins.fetchGit {
-      url = "git@github.com:madmaxieee/simple-bar.git";
-      rev = "1240a1d5e0aa546a77ae680277e87aa5b39d46b1";
+    "sketchybar" = {
+      source = linkDotfile "sketchybar";
+      recursive = false;
     };
   };
 }

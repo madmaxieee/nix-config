@@ -5,7 +5,6 @@
     brews = [ ];
     casks = [
       "hammerspoon"
-      "ubersicht"
       "orbstack"
       "1password"
       "arc"

@@ -5,7 +5,6 @@
     brews = [ ];
     casks = [
       "hammerspoon"
-      "ubersicht"
       "orbstack"
       "1password"
       "arc"
@@ -16,6 +15,8 @@
       "jordanbaird-ice"
       "cleanshot"
       "heptabase"
+      "raycast"
+      "thingsmacsandboxhelper"
     ];
     masApps = {
       "Things" = 904280696;

@@ -72,9 +72,12 @@
           inactive_color = "0x00494d64";
           width = 3.0;
         };
+        services.sketchybar = { enable = true; };
 
         fonts.packages = [
-          (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+          (pkgs.nerdfonts.override {
+            fonts = [ "NerdFontsSymbolsOnly" "JetBrainsMono" ];
+          })
           pkgs.victor-mono
         ];
 
