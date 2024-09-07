@@ -1,8 +1,10 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [ micromamba uv ];
   programs.fish = {
-    mm = "mamba";
-    shellAbbrs = { mma = "mamba activate"; };
+    shellAbbrs = {
+      mm = "mamba";
+      mma = "mamba activate";
+    };
     shellAliases = { mamba = "micromamba"; };
   };
 
