@@ -83,18 +83,6 @@ in {
 
   home.sessionVariables.PAGER = "bat -p";
 
-  programs.zoxide.enable = true;
-  home.sessionVariables = {
-    "_ZO_DATA_DIR" = "${config.home.homeDirectory}/.local/share";
-    "_ZO_RESOLVE_SYMLINKS" = "1";
-    "_ZO_EXCLUDE_DIRS" = "/nix/store/*";
-  };
-
-  programs.atuin = {
-    enable = true;
-    flags = [ "--disable-up-arrow" ];
-  };
-
   programs.bun.enable = true;
   programs.java.enable = true;
   programs.gradle.enable = true;
