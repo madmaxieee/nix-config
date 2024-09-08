@@ -15,6 +15,15 @@ local function space_selection(env)
 end
 
 local spaces = {}
+
+local function set_space_label(index)
+	sbar.exec([[yabai -m query --spaces label --space ]] .. index .. [[ | jq -r .label]], function(result, exit_code)
+		if exit_code == 0 and #result > 1 then
+			sbar.set(spaces[index], { icon = { string = result } })
+		end
+	end)
+end
+
 for i = 1, 20 do
 	local space = sbar.add("space", {
 		associated_space = i,
@@ -37,6 +46,7 @@ for i = 1, 20 do
 	spaces[i] = space.name
 	space:subscribe("space_change", space_selection)
 	space:subscribe("mouse.clicked", mouse_click)
+	set_space_label(i)
 end
 
 sbar.add("bracket", spaces, {
