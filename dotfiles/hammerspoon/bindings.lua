@@ -45,17 +45,6 @@ leader_bind("", "escape", function()
     leader_mode:exit()
 end)
 
--- debug
-leader_bind("shift", "d", function()
-    local output, status, termType = hs.execute([[env | tee /tmp/hsdebug]])
-    print("output:\n" .. output)
-    print("status:")
-    print(status)
-    print("termType:")
-    print(termType)
-    leader_mode:exit()
-end)
-
 leader_bind("", "m", function()
     ToggleScratchpad("Messenger")
     leader_mode:exit()
