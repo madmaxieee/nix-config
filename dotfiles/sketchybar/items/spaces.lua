@@ -15,7 +15,7 @@ local function space_selection(env)
 end
 
 local spaces = {}
-for i = 1, 10, 1 do
+for i = 1, 20 do
 	local space = sbar.add("space", {
 		associated_space = i,
 		icon = {
@@ -23,7 +23,7 @@ for i = 1, 10, 1 do
 			padding_left = 7,
 			padding_right = 7,
 			color = colors.white,
-			highlight_color = colors.red,
+			highlight_color = colors.blue,
 		},
 		label = {
 			drawing = false,
@@ -47,10 +47,11 @@ local space_creator = sbar.add("item", {
 	padding_left = 10,
 	padding_right = 8,
 	icon = {
-		string = "+",
+		string = ":add:",
 		font = {
-			style = "Heavy",
-			size = 16.0,
+			family = "sketchybar-app-font",
+			style = "Regular",
+			size = 12.0,
 		},
 	},
 	label = { drawing = false },
@@ -58,5 +59,5 @@ local space_creator = sbar.add("item", {
 })
 
 space_creator:subscribe("mouse.clicked", function(_)
-	sbar.exec("yabai -m space --create")
+	sbar.exec("~/.config/yabai/new_space.sh")
 end)

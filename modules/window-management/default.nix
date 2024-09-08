@@ -18,6 +18,8 @@ in {
     extraPackages = [ (pkgs.lua54Packages.lua.withPackages (ps: [ sbarLua ])) ];
   };
 
-  fonts.packages =
-    [ (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
+  fonts.packages = [
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    pkgs.sketchybar-app-font
+  ];
 }

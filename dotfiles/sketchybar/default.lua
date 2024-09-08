@@ -6,7 +6,7 @@ sbar.default({
 	icon = {
 		font = {
 			family = "JetBrainsMono Nerd Font",
-			style = "SemiBold",
+			style = "Semibold",
 			size = 14.0,
 		},
 		color = colors.white,
