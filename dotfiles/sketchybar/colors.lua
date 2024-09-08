@@ -10,17 +10,7 @@ return {
 	grey = 0xff939ab7,
 	transparent = 0x00000000,
 
-	bar = {
-		bg = 0xd01e1e2e,
-		border = 0xff494d64,
-	},
-	popup = {
-		bg = 0xff1e1e2e,
-		border = 0xffcad3f5,
-	},
-	bg1 = 0x803c3e4f,
+	bar = { bg = 0x40000000 },
+	bg1 = 0x40ffffff,
 	bg2 = 0xff494d64,
-
-	inactive_bg = 0xff1e1e2e,
-	media = 0xff8aadf4,
 }
