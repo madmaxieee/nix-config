@@ -19,7 +19,7 @@ local spaces = {}
 local function set_space_label(index)
 	sbar.exec([[yabai -m query --spaces label --space ]] .. index .. [[ | jq -r .label]], function(result, exit_code)
 		if exit_code == 0 and #result > 1 then
-			sbar.set(spaces[index], { icon = { string = result } })
+			sbar.set(spaces[index], { icon = { string = index .. " " .. result } })
 		end
 	end)
 end
