@@ -17,7 +17,7 @@ local media = sbar.add("item", "media", {
 		font = "JetBrainsMono Nerd Font:Regular:14.0",
 		padding_right = 12,
 	},
-	position = "right",
+	position = "center",
 	updates = true,
 })
 

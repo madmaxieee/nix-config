@@ -9,7 +9,7 @@ local function space_selection(env)
 		icon = { highlight = env.SELECTED },
 		label = { highlight = env.SELECTED },
 		background = {
-			color = env.SELECTED == "true" and colors.bg1 or colors.bg2,
+			color = env.SELECTED == "true" and colors.bg1 or colors.bg_inactive,
 		},
 	})
 end
@@ -22,7 +22,7 @@ for i = 1, 20 do
 			string = i,
 			padding_left = 7,
 			padding_right = 7,
-			color = colors.blue,
+			color = colors.grey,
 			highlight_color = colors.white,
 		},
 		label = {

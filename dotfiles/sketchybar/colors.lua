@@ -13,4 +13,6 @@ return {
 	bar = { bg = 0x40000000 },
 	bg1 = 0x40ffffff,
 	bg2 = 0xff494d64,
+	bg3 = 0x40494d64,
+	bg_inactive = 0x40888888,
 }
