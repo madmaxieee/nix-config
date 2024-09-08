@@ -5,12 +5,12 @@ local function mouse_click(env)
 end
 
 local function space_selection(env)
-	local color = env.SELECTED == "true" and colors.white or colors.bg2
-
 	sbar.set(env.NAME, {
 		icon = { highlight = env.SELECTED },
 		label = { highlight = env.SELECTED },
-		background = { border_color = color },
+		background = {
+			color = env.SELECTED == "true" and colors.bg1 or colors.bg2,
+		},
 	})
 end
 
@@ -22,8 +22,8 @@ for i = 1, 20 do
 			string = i,
 			padding_left = 7,
 			padding_right = 7,
-			color = colors.white,
-			highlight_color = colors.blue,
+			color = colors.blue,
+			highlight_color = colors.white,
 		},
 		label = {
 			drawing = false,
