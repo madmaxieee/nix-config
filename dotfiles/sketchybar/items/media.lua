@@ -23,13 +23,17 @@ local media = sbar.add("item", "media", {
 	updates = true,
 })
 
-media:subscribe("mouse.clicked", function(_)
-	if current_app == "Spotify" then
-		sbar.exec([[hs -c 'hs.spotify.playpause()']])
-	elseif current_app == "Podcasts" then
-		sbar.exec([[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']])
+media:subscribe("mouse.clicked", function(env)
+	if env.BUTTON == "left" then
+		if current_app == "Spotify" then
+			sbar.exec([[hs -c 'hs.spotify.playpause()']])
+		elseif current_app == "Podcasts" then
+			sbar.exec([[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']])
+		else
+			sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']])
+		end
 	else
-		sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']])
+		sbar.exec([[hs -c 'hs.application.launchOrFocus("]] .. current_app .. [[")']])
 	end
 end)
 
