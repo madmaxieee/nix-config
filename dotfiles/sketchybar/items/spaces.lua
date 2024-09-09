@@ -38,9 +38,9 @@ end
 
 local function update_space_apps(index)
 	local cmd = table.concat({
-		[[yabai -m query --windows app,role,subrole --space ]],
+		[[yabai -m query --windows app,subrole,is-hidden --space ]],
 		index,
-		[[ | jq -r  '.[] | select(.role == "AXWindow" and .subrole == "AXStandardWindow") | .app']],
+		[[ | jq -r  '.[] | select(.subrole == "AXStandardWindow" and ."is-hidden" == false) | .app']],
 	}, "")
 	sbar.exec(cmd, function(result, exit_code)
 		if exit_code == 0 then
