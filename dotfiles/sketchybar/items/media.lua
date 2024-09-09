@@ -1,6 +1,5 @@
 local colors = require("colors")
 local app_icons = require("icon_map")
-app_icons.default = ":default:"
 
 local whitelist = {
 	["Spotify"] = colors.green,
@@ -42,7 +41,7 @@ media:subscribe("media_change", function(env)
 	if app_color ~= nil then
 		current_app = env.INFO.app
 		local lookup = app_icons[env.INFO.app]
-		local icon = ((lookup == nil) and app_icons["default"] or lookup)
+		local icon = (lookup and lookup or app_icons["Default"])
 
 		local playback_icon = ((env.INFO.state == "playing") and "" or "")
 

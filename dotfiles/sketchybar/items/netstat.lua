@@ -24,7 +24,7 @@ local colors = require("colors")
 
 local netstat_up = sbar.add("item", {
 	position = "right",
-	width = 72,
+	width = 66,
 	icon = { drawing = false },
 	label = { color = colors.blue },
 })
@@ -32,14 +32,14 @@ sbar.add("item", {
 	position = "right",
 	icon = {
 		string = "",
-		font = "JetBrainsMono Nerd Font:Regular:18.0",
+		font = "JetBrainsMono Nerd Font:Regular:16.0",
 		color = colors.blue,
 	},
 	label = { drawing = false },
 })
 local netstat_down = sbar.add("item", {
 	position = "right",
-	width = 72,
+	width = 66,
 	icon = { drawing = false },
 	label = { color = colors.red },
 })
@@ -47,7 +47,7 @@ sbar.add("item", {
 	position = "right",
 	icon = {
 		string = "",
-		font = "JetBrainsMono Nerd Font:Regular:18.0",
+		font = "JetBrainsMono Nerd Font:Regular:16.0",
 		color = colors.red,
 	},
 	label = { drawing = false },
