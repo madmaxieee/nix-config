@@ -130,7 +130,14 @@ local function go_to_space(space_sel)
             .. [[ || ]]
             .. (yabai .. [[ -m space --focus ]] .. space_sel)
             .. [[ || ]]
-            .. (yabai .. [[ -m query --spaces --space ]] .. space_sel .. [[ | ]] .. path .. [[jq -e '."has-focus"']])
+            .. (
+                yabai
+                .. [[ -m query --spaces has-focus --space ]]
+                .. space_sel
+                .. [[ | ]]
+                .. path
+                .. [[jq -e '."has-focus"']]
+            )
     )
 
     -- the previous command would fail with sip enabled

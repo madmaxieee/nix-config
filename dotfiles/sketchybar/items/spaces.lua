@@ -55,6 +55,11 @@ end
 
 local function on_mouse_click(env)
 	sbar.exec("~/.config/yabai/focus_space.sh " .. env.SID)
+	sbar.set(spaces[tonumber(env.SID)], {
+		icon = { highlight = "true" },
+		label = { highlight = "true" },
+		background = { color = colors.bg1 },
+	})
 end
 
 local function on_space_change(env)

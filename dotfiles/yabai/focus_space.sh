@@ -6,7 +6,7 @@ SPACE_SEL="$1"
 
 ~/.config/yabai/focus_window_in_space.sh "$SPACE_SEL" && exit
 yabai -m space --focus "$SPACE_SEL" > /dev/null 2>&1 && exit
-yabai -m query --spaces --space "$SPACE_SEL" | jq -e '."has-focus"' && exit
+yabai -m query --spaces has-focus --space "$SPACE_SEL" | jq -e '."has-focus"' && exit
 
 # the previous command would fail with sip enabled
 # if that's the case use hammerspoon to focus space instead
