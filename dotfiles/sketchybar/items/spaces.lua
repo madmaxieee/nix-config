@@ -1,10 +1,63 @@
 local colors = require("colors")
+local icon_map = require("icon_map")
 
-local function mouse_click(env)
+local spaces = {}
+local space_labels = {}
+local space_apps = {}
+
+local function rerender_space_button(index)
+	local icon_content = tostring(index)
+	if space_labels[index] and space_labels[index] ~= "" then
+		icon_content = icon_content .. " " .. space_labels[index]
+	end
+	local label_content = ""
+	if space_apps[index] then
+		for _, val in ipairs(space_apps[index]) do
+			label_content = label_content .. (icon_map[val] and icon_map[val] or ":default:") .. " "
+		end
+	end
+	sbar.set(spaces[index], {
+		icon = { string = icon_content },
+		label = { string = label_content, drawing = label_content ~= "" },
+	})
+end
+
+local function set_space_label(index)
+	local cmd = table.concat({
+		[[yabai -m query --spaces label --space ]],
+		index,
+		[[ | jq -r .label]],
+	}, "")
+	sbar.exec(cmd, function(result, exit_code)
+		if exit_code == 0 and #result > 1 then
+			space_labels[index] = result
+			rerender_space_button(index)
+		end
+	end)
+end
+
+local function update_space_apps(index)
+	local cmd = table.concat({
+		[[yabai -m query --windows app,role,subrole --space ]],
+		index,
+		[[ | jq -r  '.[] | select(.role == "AXWindow" and .subrole == "AXStandardWindow") | .app']],
+	}, "")
+	sbar.exec(cmd, function(result, exit_code)
+		if exit_code == 0 then
+			space_apps[index] = {}
+			for app in result:gmatch("[^\n]+") do
+				table.insert(space_apps[index], app)
+			end
+			rerender_space_button(index)
+		end
+	end)
+end
+
+local function on_mouse_click(env)
 	sbar.exec("~/.config/yabai/focus_space.sh " .. env.SID)
 end
 
-local function space_selection(env)
+local function on_space_change(env)
 	sbar.set(env.NAME, {
 		icon = { highlight = env.SELECTED },
 		label = { highlight = env.SELECTED },
@@ -14,17 +67,11 @@ local function space_selection(env)
 	})
 end
 
-local spaces = {}
-
-local function set_space_label(index)
-	sbar.exec([[yabai -m query --spaces label --space ]] .. index .. [[ | jq -r .label]], function(result, exit_code)
-		if exit_code == 0 and #result > 1 then
-			sbar.set(spaces[index], { icon = { string = index .. " " .. result } })
-		end
-	end)
+local function on_space_windows_change(env)
+	update_space_apps(tonumber(env.SID))
 end
 
-for i = 1, 20 do
+for i = 1, 15 do
 	local space = sbar.add("space", {
 		associated_space = i,
 		icon = {
@@ -36,17 +83,27 @@ for i = 1, 20 do
 		},
 		label = {
 			drawing = false,
+			color = colors.grey,
+			highlight_color = colors.white,
+			font = {
+				family = "sketchybar-app-font",
+				style = "Regular",
+				size = 12.0,
+			},
+			y_offset = -1.5,
 		},
 		background = {
 			color = colors.bg1,
 			corner_radius = 5,
-			height = 26,
+			height = 24,
 		},
 	})
 	spaces[i] = space.name
-	space:subscribe("space_change", space_selection)
-	space:subscribe("mouse.clicked", mouse_click)
+	space:subscribe("space_change", on_space_change)
+	space:subscribe("space_windows_change", on_space_windows_change)
+	space:subscribe("mouse.clicked", on_mouse_click)
 	set_space_label(i)
+	update_space_apps(i)
 end
 
 sbar.add("bracket", spaces, {
