@@ -83,12 +83,12 @@ for i = 1, 15 do
 			string = i,
 			padding_left = 7,
 			padding_right = 7,
-			color = colors.grey,
+			color = colors.white_inactive,
 			highlight_color = colors.white,
 		},
 		label = {
 			drawing = false,
-			color = colors.grey,
+			color = colors.white_inactive,
 			highlight_color = colors.white,
 			font = {
 				family = "sketchybar-app-font",
