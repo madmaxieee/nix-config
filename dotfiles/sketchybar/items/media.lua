@@ -10,14 +10,12 @@ local current_app = nil
 
 local media = sbar.add("item", "media", {
 	icon = {
-		font = "sketchybar-app-font:Regular:12.0",
+		font = "sketchybar-app-font:Regular:14.0",
 		padding_left = 12,
 		padding_right = 12,
+		y_offset = -1,
 	},
-	label = {
-		font = "JetBrainsMono Nerd Font:Regular:14.0",
-		padding_right = 12,
-	},
+	label = { padding_right = 12, font = { size = 14.0 } },
 	position = "center",
 	updates = true,
 })

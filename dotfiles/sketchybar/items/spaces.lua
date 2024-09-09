@@ -115,11 +115,7 @@ local space_creator = sbar.add("item", {
 	padding_right = 8,
 	icon = {
 		string = ":add:",
-		font = {
-			family = "sketchybar-app-font",
-			style = "Regular",
-			size = 12.0,
-		},
+		font = "sketchybar-app-font:Regular:12.0",
 	},
 	label = { drawing = false },
 	associated_display = "active",
