@@ -58,9 +58,8 @@ sbar.add("event", "netstat_update")
 sbar.exec("~/.config/sketchybar/items/netstat.sh")
 
 netstat_up:subscribe("netstat_update", function(env)
-	load("NETSTAT_SPEED=" .. env.INFO)()
-	local download = formatBytes(NETSTAT_SPEED.download)
-	local upload = formatBytes(NETSTAT_SPEED.upload)
+	local download = formatBytes(env.DOWNLOAD)
+	local upload = formatBytes(env.UPLOAD)
 	netstat_up:set({
 		label = { string = upload },
 	})

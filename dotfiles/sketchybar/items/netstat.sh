@@ -2,5 +2,5 @@
 
 pkill -f "netstat -w5"
 netstat -w5 \
-  | awk 'NR > 2 {print "{download=" $3/5 ", upload=" $6/5 "}"; fflush(stdout) }' \
-  | xargs -I {} sketchybar --trigger netstat_update INFO={} &
+  | awk '/[0-9]/ {print $3/5 "," $6/5; fflush(stdout)}' \
+  | xargs -I {} bash -c 'sketchybar --trigger netstat_update DOWNLOAD=$(cut -d, -f1 <<< {}) UPLOAD=$(cut -d, -f2 <<< {})' &
