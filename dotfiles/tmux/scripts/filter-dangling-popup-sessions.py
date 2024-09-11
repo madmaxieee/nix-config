@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 
 session_names = []
 while True:
@@ -6,8 +6,6 @@ while True:
         session_names.append(input())
     except EOFError:
         break
-
-session_names = [name.split(":")[0] for name in session_names]
 
 popup_sessions = [name for name in session_names if name.endswith("__popup")]
 regular_sessions = [name for name in session_names if not name.endswith("__popup")]
