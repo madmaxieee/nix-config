@@ -33,6 +33,7 @@ in {
       grr = "gradle -q --console plain run";
     };
     shellAliases = {
+      "..." = "../..";
       cat = "bat -p";
       l = "eza";
       ls = "eza --icons";

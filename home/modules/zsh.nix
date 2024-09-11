@@ -21,10 +21,6 @@ in {
       flush = "printf '\\n%.0s' {1..$(tput lines)}";
       clear = "flush";
     };
-    syntaxHighlighting = {
-      enable = true;
-      highlighters = [ "brackets" ];
-    };
     zsh-abbr = {
       enable = true;
       abbreviations = {
@@ -36,13 +32,11 @@ in {
         rmm = "rm -rf";
       };
     };
-    sessionVariables = {
-      STARSHIP_CONFIG =
-        "${config.home.homeDirectory}/.config/starship_zsh.toml";
-    };
-    autosuggestion.enable = true;
-    defaultKeymap = "viins";
     initExtra = ''
+      function precmd() {
+        echo
+      }
+
       function _flush() {
         printf '\n%.0s' {1..$(tput lines)}
         zle reset-prompt
@@ -50,9 +44,33 @@ in {
       zle -N _flush
       bindkey '^L' _flush
     '';
+    sessionVariables = {
+      STARSHIP_CONFIG =
+        "${config.home.homeDirectory}/.config/starship_zsh.toml";
+      VI_MODE_SET_CURSOR = true;
+      VI_MODE_CURSOR_NORMAL = 2;
+      VI_MODE_CURSOR_VISUAL = 4;
+      VI_MODE_CURSOR_INSERT = 6;
+      VI_MODE_CURSOR_OPPEND = 0;
+    };
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [ "main" "brackets" "pattern" "cursor" ];
+    };
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=244";
+      strategy = [ "history" "completion" "match_prev_cmd" ];
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "vi-mode" ];
+      theme = "robbyrussell";
+    };
   };
 
-  programs.starship.enable = true;
+  programs.starship.enableZshIntegration = false;
+
   xdg.configFile = {
     "starship_zsh.toml".source = linkDotfile "starship/starship_zsh.toml";
   };

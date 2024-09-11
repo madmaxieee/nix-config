@@ -27,10 +27,6 @@ format = '@[$ssh_symbol$hostname]($style) in '
 style_user = "bold yellow"
 format = '[$user]($style)'
 
-[gcloud]
-disabled = true
-format = 'on [$symbol$account]($style) '
-
 [git_branch]
 style = "green"
 ignore_branches = ["main"]

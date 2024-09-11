@@ -33,6 +33,7 @@
   home.sessionVariables.PAGER = "bat -p";
 
   programs.fish.shellAbbrs = { hm = "home-manager"; };
+  programs.zsh.zsh-abbr.abbreviations = { hm = "home-manager"; };
 
   imports = [
     ./modules/fish.nix
