@@ -36,6 +36,7 @@
 
   imports = [
     ./modules/fish.nix
+    ./modules/zsh.nix
     ./modules/nvim.nix
     ./modules/tmux-ssh-host.nix
     ./modules/git-google.nix
