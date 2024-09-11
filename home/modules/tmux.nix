@@ -40,8 +40,11 @@ in {
   };
 
   programs.fish = {
-    shellAbbrs = { t = "${config.xdg.configHome}/tmux/scripts/sesh.sh"; };
-    shellAliases = { ta = "tmux attach"; };
+    shellAliases = { t = "${config.xdg.configHome}/tmux/scripts/sesh.sh"; };
+    shellAbbrs = {
+      ta = "tmux attach";
+      tn = "tmux new -s";
+    };
   };
 
   xdg.configFile = {
