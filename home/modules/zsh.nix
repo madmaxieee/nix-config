@@ -5,24 +5,11 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  programs.starship.enable = true;
-  programs.tmux.enable = true;
-
   home.packages = with pkgs; [ eza bat rm-improved fzf lazygit ];
-
-  xdg.configFile = {
-    "starship_google.toml".source = linkDotfile "starship/starship_google.toml";
-  };
 
   programs.zsh = {
     enable = true;
     shellAliases = {
-      md = "mkdir -p";
-      g = "git";
-      lg = "lazygit";
-      py = "python3";
-      rm = "rip";
-      rmm = "rm -rf";
       cat = "bat -p";
       l = "eza";
       ls = "eza --icons";
@@ -34,14 +21,39 @@ in {
       flush = "printf '\\n%.0s' {1..$(tput lines)}";
       clear = "flush";
     };
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [ "brackets" ];
+    };
+    zsh-abbr = {
+      enable = true;
+      abbreviations = {
+        md = "mkdir -p";
+        g = "git";
+        lg = "lazygit";
+        py = "python3";
+        rm = "rip";
+        rmm = "rm -rf";
+      };
+    };
+    sessionVariables = {
+      STARSHIP_CONFIG =
+        "${config.home.homeDirectory}/.config/starship_zsh.toml";
+    };
+    autosuggestion.enable = true;
+    defaultKeymap = "viins";
+    initExtra = ''
+      function _flush() {
+        printf '\n%.0s' {1..$(tput lines)}
+        zle reset-prompt
+      }
+      zle -N _flush
+      bindkey '^L' _flush
+    '';
   };
 
-  programs.atuin = { enable = true; };
-
-  programs.zoxide.enable = true;
-  programs.zsh.sessionVariables = {
-    "_ZO_DATA_DIR" = "${config.home.homeDirectory}/.local/share";
-    "_ZO_RESOLVE_SYMLINKS" = "1";
-    "_ZO_EXCLUDE_DIRS" = "/nix/store/*";
+  programs.starship.enable = true;
+  xdg.configFile = {
+    "starship_zsh.toml".source = linkDotfile "starship/starship_zsh.toml";
   };
 }

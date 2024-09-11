@@ -19,5 +19,24 @@
     };
   };
 
-  imports = [ ./mac.nix ./modules/git-google.nix ];
+  imports = [
+    ./modules/mac.nix
+
+    ./modules/fish.nix
+    ./modules/zsh.nix
+    ./modules/nvim.nix
+    ./modules/tmux.nix
+
+    ./modules/atuin.nix
+    ./modules/zoxide.nix
+
+    ./modules/git-google.nix
+
+    ./modules/window-management.nix
+
+    ./modules/python.nix
+
+    ./modules/scripts.nix
+  ];
+
 }

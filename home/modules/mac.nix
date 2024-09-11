@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   nix_config_path = "${config.home.homeDirectory}/nix-config";
@@ -9,15 +9,6 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  home.activation = let git = "${pkgs.git}/bin/git";
-  in {
-    clone_dotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d ${nix_config_path} ]; then
-        $DRY_RUN_CMD ${git} clone https://github.com/madmaxieee/nix-config.git ${nix_config_path}
-      fi
-    '';
-  };
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
@@ -93,14 +84,12 @@ in {
   programs.fish.shellAbbrs = {
     copy = "pbcopy";
     paste = "pbpaste";
+    dr = "darwin-rebuild";
   };
 
-  imports = [
-    ./modules/fish.nix
-    ./modules/nvim.nix
-    ./modules/tmux.nix
-    ./modules/window-management.nix
-
-    ./modules/python.nix
-  ];
+  programs.zsh.zsh-abbr.abbreviations = {
+    copy = "pbcopy";
+    paste = "pbpaste";
+    dr = "darwin-rebuild";
+  };
 }

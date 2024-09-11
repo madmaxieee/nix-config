@@ -39,6 +39,12 @@
     ./modules/zsh.nix
     ./modules/nvim.nix
     ./modules/tmux-ssh-host.nix
+
+    ./modules/atuin.nix
+    ./modules/zoxide.nix
+
     ./modules/git-google.nix
+
+    ./modules/scripts.nix
   ];
 }

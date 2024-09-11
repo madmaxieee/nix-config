@@ -49,6 +49,12 @@ in {
     };
   };
 
+  programs.zsh.shellAliases = {
+    t = "${config.xdg.configHome}/tmux/scripts/sesh.sh";
+    ta = "tmux attach";
+    tn = "tmux new -s";
+  };
+
   xdg.configFile = {
     "tmux/scripts" = {
       source = linkDotfile "tmux/scripts";

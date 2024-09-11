@@ -1,0 +1,19 @@
+#!/bin/sh
+
+temp_file=/tmp/vipe.$$.txt
+touch $temp_file
+
+# read from stdin
+if [ ! -t 0 ]; then
+  cat > $temp_file
+fi
+
+# spawn editor with stdio connected
+${EDITOR} $temp_file < /dev/tty > /dev/tty || exit $?
+
+# write to stdout
+cat $temp_file
+
+# cleanup
+rm $temp_file
+

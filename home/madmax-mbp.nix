@@ -35,5 +35,25 @@
     };
   };
 
-  imports = [ ./mac.nix ./modules/git.nix ./modules/mods.nix ];
+  imports = [
+    ./modules/mac.nix
+
+    ./modules/fish.nix
+    ./modules/zsh.nix
+    ./modules/nvim.nix
+    ./modules/tmux.nix
+
+    ./modules/atuin.nix
+    ./modules/zoxide.nix
+
+    ./modules/git.nix
+    ./modules/mods.nix
+
+    ./modules/window-management.nix
+
+    ./modules/python.nix
+
+    ./modules/scripts.nix
+  ];
+
 }

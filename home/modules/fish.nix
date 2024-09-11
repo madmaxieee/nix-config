@@ -5,15 +5,14 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  programs.starship.enable = true;
-  programs.tmux.enable = true;
-
   home.packages = with pkgs; [ eza bat rm-improved fzf lazygit fnm ];
+
+  programs.starship.enable = true;
 
   xdg.configFile = {
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
     "starship.toml".source = linkDotfile "starship/starship.toml";
-    "starship_google.toml".source = linkDotfile "starship/starship_google.toml";
+    "starship_no_git.toml".source = linkDotfile "starship/starship_no_git.toml";
   };
 
   programs.fish = {
@@ -41,7 +40,6 @@ in {
       ll = "eza --icons --long --group";
       lla = "eza --icons --long --group --all";
       tree = "eza -T -a -I .git";
-      rsync = "rsync --progress --archive";
       icat = "kitten icat";
     };
     functions = {
@@ -51,7 +49,7 @@ in {
       __google_starship_config = {
         body = ''
           if path resolve $PWD | grep -q -E '^(/Volumes)?/google'
-            set -gx STARSHIP_CONFIG ~/.config/starship_google.toml
+            set -gx STARSHIP_CONFIG ~/.config/starship_no_git.toml
           else
             set -gx STARSHIP_CONFIG ~/.config/starship.toml
           end
@@ -60,7 +58,7 @@ in {
       };
     };
     interactiveShellInit = ''
-      if test -d /google
+      if test -d /google && type -q starship
         __google_starship_config
       end
 
@@ -120,27 +118,6 @@ in {
           sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
         };
       }
-      {
-        name = "vipe.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "madmaxieee";
-          repo = "vipe.fish";
-          rev = "de948ed4cac4fb9b5d4974874f7d0d6f8e9652b5";
-          sha256 = "sha256-JvlCRZECUXMk9D5jPWvJkzwFq1N5G3q+KTwUXlSJSTw=";
-        };
-      }
     ];
-  };
-
-  programs.atuin = {
-    enable = true;
-    flags = [ "--disable-up-arrow" ];
-  };
-
-  programs.zoxide.enable = true;
-  home.sessionVariables = {
-    "_ZO_DATA_DIR" = "${config.home.homeDirectory}/.local/share";
-    "_ZO_RESOLVE_SYMLINKS" = "1";
-    "_ZO_EXCLUDE_DIRS" = "/nix/store/*";
   };
 }
