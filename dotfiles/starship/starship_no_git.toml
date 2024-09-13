@@ -43,8 +43,9 @@ disabled = true
 [docker_context]
 disabled = true
 
-[jobs]
-disabled = true
-
 [hg_branch]
 disabled = false
+
+[nix_shell]
+disabled = false
+heuristic = true

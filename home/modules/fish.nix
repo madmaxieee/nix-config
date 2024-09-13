@@ -59,6 +59,10 @@ in {
       };
     };
     interactiveShellInit = ''
+      if echo $PATH | grep -q '/nix/store/'
+        set -gx IN_NIX_SHELL 1
+      end
+
       if test -d /google && type -q starship
         __google_starship_config
       end
@@ -96,7 +100,7 @@ in {
       end
 
       # if not in tmux, start a new session
-      if [ -z "$TMUX" ]
+      if not set -q TMUX && set -q IN_NIX_SHELL
           tmux new-session -A -s main >/dev/null 2>&1
       end
     '';

@@ -48,5 +48,6 @@ style = "green"
 [docker_context]
 disabled = true
 
-[jobs]
-disabled = true
+[nix_shell]
+disabled = false
+heuristic = true
