@@ -38,11 +38,11 @@
         zle reset-prompt
       }
       zle -N _flush
-      bindkey '^L' _flush
+      bindkey '^l' _flush
 
       autoload -z edit-command-line
       zle -N edit-command-line
-      bindkey "^[E" edit-command-line
+      bindkey '^[e' edit-command-line
 
       if echo $PATH | grep -q '/nix/store/'; then
         export IN_NIX_SHELL=1
