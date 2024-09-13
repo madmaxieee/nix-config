@@ -12,8 +12,8 @@
         port = 23231;
         identityFile = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
-      "cloudtop" = {
-        hostname = "maxcchuang.c.googlers.com";
+      "*.c" = {
+        hostname = "%h.googlers.com";
         forwardAgent = true;
       };
     };
