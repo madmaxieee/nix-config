@@ -20,7 +20,6 @@
     rm-improved
 
     tealdeer
-    tokei
     typos
 
     clang

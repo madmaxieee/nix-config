@@ -24,7 +24,6 @@ in {
     difftastic
     wget
     rm-improved
-    dust
 
     parallel
     entr
@@ -35,16 +34,12 @@ in {
     pass
     gnupg
 
-    mprocs
     tealdeer
-    tokei
-    ffmpeg_7
     typos
 
     clang
     clang-tools
     cmake
-    bear
 
     zig
     fnm
