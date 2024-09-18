@@ -8,3 +8,4 @@ PATH = NIX_PATH .. ":" .. os.getenv("PATH")
 hs.application.enableSpotlightForNameSearches(true)
 
 require("bindings")
+require("globals")
