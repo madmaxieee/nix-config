@@ -34,14 +34,17 @@ yabai -m config window_gap                   4
 yabai -m space 1 --label 'terminal'
 yabai -m space 2 --label 'browser'
 yabai -m space 3 --label 'todo'
+yabai -m space 4 --label 'note'
 
 yabai -m rule --add space=^'todo' app="^Things$"
 yabai -m rule --add space=^'todo' app="^Fantastical$"
+yabai -m rule --add space=^'note' app="^Heptabase$"
 
 # apps to not manage (keep floating)
 yabai -m rule --add manage=off app='^Finder$'
 yabai -m rule --add manage=off app='^System Settings$'
 yabai -m rule --add manage=off app='^Messenger$'
+yabai -m rule --add manage=off app='^Google Chat$'
 yabai -m rule --add manage=off app='^LINE$'
 yabai -m rule --add manage=off app='^Telegram$'
 yabai -m rule --add manage=off sticky=on app='^Keymapp$'
