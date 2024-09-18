@@ -1,4 +1,6 @@
-local function toggle_scratchpad(app_name)
+local M = {}
+
+M.toggle_scratchpad = function(app_name)
     local app = hs.application.find(app_name, true)
 
     if not app then
@@ -23,4 +25,17 @@ local function toggle_scratchpad(app_name)
     end
 end
 
-return toggle_scratchpad
+-- to make scratchpad work better
+M.hide_on_cmd_w = function(app_name)
+    require("app_bind").app_bind(app_name, { "cmd" }, "w", function()
+        local app = hs.application.frontmostApplication()
+        local num_windows = #app:allWindows()
+        if num_windows == 1 then
+            app:hide()
+        else
+            app:focusedWindow():close()
+        end
+    end)
+end
+
+return M

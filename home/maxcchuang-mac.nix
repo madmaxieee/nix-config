@@ -41,11 +41,17 @@
 
     ./modules/git-google.nix
 
-    ./modules/window-management.nix
-
     ./modules/python.nix
 
     ./modules/scripts.nix
-  ];
 
+    (import ./modules/window-management.nix {
+      hs_extra_config = ''
+        return {
+            message_app = "Google Chat",
+            browser = "Google Chrome",
+        }
+      '';
+    })
+  ];
 }

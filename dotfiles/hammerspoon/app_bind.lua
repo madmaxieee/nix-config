@@ -1,24 +1,14 @@
--- app specific bindings
+local M = {}
+
 local app_bind_handlers = {}
 
-local function app_bind(app_name, modifiers, key, fn)
+M.app_bind = function(app_name, modifiers, key, fn)
     local handler = hs.hotkey.bind(modifiers, key, fn)
     if app_bind_handlers[app_name] == nil then
         app_bind_handlers[app_name] = {}
     end
     table.insert(app_bind_handlers[app_name], handler)
 end
-
--- to make scratchpad work better
-app_bind("Messenger", { "cmd" }, "w", function()
-    local app = hs.application.frontmostApplication()
-    local num_windows = #app:allWindows()
-    if num_windows == 1 then
-        app:hide()
-    else
-        app:focusedWindow():close()
-    end
-end)
 
 ---@diagnostic disable-next-line: unused-local
 App_watcher = hs.application.watcher.new(function(app_name, event_type, app)
@@ -44,3 +34,5 @@ App_watcher = hs.application.watcher.new(function(app_name, event_type, app)
     end
 end)
 App_watcher:start()
+
+return M

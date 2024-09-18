@@ -1,6 +1,9 @@
 local path = "PATH=" .. PATH .. " "
 local yabai = path .. "yabai"
 
+local scratchpad = require("scratchpad")
+local config = require("my_config")
+
 local leader_mode = hs.hotkey.modal.new("shift", "space")
 
 -- disable leader mode when the last key is not pressed in 1 second
@@ -45,8 +48,9 @@ leader_bind("", "escape", function()
     leader_mode:exit()
 end)
 
+scratchpad.hide_on_cmd_w(config.message_app)
 leader_bind("", "m", function()
-    ToggleScratchpad("Messenger")
+    scratchpad.toggle_scratchpad(config.message_app)
     leader_mode:exit()
 end)
 
@@ -64,28 +68,28 @@ leader_bind("", "q", function()
 end)
 
 -- open new arc windows
-local function new_arc_window()
-    local arc_app = hs.application.find("Arc", true)
-    if arc_app == nil then
-        hs.application.launchOrFocus("Arc")
+local function new_browser_window()
+    local browser_app = hs.application.find(config.browser, true)
+    if browser_app == nil then
+        hs.application.launchOrFocus(config.browser)
     else
-        hs.eventtap.keyStroke({ "command" }, "n", 0, arc_app)
+        hs.eventtap.keyStroke({ "command" }, "n", 0, browser_app)
     end
 end
-local function new_icognito_arc_window()
-    local arc_app = hs.application.find("Arc", true)
-    if arc_app == nil then
-        hs.application.launchOrFocus("Arc")
+local function new_icognito_browser_window()
+    local browser_app = hs.application.find(config.browser, true)
+    if browser_app == nil then
+        hs.application.launchOrFocus(config.browser)
     else
-        hs.eventtap.keyStroke({ "command", "shift" }, "n", 0, arc_app)
+        hs.eventtap.keyStroke({ "command", "shift" }, "n", 0, browser_app)
     end
 end
 leader_bind("", "b", function()
-    new_arc_window()
+    new_browser_window()
     leader_mode:exit()
 end)
 leader_bind("shift", "b", function()
-    new_icognito_arc_window()
+    new_icognito_browser_window()
     leader_mode:exit()
 end)
 

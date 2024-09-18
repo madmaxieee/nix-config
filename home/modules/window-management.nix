@@ -1,3 +1,4 @@
+{ hs_extra_config }:
 { config, pkgs, ... }:
 
 let
@@ -16,6 +17,8 @@ in {
     "nix-config/dotfiles/hammerspoon/nix_path.lua".text = ''
       NIX_PATH = "${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
     '';
+
+    "nix-config/dotfiles/hammerspoon/extra_config.lua".text = hs_extra_config;
   };
 
   xdg.configFile = {

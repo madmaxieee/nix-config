@@ -49,11 +49,18 @@
     ./modules/git.nix
     ./modules/mods.nix
 
-    ./modules/window-management.nix
-
     ./modules/python.nix
 
     ./modules/scripts.nix
+
+    (import ./modules/window-management.nix {
+      hs_extra_config = ''
+        return {
+            message_app = "Messenger",
+            browser = "Arc",
+        }
+      '';
+    })
   ];
 
 }
