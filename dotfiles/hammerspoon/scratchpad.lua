@@ -4,14 +4,12 @@ hs.window.animationDuration = 0
 
 M.toggle_scratchpad = function(app_name)
     local app = hs.application.find(app_name, true)
-
     if not app then
         hs.application.launchOrFocus(app_name)
         return
     end
 
     local main_window = app:mainWindow()
-
     if not main_window then
         hs.application.launchOrFocus(app_name)
         return
@@ -19,7 +17,6 @@ M.toggle_scratchpad = function(app_name)
 
     if app:isFrontmost() then
         app:hide()
-        return
     else
         hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
         main_window:moveToScreen(hs.screen.mainScreen())
