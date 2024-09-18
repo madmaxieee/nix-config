@@ -1,5 +1,7 @@
 local M = {}
 
+hs.window.animationDuration = 0
+
 M.toggle_scratchpad = function(app_name)
     local app = hs.application.find(app_name, true)
 
@@ -19,8 +21,8 @@ M.toggle_scratchpad = function(app_name)
         app:hide()
         return
     else
-        local window_id = main_window:id()
-        os.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. window_id)
+        hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
+        main_window:moveToScreen(hs.screen.mainScreen())
         app:activate()
     end
 end
