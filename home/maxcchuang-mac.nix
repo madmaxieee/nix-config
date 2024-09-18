@@ -19,6 +19,15 @@
     };
   };
 
+  xdg.configFile = {
+    "sesh/sesh.toml".text = ''
+      [[session]]
+      name = "cloud"
+      path = "~"
+      startup_command = "ssh maxcchuang.c"
+    '';
+  };
+
   imports = [
     ./modules/mac.nix
 
