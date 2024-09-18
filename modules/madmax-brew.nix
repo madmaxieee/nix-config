@@ -24,7 +24,6 @@
       "RunCat" = 1429033973;
       "Messenger" = 1480068668;
       "LINE" = 539883307;
-      "Spark" = 1176895641;
       "Keymapp" = 6472865291;
     };
     onActivation = {
