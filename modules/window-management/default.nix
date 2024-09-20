@@ -2,9 +2,11 @@
 
 let sbarLua = pkgs.callPackage ./SbarLua.nix { };
 in {
+  environment.systemPackages = [ pkgs.yabai ];
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
+    package = pkgs.yabai;
   };
   services.skhd = { enable = true; };
   services.jankyborders = {

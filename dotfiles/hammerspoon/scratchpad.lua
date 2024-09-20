@@ -20,6 +20,7 @@ M.toggle_scratchpad = function(app_name)
     else
         hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
         main_window:moveToScreen(hs.screen.mainScreen())
+        os.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. main_window:id())
         app:activate()
     end
 end
