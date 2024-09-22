@@ -55,5 +55,3 @@ yabai -m rule --add manage=off app="^Python$"
 yabai -m rule --add manage=off app="^python3$"
 yabai -m rule --add manage=off app="^CleanShot X$"
 yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
-
-~/.config/yabai/borders.sh
