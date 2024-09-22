@@ -45,6 +45,6 @@
 
     ./modules/git-google.nix
 
-    ./modules/scripts.nix
+    # ./modules/scripts.nix
   ];
 }

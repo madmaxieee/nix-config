@@ -123,6 +123,15 @@ in {
           sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
         };
       }
+      {
+        name = "vipe.fish";
+        src = pkgs.fetchFromGitHub {
+          owner = "madmaxieee";
+          repo = "vipe.fish";
+          rev = "de948ed4cac4fb9b5d4974874f7d0d6f8e9652b5";
+          sha256 = "sha256-JvlCRZECUXMk9D5jPWvJkzwFq1N5G3q+KTwUXlSJSTw=";
+        };
+      }
     ];
   };
 }

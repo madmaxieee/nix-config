@@ -47,6 +47,22 @@
       if echo $PATH | grep -q '/nix/store/'; then
         export IN_NIX_SHELL=1
       fi
+
+      function vipe() {
+        temp_file=/tmp/vipe.$$.txt
+        touch $temp_file
+
+        # read from stdin if it is a tty
+        if [ ! -t 0 ]; then
+          cat > $temp_file
+        fi
+
+        # spawn editor with stdio connected
+        $EDITOR $temp_file < /dev/tty > /dev/tty || exit $?
+
+        cat $temp_file
+        rm $temp_file
+      }
     '';
     sessionVariables = {
       STARSHIP_CONFIG =
