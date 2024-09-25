@@ -18,12 +18,9 @@ M.toggle_scratchpad = function(app_name)
     if app:isFrontmost() then
         app:hide()
     else
-        local _, status =
-            hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. main_window:id())
-        if not status then
-            hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
-            main_window:moveToScreen(hs.screen.mainScreen())
-        end
+        hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. main_window:id())
+        hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
+        main_window:moveToScreen(hs.screen.mainScreen())
         app:activate()
     end
 end
