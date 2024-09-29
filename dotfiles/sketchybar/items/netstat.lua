@@ -2,7 +2,7 @@
 
 local function formatBytes(bytes)
 	if bytes == 0 then
-		return "0b"
+		return "0 b"
 	end
 
 	local k = 1024

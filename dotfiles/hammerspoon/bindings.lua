@@ -61,10 +61,10 @@ leader_bind("", "q", function()
     local app = hs.application.find("Notes", true)
     if app ~= nil and app:isFrontmost() then
         app:hide()
-        return
     else
         quick_note()
     end
+    leader_mode:exit()
 end)
 
 -- open new arc windows
