@@ -130,8 +130,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "madmaxieee";
           repo = "vipe.fish";
-          rev = "de948ed4cac4fb9b5d4974874f7d0d6f8e9652b5";
-          sha256 = "sha256-JvlCRZECUXMk9D5jPWvJkzwFq1N5G3q+KTwUXlSJSTw=";
+          rev = "95e1a08862a2c6149676217e725e351357c0e869";
+          hash = "sha256-9plV/fZn1B6z2lUh153yLK/xQdpCOImxHPYGiIJO/lk=";
         };
       }
     ];
