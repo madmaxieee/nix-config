@@ -1,4 +1,4 @@
-local path = "PATH=" .. PATH .. " "
+local path = "PATH=" .. PATH .. " HAMMERSPOON=1 "
 local yabai = path .. "yabai"
 
 local scratchpad = require("scratchpad")
@@ -117,19 +117,10 @@ leader_bind("shift", "s", function()
 end)
 
 -- interact with spaces
-leader_bind("", "t", function()
-    os.execute(path .. [[~/.config/yabai/new_space.sh]])
-    leader_mode:exit()
-end)
-leader_bind("", "x", function()
-    os.execute(yabai .. [[ -m space --destroy mouse]])
-    leader_mode:exit()
-end)
-
 local function go_to_space(space_sel)
     -- don't call ~/.config/yabai/focus_space.sh directly
     -- calling hammerspoon in a script invoke by hammerspoon causes problem
-    local _, status = hs.execute(
+    local success = os.execute(
         (path .. [[~/.config/yabai/focus_window_in_space.sh ]] .. space_sel)
             .. [[ || ]]
             .. (yabai .. [[ -m space --focus ]] .. space_sel)
@@ -146,13 +137,40 @@ local function go_to_space(space_sel)
 
     -- the previous command would fail with sip enabled
     -- if that's the case use hammerspoon to focus space instead
-    if not status then
+    if not success then
         local space_id =
-            hs.execute(yabai .. [[ -m query --spaces --space ]] .. space_sel .. [[ | ]] .. path .. [[jq .id]])
+            hs.execute(yabai .. [[ -m query --spaces id --space ]] .. space_sel .. [[ | ]] .. path .. [[jq .id]])
         space_id = tonumber(space_id)
         hs.spaces.gotoSpace(space_id)
     end
 end
+leader_bind("", "t", function()
+    -- don't call new_space directly as it uses focus_space under the hood
+    local success = os.execute(yabai .. [[ -m space --create]])
+    if not success then
+        hs.spaces.addSpaceToScreen("main", false)
+    end
+    local new_space_index = hs.execute(
+        yabai
+            .. [[ -m query --spaces --display]]
+            .. [[|]]
+            .. path
+            .. [[ jq 'map(select(."is-native-fullscreen" == false))[-1].index']]
+    )
+    new_space_index = tonumber(new_space_index)
+    go_to_space(new_space_index)
+    leader_mode:exit()
+end)
+leader_bind("", "x", function()
+    leader_mode:exit()
+    local success = os.execute(yabai .. [[ -m space --destroy]])
+    if not success then
+        local space_id = hs.spaces.activeSpaceOnScreen()
+        go_to_space("recent")
+        hs.timer.usleep(400 * 1000)
+        hs.spaces.removeSpace(space_id)
+    end
+end)
 leader_bind("", "r", function()
     go_to_space("recent")
     leader_mode:exit()
