@@ -31,6 +31,8 @@ in {
       n = "npm";
       gr = "gradle";
       grr = "gradle -q --console plain run";
+      ns = "nix shell nixpkgs#";
+      nr = "nix run nixpkgs#";
     };
     shellAliases = {
       "..." = "../..";
