@@ -45,6 +45,8 @@ in {
     fnm
     rustup
 
+    d2
+
     kitty
     espanso
     _1password
