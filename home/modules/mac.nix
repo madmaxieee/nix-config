@@ -49,6 +49,7 @@ in {
 
     kitty
     espanso
+    vscode
     _1password
   ];
 
