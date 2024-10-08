@@ -35,6 +35,16 @@
     };
   };
 
+  programs.fish.shellAbbrs = {
+    d = "docker";
+    dco = "docker compose";
+    y = "yarn";
+    pm = "pnpm";
+    n = "npm";
+    gr = "gradle";
+    grr = "gradle -q --console plain run";
+  };
+
   imports = [
     ./modules/mac.nix
 

@@ -19,18 +19,11 @@ in {
     enable = true;
     shellAbbrs = {
       md = "mkdir -p";
-      d = "docker";
-      dco = "docker compose";
       g = "git";
       lg = "lazygit";
-      y = "yarn";
-      pm = "pnpm";
       py = "python3";
       rm = "rip";
       rmm = "rm -rf";
-      n = "npm";
-      gr = "gradle";
-      grr = "gradle -q --console plain run";
       ns = "nix shell nixpkgs#";
       nr = "nix run nixpkgs#";
     };
