@@ -16,6 +16,10 @@
         hostname = "%h.googlers.com";
         forwardAgent = true;
       };
+      "auto gcert" = {
+        match = ''
+          host *.c.googlers.com exec  "find /var/run/ccache/sso-$USER/cookie ~/.sso/cookie -mmin -1200 2>/dev/null | grep -q . && gcertstatus --check_remaining=1h --nocheck_loas2 --quiet || gcert --noloas2"'';
+      };
     };
   };
 
