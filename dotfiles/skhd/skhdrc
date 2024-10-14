@@ -9,7 +9,7 @@ cmd - m : true
 
 # 0x32 = backtick
 cmd - 0x32 : ~/.config/yabai/toggle_space.sh 1
-cmd - escape : ~/.config/yabai/toggle_space.sh 3
+cmd - escape : ~/.config/yabai/focus_space.sh recent
 
 ctrl + shift - h : yabai -m window --focus west || ~/.config/yabai/restore_window_focus.sh || ~/.config/yabai/focus_display.sh west
 ctrl + shift - j : yabai -m window --focus south || ~/.config/yabai/restore_window_focus.sh || ~/.config/yabai/focus_display.sh south
