@@ -38,6 +38,7 @@ yabai -m space 4 --label 'note'
 
 yabai -m rule --add space=^'todo' app="^Things$"
 yabai -m rule --add space=^'todo' app="^Fantastical$"
+yabai -m rule --add space=^'todo' app="^Google Calendar$"
 yabai -m rule --add space=^'note' app="^Heptabase$"
 
 # apps to not manage (keep floating)
