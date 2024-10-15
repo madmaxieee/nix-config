@@ -3,6 +3,7 @@
 imports:
   - private.yml
   - links.yml
+  - symbols.yml
 
 matches:
   - trigger: ":td"
