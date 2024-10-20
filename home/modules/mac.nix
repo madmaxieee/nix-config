@@ -43,6 +43,7 @@ in {
 
     zig
     fnm
+    deno
     rustup
 
     kitty
