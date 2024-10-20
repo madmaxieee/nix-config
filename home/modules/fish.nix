@@ -28,7 +28,7 @@ in {
       nr = "nix run nixpkgs#";
     };
     shellAliases = {
-      "..." = "../..";
+      "..." = "cd ../..";
       cat = "bat -p";
       l = "eza";
       ls = "eza --icons";
