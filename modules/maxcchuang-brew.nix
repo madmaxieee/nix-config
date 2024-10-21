@@ -17,6 +17,7 @@
       "heptabase"
       "raycast"
       "thingsmacsandboxhelper"
+      "scroll-reverser"
     ];
     masApps = {
       "Things" = 904280696;
