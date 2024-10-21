@@ -25,6 +25,8 @@
     clang
     clang-tools
     uv
+
+    minicom
   ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];

@@ -1,8 +1,10 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   home.username = "maxcchuang";
   home.homeDirectory = "/Users/maxcchuang";
+
+  home.packages = with pkgs; [ minicom ];
 
   programs.ssh = {
     enable = true;
