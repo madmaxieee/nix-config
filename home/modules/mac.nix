@@ -45,8 +45,6 @@ in {
     fnm
     rustup
 
-    d2
-
     kitty
     espanso
     vscode
@@ -80,12 +78,14 @@ in {
   programs.fastfetch.enable = true;
 
   programs.fish.shellAbbrs = {
+    o = "open";
     copy = "pbcopy";
     paste = "pbpaste";
     dr = "darwin-rebuild";
   };
 
   programs.zsh.zsh-abbr.abbreviations = {
+    o = "open";
     copy = "pbcopy";
     paste = "pbpaste";
     dr = "darwin-rebuild";
