@@ -9,7 +9,6 @@
       "1password"
       "arc"
       "discord"
-      "spotmenu"
       "spotify"
       "fantastical"
       "jordanbaird-ice"
@@ -17,6 +16,8 @@
       "heptabase"
       "raycast"
       "thingsmacsandboxhelper"
+      "scroll-reverser"
+      "iina"
     ];
     masApps = {
       "Things" = 904280696;
