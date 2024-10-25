@@ -27,14 +27,25 @@
     uv
 
     minicom
+
+    kitty
   ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   home.sessionVariables.PAGER = "bat -p";
 
-  programs.fish.shellAbbrs = { hm = "home-manager"; };
-  programs.zsh.zsh-abbr.abbreviations = { hm = "home-manager"; };
+  programs.fish.shellAbbrs = {
+    hm = "home-manager";
+    copy = "kitten clipboard";
+    paste = "kitten clipboard -g";
+  };
+
+  programs.zsh.zsh-abbr.abbreviations = {
+    hm = "home-manager";
+    copy = "kitten clipboard";
+    paste = "kitten clipboard -g";
+  };
 
   imports = [
     ./modules/fish.nix
