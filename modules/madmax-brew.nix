@@ -18,6 +18,7 @@
       "thingsmacsandboxhelper"
       "scroll-reverser"
       "iina"
+      "nordvpn"
     ];
     masApps = {
       "Things" = 904280696;
