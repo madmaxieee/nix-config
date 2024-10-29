@@ -35,10 +35,19 @@
 
   home.sessionVariables.PAGER = "bat -p";
 
-  programs.fish.shellAbbrs = {
-    hm = "home-manager";
-    copy = "kitten clipboard";
-    paste = "kitten clipboard -g";
+  programs.fish = {
+    shellAliases = {
+      gcert = ''
+        bash -c 'if [[ -n $TMUX ]]; then
+                  eval "$(tmux show-environment -s)"
+                fi
+                command gcert "$@"' --'';
+    };
+    shellAbbrs = {
+      hm = "home-manager";
+      copy = "kitten clipboard";
+      paste = "kitten clipboard -g";
+    };
   };
 
   programs.zsh.zsh-abbr.abbreviations = {
