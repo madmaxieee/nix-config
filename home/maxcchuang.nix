@@ -56,6 +56,14 @@
     paste = "kitten clipboard -g";
   };
 
+  programs.git = {
+    userName = "maxcchuang";
+    userEmail = "maxcchuang@google.com";
+    extraConfig = {
+      http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
+    };
+  };
+
   imports = [
     ./modules/fish.nix
     ./modules/zsh.nix
@@ -65,7 +73,7 @@
     ./modules/atuin.nix
     ./modules/zoxide.nix
 
-    ./modules/git-google.nix
+    ./modules/git.nix
 
     # ./modules/scripts.nix
   ];

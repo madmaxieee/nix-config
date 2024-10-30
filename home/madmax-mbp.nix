@@ -45,6 +45,11 @@
     grr = "gradle -q --console plain run";
   };
 
+  programs.git = {
+    userName = "madmaxieee";
+    userEmail = "76544194+madmaxieee@users.noreply.github.com";
+  };
+
   imports = [
     ./modules/mac.nix
 

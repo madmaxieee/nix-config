@@ -5,8 +5,6 @@
 
   programs.git = {
     enable = true;
-    userName = "madmaxieee";
-    userEmail = "76544194+madmaxieee@users.noreply.github.com";
     lfs.enable = true;
     difftastic.enable = true;
 
