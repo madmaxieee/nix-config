@@ -16,7 +16,8 @@ session="$(
 		--bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
 		--bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
 		--bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash -E .cache . ~)' \
-		--bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
+		--bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)' \
+		--bind 'ctrl-alt-t:abort'
 )"
 
 sesh connect "$session"

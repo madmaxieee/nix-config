@@ -60,7 +60,7 @@
     ./modules/fish.nix
     ./modules/zsh.nix
     ./modules/nvim.nix
-    ./modules/tmux-ssh-host.nix
+    ./modules/tmux.nix
 
     ./modules/atuin.nix
     ./modules/zoxide.nix
