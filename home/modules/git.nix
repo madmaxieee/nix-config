@@ -63,7 +63,7 @@
       "noignore" = "update-index --no-skip-worktree";
     };
 
-    ignores = [
+    ignores = (if pkgs.stdenv.isDarwin then [
       # General
       ".DS_Store"
       ".AppleDouble"
@@ -90,7 +90,15 @@
       "Network Trash Folder"
       "Temporary Items"
       ".apdisk"
-    ];
+    ] else
+      [ ]) ++ [
+        # clangd
+        ".cache"
+        "compile_commands.json"
+
+        # typos cli
+        "typos.toml"
+      ];
 
     extraConfig = {
       init.defaultBranch = "main";
