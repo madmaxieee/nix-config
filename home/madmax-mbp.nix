@@ -9,7 +9,8 @@
     pass
     gnupg
 
-    zig
+    # FIX: zig build is broken as of 2024/11/05
+    # zig
     fnm
     deno
     rustup
@@ -47,11 +48,11 @@
   };
 
   programs.fish.shellAbbrs = {
+    n = "nix";
     d = "docker";
     dco = "docker compose";
     y = "yarn";
     pm = "pnpm";
-    n = "npm";
     gr = "gradle";
     grr = "gradle -q --console plain run";
   };
