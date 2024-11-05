@@ -16,6 +16,9 @@ ctrl + shift - j : yabai -m window --focus south || ~/.config/yabai/restore_wind
 ctrl + shift - k : yabai -m window --focus north || ~/.config/yabai/restore_window_focus.sh || ~/.config/yabai/focus_display.sh north
 ctrl + shift - l : yabai -m window --focus east || ~/.config/yabai/restore_window_focus.sh || ~/.config/yabai/focus_display.sh east
 
+ctrl - right : ~/.config/yabai/focus_space.sh next
+ctrl - left : ~/.config/yabai/focus_space.sh prev
+
 # swap
 alt + shift - h : ~/.config/yabai/swap_and_focus.sh west
 alt + shift - j : ~/.config/yabai/swap_and_focus.sh south
