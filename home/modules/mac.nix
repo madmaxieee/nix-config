@@ -29,10 +29,7 @@ in {
     entr
     fzf
     jq
-    mods
     lazygit
-    pass
-    gnupg
 
     tealdeer
     typos
@@ -41,15 +38,10 @@ in {
     clang-tools
     cmake
 
-    zig
-    fnm
-    deno
-    rustup
-
     kitty
     espanso
     vscode
-    _1password
+    _1password-cli
   ];
 
   xdg.configFile = {

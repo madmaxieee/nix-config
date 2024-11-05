@@ -1,8 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
+
+  home.packages = with pkgs; [
+    mods
+    pass
+    gnupg
+
+    zig
+    fnm
+    deno
+    rustup
+  ];
 
   programs.ssh = {
     enable = true;
