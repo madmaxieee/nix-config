@@ -5,7 +5,7 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = [ pkgs.sesh pkgs.fzf pkgs.jq ];
+  home.packages = [ pkgs.sesh pkgs.fzf pkgs.jq pkgs.fd ];
 
   programs.tmux = {
     enable = true;
