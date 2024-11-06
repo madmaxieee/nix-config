@@ -24,11 +24,13 @@ in {
       py = "python3";
       rm = "rip";
       rmm = "rm -rf";
+      n = "nix";
       ns = "nix shell nixpkgs#";
       nr = "nix run nixpkgs#";
     };
     shellAliases = {
       "..." = "cd ../..";
+      "...." = "cd ../../..";
       cat = "bat -p";
       l = "eza";
       ls = "eza --icons";

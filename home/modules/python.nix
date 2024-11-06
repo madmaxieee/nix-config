@@ -7,6 +7,13 @@
     };
     shellAliases = { mamba = "micromamba"; };
   };
+  programs.zsh = {
+    zsh-abbr.abbreviations = {
+      mm = "mamba";
+      mma = "mamba activate";
+    };
+    shellAliases = { mamba = "micromamba"; };
+  };
 
   programs.poetry.enable = true;
 }

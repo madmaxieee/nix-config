@@ -48,7 +48,6 @@
   };
 
   programs.fish.shellAbbrs = {
-    n = "nix";
     d = "docker";
     dco = "docker compose";
     y = "yarn";

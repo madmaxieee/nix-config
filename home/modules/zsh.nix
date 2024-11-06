@@ -26,6 +26,9 @@
         py = "python3";
         rm = "rip";
         rmm = "rm -rf";
+        n = "nix";
+        ns = "nix shell nixpkgs#";
+        nr = "nix run nixpkgs#";
       };
     };
     initExtra = ''

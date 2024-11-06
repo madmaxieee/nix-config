@@ -50,10 +50,19 @@
     };
   };
 
-  programs.zsh.zsh-abbr.abbreviations = {
-    hm = "home-manager";
-    copy = "kitten clipboard";
-    paste = "kitten clipboard -g";
+  programs.zsh = {
+    shellAliases = {
+      gcert = ''
+        bash -c 'if [[ -n $TMUX ]]; then
+                  eval "$(tmux show-environment -s)"
+                fi
+                command gcert "$@"' --'';
+    };
+    zsh-abbr.abbreviations = {
+      hm = "home-manager";
+      copy = "kitten clipboard";
+      paste = "kitten clipboard -g";
+    };
   };
 
   programs.git = {
