@@ -4,17 +4,14 @@
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
-  home.packages = with pkgs; [
-    mods
-    pass
-    gnupg
+  home.packages = with pkgs;
+    [
+      # FIX: zig build is broken as of 2024/11/05
+      # zig
+      rustup
+    ];
 
-    # FIX: zig build is broken as of 2024/11/05
-    # zig
-    fnm
-    deno
-    rustup
-  ];
+  home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 
   programs.ssh = {
     enable = true;
@@ -50,10 +47,11 @@
   programs.fish.shellAbbrs = {
     d = "docker";
     dco = "docker compose";
-    y = "yarn";
-    pm = "pnpm";
-    gr = "gradle";
-    grr = "gradle -q --console plain run";
+  };
+
+  programs.zsh.zsh-abbr.abbreviations = {
+    d = "docker";
+    dco = "docker compose";
   };
 
   programs.git = {
@@ -63,6 +61,7 @@
 
   imports = [
     ./modules/mac.nix
+    ./modules/dev-basic-pkgs.nix
 
     ./modules/fish.nix
     ./modules/zsh.nix
@@ -76,8 +75,8 @@
     ./modules/mods.nix
 
     ./modules/python.nix
-
-    # ./modules/scripts.nix
+    ./modules/java.nix
+    ./modules/web-dev.nix
 
     (import ./modules/window-management.nix {
       hs_extra_config = ''

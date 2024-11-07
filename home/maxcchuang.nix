@@ -9,31 +9,7 @@
   home.username = "maxcchuang";
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
-  home.packages = with pkgs; [
-    eza
-    bat
-    ripgrep
-    fd
-    sd
-    difftastic
-    wget
-    rm-improved
-
-    tealdeer
-    typos
-
-    clang
-    clang-tools
-    uv
-
-    minicom
-
-    kitty
-  ];
-
-  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
-
-  home.sessionVariables.PAGER = "bat -p";
+  home.packages = with pkgs; [ minicom ];
 
   programs.fish = {
     shellAliases = {
@@ -74,6 +50,8 @@
   };
 
   imports = [
+    ./modules/dev-basic-pkgs.nix
+
     ./modules/fish.nix
     ./modules/zsh.nix
     ./modules/nvim.nix
@@ -83,7 +61,5 @@
     ./modules/zoxide.nix
 
     ./modules/git.nix
-
-    # ./modules/scripts.nix
   ];
 }

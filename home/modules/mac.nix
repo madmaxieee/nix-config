@@ -10,39 +10,7 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.local/bin"
-    "${config.home.homeDirectory}/.cargo/bin"
-  ];
-
-  home.packages = with pkgs; [
-    eza
-    bat
-    ripgrep
-    fd
-    sd
-    difftastic
-    wget
-    rm-improved
-
-    parallel
-    entr
-    fzf
-    jq
-    lazygit
-
-    tealdeer
-    typos
-
-    clang
-    clang-tools
-    cmake
-
-    kitty
-    espanso
-    vscode
-    _1password-cli
-  ];
+  home.packages = with pkgs; [ espanso vscode _1password-cli ];
 
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
@@ -60,15 +28,6 @@ in {
       recursive = false;
     };
   };
-
-  home.sessionVariables.PAGER = "bat -p";
-
-  programs.bun.enable = true;
-  programs.java.enable = true;
-  programs.gradle.enable = true;
-  programs.go.enable = true;
-
-  programs.fastfetch.enable = true;
 
   programs.fish.shellAbbrs = {
     o = "open";

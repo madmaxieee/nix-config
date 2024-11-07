@@ -44,6 +44,7 @@
 
   imports = [
     ./modules/mac.nix
+    ./modules/dev-basic-pkgs.nix
 
     ./modules/fish.nix
     ./modules/zsh.nix
@@ -56,8 +57,7 @@
     ./modules/git.nix
 
     ./modules/python.nix
-
-    # ./modules/scripts.nix
+    ./modules/java.nix
 
     (import ./modules/window-management.nix {
       hs_extra_config = ''
