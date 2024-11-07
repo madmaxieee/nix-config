@@ -95,7 +95,7 @@ end)
 
 -- new kitty instance
 leader_bind("", "return", function()
-    os.execute(path .. [[kitty --single-instance --working-directory ~]])
+    os.execute(path .. [[kitty --single-instance --working-directory ~ &]])
     leader_mode:exit()
 end)
 
