@@ -1,19 +1,9 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
-  home.packages = with pkgs; [ eza bat rm-improved fzf lazygit ];
-
   programs.zsh = {
     enable = true;
     shellAliases = {
-      cat = "bat -p";
-      l = "eza";
-      ls = "eza --icons";
-      la = "eza --icons --all";
-      ll = "eza --icons --long --group";
-      lla = "eza --icons --long --group --all";
-      tree = "eza -T -a -I .git";
-      icat = "kitten icat";
       flush = "printf '\\n%.0s' {1..$(tput lines)}";
       clear = "flush";
     };
@@ -22,10 +12,6 @@
       abbreviations = {
         md = "mkdir -p";
         g = "git";
-        lg = "lazygit";
-        py = "python3";
-        rm = "rip";
-        rmm = "rm -rf";
         n = "nix";
         ns = "nix shell nixpkgs#";
         nr = "nix run nixpkgs#";

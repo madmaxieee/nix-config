@@ -4,6 +4,7 @@
     shellAbbrs = {
       mm = "mamba";
       mma = "mamba activate";
+      py = "python3";
     };
     shellAliases = { mamba = "micromamba"; };
   };
@@ -11,6 +12,7 @@
     zsh-abbr.abbreviations = {
       mm = "mamba";
       mma = "mamba activate";
+      py = "python3";
     };
     shellAliases = { mamba = "micromamba"; };
   };

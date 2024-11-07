@@ -5,7 +5,7 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = with pkgs; [ eza bat rm-improved fzf lazygit fnm ];
+  home.packages = with pkgs; [ fzf ];
 
   programs.starship.enable = true;
 
@@ -20,10 +20,6 @@ in {
     shellAbbrs = {
       md = "mkdir -p";
       g = "git";
-      lg = "lazygit";
-      py = "python3";
-      rm = "rip";
-      rmm = "rm -rf";
       n = "nix";
       ns = "nix shell nixpkgs#";
       nr = "nix run nixpkgs#";
@@ -31,14 +27,6 @@ in {
     shellAliases = {
       "..." = "cd ../..";
       "...." = "cd ../../..";
-      cat = "bat -p";
-      l = "eza";
-      ls = "eza --icons";
-      la = "eza --icons --all";
-      ll = "eza --icons --long --group";
-      lla = "eza --icons --long --group --all";
-      tree = "eza -T -a -I .git";
-      icat = "kitten icat";
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
@@ -97,7 +85,7 @@ in {
       end
 
       # if not in tmux, start a new session
-      if not set -q TMUX && not set -q IN_NIX_SHELL
+      if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux
           tmux new-session -A -s main >/dev/null 2>&1
       end
     '';
