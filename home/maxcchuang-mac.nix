@@ -64,6 +64,7 @@
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",
+            note_app = "Heptabase",
         }
       '';
     })

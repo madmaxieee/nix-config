@@ -104,6 +104,7 @@
           NSGlobalDomain = {
             AppleICUForce24HourTime = true;
             AppleInterfaceStyle = "Dark";
+            NSWindowShouldDragOnGesture = true;
           };
         };
         system.startup.chime = false;
@@ -149,6 +150,7 @@
         modules = [
           configuration
           {
+            system.defaults.universalaccess.reduceMotion = true;
             programs.zsh.enable = false;
             programs.bash.enable = false;
             programs.fish.enable = true;

@@ -54,20 +54,13 @@ leader_bind("", "m", function()
     leader_mode:exit()
 end)
 
-local function quick_note()
-    hs.eventtap.keyStroke({ "fn" }, "q")
-end
-leader_bind("", "q", function()
-    local app = hs.application.find("Notes", true)
-    if app ~= nil and app:isFrontmost() then
-        app:hide()
-    else
-        quick_note()
-    end
+scratchpad.hide_on_cmd_w(config.note_app)
+leader_bind("", "n", function()
+    scratchpad.toggle_scratchpad(config.note_app)
     leader_mode:exit()
 end)
 
--- open new arc windows
+-- open new browser windows
 local function new_browser_window()
     local browser_app = hs.application.find(config.browser, true)
     if browser_app == nil then
@@ -201,6 +194,9 @@ end
 -- raycast window management for floating windows
 leader_bind("", "-", function()
     open_bg("raycast://extensions/raycast/window-management/make-smaller")
+end)
+leader_bind("", "+", function()
+    open_bg("raycast://extensions/raycast/window-management/make-larger")
 end)
 leader_bind("", "=", function()
     open_bg("raycast://extensions/raycast/window-management/make-larger")
