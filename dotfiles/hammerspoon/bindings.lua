@@ -195,7 +195,7 @@ end
 leader_bind("", "-", function()
     open_bg("raycast://extensions/raycast/window-management/make-smaller")
 end)
-leader_bind("", "+", function()
+leader_bind("shift", "=", function()
     open_bg("raycast://extensions/raycast/window-management/make-larger")
 end)
 leader_bind("", "=", function()
