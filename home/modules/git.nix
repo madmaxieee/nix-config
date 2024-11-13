@@ -1,12 +1,19 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ bat difftastic ];
+  home.packages = with pkgs; [ difftastic ];
 
   programs.git = {
     enable = true;
     lfs.enable = true;
-    difftastic.enable = true;
+    delta = {
+      enable = true;
+      options = {
+        line-numbers = true;
+        side-by-side = true;
+        navigate = true;
+      };
+    };
 
     aliases = {
       "st" = "status -sb";
@@ -103,7 +110,7 @@
     extraConfig = {
       init.defaultBranch = "main";
 
-      core = { autocrlf = "false"; };
+      core.autocrlf = "false";
 
       pull.rebase = "true";
       push.autoSetupRemote = "true";

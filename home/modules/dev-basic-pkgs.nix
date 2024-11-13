@@ -5,7 +5,6 @@
 
   home.packages = with pkgs; [
     eza
-    bat
     ripgrep
     fd
     sd
@@ -28,7 +27,27 @@
 
   programs.fastfetch.enable = true;
 
-  home.sessionVariables.PAGER = "bat -p";
+  programs.bat = {
+    enable = true;
+    config.theme = "catpuccin-mocha";
+    themes = {
+      catpuccin-mocha = {
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "bat";
+          rev = "d2bbee4f7e7d5bac63c054e4d8eca57954b31471";
+          hash = "sha256-x1yqPCWuoBSx/cI94eA+AWwhiSA42cLNUOFJl7qjhmw=";
+        };
+        file = "themes/Catppuccin Mocha.tmTheme";
+      };
+    };
+  };
+
+  home.sessionVariables = {
+    PAGER = "less";
+    MANROFFOPT = "-c";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+  };
 
   programs.fish = {
     shellAbbrs = {
