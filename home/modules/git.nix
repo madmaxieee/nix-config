@@ -5,14 +5,14 @@
 
   programs.bat = {
     themes = {
-      catpuccin-mocha = {
+      tokyonight-moon = {
         src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "bat";
-          rev = "d2bbee4f7e7d5bac63c054e4d8eca57954b31471";
-          hash = "sha256-x1yqPCWuoBSx/cI94eA+AWwhiSA42cLNUOFJl7qjhmw=";
+          owner = "folke";
+          repo = "tokyonight.nvim";
+          rev = "9758827c3b380ba89da4a2212b6255d01afbcf08";
+          hash = "sha256-qEmfBs+rKP25RlS7VxNSw9w4GnlZiiEchs17nJg7vsE=";
         };
-        file = "themes/Catppuccin Mocha.tmTheme";
+        file = "extras/sublime/tokyonight_moon.tmTheme";
       };
     };
   };
@@ -26,7 +26,7 @@
         line-numbers = true;
         side-by-side = true;
         navigate = true;
-        syntax-theme = "catpuccin-mocha";
+        syntax-theme = "tokyonight-moon";
       };
     };
 
