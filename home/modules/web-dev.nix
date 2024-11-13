@@ -4,14 +4,14 @@
   programs.fish.shellAbbrs = {
     d = "docker";
     dco = "docker compose";
-    y = "yarn";
+    ya = "yarn";
     pm = "pnpm";
   };
 
   programs.zsh.zsh-abbr.abbreviations = {
     d = "docker";
     dco = "docker compose";
-    y = "yarn";
+    ya = "yarn";
     pm = "pnpm";
   };
 

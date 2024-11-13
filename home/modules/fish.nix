@@ -23,10 +23,18 @@ in {
       n = "nix";
       ns = "nix shell nixpkgs#";
       nr = "nix run nixpkgs#";
-    };
-    shellAliases = {
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
+      "..." = {
+        position = "anywhere";
+        expansion = "../..";
+      };
+      "...." = {
+        position = "anywhere";
+        expansion = "../../..";
+      };
+      "....." = {
+        position = "anywhere";
+        expansion = "../../../..";
+      };
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";

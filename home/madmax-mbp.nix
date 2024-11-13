@@ -70,6 +70,7 @@
 
     ./modules/atuin.nix
     ./modules/zoxide.nix
+    ./modules/yazi.nix
 
     ./modules/git.nix
     ./modules/mods.nix

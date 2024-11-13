@@ -9,7 +9,7 @@
   home.username = "maxcchuang";
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
-  home.packages = with pkgs; [ minicom ];
+  home.packages = with pkgs; [ minicom kitty ];
 
   programs.fish = {
     shellAliases = {
@@ -59,6 +59,7 @@
 
     ./modules/atuin.nix
     ./modules/zoxide.nix
+    ./modules/yazi.nix
 
     ./modules/git.nix
   ];
