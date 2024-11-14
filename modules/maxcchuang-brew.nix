@@ -10,13 +10,13 @@
       "discord"
       "spotify"
       "fantastical"
-      "cleanshot"
       "jordanbaird-ice"
       "heptabase"
       "raycast"
       "thingsmacsandboxhelper"
       "scroll-reverser"
       "iina"
+      "obsidian"
     ];
     masApps = {
       "Things" = 904280696;

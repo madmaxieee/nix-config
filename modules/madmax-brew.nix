@@ -19,14 +19,15 @@
       "scroll-reverser"
       "iina"
       "nordvpn"
+      "obsidian"
     ];
     masApps = {
       "Things" = 904280696;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
+      "Keymapp" = 6472865291;
       "Messenger" = 1480068668;
       "LINE" = 539883307;
-      "Keymapp" = 6472865291;
     };
     onActivation = {
       autoUpdate = true;
