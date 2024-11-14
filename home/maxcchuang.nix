@@ -62,5 +62,7 @@
     ./modules/yazi.nix
 
     ./modules/git.nix
+
+    ./modules/python.nix
   ];
 }
