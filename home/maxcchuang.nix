@@ -59,7 +59,7 @@
 
     ./modules/atuin.nix
     ./modules/zoxide.nix
-    ./modules/yazi.nix
+    ./modules/yazi
 
     ./modules/git.nix
 

@@ -10,7 +10,14 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = with pkgs; [ espanso vscode _1password-cli kitty ];
+  home.packages = with pkgs; [
+    coreutils
+
+    espanso
+    vscode
+    _1password-cli
+    kitty
+  ];
 
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
