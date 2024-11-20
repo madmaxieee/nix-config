@@ -23,18 +23,6 @@ in {
       n = "nix";
       ns = "nix shell nixpkgs#";
       nr = "nix run nixpkgs#";
-      "..." = {
-        position = "anywhere";
-        expansion = "../..";
-      };
-      "...." = {
-        position = "anywhere";
-        expansion = "../../..";
-      };
-      "....." = {
-        position = "anywhere";
-        expansion = "../../../..";
-      };
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
@@ -96,6 +84,11 @@ in {
       if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux
           tmux new-session -A -s main >/dev/null 2>&1
       end
+
+      function multicd
+          echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+      end
+      abbr --add dotdot --regex '^\.\.+$' --function multicd
     '';
     plugins = [
       {

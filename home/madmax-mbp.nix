@@ -73,7 +73,7 @@
     ./modules/yazi
 
     ./modules/git.nix
-    ./modules/mods.nix
+    (import ./modules/mods { provider = "openai"; })
 
     ./modules/python.nix
     ./modules/java.nix
