@@ -63,6 +63,7 @@
     ./modules/git.nix
     (import ./modules/mods { provider = "gemini"; })
 
+    ./modules/clang.nix
     ./modules/python.nix
     ./modules/java.nix
 
