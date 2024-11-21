@@ -16,11 +16,11 @@ border_label=" sesh $hostname_module"
 prompt_prefix="$hostname_module"
 
 session="$(
- sesh list | grep -v -E '.__popup$' | fzf-tmux -p 55%,60% \
+ sesh list | ~/.config/tmux/scripts/remove_duplicate_sessions.py | grep -v -E '.__popup$' | fzf-tmux -p 55%,60% \
 		--no-sort --border-label "$border_label" --prompt "$prompt_prefix"'⚡  ' \
 		--header '  ^a all ^t tmux ^g configs ^x zoxide ^d kill ^f find' \
 		--bind 'tab:down,btab:up' \
-		--bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list)' \
+		--bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list | ~/.config/tmux/scripts/remove_duplicate_sessions.py)' \
 		--bind 'ctrl-t:change-prompt('"$prompt_prefix"'🪟  )+reload(sesh list -t)' \
 		--bind 'ctrl-g:change-prompt('"$prompt_prefix"'⚙️  )+reload(sesh list -c)' \
 		--bind 'ctrl-x:change-prompt('"$prompt_prefix"'📁  )+reload(sesh list -z)' \

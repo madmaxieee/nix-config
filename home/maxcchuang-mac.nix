@@ -30,7 +30,12 @@
       [[session]]
       name = "cloud"
       path = "~"
-      startup_command = "ssh maxcchuang.c"
+      startup_command = "TERM=xterm-256color exec ssh maxcchuang.c"
+
+      [[session]]
+      name = "obsidian"
+      path = "~/obsidian"
+      startup_command = "exec nvim"
     '';
   };
 
@@ -66,7 +71,7 @@
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",
-            note_app = "Heptabase",
+            note_app = "Obsidian",
         }
       '';
     })

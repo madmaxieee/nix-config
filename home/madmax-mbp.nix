@@ -44,6 +44,15 @@
     };
   };
 
+  xdg.configFile = {
+    "sesh/sesh.toml".text = ''
+      [[session]]
+      name = "obsidian"
+      path = "~/obsidian"
+      startup_command = "exec nvim"
+    '';
+  };
+
   programs.fish.shellAbbrs = {
     d = "docker";
     dco = "docker compose";
