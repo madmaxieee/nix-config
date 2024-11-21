@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-if tmux display-message -p "#S" | grep -q -E ".__popup$"; then
+if [[ "$(tmux show-options detach-on-destroy)" == "detach-on-destroy on" ]]; then
 	exit 0
 fi
 
@@ -29,4 +29,6 @@ session="$(
 		--bind 'ctrl-alt-k:abort'
 )"
 
+tmux set-option -t "$session" detach-on-destroy off &
+tmux set-option -t "$session" status on &
 sesh connect "$session"
