@@ -46,6 +46,7 @@
       http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
     };
   };
+  home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
   imports = [
     ./modules/mac.nix
