@@ -11,7 +11,7 @@
       "/Applications/Things3.app"
       "/Applications/Fantastical.app"
       "/Applications/Heptabase.app"
-      "/System/Applications/Notes.app"
+      "/Applications/Obsidian.app"
       "/Applications/Discord.app"
       "/System/Applications/Podcasts.app"
       "/Applications/Steam.app"
