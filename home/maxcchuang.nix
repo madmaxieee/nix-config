@@ -64,5 +64,7 @@
     ./modules/git.nix
 
     ./modules/python.nix
+
+    ./modules/gscripts.nix
   ];
 }
