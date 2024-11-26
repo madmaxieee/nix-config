@@ -62,6 +62,7 @@
     ./modules/yazi
 
     ./modules/git.nix
+    (import ./modules/mods { provider = "gemini"; })
 
     ./modules/python.nix
 
