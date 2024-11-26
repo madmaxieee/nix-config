@@ -6,13 +6,19 @@ let
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = with pkgs; [ mods pass gnupg ];
+  home.packages = with pkgs; [ mods ];
 
   xdg.configFile = {
     "mods" = {
       source = linkDotfile "mods";
       recursive = true;
     };
+  };
+
+  programs.password-store.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   imports = if provider == "openai" then
