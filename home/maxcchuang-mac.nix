@@ -39,6 +39,10 @@
     '';
   };
 
+  programs.fish.shellAbbrs = { ss = "ssh maxcchuang.c"; };
+
+  programs.zsh.zsh-abbr.abbreviations = { ss = "ssh maxcchuang.c"; };
+
   programs.git = {
     userName = "maxcchuang";
     userEmail = "maxcchuang@google.com";
