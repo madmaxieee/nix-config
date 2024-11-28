@@ -16,8 +16,14 @@
     enable = true;
     defaultEditor = true;
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
-    extraPackages =
-      [ pkgs.cargo pkgs.nodejs_20 pkgs.nixfmt-classic pkgs.sqlite ];
+    extraPackages = with pkgs;
+      [ cargo nodejs_20 nixfmt-classic sqlite ] ++ (if stdenv.isDarwin then
+        [
+          # for obsidian.nvim, ObsidianPasteImg
+          pngpaste
+        ]
+      else
+        [ ]);
   };
   home.sessionVariables = if pkgs.stdenv.isDarwin then {
     # for sqlite.lua on macos
