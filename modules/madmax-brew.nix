@@ -20,6 +20,7 @@
       "iina"
       "nordvpn"
       "obsidian"
+      "logi-options-plus"
     ];
     masApps = {
       "Things" = 904280696;
