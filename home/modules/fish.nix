@@ -59,7 +59,8 @@ in {
       end
 
       if [ $TERM = xterm-kitty ]
-        alias ssh='TERM=xterm-256color /usr/bin/ssh'
+        alias ssh='kitty +kitten ssh'
+        alias xssh='TERM=xterm-256color command ssh'
       end
 
       if type -q micromamba
