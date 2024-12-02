@@ -58,9 +58,11 @@ in {
         fnm env --use-on-cd | source
       end
 
-      if [ $TERM = xterm-kitty ]
-        alias ssh='kitty +kitten ssh'
+      if test $TERM = 'xterm-kitty'
         alias xssh='TERM=xterm-256color command ssh'
+        if not set -q TMUX
+          alias ssh='kitty +kitten ssh'
+        end
       end
 
       if type -q micromamba

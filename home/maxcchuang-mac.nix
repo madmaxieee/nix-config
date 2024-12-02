@@ -30,7 +30,7 @@
       [[session]]
       name = "cloud"
       path = "~"
-      startup_command = "exec kitty +kitten ssh maxcchuang.c"
+      startup_command = "exec ssh maxcchuang.c"
 
       [[session]]
       name = "obsidian"
