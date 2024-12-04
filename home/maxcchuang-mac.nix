@@ -44,7 +44,7 @@
   programs.zsh.zsh-abbr.abbreviations = { ss = "ssh maxcchuang.c"; };
 
   programs.git = {
-    userName = "maxcchuang";
+    userName = "Max Chuang";
     userEmail = "maxcchuang@google.com";
     extraConfig = {
       http.cookiefile = "${config.home.homeDirectory}/.gitcookies";

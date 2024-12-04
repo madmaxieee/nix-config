@@ -42,7 +42,7 @@
   };
 
   programs.git = {
-    userName = "maxcchuang";
+    userName = "Max Chuang";
     userEmail = "maxcchuang@google.com";
     extraConfig = {
       http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
