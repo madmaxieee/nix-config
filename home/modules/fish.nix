@@ -28,6 +28,15 @@ in {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";
       fish_greeting = "flush";
+      fish_user_key_bindings = ''
+        fish_vi_key_bindings
+        set fish_cursor_default block
+        set fish_cursor_insert line
+        set fish_cursor_replace_one underscore
+        set fish_cursor_visual block
+        bind -M insert -m default kj backward-char force-repaint
+        bind -M insert kk 'commandline -i k'
+      '';
       __google_starship_config = {
         body = ''
           if path resolve $PWD | grep -q -E '^(/Volumes)?/google'
@@ -47,12 +56,6 @@ in {
       if test -d /google && type -q starship
         __google_starship_config
       end
-
-      fish_vi_key_bindings
-      set fish_cursor_default block
-      set fish_cursor_insert line
-      set fish_cursor_replace_one underscore
-      set fish_cursor_visual block
 
       if type -q fnm
         fnm env --use-on-cd | source
