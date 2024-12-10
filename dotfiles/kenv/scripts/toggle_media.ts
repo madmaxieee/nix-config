@@ -1,5 +1,5 @@
 // Name: toggle media
 
-import "@johnlindquist/kit"
+import "@johnlindquist/kit";
 
-$`sketchybar --trigger media_toggle`
+$`sketchybar --trigger media_toggle`;
