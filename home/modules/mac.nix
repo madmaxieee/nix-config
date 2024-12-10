@@ -17,7 +17,17 @@ in {
     vscode
     _1password-cli
     kitty
+
+    (import ../../packages/script-kit.nix { inherit lib pkgs; })
   ];
+
+  home.sessionPath = [ "${config.home.homeDirectory}/.kit/bin" ];
+  home.file = {
+    ".kenv/scripts" = {
+      source = linkDotfile "kenv/scripts";
+      recursive = false;
+    };
+  };
 
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
