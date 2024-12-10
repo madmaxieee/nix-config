@@ -23,8 +23,8 @@ in {
 
   home.sessionPath = [ "${config.home.homeDirectory}/.kit/bin" ];
   home.file = {
-    ".kenv/scripts" = {
-      source = linkDotfile "kenv/scripts";
+    ".kenv" = {
+      source = linkDotfile "kenv";
       recursive = false;
     };
   };
