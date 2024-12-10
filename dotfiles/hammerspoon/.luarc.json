@@ -1,7 +1,3 @@
 {
-    "diagnostics.globals": [
-        "vim",
-        "hs",
-        "spoon"
-    ]
+    "Lua.workspace.library": ["/Users/madmax/.hammerspoon/Spoons/EmmyLua.spoon/annotations"]
 }
