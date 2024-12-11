@@ -1,8 +1,8 @@
 local path = "PATH=" .. PATH .. " HAMMERSPOON=1 "
 local yabai = path .. "yabai"
 
-local scratchpad = require "scratchpad"
-local config = require "my_config"
+local scratchpad = require("scratchpad")
+local config = require("my_config")
 
 local leader_mode = hs.hotkey.modal.new("shift", "space")
 
@@ -96,7 +96,7 @@ end)
 -- yabai debug query
 leader_bind("shift", "q", function()
     os.execute(yabai .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]])
-    hs.alert "saved yabai query result"
+    hs.alert("saved yabai query result")
     leader_mode:exit()
 end)
 
@@ -160,21 +160,21 @@ leader_bind("", "x", function()
     local success = os.execute(yabai .. [[ -m space --destroy]])
     if not success then
         local space_id = hs.spaces.activeSpaceOnScreen()
-        go_to_space "recent"
+        go_to_space("recent")
         hs.timer.usleep(400 * 1000)
         hs.spaces.removeSpace(space_id)
     end
 end)
 leader_bind("", "r", function()
-    go_to_space "recent"
+    go_to_space("recent")
     leader_mode:exit()
 end)
 leader_bind("", "l", function()
-    go_to_space "next"
+    go_to_space("next")
     leader_mode:exit()
 end)
 leader_bind("", "h", function()
-    go_to_space "prev"
+    go_to_space("prev")
     leader_mode:exit()
 end)
 for i = 1, 9 do
@@ -194,16 +194,16 @@ end
 
 -- raycast window management for floating windows
 leader_bind("", "-", function()
-    open_bg "raycast://extensions/raycast/window-management/make-smaller"
+    open_bg("raycast://extensions/raycast/window-management/make-smaller")
 end)
 leader_bind("shift", "=", function()
-    open_bg "raycast://extensions/raycast/window-management/make-larger"
+    open_bg("raycast://extensions/raycast/window-management/make-larger")
 end)
 leader_bind("", "=", function()
-    open_bg "raycast://extensions/raycast/window-management/make-larger"
+    open_bg("raycast://extensions/raycast/window-management/make-larger")
 end)
 leader_bind("", "c", function()
-    open_bg "raycast://extensions/raycast/window-management/center"
+    open_bg("raycast://extensions/raycast/window-management/center")
     leader_mode:exit()
 end)
 
@@ -211,11 +211,11 @@ end)
 local lock_mode = hs.hotkey.modal.new("ctrl-shift", "space")
 
 function lock_mode:entered()
-    hs.alert "entered lock mode"
+    hs.alert("entered lock mode")
     leader_mode:exit()
 end
 function lock_mode:exited()
-    hs.alert "exited lock mode"
+    hs.alert("exited lock mode")
     leader_mode:exit()
 end
 
@@ -225,5 +225,5 @@ end)
 
 -- shadow leader mode keybinding
 lock_mode:bind({ "shift" }, "space", function()
-    hs.alert "lock mode activated"
+    hs.alert("lock mode activated")
 end)
