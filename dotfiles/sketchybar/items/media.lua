@@ -48,7 +48,14 @@ media:subscribe("mouse.clicked", function(env)
             sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']]
         end
     elseif env.BUTTON == "right" then
-        sbar.exec([[hs -c 'hs.application.launchOrFocus("]] .. state.current_app .. [[")']])
+        sbar.exec([[hs -c '
+            local app = hs.application.find("]] .. state.current_app .. [[");
+            if app:isFrontmost() and app:mainWindow() then
+                app:mainWindow():close()
+            else
+                hs.application.launchOrFocus(app:name())
+            end
+        ']])
     end
 end)
 
