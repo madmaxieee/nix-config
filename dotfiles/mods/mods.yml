@@ -119,11 +119,17 @@ apis:
         max-input-chars: 128000
   google:
     models:
-      gemini-1.5-pro-latest:
+      gemini-exp-1206:
         aliases: ["gemini"]
         max-input-chars: 392000
-      gemini-1.5-flash-latest:
+      gemini-2.0-flash-exp:
         aliases: ["flash"]
+        max-input-chars: 392000
+      gemini-1.5-pro-latest:
+        aliases: ["gemini1.5"]
+        max-input-chars: 392000
+      gemini-1.5-flash-latest:
+        aliases: ["flash1.5"]
         max-input-chars: 392000
   ollama:
     base-url: http://localhost:11434/api
