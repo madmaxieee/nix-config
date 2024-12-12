@@ -29,6 +29,8 @@ in {
     };
   };
 
+  home.sessionVariables = { "XDG_CONFIG_HOME" = config.xdg.configHome; };
+
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
       url =
