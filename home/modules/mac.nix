@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 let
+  script-kit = pkgs.callPackage ../../packages/script-kit.nix { };
   nix_config_path = "${config.home.homeDirectory}/nix-config";
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
@@ -18,7 +19,7 @@ in {
     _1password-cli
     kitty
 
-    (import ../../packages/script-kit.nix { inherit lib pkgs; })
+    script-kit
   ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.kit/bin" ];
