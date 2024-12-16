@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 let
-  script-kit = pkgs.callPackage ../../packages/script-kit.nix { };
   nix_config_path = "${config.home.homeDirectory}/nix-config";
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
@@ -18,17 +17,7 @@ in {
     vscode
     _1password-cli
     kitty
-
-    script-kit
   ];
-
-  home.sessionPath = [ "${config.home.homeDirectory}/.kit/bin" ];
-  home.file = {
-    ".kenv" = {
-      source = linkDotfile "kenv";
-      recursive = false;
-    };
-  };
 
   home.sessionVariables = { "XDG_CONFIG_HOME" = config.xdg.configHome; };
 
