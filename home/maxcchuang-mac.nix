@@ -43,32 +43,6 @@
 
   programs.zsh.zsh-abbr.abbreviations = { ss = "ssh maxcchuang.c"; };
 
-  programs.git = {
-    userName = "Max Chuang";
-    userEmail = "maxcchuang@google.com";
-    extraConfig = {
-      http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
-    };
-    includes = [
-      {
-        condition = "hasconfig:remote.*.url:https://github.com/**";
-        contentSuffix = "github";
-        contents = {
-          user.name = "madmaxieee";
-          user.email = "76544194+madmaxieee@users.noreply.github.com";
-        };
-      }
-      {
-        condition = "hasconfig:remote.*.url:ssh://soft/**";
-        contentSuffix = "soft";
-        contents = {
-          user.name = "madmaxieee";
-          user.email = "76544194+madmaxieee@users.noreply.github.com";
-        };
-      }
-    ];
-  };
-
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
   imports = [
@@ -85,6 +59,7 @@
     ./modules/yazi
 
     ./modules/git.nix
+    ./modules/git-google.nix
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang.nix
