@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if git rev-parse --is-inside-work-tree &> /dev/null; then
+  dotgit="$(git rev-parse --show-toplevel --git-dir | tr "\n" "/")"
+  cd "$dotgit" || exit 1
+  curl -Lo hooks/commit-msg https://gerrit-review.googlesource.com/tools/hooks/commit-msg 2> /dev/null
+  chmod +x hooks/commit-msg
+  echo "Successfully initialized"
+else
+  echo "Not in a git repository"
+fi

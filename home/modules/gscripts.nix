@@ -7,6 +7,7 @@ let
 in {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
   home.file = {
-    ".local/bin/gob-create".source = linkDotfile "scripts/gob-create";
+    ".local/bin/gob-create".source = linkDotfile "gscripts/gob-create";
+    ".local/bin/gerrit-init".source = linkDotfile "gscripts/gerrit-init";
   };
 }
