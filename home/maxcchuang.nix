@@ -47,6 +47,24 @@
     extraConfig = {
       http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
     };
+    includes = [
+      {
+        condition = "hasconfig:remote.*.url:https://github.com/**";
+        contentSuffix = "github";
+        contents = {
+          user.name = "madmaxieee";
+          user.email = "76544194+madmaxieee@users.noreply.github.com";
+        };
+      }
+      {
+        condition = "hasconfig:remote.*.url:ssh://soft/**";
+        contentSuffix = "soft";
+        contents = {
+          user.name = "madmaxieee";
+          user.email = "76544194+madmaxieee@users.noreply.github.com";
+        };
+      }
+    ];
   };
 
   imports = [
