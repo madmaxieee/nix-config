@@ -37,8 +37,8 @@
       "aa" = "add --all";
       "ua" = "restore --staged";
 
+      "c" = "commit";
       "cm" = "commit -m";
-      "cam" = "commit -a -m";
       "amend" = "commit --amend";
 
       "d" = "diff";
