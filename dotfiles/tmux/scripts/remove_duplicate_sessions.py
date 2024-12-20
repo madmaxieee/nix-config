@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-filter duplicate session names
+filter duplicate session names, while keeping the last occurrence of duplicated names
 """
 
 sessions = []
