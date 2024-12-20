@@ -1,6 +1,14 @@
 local colors = require "colors"
 local app_icons = require "icon_map"
 
+local function truncate_string(str, n)
+    if #str > n then
+        return str:sub(1, n - 3) .. "..."
+    else
+        return str
+    end
+end
+
 local whitelist = {
     ["Spotify"] = colors.green,
     ["Podcasts"] = colors.magenta,
@@ -64,7 +72,7 @@ media:subscribe("media_change", function(env)
     if app_color ~= nil then
         state.current_app = env.INFO.app
         state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or "Unknown Artist"
-        state.title = (env.INFO.title ~= "" and env.INFO.title) or "Unknown Title"
+        state.title = (env.INFO.title ~= "" and truncate_string(env.INFO.title, 50)) or "Unknown Title"
         local playback_icon = ((env.INFO.state == "playing") and "" or "")
         state.label = playback_icon .. "  " .. state.artist .. ": " .. state.title
 
