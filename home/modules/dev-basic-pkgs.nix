@@ -11,6 +11,7 @@
     difftastic
     wget
     rm-improved
+    moar
 
     parallel
     entr
@@ -42,7 +43,7 @@
   };
 
   home.sessionVariables = {
-    PAGER = "less";
+    PAGER = "moar";
     MANROFFOPT = "-c";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
   };

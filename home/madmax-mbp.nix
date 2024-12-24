@@ -4,12 +4,12 @@
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
-  home.packages = with pkgs;
-    [
-      # FIX: zig build is broken as of 2024/11/05
-      # zig
-      rustup
-    ];
+  home.packages = with pkgs; [
+    # FIX: zig build is broken as of 2024/11/05
+    # zig
+    rustup
+    jujutsu
+  ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 
