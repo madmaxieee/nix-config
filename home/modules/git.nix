@@ -31,7 +31,7 @@
     };
 
     aliases = {
-      "st" = "status -sb";
+      "st" = "status --short --branch";
 
       "a" = "add";
       "aa" = "add --all";
@@ -56,8 +56,8 @@
       "co" = "checkout";
       "sw" = "switch";
       "br" = "branch";
-      "brl" = "branch -l";
-      "brr" = "branch -r";
+      "brl" = "branch --list";
+      "brr" = "branch --remote";
       "wt" = "worktree";
 
       "sa" = "stash apply";
