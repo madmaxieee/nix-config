@@ -2,8 +2,9 @@ local colors = require "colors"
 local app_icons = require "icon_map"
 
 local function truncate_string(str, n)
-    if #str > n then
-        return str:sub(1, n - 3) .. "..."
+    local len = utf8.len(str)
+    if len > n then
+        return str:sub(1, utf8.offset(str, len - 3)) .. "..."
     else
         return str
     end
