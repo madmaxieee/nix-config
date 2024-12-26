@@ -1,0 +1,18 @@
+keymap_procs:
+  <C-q>: { c: toggle-focus }
+  <C-a>: null
+keymap_term:
+  reset: true
+  <C-q>: { c: toggle-focus }
+  <C-k>:
+    c: batch
+    cmds:
+      - { c: focus-procs }
+      - { c: prev-proc }
+      - { c: focus-term }
+  <C-j>:
+    c: batch
+    cmds:
+      - { c: focus-procs }
+      - { c: next-proc }
+      - { c: focus-term }

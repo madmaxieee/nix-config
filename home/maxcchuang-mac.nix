@@ -80,5 +80,7 @@
         }
       '';
     })
+
+    ./modules/mprocs.nix
   ];
 }
