@@ -16,7 +16,7 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    hombrew-bundle = {
+    homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
@@ -28,13 +28,13 @@
   };
 
   outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
-    , homebrew-cask, hombrew-bundle, home-manager }:
+    , homebrew-cask, homebrew-bundle, home-manager }:
     let
       pkgs = import nixpkgs { system = "aarch64-darwin"; };
       taps = {
         "homebrew/core" = homebrew-core;
         "homebrew/cask" = homebrew-cask;
-        "homebrew/bundle" = hombrew-bundle;
+        "homebrew/bundle" = homebrew-bundle;
       };
       brew_config = { username }: {
         nix-homebrew = {
