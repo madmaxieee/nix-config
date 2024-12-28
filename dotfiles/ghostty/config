@@ -11,12 +11,13 @@ font-style-bold-italic = Bold Italic
 font-size = 14
 
 adjust-underline-position = 5
+adjust-cursor-thickness = 2
 
 background-opacity = 0.95
 macos-titlebar-style = hidden
 
+# get the escape sequence from `xxd -psd`
 # ctrl+alt+k
 keybind = cmd+k=text:\x1b\x0b
-
 # ctrl+alt+j
 keybind = cmd+j=text:\x1b\x0a
