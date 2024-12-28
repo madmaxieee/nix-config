@@ -1,0 +1,22 @@
+macos-option-as-alt = true
+
+theme = catppuccin-mocha
+
+font-family = Victor Mono
+font-style = SemiBold
+font-style-bold = Bold
+font-style-italic = SemiBold Italic
+font-style-bold-italic = Bold Italic
+
+font-size = 14
+
+adjust-underline-position = 5
+
+background-opacity = 0.95
+macos-titlebar-style = hidden
+
+# ctrl+alt+k
+keybind = cmd+k=text:\x1b\x0b
+
+# ctrl+alt+j
+keybind = cmd+j=text:\x1b\x0a

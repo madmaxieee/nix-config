@@ -32,6 +32,10 @@ in {
       source = linkDotfile "kitty";
       recursive = false;
     };
+    "ghostty" = {
+      source = linkDotfile "ghostty";
+      recursive = false;
+    };
     "espanso" = {
       source = linkDotfile "espanso";
       recursive = false;

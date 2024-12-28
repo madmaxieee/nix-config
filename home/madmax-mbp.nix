@@ -95,6 +95,7 @@
             message_app = "Messenger",
             browser = "Arc",
             note_app = "Heptabase",
+            terminal_app = "Ghostty",
         }
       '';
     })

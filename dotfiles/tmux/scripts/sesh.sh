@@ -4,7 +4,7 @@ if [[ "$(tmux show-options detach-on-destroy)" == "detach-on-destroy on" ]]; the
   exit 0
 fi
 
-tmux new-session -d -s main -c "$HOME" > /dev/null 2>&1 
+tmux new-session -d -s main -c "$HOME" > /dev/null 2>&1
 
 if which starship &> /dev/null; then
   hostname_module="$(starship module hostname | cut -d' ' -f1) "
