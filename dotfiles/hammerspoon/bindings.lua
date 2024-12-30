@@ -9,11 +9,10 @@ local leader_mode = hs.hotkey.modal.new("shift", "space")
 -- disable leader mode when the last key is not pressed in 1 second
 local last_defer_time = 0
 local function defer_exit_leader(second)
-    ---@type number
-    ---@diagnostic disable-next-line: assign-type-mismatch
     local current_time = hs.timer.absoluteTime()
     -- this current time is bind to this specific callback
     -- would only exit when the leader key is not pressed in the next 1 second
+    ---@diagnostic disable-next-line: cast-local-type
     last_defer_time = current_time
     hs.timer.doAfter(second, function()
         if last_defer_time == current_time then
@@ -68,24 +67,10 @@ leader_bind("", "m", function()
     scratchpad.toggle_scratchpad(config.message_app)
 end)
 
-if config.terminal_app == "Ghostty" and config.note_app == "Obsidian" then
-    leader_bind("", "n", function()
-        scratchpad.toggle_scratchpad("Ghostty", {
-            window_title = "obsidian",
-            launch_fn = function()
-                hs.execute(
-                    path
-                        .. [[open -n /Applications/Ghostty.app --args --title="obsidian" --command="~/.config/tmux/scripts/attach-obsidian.sh"]]
-                )
-            end,
-        })
-    end)
-else
-    scratchpad.hide_on_cmd_w(config.note_app)
-    leader_bind("", "n", function()
-        scratchpad.toggle_scratchpad(config.note_app)
-    end)
-end
+scratchpad.hide_on_cmd_w(config.note_app)
+leader_bind("", "n", function()
+    scratchpad.toggle_scratchpad(config.note_app)
+end)
 
 -- open new browser windows
 local function new_browser_window()

@@ -2,58 +2,26 @@ local M = {}
 
 hs.window.animationDuration = 0
 
----@class ScratchpadOpts
----@field window_title string?
----@field launch_fn function?
-
----@param app_name string: the name of the application to toggle
----@param opts ScratchpadOpts?
-M.toggle_scratchpad = function(app_name, opts)
-    opts = opts or {}
-
-    local launch = function()
-        if opts.launch_fn then
-            opts.launch_fn()
-        else
-            hs.application.launchOrFocus(app_name)
-        end
-    end
-
-    local find_window = function(app)
-        if not opts.window_title then
-            return app:mainWindow(), app
-        end
-        local window = hs.appfinder.windowFromWindowTitle(opts.window_title)
-        if window == nil then
-            return nil, nil
-        end
-        app = window:application()
-        if app:name() == app_name then
-            return window, app
-        end
-    end
-
-    ---@type hs.application?
+M.toggle_scratchpad = function(app_name)
     local app = hs.application.find(app_name, true)
     if not app then
-        launch()
+        hs.application.launchOrFocus(app_name)
         return
     end
 
-    local window = nil
-    window, app = find_window(app)
-    if not window or not app then
-        launch()
+    local main_window = app:mainWindow()
+    if not main_window then
+        hs.application.launchOrFocus(app_name)
         return
     end
 
-    if window:id() == hs.window.frontmostWindow():id() then
+    if app:isFrontmost() then
         app:hide()
     else
-        hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. window:id())
-        hs.spaces.moveWindowToSpace(window, hs.spaces.activeSpaceOnScreen())
-        window:moveToScreen(hs.screen.mainScreen())
-        window:focus():raise()
+        hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. main_window:id())
+        hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
+        main_window:moveToScreen(hs.screen.mainScreen())
+        app:activate()
     end
 end
 
