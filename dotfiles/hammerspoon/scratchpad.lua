@@ -38,4 +38,7 @@ M.hide_on_cmd_w = function(app_name)
     end)
 end
 
+-- TODO: also accept window title to find the correct window to toggle
+-- open -n /Applications/Ghostty.app --args --title="obsidian ghostty" -e fish -c '"exec ~/.config/tmux/scripts/attach-obsidian.sh"'
+
 return M
