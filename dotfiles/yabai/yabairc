@@ -57,3 +57,7 @@ yabai -m rule --add manage=off app="^python3$"
 yabai -m rule --add manage=off app="^CleanShot X$"
 yabai -m rule --add manage=off app="^Script Kit$"
 yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
+
+yabai -m signal --add label='refresh sketchybar space apps 1' event='space_created' action='sketchybar --trigger space_apps_refresh'
+yabai -m signal --add label='refresh sketchybar space apps 2' event='space_destroyed' action='sketchybar --trigger space_apps_refresh'
+

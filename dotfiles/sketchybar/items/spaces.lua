@@ -76,6 +76,12 @@ local function on_space_windows_change(env)
     update_space_apps(tonumber(env.SID))
 end
 
+-- called from yabai signal
+sbar.add("event", "space_apps_refresh")
+local function on_space_apps_refresh(env)
+    update_space_apps(tonumber(env.SID))
+end
+
 for i = 1, 15 do
     local space = sbar.add("space", {
         associated_space = i,
@@ -107,6 +113,7 @@ for i = 1, 15 do
     space:subscribe("space_change", on_space_change)
     space:subscribe("space_windows_change", on_space_windows_change)
     space:subscribe("mouse.clicked", on_mouse_click)
+    space:subscribe("space_apps_refresh", on_space_apps_refresh)
     set_space_label(i)
     update_space_apps(i)
 end
@@ -115,6 +122,7 @@ sbar.add("bracket", spaces, {
     background = { color = colors.bg1, border_color = colors.bg2 },
 })
 
+-- space creator
 local space_creator = sbar.add("item", {
     padding_left = 10,
     padding_right = 8,
