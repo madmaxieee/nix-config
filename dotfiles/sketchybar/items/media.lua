@@ -22,32 +22,59 @@ local state = {
     label = "",
 }
 
+local last_track_button = sbar.add("item", "last_track_button", {
+    icon = {
+        string = "",
+        font = { size = 14.0 },
+        color = colors.white,
+        width = 14,
+    },
+    position = "center",
+    padding_left = 0,
+    padding_right = 0,
+    drawing = false,
+})
+
 local play_button = sbar.add("item", "play_button", {
     icon = {
         string = "",
         font = { size = 14.0 },
         color = colors.white,
-        width = 20,
+        width = 14,
     },
     position = "center",
+    padding_left = 0,
     padding_right = 0,
+})
+
+local next_track_button = sbar.add("item", "next_track_button", {
+    icon = {
+        string = "",
+        font = { size = 14.0 },
+        color = colors.white,
+        width = 14,
+    },
+    position = "center",
+    padding_left = 0,
+    padding_right = 0,
+    drawing = false,
 })
 
 local media = sbar.add("item", "media", {
     icon = {
         font = "sketchybar-app-font:Regular:14.0",
         padding_left = 0,
-        padding_right = 12,
+        padding_right = 8,
         y_offset = -1,
     },
     label = {
         padding_right = 12,
         font = { size = 14.0 },
-        max_chars = 30,
+        max_chars = 25,
     },
     position = "center",
     scroll_texts = true,
-    padding_left = 0,
+    padding_left = 8,
 })
 
 local function get_app_icon(app)
@@ -59,9 +86,9 @@ end
 local function rerender_media()
     if state.enabled and state.current_app then
         sbar.animate("tanh", 10, function()
-            play_button:set {
-                icon = { string = state.playing and "" or "" },
-            }
+            last_track_button:set { icon = { string = "" } }
+            play_button:set { icon = { string = state.playing and "" or "" } }
+            next_track_button:set { icon = { string = "" } }
             media:set {
                 icon = {
                     string = get_app_icon(state.current_app),
@@ -72,7 +99,9 @@ local function rerender_media()
         end)
     else
         sbar.animate("tanh", 10, function()
+            last_track_button:set { icon = { string = "" } }
             play_button:set { icon = { string = "" } }
+            next_track_button:set { icon = { string = "" } }
             media:set { icon = { string = "" }, label = { string = "" } }
         end)
     end
@@ -100,6 +129,29 @@ local function toggle_app()
 end
 
 play_button:subscribe("mouse.clicked", play_pause)
+
+local function next_track()
+    if state.current_app == "Spotify" then
+        sbar.exec [[hs -c 'hs.spotify.next()']]
+    elseif state.current_app == "Podcasts" then
+        sbar.exec [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "right", 0, hs.application.find("Podcasts"))']]
+    else
+        sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()']]
+    end
+end
+
+local function last_track()
+    if state.current_app == "Spotify" then
+        sbar.exec [[hs -c 'hs.spotify.previous()']]
+    elseif state.current_app == "Podcasts" then
+        sbar.exec [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "left", 0, hs.application.find("Podcasts"))']]
+    else
+        sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()']]
+    end
+end
+
+last_track_button:subscribe("mouse.clicked", last_track)
+next_track_button:subscribe("mouse.clicked", next_track)
 
 media:subscribe("mouse.clicked", function(env)
     if env.BUTTON == "left" then
