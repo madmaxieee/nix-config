@@ -5,6 +5,8 @@ local spaces = {}
 local space_labels = {}
 local space_apps = {}
 
+local NUM_SPACES = 15
+
 local function rerender_space_button(index)
     local icon_content = tostring(index)
     if space_labels[index] and space_labels[index] ~= "" then
@@ -76,7 +78,7 @@ local function on_space_windows_change(env)
     update_space_apps(tonumber(env.SID))
 end
 
-for i = 1, 15 do
+for i = 1, NUM_SPACES do
     local space = sbar.add("space", {
         associated_space = i,
         icon = {
@@ -117,9 +119,14 @@ sbar.add("bracket", spaces, {
 
 -- triggered from yabai signal
 sbar.add("event", "space_apps_refresh")
-local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {})
+local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {
+    icon = { drawing = false },
+    label = { drawing = false },
+    padding_left = 0,
+    padding_right = 0,
+})
 space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
-    for i = 1, 15 do
+    for i = 1, NUM_SPACES do
         update_space_apps(i)
     end
 end)
