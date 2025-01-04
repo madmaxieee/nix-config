@@ -119,12 +119,7 @@ sbar.add("bracket", spaces, {
 
 -- triggered from yabai signal
 sbar.add("event", "space_apps_refresh")
-local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {
-    icon = { drawing = false },
-    label = { drawing = false },
-    padding_left = 0,
-    padding_right = 0,
-})
+local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", { drawing = false })
 space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
     for i = 1, NUM_SPACES do
         update_space_apps(i)
