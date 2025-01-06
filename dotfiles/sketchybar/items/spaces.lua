@@ -24,6 +24,7 @@ local function rerender_space_button(index)
     })
 end
 
+---@diagnostic disable-next-line: unused-local
 local function set_space_label(index)
     local cmd = table.concat({
         [[yabai -m query --spaces label --space ]],
@@ -109,7 +110,6 @@ for i = 1, NUM_SPACES do
     space:subscribe("space_change", on_space_change)
     space:subscribe("space_windows_change", on_space_windows_change)
     space:subscribe("mouse.clicked", on_mouse_click)
-    set_space_label(i)
     update_space_apps(i)
 end
 
