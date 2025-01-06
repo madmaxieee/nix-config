@@ -77,7 +77,7 @@
             message_app = "Google Chat",
             browser = "Google Chrome",
             note_app = "Obsidian",
-            terminal_app = "Ghostty",
+            terminal_app = "kitty",
         }
       '';
     })

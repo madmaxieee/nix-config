@@ -2,7 +2,7 @@
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"
-      "/Applications/Ghostty.app"
+      "${pkgs.kitty}/Applications/kitty.app"
       "/Applications/Google Chrome.app"
       "/Applications/Arc.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Chat.app"
