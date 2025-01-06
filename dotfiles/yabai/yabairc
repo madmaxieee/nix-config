@@ -26,10 +26,10 @@ yabai -m config window_shadow                off
 yabai -m config layout                       bsp
 yabai -m config window_placement             first_child
 yabai -m config top_padding                  0
-yabai -m config bottom_padding               4
-yabai -m config left_padding                 4
-yabai -m config right_padding                4
-yabai -m config window_gap                   4
+yabai -m config bottom_padding               3
+yabai -m config left_padding                 3
+yabai -m config right_padding                3
+yabai -m config window_gap                   3
 
 yabai -m space 1 --label 'terminal'
 yabai -m space 2 --label 'browser'
