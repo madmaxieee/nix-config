@@ -7,7 +7,7 @@ sbar.default {
         font = {
             family = "JetBrainsMono Nerd Font",
             style = "Semibold",
-            size = 12.0,
+            size = 12,
         },
         color = colors.white,
         padding_left = 4,
@@ -17,7 +17,7 @@ sbar.default {
         font = {
             family = "JetBrainsMono Nerd Font",
             style = "Semibold",
-            size = 12.0,
+            size = 12,
         },
         color = colors.white,
         padding_left = 4,

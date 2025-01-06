@@ -96,7 +96,7 @@ for i = 1, NUM_SPACES do
             font = {
                 family = "sketchybar-app-font",
                 style = "Regular",
-                size = 12.0,
+                size = 12,
             },
             y_offset = -1.5,
         },
@@ -132,7 +132,11 @@ local space_creator = sbar.add("item", {
     padding_right = 8,
     icon = {
         string = ":add:",
-        font = "sketchybar-app-font:Regular:12.0",
+        font = {
+            family = "sketchybar-app-font",
+            style = "Regular",
+            size = 10,
+        },
     },
     label = { drawing = false },
     associated_display = "active",
