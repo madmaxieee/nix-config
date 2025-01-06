@@ -24,7 +24,7 @@ local function rerender_space_button(index)
     })
 end
 
----@diagnostic disable-next-line: unused-local
+---@diagnostic disable-next-line: unused-local, unused-function
 local function set_space_label(index)
     local cmd = table.concat({
         [[yabai -m query --spaces label --space ]],
@@ -103,7 +103,7 @@ for i = 1, NUM_SPACES do
         background = {
             color = colors.bg1,
             corner_radius = 5,
-            height = 24,
+            height = 22,
         },
     })
     spaces[i] = space.name

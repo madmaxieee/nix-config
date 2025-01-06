@@ -32,8 +32,9 @@ sbar.add("item", {
     position = "right",
     icon = {
         string = "",
-        font = "JetBrainsMono Nerd Font:Regular:16.0",
+        font = { size = 14 },
         color = colors.blue,
+        padding_right = 0,
     },
     label = { drawing = false },
 })
@@ -47,8 +48,9 @@ sbar.add("item", {
     position = "right",
     icon = {
         string = "",
-        font = "JetBrainsMono Nerd Font:Regular:16.0",
+        font = { size = 14 },
         color = colors.red,
+        padding_right = 0,
     },
     label = { drawing = false },
 })

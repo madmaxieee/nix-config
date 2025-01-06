@@ -26,7 +26,7 @@ local last_track_button = sbar.add("item", "last_track_button", {
     icon = {
         font = { size = 14.0 },
         color = colors.white,
-        width = 14,
+        width = 12,
     },
     position = "center",
     padding_left = 0,
@@ -36,9 +36,9 @@ local last_track_button = sbar.add("item", "last_track_button", {
 
 local play_button = sbar.add("item", "play_button", {
     icon = {
-        font = { size = 14.0 },
+        font = { size = 12.0 },
         color = colors.white,
-        width = 14,
+        width = 12,
     },
     position = "center",
     padding_left = 0,
@@ -47,9 +47,9 @@ local play_button = sbar.add("item", "play_button", {
 
 local next_track_button = sbar.add("item", "next_track_button", {
     icon = {
-        font = { size = 14.0 },
+        font = { size = 12.0 },
         color = colors.white,
-        width = 14,
+        width = 12,
     },
     position = "center",
     padding_left = 0,
@@ -59,7 +59,11 @@ local next_track_button = sbar.add("item", "next_track_button", {
 
 local media = sbar.add("item", "media", {
     icon = {
-        font = "sketchybar-app-font:Regular:14.0",
+        font = {
+            family = "sketchybar-app-font",
+            style = "Regular",
+            size = 12.0,
+        },
         padding_left = 0,
         padding_right = 8,
         y_offset = -1,
