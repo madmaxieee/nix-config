@@ -24,7 +24,6 @@ local state = {
 
 local last_track_button = sbar.add("item", "last_track_button", {
     icon = {
-        string = "",
         font = { size = 14.0 },
         color = colors.white,
         width = 14,
@@ -37,7 +36,6 @@ local last_track_button = sbar.add("item", "last_track_button", {
 
 local play_button = sbar.add("item", "play_button", {
     icon = {
-        string = "",
         font = { size = 14.0 },
         color = colors.white,
         width = 14,
@@ -49,7 +47,6 @@ local play_button = sbar.add("item", "play_button", {
 
 local next_track_button = sbar.add("item", "next_track_button", {
     icon = {
-        string = "",
         font = { size = 14.0 },
         color = colors.white,
         width = 14,
