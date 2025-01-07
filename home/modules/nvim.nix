@@ -17,7 +17,16 @@
     defaultEditor = true;
     extraLuaPackages = ps: with ps; [ sqlite luv magick ];
     extraPackages = with pkgs;
-      [ cargo nodejs_20 nixfmt-classic sqlite ] ++ (if stdenv.isDarwin then
+      [
+        cargo
+        nodejs_20
+        go
+
+        nixfmt-classic
+        nil
+
+        sqlite
+      ] ++ (if stdenv.isDarwin then
         [
           # for obsidian.nvim, ObsidianPasteImg
           pngpaste
