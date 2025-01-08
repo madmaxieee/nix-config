@@ -23,8 +23,5 @@ in {
 
   homebrew.casks = [ "hammerspoon" ];
 
-  fonts.packages = [
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    pkgs.sketchybar-app-font
-  ];
+  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono pkgs.sketchybar-app-font ];
 }

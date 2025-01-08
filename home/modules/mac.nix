@@ -13,7 +13,6 @@ in {
   home.packages = with pkgs; [
     coreutils
 
-    espanso
     vscode
     _1password-cli
     kitty

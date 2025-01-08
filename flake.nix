@@ -61,10 +61,7 @@
         services.nix-daemon.enable = true;
         # nix.package = pkgs.nix;
 
-        fonts.packages = [
-          (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-          pkgs.victor-mono
-        ];
+        fonts.packages = [ pkgs.nerd-fonts.symbols-only pkgs.victor-mono ];
 
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";

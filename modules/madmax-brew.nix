@@ -20,6 +20,7 @@
       "nordvpn"
       "obsidian"
       "logi-options-plus"
+      "espanso"
     ];
     masApps = {
       "Things" = 904280696;

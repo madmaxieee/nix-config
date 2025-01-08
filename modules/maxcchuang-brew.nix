@@ -16,6 +16,7 @@
       "thingsmacsandboxhelper"
       "iina"
       "obsidian"
+      "espanso"
     ];
     masApps = {
       "Things" = 904280696;
