@@ -21,8 +21,6 @@ in {
       md = "mkdir -p";
       g = "git";
       n = "nix";
-      ns = "nix shell nixpkgs#";
-      nr = "nix run nixpkgs#";
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";

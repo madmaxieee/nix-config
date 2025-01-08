@@ -5,15 +5,19 @@ touch $temp_file
 
 # read from stdin
 if [ ! -t 0 ]; then
-  cat > $temp_file
+  cat >$temp_file
+fi
+
+# if no EDITOR is defined, default to vim
+if [ -z "$EDITOR" ]; then
+  export EDITOR=vim
 fi
 
 # spawn editor with stdio connected
-${EDITOR} $temp_file < /dev/tty > /dev/tty || exit $?
+${EDITOR} $temp_file </dev/tty >/dev/tty || exit $?
 
 # write to stdout
 cat $temp_file
 
 # cleanup
 rm $temp_file
-

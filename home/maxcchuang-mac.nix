@@ -54,6 +54,8 @@
     ./modules/nvim.nix
     ./modules/tmux.nix
 
+    ./modules/scripts.nix
+
     ./modules/atuin.nix
     ./modules/zoxide.nix
     ./modules/yazi
