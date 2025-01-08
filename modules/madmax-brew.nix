@@ -2,7 +2,6 @@
   environment.systemPath = [ "/opt/homebrew/bin" ];
   homebrew = {
     enable = true;
-    brews = [ "zig" ];
     casks = [
       "hammerspoon"
       "orbstack"
