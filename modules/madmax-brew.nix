@@ -16,7 +16,6 @@
       "heptabase"
       "raycast"
       "thingsmacsandboxhelper"
-      "scroll-reverser"
       "iina"
       "nordvpn"
       "obsidian"

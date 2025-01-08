@@ -14,7 +14,6 @@
       "heptabase"
       "raycast"
       "thingsmacsandboxhelper"
-      "scroll-reverser"
       "iina"
       "obsidian"
     ];
