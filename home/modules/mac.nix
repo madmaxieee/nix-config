@@ -32,6 +32,15 @@ in {
       source = linkDotfile "kitty";
       recursive = false;
     };
+    "fish/conf.d/kitty.fish".text = ''
+      status is-interactive || exit 0
+      if test $TERM = 'xterm-kitty'
+        alias xssh='TERM=xterm-256color command ssh'
+        if not set -q TMUX
+          alias ssh='kitty +kitten ssh'
+        end
+      end
+    '';
     "ghostty" = {
       source = linkDotfile "ghostty";
       recursive = false;

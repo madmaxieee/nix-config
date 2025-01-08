@@ -46,26 +46,6 @@ in {
         __google_starship_config
       end
 
-      if type -q fnm
-        fnm env --use-on-cd | source
-      end
-
-      if test $TERM = 'xterm-kitty'
-        alias xssh='TERM=xterm-256color command ssh'
-        if not set -q TMUX
-          alias ssh='kitty +kitten ssh'
-        end
-      end
-
-      if type -q micromamba
-        # >>> mamba initialize >>>
-        # !! Contents within this block are managed by 'mamba init' !!
-        set -gx MAMBA_EXE "${config.home.profileDirectory}/bin/micromamba"
-        set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
-        $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
-        # <<< mamba initialize <<<
-      end
-
       if type -q brew
         if test -d (brew --prefix)"/share/fish/completions"
             set -p fish_complete_path (brew --prefix)/share/fish/completions
@@ -73,11 +53,6 @@ in {
         if test -d (brew --prefix)"/share/fish/vendor_completions.d"
             set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
         end
-      end
-
-      # if not in tmux, start a new session
-      if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux
-          tmux new-session -A -s main >/dev/null 2>&1
       end
 
       function multicd

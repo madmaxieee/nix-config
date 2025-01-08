@@ -96,7 +96,7 @@ leader_bind("shift", "b", function()
     new_icognito_browser_window()
 end)
 
--- new kitty instance
+-- new terminal instance
 leader_bind("", "return", function()
     local terminal_name = config.terminal_app
     local terminal_app = hs.application.find(terminal_name, true)
