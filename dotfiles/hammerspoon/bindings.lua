@@ -97,20 +97,26 @@ leader_bind("shift", "b", function()
 end)
 
 -- new terminal instance
-leader_bind("", "return", function()
-    local terminal_name = config.terminal_app
-    local terminal_app = hs.application.find(terminal_name, true)
-    if not terminal_app then
-        hs.application.launchOrFocus(terminal_name)
-        return
-    end
-    local main_window = terminal_app:mainWindow()
-    if not main_window then
-        hs.application.launchOrFocus(terminal_name)
-        return
-    end
-    hs.eventtap.keyStroke({ "command" }, "n", 0, terminal_app)
-end)
+if config.terminal_app == "kitty" then
+    leader_bind("", "return", function()
+        os.execute(path .. [[kitty --single-instance --working-directory ~ &]])
+    end)
+else
+    leader_bind("", "return", function()
+        local terminal_name = config.terminal_app
+        local terminal_app = hs.application.find(terminal_name, true)
+        if not terminal_app then
+            hs.application.launchOrFocus(terminal_name)
+            return
+        end
+        local main_window = terminal_app:mainWindow()
+        if not main_window then
+            hs.application.launchOrFocus(terminal_name)
+            return
+        end
+        hs.eventtap.keyStroke({ "command" }, "n", 0, terminal_app)
+    end)
+end
 
 -- yabai debug query
 leader_bind("shift", "q", function()
