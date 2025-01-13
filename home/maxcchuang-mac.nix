@@ -64,7 +64,7 @@
     ./modules/git-google.nix
     (import ./modules/mods { provider = "gemini"; })
 
-    ./modules/clang.nix
+    ./modules/clang-tools.nix
     ./modules/python.nix
     ./modules/java.nix
 

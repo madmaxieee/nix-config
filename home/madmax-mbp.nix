@@ -81,7 +81,7 @@
     ./modules/git.nix
     (import ./modules/mods { provider = "openai"; })
 
-    ./modules/clang.nix
+    ./modules/clang-tools.nix
     ./modules/python.nix
     ./modules/java.nix
     ./modules/web-dev.nix

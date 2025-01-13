@@ -71,7 +71,7 @@ local media = sbar.add("item", "media", {
     label = {
         padding_right = 12,
         font = { size = 14 },
-        max_chars = 25,
+        max_chars = 40,
     },
     position = "center",
     scroll_texts = true,
