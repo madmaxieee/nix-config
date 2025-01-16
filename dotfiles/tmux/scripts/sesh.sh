@@ -20,12 +20,12 @@ session="$(
     --no-sort --ansi --border-label "$border_label" --prompt "$prompt_prefix"'⚡  ' \
     --header '  ^a all ^t tmux ^g configs ^x zoxide ^d kill ^f find' \
     --bind 'tab:down,btab:up' \
-    --bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list | ~/.config/tmux/scripts/remove_duplicate_sessions.py)' \
-    --bind 'ctrl-t:change-prompt('"$prompt_prefix"'🪟  )+reload(sesh list -t)' \
-    --bind 'ctrl-g:change-prompt('"$prompt_prefix"'⚙️  )+reload(sesh list -c)' \
-    --bind 'ctrl-x:change-prompt('"$prompt_prefix"'📁  )+reload(sesh list -z)' \
+    --bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons | ~/.config/tmux/scripts/remove_duplicate_sessions.py)' \
+    --bind 'ctrl-t:change-prompt('"$prompt_prefix"'🪟  )+reload(sesh list --icons -t)' \
+    --bind 'ctrl-g:change-prompt('"$prompt_prefix"'⚙️  )+reload(sesh list --icons -c)' \
+    --bind 'ctrl-x:change-prompt('"$prompt_prefix"'📁  )+reload(sesh list --icons -z)' \
     --bind 'ctrl-f:change-prompt('"$prompt_prefix"'🔎  )+reload(fd -H -d 2 -t d -E .Trash -E .cache . ~)' \
-    --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {})+reload(sesh list --icons )' \
     --bind 'ctrl-alt-k:abort'
 )"
 
