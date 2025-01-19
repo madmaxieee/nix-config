@@ -1,5 +1,8 @@
+local sbar = require "sketchybar"
 local colors = require "colors"
 local app_icons = require "icon_map"
+
+local M = {}
 
 local whitelist = {
     ["Spotify"] = colors.green,
@@ -21,62 +24,7 @@ local state = {
     title = "",
     label = "",
 }
-
-local last_track_button = sbar.add("item", "last_track_button", {
-    icon = {
-        font = { size = 14 },
-        color = colors.white,
-        width = 12,
-    },
-    position = "center",
-    padding_left = 0,
-    padding_right = 0,
-    drawing = false,
-})
-
-local play_button = sbar.add("item", "play_button", {
-    icon = {
-        font = { size = 12 },
-        color = colors.white,
-        width = 12,
-    },
-    position = "center",
-    padding_left = 0,
-    padding_right = 0,
-})
-
-local next_track_button = sbar.add("item", "next_track_button", {
-    icon = {
-        font = { size = 12 },
-        color = colors.white,
-        width = 12,
-    },
-    position = "center",
-    padding_left = 0,
-    padding_right = 0,
-    drawing = false,
-})
-
-local media = sbar.add("item", "media", {
-    icon = {
-        font = {
-            family = "sketchybar-app-font",
-            style = "Regular",
-            size = 12,
-        },
-        padding_left = 0,
-        padding_right = 8,
-        y_offset = -1,
-    },
-    label = {
-        padding_right = 12,
-        font = { size = 14 },
-        max_chars = 40,
-    },
-    position = "center",
-    scroll_texts = true,
-    padding_left = 8,
-})
+M.state = state
 
 local function get_app_icon(app)
     local lookup = app_icons[app]
@@ -87,10 +35,10 @@ end
 local function rerender_media()
     if state.enabled and state.current_app then
         sbar.animate("tanh", 10, function()
-            last_track_button:set { icon = { string = "" } }
-            play_button:set { icon = { string = state.playing and "" or "" } }
-            next_track_button:set { icon = { string = "" } }
-            media:set {
+            M.last_track_button:set { icon = { string = "" } }
+            M.play_button:set { icon = { string = state.playing and "" or "" } }
+            M.next_track_button:set { icon = { string = "" } }
+            M.item:set {
                 icon = {
                     string = get_app_icon(state.current_app),
                     color = whitelist[state.current_app],
@@ -100,10 +48,10 @@ local function rerender_media()
         end)
     else
         sbar.animate("tanh", 10, function()
-            last_track_button:set { icon = { string = "" } }
-            play_button:set { icon = { string = "" } }
-            next_track_button:set { icon = { string = "" } }
-            media:set { icon = { string = "" }, label = { string = "" } }
+            M.last_track_button:set { icon = { string = "" } }
+            M.play_button:set { icon = { string = "" } }
+            M.next_track_button:set { icon = { string = "" } }
+            M.item:set { icon = { string = "" }, label = { string = "" } }
         end)
     end
 end
@@ -129,8 +77,6 @@ local function toggle_app()
         ']])
 end
 
-play_button:subscribe("mouse.clicked", play_pause)
-
 local function next_track()
     if state.current_app == "Spotify" then
         sbar.exec [[hs -c 'hs.spotify.next()']]
@@ -151,31 +97,98 @@ local function last_track()
     end
 end
 
-last_track_button:subscribe("mouse.clicked", last_track)
-next_track_button:subscribe("mouse.clicked", next_track)
+function M.setup(opts)
+    opts = opts or {}
 
-media:subscribe("mouse.clicked", function(env)
-    if env.BUTTON == "left" then
-        play_pause()
-    elseif env.BUTTON == "right" then
-        toggle_app()
-    end
-end)
+    local last_track_button = sbar.add("item", "last_track_button", {
+        icon = {
+            font = { size = 14 },
+            color = colors.white,
+            width = 12,
+        },
+        position = "center",
+        padding_left = 0,
+        padding_right = 0,
+        drawing = false,
+    })
 
-media:subscribe("media_change", function(env)
-    local app_color = whitelist[env.INFO.app]
-    if app_color ~= nil then
-        state.current_app = env.INFO.app
-        state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or "Unknown Artist"
-        state.title = (env.INFO.title ~= "" and env.INFO.title) or "Unknown Title"
-        state.playing = env.INFO.state == "playing"
-        state.label = state.artist .. ": " .. state.title
+    local play_button = sbar.add("item", "play_button", {
+        icon = {
+            font = { size = 12 },
+            color = colors.white,
+            width = 12,
+        },
+        position = "center",
+        padding_left = 0,
+        padding_right = 0,
+    })
+
+    local next_track_button = sbar.add("item", "next_track_button", {
+        icon = {
+            font = { size = 12 },
+            color = colors.white,
+            width = 12,
+        },
+        position = "center",
+        padding_left = 0,
+        padding_right = 0,
+        drawing = false,
+    })
+
+    local media = sbar.add("item", "media", {
+        icon = {
+            font = {
+                family = "sketchybar-app-font",
+                style = "Regular",
+                size = 12,
+            },
+            padding_left = 0,
+            padding_right = 8,
+            y_offset = -1,
+        },
+        label = {
+            padding_right = 12,
+            font = { size = 14 },
+            max_chars = 40,
+        },
+        position = "center",
+        scroll_texts = true,
+        padding_left = 8,
+    })
+
+    M.last_track_button = last_track_button
+    M.play_button = play_button
+    M.next_track_button = next_track_button
+    M.item = media
+
+    play_button:subscribe("mouse.clicked", play_pause)
+    last_track_button:subscribe("mouse.clicked", last_track)
+    next_track_button:subscribe("mouse.clicked", next_track)
+
+    media:subscribe("mouse.clicked", function(env)
+        if env.BUTTON == "left" then
+            play_pause()
+        elseif env.BUTTON == "right" then
+            toggle_app()
+        end
+    end)
+
+    media:subscribe("media_change", function(env)
+        local app_color = whitelist[env.INFO.app]
+        if app_color ~= nil then
+            state.current_app = env.INFO.app
+            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or "Unknown Artist"
+            state.title = (env.INFO.title ~= "" and env.INFO.title) or "Unknown Title"
+            state.playing = env.INFO.state == "playing"
+            state.label = state.artist .. ": " .. state.title
+            rerender_media()
+        end
+    end)
+
+    media:subscribe("media_toggle", function(_)
+        state.enabled = not state.enabled
         rerender_media()
-    end
-end)
+    end)
+end
 
----@diagnostic disable-next-line: unused-local
-media:subscribe("media_toggle", function(env)
-    state.enabled = not state.enabled
-    rerender_media()
-end)
+return M

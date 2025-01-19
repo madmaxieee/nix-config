@@ -1,9 +1,15 @@
+local sbar = require "sketchybar"
 local colors = require "colors"
 local icon_map = require "icon_map"
 
+local M = {}
+
 local spaces = {}
+M.spaces = spaces
 local space_labels = {}
+M.space_labels = space_labels
 local space_apps = {}
+M.space_apps = space_apps
 
 local NUM_SPACES = 15
 
@@ -79,69 +85,70 @@ local function on_space_windows_change(env)
     update_space_apps(tonumber(env.SID))
 end
 
-for i = 1, NUM_SPACES do
-    local space = sbar.add("space", {
-        associated_space = i,
-        icon = {
-            string = i,
-            padding_left = 7,
-            padding_right = 7,
-            color = colors.white_inactive,
-            highlight_color = colors.white,
-        },
-        label = {
-            drawing = false,
-            color = colors.white_inactive,
-            highlight_color = colors.white,
-            font = {
-                family = "sketchybar-app-font",
-                style = "Regular",
-                size = 12,
-            },
-            y_offset = -1.5,
-        },
-        background = {
-            color = colors.bg1,
-            corner_radius = 5,
-            height = 22,
-        },
-    })
-    spaces[i] = space.name
-    space:subscribe("space_change", on_space_change)
-    space:subscribe("space_windows_change", on_space_windows_change)
-    space:subscribe("mouse.clicked", on_mouse_click)
-    update_space_apps(i)
+local function on_front_app_switched(env)
+    update_space_apps(tonumber(env.SID))
 end
 
-sbar.add("bracket", spaces, {
-    background = { color = colors.bg1, border_color = colors.bg2 },
-})
+function M.setup(opts)
+    opts = opts or {}
 
--- triggered from yabai signal
-sbar.add("event", "space_apps_refresh")
-local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", { drawing = false })
-space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
-    for i = 1, NUM_SPACES do
+    local from = 1
+    local to = NUM_SPACES
+    local step = 1
+    if opts.position == "right" then
+        from = NUM_SPACES
+        to = 1
+        step = -1
+    end
+
+    for i = from, to, step do
+        local space = sbar.add("space", {
+            position = opts.position,
+            associated_space = i,
+            icon = {
+                string = i,
+                padding_left = 7,
+                padding_right = 7,
+                color = colors.white_inactive,
+                highlight_color = colors.white,
+            },
+            label = {
+                drawing = false,
+                color = colors.white_inactive,
+                highlight_color = colors.white,
+                font = {
+                    family = "sketchybar-app-font",
+                    style = "Regular",
+                    size = 12,
+                },
+                y_offset = -1.5,
+            },
+            background = {
+                color = colors.bg1,
+                corner_radius = 5,
+                height = 22,
+            },
+        })
+        spaces[i] = space.name
+        space:subscribe("space_change", on_space_change)
+        space:subscribe("space_windows_change", on_space_windows_change)
+        space:subscribe("mouse.clicked", on_mouse_click)
+        space:subscribe("front_app_switched", on_front_app_switched)
         update_space_apps(i)
     end
-end)
 
--- space creator
-local space_creator = sbar.add("item", {
-    padding_left = 10,
-    padding_right = 8,
-    icon = {
-        string = ":add:",
-        font = {
-            family = "sketchybar-app-font",
-            style = "Regular",
-            size = 10,
-        },
-    },
-    label = { drawing = false },
-    associated_display = "active",
-})
+    sbar.add("bracket", spaces, {
+        background = { color = colors.bg1, border_color = colors.bg2 },
+    })
 
-space_creator:subscribe("mouse.clicked", function(_)
-    sbar.exec "~/.config/yabai/new_space.sh"
-end)
+    -- triggered from yabai signal
+    sbar.add("event", "space_apps_refresh")
+    local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", { drawing = false })
+    space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
+        for i = 1, NUM_SPACES do
+            update_space_apps(i)
+        end
+    end)
+end
+
+return M

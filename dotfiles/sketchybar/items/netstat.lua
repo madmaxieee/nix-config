@@ -1,4 +1,7 @@
----@diagnostic disable: undefined-global
+local sbar = require "sketchybar"
+local colors = require "colors"
+
+local M = {}
 
 local function formatBytes(bytes)
     if bytes == 0 then
@@ -20,52 +23,59 @@ local function formatBytes(bytes)
     return formattedValue .. " " .. sizes[i + 1]
 end
 
-local colors = require "colors"
+function M.setup(opts)
+    opts = opts or {}
+    local position = opts.position
 
-local netstat_up = sbar.add("item", {
-    position = "right",
-    width = 66,
-    icon = { drawing = false },
-    label = { color = colors.blue },
-})
-sbar.add("item", {
-    position = "right",
-    icon = {
-        string = "",
-        font = { size = 14 },
-        color = colors.blue,
-        padding_right = 0,
-    },
-    label = { drawing = false },
-})
-local netstat_down = sbar.add("item", {
-    position = "right",
-    width = 66,
-    icon = { drawing = false },
-    label = { color = colors.red },
-})
-sbar.add("item", {
-    position = "right",
-    icon = {
-        string = "",
-        font = { size = 14 },
-        color = colors.red,
-        padding_right = 0,
-    },
-    label = { drawing = false },
-})
+    local netstat_up = sbar.add("item", {
+        position = position,
+        width = 66,
+        icon = { drawing = false },
+        label = { color = colors.blue },
+    })
+    sbar.add("item", {
+        position = position,
+        icon = {
+            string = "",
+            font = { size = 14 },
+            color = colors.blue,
+            padding_right = 0,
+        },
+        label = { drawing = false },
+    })
+    local netstat_down = sbar.add("item", {
+        position = position,
+        width = 66,
+        icon = { drawing = false },
+        label = { color = colors.red },
+    })
+    sbar.add("item", {
+        position = position,
+        icon = {
+            string = "",
+            font = { size = 14 },
+            color = colors.red,
+            padding_right = 0,
+        },
+        label = { drawing = false },
+    })
+    M.netstat_up = netstat_up
+    M.netstat_down = netstat_down
 
-sbar.add("event", "netstat_update")
+    sbar.add("event", "netstat_update")
 
-sbar.exec "~/.config/sketchybar/items/netstat.sh"
+    sbar.exec "~/.config/sketchybar/items/netstat.sh"
 
-netstat_up:subscribe("netstat_update", function(env)
-    local download = formatBytes(env.DOWNLOAD)
-    local upload = formatBytes(env.UPLOAD)
-    netstat_up:set {
-        label = { string = upload },
-    }
-    netstat_down:set {
-        label = { string = download },
-    }
-end)
+    netstat_up:subscribe("netstat_update", function(env)
+        local download = formatBytes(env.DOWNLOAD)
+        local upload = formatBytes(env.UPLOAD)
+        netstat_up:set {
+            label = { string = upload },
+        }
+        netstat_down:set {
+            label = { string = download },
+        }
+    end)
+end
+
+return M

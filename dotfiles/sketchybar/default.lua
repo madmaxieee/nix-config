@@ -1,3 +1,4 @@
+local sbar = require "sketchybar"
 local colors = require "colors"
 
 -- Equivalent to the --default domain
