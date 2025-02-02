@@ -19,8 +19,8 @@ in {
       starship = pkgs.fetchFromGitHub {
         owner = "Rolv-Apneseth";
         repo = "starship.yazi";
-        rev = "77a65f5a367f833ad5e6687261494044006de9c3";
-        hash = "sha256-sAB0958lLNqqwkpucRsUqLHFV/PJYoJL2lHFtfHDZF8=";
+        rev = "af8bf6f82165b83272b6501ce7445cf2c61fbf51";
+        hash = "sha256-L7MkZZqJ+t+A61ceC4Q1joLF6ytoWdgx9BwZWAGAoCA=";
       };
       lazygit = pkgs.fetchFromGitHub {
         owner = "Lil-Dank";
