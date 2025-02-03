@@ -31,8 +31,8 @@ in {
       what-size = pkgs.fetchFromGitHub {
         owner = "pirafrank";
         repo = "what-size.yazi";
-        rev = "f08f7f2d5c94958ac4cb66c51a7c24b4319c6c93";
-        hash = "sha256-q0CKA8OTMgr8hCZ3CM/Jd/Gv4y68uJdMFeHhhJyHcbI=";
+        rev = "b23e3a4cf44ce12b81fa6be640524acbd40ad9d3";
+        hash = "sha256-SDObD22u2XYF2BYKsdw9ZM+yJLH9xYTwSFRWIwMCi08=";
       };
     };
     settings = {
