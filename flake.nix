@@ -102,6 +102,12 @@
             AppleICUForce24HourTime = true;
             AppleInterfaceStyle = "Dark";
             NSWindowShouldDragOnGesture = true;
+            # sets how long it takes before it starts repeating.
+            # normal minimum is 15 (225 ms), maximum is 120 (1800 ms)
+            InitialKeyRepeat = 15;
+            # sets how fast it repeats once it starts.
+            # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
+            KeyRepeat = 3;
           };
         };
         system.startup.chime = false;
