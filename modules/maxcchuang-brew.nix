@@ -4,25 +4,25 @@
     enable = true;
     brews = [ ];
     casks = [
-      "hammerspoon"
       "1password"
       "arc"
       "discord"
-      "spotify"
-      "fantastical"
-      "jordanbaird-ice"
-      "heptabase"
-      "raycast"
-      "thingsmacsandboxhelper"
-      "iina"
-      "obsidian"
       "espanso"
+      "fantastical"
+      "hammerspoon"
+      "heptabase"
+      "iina"
+      "jordanbaird-ice"
+      "obsidian"
+      "raycast"
+      "spotify"
+      "thingsmacsandboxhelper"
     ];
     masApps = {
-      "Things" = 904280696;
+      "Keymapp" = 6472865291;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
-      "Keymapp" = 6472865291;
+      "Things" = 904280696;
     };
     onActivation = {
       autoUpdate = true;

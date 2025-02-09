@@ -3,31 +3,32 @@
   homebrew = {
     enable = true;
     casks = [
-      "hammerspoon"
-      "orbstack"
       "1password"
       "arc"
-      "discord"
-      "spotify"
-      "fantastical"
-      "jordanbaird-ice"
       "cleanshot"
+      "discord"
+      "espanso"
+      "fantastical"
+      "hammerspoon"
       "heptabase"
-      "raycast"
-      "thingsmacsandboxhelper"
       "iina"
+      "jordanbaird-ice"
+      "logi-options-plus"
       "nordvpn"
       "obsidian"
-      "logi-options-plus"
-      "espanso"
+      "orbstack"
+      "raycast"
+      "spotify"
+      "squirrel"
+      "thingsmacsandboxhelper"
     ];
     masApps = {
-      "Things" = 904280696;
+      "Keymapp" = 6472865291;
+      "LINE" = 539883307;
+      "Messenger" = 1480068668;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
-      "Keymapp" = 6472865291;
-      "Messenger" = 1480068668;
-      "LINE" = 539883307;
+      "Things" = 904280696;
     };
     onActivation = {
       autoUpdate = true;
