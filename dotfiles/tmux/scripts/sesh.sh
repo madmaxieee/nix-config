@@ -16,16 +16,17 @@ border_label=" sesh $hostname_module"
 prompt_prefix="$hostname_module"
 
 session="$(
-  sesh list --icons | grep -v -E '.__popup$' | fzf-tmux -p 55%,60% \
+  sesh list --icons | grep -v '__popup$' | fzf-tmux -p 55%,60% \
     --no-sort --ansi --border-label "$border_label" --prompt "$prompt_prefix"'⚡  ' \
-    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d kill ^f find' \
+    --header ' ^r reload ^a all ^t tmux ^g configs ^x zoxide ^d kill ^f find' \
     --bind 'tab:down,btab:up' \
-    --bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons | ~/.config/tmux/scripts/remove_duplicate_sessions.py)' \
-    --bind 'ctrl-t:change-prompt('"$prompt_prefix"'🪟  )+reload(sesh list --icons -t)' \
-    --bind 'ctrl-g:change-prompt('"$prompt_prefix"'⚙️  )+reload(sesh list --icons -c)' \
-    --bind 'ctrl-x:change-prompt('"$prompt_prefix"'📁  )+reload(sesh list --icons -z)' \
+    --bind 'ctrl-r:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons | grep -v __popup\$)' \
+    --bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons)' \
+    --bind 'ctrl-t:change-prompt('"$prompt_prefix"'🪟  )+reload(sesh list --icons --tmux | grep -v __popup\$)' \
+    --bind 'ctrl-g:change-prompt('"$prompt_prefix"'⚙️  )+reload(sesh list --icons --config)' \
+    --bind 'ctrl-x:change-prompt('"$prompt_prefix"'📁  )+reload(sesh list --icons --zoxide)' \
     --bind 'ctrl-f:change-prompt('"$prompt_prefix"'🔎  )+reload(fd -H -d 2 -t d -E .Trash -E .cache . ~)' \
-    --bind 'ctrl-d:execute(tmux kill-session -t {})+reload(sesh list --icons )' \
+    --bind 'ctrl-d:execute(echo {} | cut -d" " -f2 | xargs tmux kill-session -t)+reload(sesh list --icons | grep -v __popup\$)' \
     --bind 'ctrl-alt-k:abort'
 )"
 
