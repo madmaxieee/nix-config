@@ -13,7 +13,7 @@
       "heptabase"
       "iina"
       "jordanbaird-ice"
-      "logi-options-plus"
+      "logi-options+"
       "nordvpn"
       "obsidian"
       "orbstack"
