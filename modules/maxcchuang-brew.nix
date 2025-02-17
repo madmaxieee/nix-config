@@ -13,6 +13,7 @@
       "heptabase"
       "iina"
       "jordanbaird-ice"
+      "logi-options+"
       "obsidian"
       "raycast"
       "spotify"
