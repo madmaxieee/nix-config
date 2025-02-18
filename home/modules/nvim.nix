@@ -26,6 +26,7 @@
         nil
 
         sqlite
+        imagemagick
       ] ++ (if stdenv.isDarwin then
         [
           # for obsidian.nvim, ObsidianPasteImg
