@@ -3,30 +3,24 @@ let
   plugins-repo = pkgs.fetchFromGitHub {
     owner = "yazi-rs";
     repo = "plugins";
-    rev = "4a6edc3349a2a9850075363965d05b9063817df4";
-    hash = "sha256-RYa7wbFGZ9citYYdF9FYJwzUGBmIUvNBdORpBPb6ZnQ=";
+    rev = "beb586aed0d41e6fdec5bba7816337fdad905a33";
+    hash = "sha256-enIt79UvQnKJalBtzSEdUkjNHjNJuKUWC4L6QFb3Ou4=";
   };
 in {
-  home.packages = with pkgs; [ lazygit starship glow ];
+  home.packages = with pkgs; [ lazygit glow ];
   programs.yazi = {
     enable = true;
     shellWrapperName = "y";
     initLua = ./init.lua;
     plugins = {
       git = "${plugins-repo}/git.yazi";
-      full-border = "${plugins-repo}/full-border.yazi";
+      smart-enter = "${plugins-repo}/smart-enter.yazi";
       smart-filter = "${plugins-repo}/smart-filter.yazi";
-      starship = pkgs.fetchFromGitHub {
-        owner = "Rolv-Apneseth";
-        repo = "starship.yazi";
-        rev = "af8bf6f82165b83272b6501ce7445cf2c61fbf51";
-        hash = "sha256-L7MkZZqJ+t+A61ceC4Q1joLF6ytoWdgx9BwZWAGAoCA=";
-      };
       lazygit = pkgs.fetchFromGitHub {
         owner = "Lil-Dank";
         repo = "lazygit.yazi";
-        rev = "c82794fb410cca36b23b939d32126a6a9705f94d";
-        hash = "sha256-m2zITkjGrUjaPnzHnnlwA6d4ODIpvlBfIO0RZCBfL0E=";
+        rev = "9f924e34cde61d5965d6d620698b0b15436c8e08";
+        hash = "sha256-ns9DzIdI2H3IuCByoJjOtUWQQB9vITxmJ/QrYt+Rdao=";
       };
       what-size = pkgs.fetchFromGitHub {
         owner = "pirafrank";
@@ -52,14 +46,29 @@ in {
     keymap = {
       manager.prepend_keymap = [
         {
-          on = "F";
+          on = "<enter>";
+          run = "plugin smart-enter";
+          desc = "Enter the child directory, or open the file";
+        }
+        {
+          on = "f";
           run = "plugin smart-filter";
           desc = "Smart filter";
+        }
+        {
+          on = "F";
+          run = "filter";
+          desc = "Filter";
         }
         {
           on = [ "g" "i" ];
           run = "plugin lazygit";
           desc = "run lazygit";
+        }
+        {
+          on = [ "g" "?" ];
+          run = "help";
+          desc = "help";
         }
         {
           on = [ "." "s" ];
