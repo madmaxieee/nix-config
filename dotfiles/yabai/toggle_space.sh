@@ -17,6 +17,6 @@ fi
 if [ "$current_space_index" = "$target_space_index" ]; then
     ~/.config/yabai/focus_space.sh "$previous_space_index"
 else
-    echo "$current_space_index" > "$tmp_file"
+    echo "$current_space_index" >"$tmp_file"
     ~/.config/yabai/focus_space.sh "$target_space_index"
 fi
