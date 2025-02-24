@@ -63,8 +63,8 @@ in {
     "fish/conf.d/tmux.fish".text = ''
       status is-interactive || exit 0
       # if not in tmux, start a new session
-      if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux
-          tmux new-session -A -s main >/dev/null 2>&1
+      if not set -q TMUX && not set -q IN_NIX_SHELL && type -q ${pkgs.tmux}/bin/tmux
+          ${pkgs.tmux}/bin/tmux new-session -A -s main >/dev/null 2>&1
       end
     '';
   };

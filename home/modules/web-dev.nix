@@ -18,7 +18,7 @@
   xdg.configFile = {
     "fish/conf.d/fnm.fish".text = ''
       status is-interactive || exit 0
-      fnm env --use-on-cd | source
+      ${pkgs.fnm}/bin/fnm env --use-on-cd | source
     '';
   };
 }
