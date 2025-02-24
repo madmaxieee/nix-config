@@ -48,17 +48,22 @@ in {
 
       if type -q brew
         if test -d (brew --prefix)"/share/fish/completions"
-            set -p fish_complete_path (brew --prefix)/share/fish/completions
+          set -p fish_complete_path (brew --prefix)/share/fish/completions
         end
         if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-            set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+          set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
         end
       end
 
       function multicd
-          echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+        echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
       end
       abbr --add dotdot --regex '^\.\.+$' --function multicd
+
+      # if not in tmux, start a new session
+      if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux
+        tmux new-session -A -s main >/dev/null 2>&1
+      end
     '';
     plugins = [
       {
