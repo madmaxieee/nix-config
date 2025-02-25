@@ -20,7 +20,7 @@ local function formatBytes(bytes)
     end
     local formattedValue = string.format("%." .. dm .. "f", value)
 
-    return formattedValue .. " " .. sizes[i + 1]
+    return string.format("%s %s", formattedValue, sizes[i + 1])
 end
 
 function M.setup(opts)
@@ -61,8 +61,6 @@ function M.setup(opts)
     })
     M.netstat_up = netstat_up
     M.netstat_down = netstat_down
-
-    sbar.add("event", "netstat_update")
 
     sbar.exec "~/.config/sketchybar/items/netstat.sh"
 

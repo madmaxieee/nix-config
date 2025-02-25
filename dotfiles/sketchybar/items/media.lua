@@ -97,6 +97,11 @@ local function last_track()
     end
 end
 
+---@param seconds number
+local function scroll(seconds)
+    sbar.exec(string.format("~/.config/sketchybar/items/scroll_media_title.sh %d &", seconds))
+end
+
 function M.setup(opts)
     opts = opts or {}
 
@@ -150,9 +155,10 @@ function M.setup(opts)
             padding_right = 12,
             font = { size = 14 },
             max_chars = 40,
+            scroll_duration = 200,
         },
         position = "center",
-        scroll_texts = true,
+        scroll_texts = false,
         padding_left = 8,
     })
 
@@ -168,6 +174,7 @@ function M.setup(opts)
     media:subscribe("mouse.clicked", function(env)
         if env.BUTTON == "left" then
             play_pause()
+            scroll(5)
         elseif env.BUTTON == "right" then
             toggle_app()
         end
@@ -182,12 +189,22 @@ function M.setup(opts)
             state.playing = env.INFO.state == "playing"
             state.label = state.artist .. ": " .. state.title
             rerender_media()
+            scroll(5)
         end
     end)
 
     media:subscribe("media_toggle", function(_)
         state.enabled = not state.enabled
         rerender_media()
+        scroll(5)
+    end)
+
+    media:subscribe("media_scroll_start", function(_)
+        M.item:set { scroll_texts = true }
+    end)
+
+    media:subscribe("media_scroll_stop", function(_)
+        M.item:set { scroll_texts = false }
     end)
 end
 
