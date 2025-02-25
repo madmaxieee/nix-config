@@ -30,7 +30,7 @@
       [[session]]
       name = "cloud"
       path = "~"
-      startup_command = "exec ssh maxcchuang.c"
+      startup_command = "cloudtop --exec maxcchuang.c"
 
       [[session]]
       name = "obsidian"
@@ -39,9 +39,28 @@
     '';
   };
 
-  programs.fish.shellAbbrs = { ss = "ssh maxcchuang.c"; };
+  programs.fish.functions = {
+    cloudtop = ''
+      if test \( (count $argv) -gt 1 \) -a \( "$argv[1]" = --exec \)
+          set -f exec_cmd exec
+          set -f ssh_host $argv[2]
+      else
+          set -f exec_cmd ""
+          set -f ssh_host $argv[1]
+      end
 
-  programs.zsh.zsh-abbr.abbreviations = { ss = "ssh maxcchuang.c"; };
+      if type -q rw
+          set -f ssh_command "rw --check_remaining"
+      else
+          echo "roadwarrior not found, using ssh"
+          set -f ssh_command ssh
+      end
+
+      eval "$exec_cmd $ssh_command $ssh_host"
+    '';
+  };
+
+  programs.fish.shellAbbrs = { ct = "cloudtop maxcchuang.c"; };
 
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
