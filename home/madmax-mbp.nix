@@ -4,7 +4,7 @@
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
-  home.packages = with pkgs; [ zig rustup ];
+  home.packages = with pkgs; [ zig rustup typst ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 

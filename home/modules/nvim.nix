@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = [ ];
-
   home.activation = let git = "${pkgs.git}/bin/git";
   in {
     clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -15,7 +13,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraLuaPackages = ps: with ps; [ sqlite luv magick ];
+    extraLuaPackages = ps: with ps; [ sqlite luv ];
     extraPackages = with pkgs;
       [
         cargo
@@ -27,6 +25,7 @@
 
         sqlite
         imagemagick
+        ghostscript
       ] ++ (if stdenv.isDarwin then
         [
           # for obsidian.nvim, ObsidianPasteImg
