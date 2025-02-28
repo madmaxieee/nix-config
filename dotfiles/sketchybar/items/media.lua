@@ -13,16 +13,14 @@ local whitelist = {
 ---@field enabled boolean
 ---@field current_app string?
 ---@field playing boolean
----@field artist string
----@field title string
----@field label string
+---@field artist string?
+---@field title string?
 local state = {
     enabled = true,
     current_app = nil,
     playing = false,
     artist = "",
     title = "",
-    label = "",
 }
 M.state = state
 
@@ -34,6 +32,8 @@ end
 
 local function rerender_media()
     if state.enabled and state.current_app then
+        local artist = state.artist or "?"
+        local title = state.title or "?"
         sbar.animate("tanh", 10, function()
             M.last_track_button:set { icon = { string = "" } }
             M.play_button:set { icon = { string = state.playing and "" or "" } }
@@ -43,7 +43,7 @@ local function rerender_media()
                     string = get_app_icon(state.current_app),
                     color = whitelist[state.current_app],
                 },
-                label = { string = state.label },
+                label = { string = string.format("%s - %s", artist, title) },
             }
         end)
     else
@@ -184,10 +184,9 @@ function M.setup(opts)
         local app_color = whitelist[env.INFO.app]
         if app_color ~= nil then
             state.current_app = env.INFO.app
-            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or "Unknown Artist"
-            state.title = (env.INFO.title ~= "" and env.INFO.title) or "Unknown Title"
+            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+            state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
             state.playing = env.INFO.state == "playing"
-            state.label = state.artist .. ": " .. state.title
             rerender_media()
             scroll(5)
         end
