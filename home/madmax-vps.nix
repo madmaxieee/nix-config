@@ -4,7 +4,13 @@
   home.username = "madmax";
   home.homeDirectory = "/home/madmax";
 
-  home.packages = with pkgs; [ kitty rustup typst zig ];
+  home.packages = with pkgs; [
+    kitty
+    rustup
+    typst
+    zig
+    llvmPackages_18.libcxxClang
+  ];
 
   programs.fish = {
     shellAbbrs = {

@@ -17,8 +17,10 @@
     extraPackages = with pkgs;
       [
         cargo
-        nodejs_20
         go
+        nodejs_20
+        python312
+        unzip
 
         nixfmt-classic
         nil

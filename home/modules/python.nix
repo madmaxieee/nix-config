@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  home.packages = with pkgs; [ micromamba uv ];
+  home.packages = with pkgs; [ micromamba uv python312 ];
   programs.fish = {
     shellAbbrs = {
       mb = "mamba";
