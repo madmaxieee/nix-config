@@ -1,19 +1,12 @@
 { pkgs, ... }:
 
 {
-  home.username = "maxcchuang";
-  home.homeDirectory = "/usr/local/google/home/maxcchuang";
+  home.username = "madmax";
+  home.homeDirectory = "/home/madmax";
 
-  home.packages = with pkgs; [ minicom kitty ];
+  home.packages = with pkgs; [ kitty rustup typst zig ];
 
   programs.fish = {
-    shellAliases = {
-      gcert = ''
-        bash -c 'if [[ -n $TMUX ]]; then
-                  eval "$(tmux show-environment -s)"
-                fi
-                command gcert "$@"' --'';
-    };
     shellAbbrs = {
       copy = "kitten clipboard";
       paste = "kitten clipboard -g";
@@ -21,13 +14,6 @@
   };
 
   programs.zsh = {
-    shellAliases = {
-      gcert = ''
-        bash -c 'if [[ -n $TMUX ]]; then
-                  eval "$(tmux show-environment -s)"
-                fi
-                command gcert "$@"' --'';
-    };
     zsh-abbr.abbreviations = {
       copy = "kitten clipboard";
       paste = "kitten clipboard -g";
@@ -50,12 +36,14 @@
     ./modules/yazi
 
     ./modules/git.nix
-    ./modules/git-google.nix
-    # my GCP project got suspended
     (import ./modules/mods { provider = "openai"; })
 
+    ./modules/clang-tools.nix
     ./modules/python.nix
+    ./modules/java.nix
+    ./modules/web-dev.nix
 
-    ./modules/gscripts.nix
+    ./modules/moar.nix
+    ./modules/jujutsu.nix
   ];
 }

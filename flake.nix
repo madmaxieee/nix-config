@@ -186,6 +186,15 @@
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."madmax-mbp".pkgs;
 
+      homeConfigurations."vps" = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+
+        modules = [ ./home/madmax-vps.nix ];
+      };
+
       # cloudtop
       homeConfigurations."maxcchuang" =
         home-manager.lib.homeManagerConfiguration {
