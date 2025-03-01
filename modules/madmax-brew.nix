@@ -21,6 +21,7 @@
       "spotify"
       "squirrel"
       "thingsmacsandboxhelper"
+      "zen-browser"
     ];
     masApps = {
       "Keymapp" = 6472865291;

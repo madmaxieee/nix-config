@@ -4,6 +4,7 @@
       "/System/Applications/Launchpad.app"
       "${pkgs.kitty}/Applications/kitty.app"
       "/Applications/Arc.app"
+      "/Applications/Zen Browser.app"
       "/Applications/Messenger.app"
       "/Applications/Telegram.app"
       "/Applications/LINE.app"
@@ -14,7 +15,6 @@
       "/Applications/Obsidian.app"
       "/Applications/Discord.app"
       "/System/Applications/Podcasts.app"
-      "/Applications/Steam.app"
     ];
     persistent-others = [ "${homeDirectory}/Downloads" ];
   };

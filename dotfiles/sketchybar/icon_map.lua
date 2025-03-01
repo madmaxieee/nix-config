@@ -263,6 +263,7 @@ return {
     ["Xcode"] = ":xcode:",
     ["Yandex Music"] = ":yandex_music:",
     ["Zed"] = ":zed:",
+    ["Zen"] = ":zen_browser:",
     ["Zeplin"] = ":zeplin:",
     ["zoom.us"] = ":zoom:",
     ["Zotero"] = ":zotero:",
