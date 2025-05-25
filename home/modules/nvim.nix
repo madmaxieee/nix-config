@@ -10,6 +10,8 @@
     '';
   };
 
+  home.packages = with pkgs; [ ripgrep fd lazygit ];
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
