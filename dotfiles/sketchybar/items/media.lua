@@ -32,8 +32,17 @@ end
 
 local function rerender_media()
     if state.enabled and state.current_app then
-        local artist = state.artist or "?"
-        local title = state.title or "?"
+        local artist = state.artist
+        local title = state.title
+        local label = ""
+        if artist ~= nil and title ~= nil then
+            label = string.format("%s - %s", artist, title)
+        elseif artist ~= nil then
+            label = artist
+        elseif title ~= nil then
+            label = title
+        end
+
         sbar.animate("tanh", 10, function()
             M.last_track_button:set { icon = { string = "" } }
             M.play_button:set { icon = { string = state.playing and "" or "" } }
@@ -43,7 +52,7 @@ local function rerender_media()
                     string = get_app_icon(state.current_app),
                     color = whitelist[state.current_app],
                 },
-                label = { string = string.format("%s - %s", artist, title) },
+                label = { string = label },
             }
         end)
     else
