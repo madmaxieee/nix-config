@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ fnm deno ];
+  home.packages = with pkgs; [ fnm deno xh ];
 
   programs.fish.shellAbbrs = {
     b = "bun";
