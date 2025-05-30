@@ -52,7 +52,7 @@
     ./modules/git.nix
     ./modules/git-google.nix
     # my GCP project got suspended
-    (import ./modules/mods { provider = "openai"; })
+    (import ./modules/mods { provider = "gemini"; })
 
     ./modules/python.nix
 

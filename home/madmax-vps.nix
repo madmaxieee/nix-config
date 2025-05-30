@@ -42,7 +42,7 @@
     ./modules/yazi
 
     ./modules/git.nix
-    (import ./modules/mods { provider = "openai"; })
+    (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
     ./modules/python.nix
