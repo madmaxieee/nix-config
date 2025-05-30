@@ -12,6 +12,7 @@ in {
 
   home.packages = with pkgs; [
     coreutils
+    ripgrep-all
 
     vscode
     _1password-cli
