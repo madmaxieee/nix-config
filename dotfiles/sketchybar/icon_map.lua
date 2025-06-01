@@ -218,6 +218,7 @@ return {
     ["Sequel Pro"] = ":sequel_pro:",
     ["Setapp"] = ":setapp:",
     ["SF Symbols"] = ":sf_symbols:",
+    ["SigmaOS"] = ":rustdesk:",
     ["Signal"] = ":signal:",
     ["sioyek"] = ":sioyek:",
     ["Sketch"] = ":sketch:",
