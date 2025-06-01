@@ -1,7 +1,26 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [ difftastic ];
+
+  xdg.configFile = {
+    "git/basic_template.txt".text = ''
+      # feat:
+      # fix:
+
+      # refactor:
+      # perf:
+      # style:
+
+      # ci:
+
+      # chore:
+      # docs:
+      # test:
+
+      # BREAKING CHANGE:
+    '';
+  };
 
   programs.bat = {
     themes = {
@@ -133,6 +152,11 @@
       merge.tool = "nvimdiff";
       mergetool.prompt = false;
       "mergetool \"nvimdiff\"".cmd = ''nvim -d "$LOCAL" "$REMOTE" "$MERGED"'';
+
+      "url \"git@github.com:madmaxieee/\"".insteadof = "me:";
+      "url \"git@github.com:\"".insteadof = "gh:";
+
+      commit.template = "${config.xdg.configHome}/git/basic_template.txt";
     };
   };
 
