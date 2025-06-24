@@ -4,7 +4,7 @@ local app_icons = require "icon_map"
 
 local M = {}
 
-local whitelist = {
+local app_colors = {
     ["Spotify"] = colors.green,
     ["Podcasts"] = colors.magenta,
 }
@@ -50,7 +50,7 @@ local function rerender_media()
             M.item:set {
                 icon = {
                     string = get_app_icon(state.current_app),
-                    color = whitelist[state.current_app],
+                    color = app_colors[state.current_app],
                 },
                 label = { string = label },
             }
@@ -189,8 +189,19 @@ function M.setup(opts)
         end
     end)
 
+    -- media_change is broken on macOS > 15.4, this is a workaround for spotify
+    sbar.add("event", "spotify_change", "com.spotify.client.PlaybackStateChanged")
+    media:subscribe("spotify_change", function(env)
+        state.current_app = "Spotify"
+        state.artist = (env.INFO.Artist ~= "" and env.INFO.Artist) or nil
+        state.title = (env.INFO.Name ~= "" and env.INFO.Name) or nil
+        state.playing = env.INFO["Player State"] == "Playing"
+        rerender_media()
+        scroll(5)
+    end)
+
     media:subscribe("media_change", function(env)
-        local app_color = whitelist[env.INFO.app]
+        local app_color = app_colors[env.INFO.app]
         if app_color ~= nil then
             state.current_app = env.INFO.app
             state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
