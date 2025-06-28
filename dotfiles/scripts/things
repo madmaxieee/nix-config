@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import argparse
+import subprocess
+import sys
+import urllib.parse
+import webbrowser
+
+URL_METHOD = "things:///"
+
+
+def main():
+    parser = argparse.ArgumentParser(description="A script to interact with things3")
+    subparsers = parser.add_subparsers(dest="command")
+
+    subparser_add = subparsers.add_parser("add", help="Add a new task")
+    subparser_add.add_argument("title", nargs="*", help="The task title to add")
+
+    args = parser.parse_args()
+
+    match args.command:
+        case "add":
+            add_command(args)
+        case _:
+            parser.print_help()
+
+
+def add_command(subparser):
+    # if no task is provided, read from stdin
+    title = " ".join(subparser.title).strip()
+    if not title:
+        title = sys.stdin.read().strip()
+
+    # construct the URL
+    url_query = urllib.parse.urlencode({"titles": title}, quote_via=urllib.parse.quote)
+    url = f"{URL_METHOD}add?{url_query}"
+
+    open_url(url)
+
+    num_tasks = len(title.splitlines())
+    print(f"successfully added {num_tasks} task{'s' if num_tasks != 1 else ''}")
+
+
+def open_url(url):
+    if sys.platform == "darwin":
+        subprocess.run(["open", "-g", url])
+    else:
+        webbrowser.open(url)
+
+
+if __name__ == "__main__":
+    main()

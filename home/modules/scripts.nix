@@ -7,8 +7,9 @@ let
 in {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
   home.file = {
-    ".local/bin/vipe".source = linkDotfile "scripts/vipe";
-    ".local/bin/ns".source = linkDotfile "scripts/ns";
     ".local/bin/nr".source = linkDotfile "scripts/nr";
+    ".local/bin/ns".source = linkDotfile "scripts/ns";
+    ".local/bin/things".source = linkDotfile "scripts/things";
+    ".local/bin/vipe".source = linkDotfile "scripts/vipe";
   };
 }
