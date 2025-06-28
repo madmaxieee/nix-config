@@ -21,9 +21,9 @@
       "raycast"
       "sigmaos"
       "spotify"
-      "squirrel"
+      "squirrel-app"
       "thingsmacsandboxhelper"
-      "zen-browser"
+      "zen"
     ];
     masApps = {
       "Keymapp" = 6472865291;
@@ -39,5 +39,6 @@
       upgrade = true;
       extraFlags = [ "--verbose" "--debug" ];
     };
+    global.autoUpdate = true;
   };
 }

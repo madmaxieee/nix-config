@@ -15,7 +15,7 @@
         n = "nix";
       };
     };
-    initExtra = ''
+    initContent = ''
       function precmd() {
         echo
       }

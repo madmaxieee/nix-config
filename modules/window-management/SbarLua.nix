@@ -12,11 +12,7 @@ pkgs.lua54Packages.buildLuaPackage {
     hash = "sha256-F0UfNxHM389GhiPQ6/GFbeKQq5EvpiqQdvyf7ygzkPg=";
   };
 
-  buildInputs = with pkgs; [
-    gcc
-    darwin.apple_sdk.frameworks.CoreFoundation
-    readline
-  ];
+  buildInputs = with pkgs; [ gcc readline ];
 
   installPhase = ''
     mkdir -p $out/lib/lua/5.4

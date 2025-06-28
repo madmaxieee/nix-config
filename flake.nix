@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
@@ -43,7 +43,7 @@
           mutableTaps = false;
         };
       };
-      configuration = { ... }: {
+      darwin_config = { ... }: {
         nixpkgs.config.allowUnfree = true;
 
         # List packages installed in system profile. To search by name, run:
@@ -53,11 +53,9 @@
           pkgs.fish
 
           pkgs.pam-reattach
-        ];
 
-        # Auto upgrade nix package and the daemon service.
-        services.nix-daemon.enable = true;
-        # nix.package = pkgs.nix;
+          pkgs.mas
+        ];
 
         fonts.packages = [ pkgs.nerd-fonts.symbols-only pkgs.victor-mono ];
 
@@ -74,7 +72,7 @@
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "aarch64-darwin";
 
-        security.pam.enableSudoTouchIdAuth = true;
+        security.pam.services.sudo_local.touchIdAuth = true;
         environment.etc."pam.d/sudo_local".text = ''
           # Written by nix-darwin
           auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so
@@ -115,8 +113,10 @@
       # $ darwin-rebuild build --flake .#madmax-mbp
       darwinConfigurations."madmax-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
-          configuration
+          darwin_config
           {
+            system.primaryUser = "madmax";
+            ids.gids.nixbld = 350;
             programs.zsh.enable = true;
             programs.fish.enable = true;
             environment.shells = [ pkgs.fish ];
@@ -149,8 +149,9 @@
 
       darwinConfigurations."maxcchuang-mac" = nix-darwin.lib.darwinSystem {
         modules = [
-          configuration
+          darwin_config
           {
+            system.primaryUser = "maxcchuang";
             system.defaults.universalaccess.reduceMotion = true;
             programs.zsh.enable = false;
             programs.bash.enable = false;
