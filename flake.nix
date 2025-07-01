@@ -53,8 +53,6 @@
           pkgs.fish
 
           pkgs.pam-reattach
-
-          pkgs.mas
         ];
 
         fonts.packages = [ pkgs.nerd-fonts.symbols-only pkgs.victor-mono ];

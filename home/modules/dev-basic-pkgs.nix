@@ -21,6 +21,7 @@
 
     tealdeer
     typos
+    ripgrep-all
   ];
 
   programs.fastfetch.enable = true;

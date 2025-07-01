@@ -12,7 +12,6 @@ in {
 
   home.packages = with pkgs; [
     coreutils
-    ripgrep-all
 
     vscode
     _1password-cli
@@ -24,7 +23,7 @@ in {
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
       url =
-        "https://raw.githubusercontent.com/Homebrew/brew/4.3.15/completions/fish/brew.fish";
+        "https://raw.githubusercontent.com/Homebrew/brew/4.5.6/completions/fish/brew.fish";
       sha256 =
         "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
     };
