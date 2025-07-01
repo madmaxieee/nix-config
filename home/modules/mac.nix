@@ -25,7 +25,7 @@ in {
       url =
         "https://raw.githubusercontent.com/Homebrew/brew/4.5.6/completions/fish/brew.fish";
       sha256 =
-        "e682ad20844b33f5150f3d9881b2eb8d20dcbdc060966aa75040180a90b04385";
+        "4c530d0297b65fa538cfd358e03da3726badfe1c5fb2b797febb1119f58e1dde";
     };
     "kitty" = {
       source = linkDotfile "kitty";
