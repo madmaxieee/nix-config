@@ -12,7 +12,7 @@ local app_colors = {
 ---@class MediaState
 ---@field enabled boolean
 ---@field current_app string?
----@field playing boolean
+---@field playing boolean?
 ---@field artist string?
 ---@field title string?
 local state = {
@@ -43,17 +43,21 @@ local function rerender_media()
             label = title
         end
 
+        M.item:set {
+            icon = {
+                string = get_app_icon(state.current_app),
+                color = app_colors[state.current_app],
+            },
+        }
         sbar.animate("tanh", 10, function()
             M.last_track_button:set { icon = { string = "" } }
-            M.play_button:set { icon = { string = state.playing and "" or "" } }
+            if state.playing == nil then
+                M.play_button:set { icon = { string = "" } }
+            else
+                M.play_button:set { icon = { string = state.playing and "" or "" } }
+            end
             M.next_track_button:set { icon = { string = "" } }
-            M.item:set {
-                icon = {
-                    string = get_app_icon(state.current_app),
-                    color = app_colors[state.current_app],
-                },
-                label = { string = label },
-            }
+            M.item:set { label = { string = label } }
         end)
     else
         sbar.animate("tanh", 10, function()
@@ -198,6 +202,28 @@ function M.setup(opts)
         state.playing = env.INFO["Player State"] == "Playing"
         rerender_media()
         scroll(5)
+    end)
+
+    sbar.exec "~/.config/sketchybar/items/my_media_change.sh"
+
+    media:subscribe("my_media_change", function(env)
+        local app_color = app_colors[env.INFO.app]
+        if app_color ~= nil then
+            state.current_app = env.INFO.app
+            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+            state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
+            if env.INFO.app ~= "Spotify" then
+                if env.INFO.state == nil then
+                    state.playing = nil
+                elseif env.INFO.state == "playing" then
+                    state.playing = true
+                else
+                    state.playing = false
+                end
+            end
+            rerender_media()
+            scroll(5)
+        end
     end)
 
     media:subscribe("media_change", function(env)
