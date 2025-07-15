@@ -1,16 +1,14 @@
 #!/usr/bin/osascript
 
 -- This script runs an infinite loop that retrieves the "Now Playing"
--- media information and prints it to standard output as a JSON object every 2 seconds.
+-- media information and prints it to standard output as a JSON object every 1 seconds.
 -- It only logs the output if it's different than the last output.
 
--- Required for using Objective-C frameworks like MediaRemote.
 use framework "AppKit"
 
--- Global variable to store the last output.
-global lastOutput
+set interval to 1
 
--- Initialize lastOutput to an empty string.
+global lastOutput
 set lastOutput to ""
 
 -- Handler to escape double quotes in a string for JSON compatibility.
@@ -93,7 +91,7 @@ repeat
       set lastOutput to jsonOutput
     end if
 
-    delay 2
+    delay interval
 
   on error errorMessage
     -- If an error occurs (e.g., no music is playing), log an empty JSON object
@@ -105,7 +103,7 @@ repeat
       set lastOutput to "{}"
     end if
 
-    delay 2
+    delay interval
   end try
 
 end repeat
