@@ -62,15 +62,26 @@ leader_bind("", "escape", function()
     leader_mode:exit()
 end)
 
-scratchpad.hide_on_cmd_w(config.message_app)
-leader_bind("", "m", function()
-    scratchpad.toggle_scratchpad(config.message_app)
-end)
+if config.message_app then
+    scratchpad.hide_on_cmd_w(config.message_app)
+    leader_bind("", "m", function()
+        scratchpad.toggle_scratchpad(config.message_app)
+    end)
+end
 
-scratchpad.hide_on_cmd_w(config.note_app)
-leader_bind("", "n", function()
-    scratchpad.toggle_scratchpad(config.note_app)
-end)
+if config.note_app then
+    scratchpad.hide_on_cmd_w(config.note_app)
+    leader_bind("", "n", function()
+        scratchpad.toggle_scratchpad(config.note_app)
+    end)
+end
+
+if config.ai_app then
+    scratchpad.hide_on_cmd_w(config.ai_app)
+    leader_bind("", "g", function()
+        scratchpad.toggle_scratchpad(config.ai_app)
+    end)
+end
 
 -- open new browser windows
 local function new_browser_window()

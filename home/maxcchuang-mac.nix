@@ -91,7 +91,6 @@
     (import ./modules/window-management.nix {
       hs_extra_config = ''
         local scratchpad = require("scratchpad")
-        scratchpad.hide_on_cmd_w("Gemini")
         scratchpad.hide_on_cmd_w("Chrome Remote Desktop")
         scratchpad.hide_on_cmd_w("Lucid")
 
@@ -100,6 +99,7 @@
             browser = "Google Chrome",
             note_app = "Obsidian",
             terminal_app = "kitty",
+            ai_app = "Gemini",
         }
       '';
     })

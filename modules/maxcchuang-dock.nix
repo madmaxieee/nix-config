@@ -6,6 +6,7 @@
       "/Applications/Google Chrome.app"
       "/Applications/Arc.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Chat.app"
+      "${homeDirectory}/Applications/Chrome Apps.localized/Gemini.app"
       "/Applications/Spotify.app"
       "/Applications/Things3.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Calendar.app"

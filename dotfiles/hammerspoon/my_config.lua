@@ -3,6 +3,7 @@ local M = {
     browser = "Arc",
     note_app = "Heptabase",
     terminal_app = "kitty",
+    ai_app = "",
 }
 
 local extra_config = {}
@@ -16,8 +17,11 @@ if not success then
 end
 
 for key, _ in pairs(M) do
-    if extra_config[key] ~= nil then
+    if extra_config[key] then
         M[key] = extra_config[key]
+    end
+    if M[key] == "" then
+        M[key] = nil
     end
 end
 
