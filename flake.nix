@@ -150,6 +150,7 @@
           darwin_config
           {
             system.primaryUser = "maxcchuang";
+            ids.gids.nixbld = 350;
             system.defaults.universalaccess.reduceMotion = true;
             programs.zsh.enable = false;
             programs.bash.enable = false;
