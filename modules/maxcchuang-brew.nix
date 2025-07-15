@@ -20,7 +20,6 @@
       "thingsmacsandboxhelper"
     ];
     masApps = {
-      "Keymapp" = 6472865291;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
       "Things" = 904280696;
