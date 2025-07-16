@@ -1,51 +1,177 @@
 #!/usr/bin/env python3
 
 import argparse
+import getpass
+import json
+import os
 import subprocess
 import sys
+import urllib.error
 import urllib.parse
+import urllib.request
 import webbrowser
 
-URL_METHOD = "things:///"
+THINGS_URL_METHOD = "things://"
+TODOIST_BASE_URL = "https://api.todoist.com/rest/v2"
+TODOIST_API_TOKEN = None
 
 
 def main():
     parser = argparse.ArgumentParser(description="A script to interact with things3")
     subparsers = parser.add_subparsers(dest="command")
 
-    subparser_add = subparsers.add_parser("add", help="Add a new task")
-    subparser_add.add_argument("title", nargs="*", help="The task title to add")
+    subparser_add = subparsers.add_parser(
+        "add",
+        help="Add a new task or several tasks (newline separated) to things3",
+    )
+    subparser_add.add_argument(
+        "title",
+        nargs="*",
+        help="The task title to add, if not provided, read from stdin",
+    )
+
+    subparsers.add_parser(
+        "pull",
+        help="Pull tasks from todoist to things3",
+    )
 
     args = parser.parse_args()
 
     match args.command:
         case "add":
             add_command(args)
+        case "pull":
+            pull_command()
         case _:
             parser.print_help()
+            sys.exit(1)
 
 
-def add_command(subparser):
+def add_command(args):
     # if no task is provided, read from stdin
-    title = " ".join(subparser.title).strip()
+    title = " ".join(args.title).strip()
     if not title:
         title = sys.stdin.read().strip()
 
     # construct the URL
     url_query = urllib.parse.urlencode({"titles": title}, quote_via=urllib.parse.quote)
-    url = f"{URL_METHOD}add?{url_query}"
+    url = f"{THINGS_URL_METHOD}/add?{url_query}"
 
-    open_url(url)
+    webbrowser.open(url)
 
     num_tasks = len(title.splitlines())
     print(f"successfully added {num_tasks} task{'s' if num_tasks != 1 else ''}")
 
 
-def open_url(url):
-    if sys.platform == "darwin":
-        subprocess.run(["open", "-g", url])
+def pull_command():
+    global TODOIST_API_TOKEN
+
+    TODOIST_API_TOKEN = get_todoist_api_token()
+
+    if not TODOIST_API_TOKEN:
+        print("Error: Can't get Todoist API token from running `pass todoist`.")
+        sys.exit(1)
+
+    projects = fetch_todoist_projects()
+
+    # Find the inbox project ID
+    inbox_project_id = None
+    for project in projects:
+        if project.get("is_inbox_project"):
+            inbox_project_id = project["id"]
+            break
+
+    if not inbox_project_id:
+        raise ValueError("Inbox project not found in Todoist.")
+
+    tasks = fetch_todoist_tasks(inbox_project_id)
+
+    if len(tasks) == 0:
+        print("No tasks found in Todoist inbox.")
+        return
+
+    things_tasks = convert_to_things_json(tasks)
+
+    json_data = json.dumps(things_tasks)
+    encoded_data = urllib.parse.quote(json_data)
+    things_url = f"{THINGS_URL_METHOD}/json?data={encoded_data}"
+
+    webbrowser.open(things_url)
+
+    print(f"Pulled {len(tasks)} task{'s' if len(tasks) != 1 else ''} from Todoist.")
+
+    for task in tasks:
+        close_todoist_task(task["id"])
+
+
+def get_todoist_api_token():
+    if "TODOIST_API_TOKEN" in os.environ:
+        return os.environ["TODOIST_API_TOKEN"]
+
+    os.environ["PASSWORD_STORE_GPG_OPTS"] = "--pinentry-mode cancel"
+    result = subprocess.run(
+        ["pass", "todoist"],
+        text=True,
+        capture_output=True,
+    )
+    del os.environ["PASSWORD_STORE_GPG_OPTS"]
+
+    if result.returncode == 0:
+        return result.stdout.strip().splitlines()[0]
+
+    os.environ["PASSWORD_STORE_GPG_OPTS"] = "--passphrase-fd 0 --pinentry-mode loopback"
+    result = subprocess.run(
+        ["pass", "todoist"],
+        input=getpass.getpass("Unlock password store: "),
+        text=True,
+        capture_output=True,
+    )
+    del os.environ["PASSWORD_STORE_GPG_OPTS"]
+
+    if result.returncode == 0:
+        return result.stdout.strip().splitlines()[0]
     else:
-        webbrowser.open(url)
+        return None
+
+
+def fetch_todoist_projects():
+    url = f"{TODOIST_BASE_URL}/projects"
+    headers = {"Authorization": f"Bearer {TODOIST_API_TOKEN}"}
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req) as response:
+        return json.loads(response.read().decode())
+
+
+def fetch_todoist_tasks(project_id):
+    base_url = f"{TODOIST_BASE_URL}/tasks"
+    headers = {"Authorization": f"Bearer {TODOIST_API_TOKEN}"}
+    params = {"project_id": project_id}
+    url = f"{base_url}?{urllib.parse.urlencode(params)}"
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req) as response:
+        return json.loads(response.read().decode())
+
+
+def close_todoist_task(task_id):
+    url = f"{TODOIST_BASE_URL}/tasks/{task_id}/close"
+    headers = {"Authorization": f"Bearer {TODOIST_API_TOKEN}"}
+    req = urllib.request.Request(url, headers=headers, method="POST")
+    with urllib.request.urlopen(req):
+        pass
+
+
+def convert_to_things_json(tasks):
+    things_tasks = []
+    for task in tasks:
+        things_task = {
+            "type": "to-do",
+            "attributes": {
+                "title": task["content"],
+                "notes": task.get("description", ""),
+            },
+        }
+        things_tasks.append(things_task)
+    return things_tasks
 
 
 if __name__ == "__main__":
