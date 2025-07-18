@@ -34,6 +34,10 @@
       if echo $PATH | grep -q '/nix/store/'; then
         export IN_NIX_SHELL=1
       fi
+
+      if [ -f ~/.zshrc.local ]; then
+        source ~/.zshrc.local
+      fi
     '';
     sessionVariables = {
       STARSHIP_CONFIG =
