@@ -2,7 +2,7 @@
   environment.systemPath = [ "/opt/homebrew/bin" ];
   homebrew = {
     enable = true;
-    brews = [ ];
+    brews = [ "mas" ];
     casks = [
       "1password"
       "arc"
