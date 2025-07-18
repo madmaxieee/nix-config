@@ -138,6 +138,7 @@ return {
     ["Matlab"] = ":matlab:",
     ["Mattermost"] = ":mattermost:",
     ["Messages"] = ":messages:",
+    ["Google Chat"] = ":messages:",
     ["Nachrichten"] = ":messages:",
     ["Messenger"] = ":messenger:",
     ["Microsoft Edge"] = ":microsoft_edge:",
