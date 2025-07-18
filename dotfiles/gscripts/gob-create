@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 VISIBILITY="-reader mdbgroup/eng-mirror"
 
@@ -14,18 +14,18 @@ eval set -- "$TEMP"
 
 while true; do
     case "$1" in
-        -p|--private)
-            VISIBILITY=""
-            shift
-            ;;
-        --)
-            shift
-            break
-            ;;
-        *)
-            echo "Internal error!" >&2
-            exit 1
-            ;;
+    -p | --private)
+        VISIBILITY=""
+        shift
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *)
+        echo "Internal error!" >&2
+        exit 1
+        ;;
     esac
 done
 
@@ -36,4 +36,4 @@ if [ -z "$NAME_OF_REPOSITORY" ]; then
     exit 1
 fi
 
-gob-ctl create user/$USER/$NAME_OF_REPOSITORY $VISIBILITY -owner mdbuser/$USER
+gob-ctl create user/"$USER"/"$NAME_OF_REPOSITORY" "$VISIBILITY" -owner mdbuser/"$USER"
