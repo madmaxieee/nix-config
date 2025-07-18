@@ -26,6 +26,7 @@ in {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";
       fish_greeting = "flush";
+      timestamp = "date +_%Y-%m-%d_%H-%M-%S";
       __google_starship_config = {
         body = ''
           if path resolve $PWD | grep -q -E '^(/Volumes)?/google'
