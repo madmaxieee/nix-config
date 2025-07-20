@@ -93,6 +93,7 @@
             browser = "Arc",
             note_app = "Heptabase",
             terminal_app = "kitty",
+            ai_app = "T3 Chat",
         }
       '';
     })
