@@ -17,6 +17,17 @@
       "*.c" = {
         hostname = "%h.googlers.com";
         forwardAgent = true;
+        localForwards = [{
+          host.address = "127.0.0.1";
+          host.port = 5000;
+          bind.address = "127.0.0.1";
+          bind.port = 5000;
+        }];
+        extraOptions = {
+          ControlMaster = "auto";
+          ControlPath = "~/.ssh/ctrl-%C";
+          ControlPersist = "yes";
+        };
       };
       "auto gcert" = {
         match = ''
