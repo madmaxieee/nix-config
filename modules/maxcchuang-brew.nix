@@ -2,7 +2,7 @@
   environment.systemPath = [ "/opt/homebrew/bin" ];
   homebrew = {
     enable = true;
-    brews = [ "mas" ];
+    brews = [ "mas" "gemini-cli" ];
     casks = [
       "1password"
       "arc"
