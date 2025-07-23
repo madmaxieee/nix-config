@@ -48,5 +48,12 @@
     nv = "nvim";
     v = "nvim";
     vi = "nvim";
+    dv = "diffview";
+  };
+  programs.fish.functions = { diffview = ''nvim +"DiffviewOpen $argv"''; };
+
+  programs.git.aliases = {
+    "dv" = "diffview";
+    "diffview" = ''! nvim +"DiffviewOpen $@"'';
   };
 }

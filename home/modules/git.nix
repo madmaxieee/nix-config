@@ -145,14 +145,6 @@
       pull.rebase = "true";
       push.autoSetupRemote = "true";
 
-      diff.tool = "nvimdiff";
-      difftool.prompt = false;
-      "difftool \"nvimdiff\"".cmd = ''nvim -d "$LOCAL" "$REMOTE"'';
-
-      merge.tool = "nvimdiff";
-      mergetool.prompt = false;
-      "mergetool \"nvimdiff\"".cmd = ''nvim -d "$LOCAL" "$REMOTE" "$MERGED"'';
-
       "url \"git@github.com:madmaxieee/\"".insteadof = "me:";
       "url \"git@github.com:\"".insteadof = "gh:";
 
