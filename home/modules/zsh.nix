@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, ... }:
 
 {
   programs.zsh = {
@@ -39,15 +39,7 @@
         source ~/.zshrc.local
       fi
     '';
-    sessionVariables = {
-      STARSHIP_CONFIG =
-        "${config.home.homeDirectory}/.config/starship_zsh.toml";
-      VI_MODE_SET_CURSOR = true;
-      VI_MODE_CURSOR_NORMAL = 2;
-      VI_MODE_CURSOR_VISUAL = 4;
-      VI_MODE_CURSOR_INSERT = 6;
-      VI_MODE_CURSOR_OPPEND = 0;
-    };
+    sessionVariables = { ZVM_VI_ESCAPE_BINDKEY = "kj"; };
     syntaxHighlighting = {
       enable = true;
       highlighters = [ "main" "brackets" "pattern" "cursor" ];
@@ -57,12 +49,12 @@
       highlight = "fg=244";
       strategy = [ "history" "completion" "match_prev_cmd" ];
     };
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "vi-mode" ];
-      theme = "robbyrussell";
-    };
+    plugins = [{
+      name = "zsh-vi-mode";
+      file = "./share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      src = pkgs.zsh-vi-mode;
+    }];
   };
 
-  programs.starship.enableZshIntegration = false;
+  programs.starship.enableZshIntegration = true;
 }

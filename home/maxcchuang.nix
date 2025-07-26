@@ -7,7 +7,7 @@
   home.packages = with pkgs; [ minicom kitty ];
 
   programs.fish = {
-    shellAliases = {
+    functions = {
       gcert = ''
         bash -c 'if [[ -n $TMUX ]]; then
                   eval "$(tmux show-environment -s)"

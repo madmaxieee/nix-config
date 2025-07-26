@@ -51,3 +51,9 @@ disabled = true
 [nix_shell]
 disabled = false
 heuristic = true
+
+[shell]
+disabled = false
+fish_indicator = ""
+zsh_indicator = "% "
+format = '[$indicator]($style)'

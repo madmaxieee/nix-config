@@ -52,6 +52,14 @@
   };
   programs.fish.functions = { diffview = ''nvim +"DiffviewOpen $argv"''; };
 
+  programs.zsh.zsh-abbr.abbreviations = {
+    nv = "nvim";
+    v = "nvim";
+    vi = "nvim";
+    dv = "diffview";
+  };
+  programs.zsh.shellAliases = { diffview = ''nvim +"DiffviewOpen $@"''; };
+
   programs.git.aliases = {
     "dv" = "diffview";
     "diffview" = ''! nvim +"DiffviewOpen $@"'';
