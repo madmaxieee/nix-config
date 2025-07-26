@@ -67,7 +67,7 @@
           set -f ssh_command ssh
       end
 
-      eval "$exec_cmd $ssh_command $ssh_host"
+      eval "$exec_cmd caffeinate -i $ssh_command $ssh_host"
     '';
   };
 
