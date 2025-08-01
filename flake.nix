@@ -102,6 +102,7 @@
             # sets how fast it repeats once it starts.
             # normal minimum is 2 (30 ms), maximum is 120 (1800 ms)
             KeyRepeat = 3;
+            ApplePressAndHoldEnabled = false;
           };
         };
         system.startup.chime = false;
