@@ -165,7 +165,7 @@
 
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "maxcchuang"; })
-          (import ./modules/maxcchuang-brew.nix)
+          (import ./modules/maxcchuang-mac-brew.nix)
 
           home-manager.darwinModules.home-manager
           {
@@ -175,7 +175,7 @@
             home-manager.backupFileExtension = "backup";
           }
 
-          (import ./modules/maxcchuang-dock.nix {
+          (import ./modules/maxcchuang-mac-dock.nix {
             inherit pkgs;
             homeDirectory = "/Users/maxcchuang";
           })

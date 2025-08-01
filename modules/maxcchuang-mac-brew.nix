@@ -5,7 +5,6 @@
     brews = [ "mas" "gemini-cli" ];
     casks = [
       "1password"
-      "arc"
       "discord"
       "espanso"
       "fantastical"
