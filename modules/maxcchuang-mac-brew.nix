@@ -2,7 +2,7 @@
   environment.systemPath = [ "/opt/homebrew/bin" ];
   homebrew = {
     enable = true;
-    brews = [ "mas" "gemini-cli" ];
+    brews = [ "mas" ];
     casks = [
       "1password"
       "discord"
