@@ -57,10 +57,10 @@
     shellAliases = {
       cat = "bat -p";
       l = "eza";
-      ls = "eza --icons";
-      la = "eza --icons --all";
-      ll = "eza --icons --long --group";
-      lla = "eza --icons --long --group --all";
+      ls = "eza --icons=auto";
+      la = "eza --icons=auto --all";
+      ll = "eza --icons=auto --long --group";
+      lla = "eza --icons=auto --long --group --all";
       tree = "eza -T -a -I .git";
       icat = "kitten icat";
     };
@@ -76,10 +76,10 @@
     shellAliases = {
       cat = "bat -p";
       l = "eza";
-      ls = "eza --icons";
-      la = "eza --icons --all";
-      ll = "eza --icons --long --group";
-      lla = "eza --icons --long --group --all";
+      ls = "eza --icons=auto";
+      la = "eza --icons=auto --all";
+      ll = "eza --icons=auto --long --group";
+      lla = "eza --icons=auto --long --group --all";
       tree = "eza -T -a -I .git";
       icat = "kitten icat";
     };
