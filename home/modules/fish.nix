@@ -27,9 +27,9 @@ in {
       clear = "flush";
       fish_greeting = "flush";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
-      __google_starship_config = {
+      __starship_no_git = {
         body = ''
-          if path resolve $PWD | grep -q -E '^(/Volumes)?/google'
+          if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not timeout 0.5s git status >/dev/null 2>&1
             set -gx STARSHIP_CONFIG ~/.config/starship_no_git.toml
           else
             set -gx STARSHIP_CONFIG ~/.config/starship.toml
@@ -44,7 +44,7 @@ in {
       end
 
       if test -d /google && type -q starship
-        __google_starship_config
+        __starship_no_git
       end
 
       if type -q brew

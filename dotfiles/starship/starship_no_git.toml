@@ -25,20 +25,23 @@ format = '@[$ssh_symbol$hostname]($style) in '
 style_user = "bold yellow"
 format = '[$user]($style)'
 
+## begin git section
 [git_branch]
-disabled = true
+style = "green"
+ignore_branches = ["main"]
 
-[git_commit]
-disabled = true
-
-[git_state]
-disabled = true
-
-[git_metrics]
-disabled = true
+# [git_commit]
+# disabled = true
+#
+# [git_state]
+# disabled = true
+#
+# [git_metrics]
+# disabled = true
 
 [git_status]
 disabled = true
+## end git section
 
 [docker_context]
 disabled = true
@@ -49,3 +52,9 @@ disabled = false
 [nix_shell]
 disabled = false
 heuristic = true
+
+[shell]
+disabled = false
+fish_indicator = ""
+zsh_indicator = "% "
+format = '[$indicator]($style)'
