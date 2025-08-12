@@ -11,6 +11,7 @@
     difftastic
     wget
     rm-improved
+    dust
 
     parallel
     entr

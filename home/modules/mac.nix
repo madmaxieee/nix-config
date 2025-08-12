@@ -12,6 +12,8 @@ in {
 
   home.packages = with pkgs; [
     coreutils
+    gnused
+    findutils
 
     vscode
     _1password-cli
