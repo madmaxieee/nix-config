@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+SRC=$1
+DEST=$2
+
+if [[ -z "$DEST" ]]; then
+  DEST=$SRC
+fi
+
+X20_PATH="/google/data/rw/users/ma/maxcchuang/share/$DEST"
+
+cp "$SRC" "$X20_PATH"
+chmod go=u-w "$X20_PATH"
+
+echo "on gLinux workstations:"
+echo "$X20_PATH"
+echo
+
+echo "using the Google3 File API or fileutil:"
+echo "/x20/users/ma/maxcchuang/share/$DEST"
+echo
+
+echo "relative to the x20 root:"
+echo "/users/ma/maxcchuang/share/$DEST"
+echo
+
+echo "x20web URL:"
+echo "https://x20web.corp.google.com/users/ma/maxcchuang/share/$DEST"
