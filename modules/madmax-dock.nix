@@ -4,7 +4,7 @@
       "/System/Applications/Launchpad.app"
       "${pkgs.kitty}/Applications/kitty.app"
       "/Applications/Arc.app"
-      "/Applications/SigmaOS.app"
+      "/Applications/Vivaldi.app"
       "/Applications/Messenger.app"
       "/Applications/Telegram.app"
       "/Applications/LINE.app"

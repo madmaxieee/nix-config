@@ -18,12 +18,11 @@
       "nordvpn"
       "obsidian"
       "orbstack"
-      "orion"
       "raycast"
-      "sigmaos"
       "spotify"
       "squirrel-app"
       "thingsmacsandboxhelper"
+      "vivaldi"
       "zen"
     ];
     masApps = {
