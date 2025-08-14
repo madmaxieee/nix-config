@@ -3,8 +3,8 @@ let
   plugins-repo = pkgs.fetchFromGitHub {
     owner = "yazi-rs";
     repo = "plugins";
-    rev = "beb586aed0d41e6fdec5bba7816337fdad905a33";
-    hash = "sha256-enIt79UvQnKJalBtzSEdUkjNHjNJuKUWC4L6QFb3Ou4=";
+    rev = "e95c7b384e7b0a9793fe1471f0f8f7810ef2a7ed";
+    hash = "sha256-TUS+yXxBOt6tL/zz10k4ezot8IgVg0/2BbS8wPs9KcE=";
   };
 in {
   home.packages = with pkgs; [ lazygit glow ];
@@ -16,17 +16,24 @@ in {
       git = "${plugins-repo}/git.yazi";
       smart-enter = "${plugins-repo}/smart-enter.yazi";
       smart-filter = "${plugins-repo}/smart-filter.yazi";
+      smart-paste = "${plugins-repo}/smart-paste.yazi";
       lazygit = pkgs.fetchFromGitHub {
         owner = "Lil-Dank";
         repo = "lazygit.yazi";
         rev = "9f924e34cde61d5965d6d620698b0b15436c8e08";
         hash = "sha256-ns9DzIdI2H3IuCByoJjOtUWQQB9vITxmJ/QrYt+Rdao=";
       };
+      searchjump = pkgs.fetchFromGitHub {
+        owner = "DreamMaoMao";
+        repo = "searchjump.yazi";
+        rev = "7fafec3e667f2b93d3ad21989ef75bbf95bb43fc";
+        hash = "sha256-zH/X7YUpfDiOcEKuXG4J1MZFj3Dv28rWOi9XEod8NNo=";
+      };
       what-size = pkgs.fetchFromGitHub {
         owner = "pirafrank";
         repo = "what-size.yazi";
-        rev = "b23e3a4cf44ce12b81fa6be640524acbd40ad9d3";
-        hash = "sha256-SDObD22u2XYF2BYKsdw9ZM+yJLH9xYTwSFRWIwMCi08=";
+        rev = "d8966568f2a80394bf1f9a1ace6708ddd4cc8154";
+        hash = "sha256-s2BifzWr/uewDI6Bowy7J+5LrID6I6OFEA5BrlOPNcM=";
       };
     };
     settings = {
@@ -44,7 +51,7 @@ in {
       ];
     };
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {
           on = "<enter>";
           run = "plugin smart-enter";
@@ -56,9 +63,19 @@ in {
           desc = "Smart filter";
         }
         {
+          on = "p";
+          run = "plugin smart-paste";
+          desc = "Paste into the hovered directory or CWD";
+        }
+        {
           on = "F";
           run = "filter";
           desc = "Filter";
+        }
+        {
+          on = "s";
+          run = "plugin searchjump";
+          desc = "searchjump mode";
         }
         {
           on = [ "g" "i" ];
