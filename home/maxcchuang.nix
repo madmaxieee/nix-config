@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   home.username = "maxcchuang";
@@ -50,11 +50,15 @@
     ./modules/yazi
 
     ./modules/git.nix
-    ./modules/git-google.nix
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/python.nix
 
-    ./modules/gscripts.nix
+    # google specific
+    ./modules/git-google.nix
+    (import ./modules/gscripts.nix {
+      inherit config;
+      platform = "glinux";
+    })
   ];
 }

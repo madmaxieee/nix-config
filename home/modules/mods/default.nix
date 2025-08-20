@@ -33,5 +33,5 @@ in {
   else if provider == "gemini" then
     [ ./gemini.nix ]
   else
-    (throw ("mods provider must be openai or gemini"));
+    (throw ("mods: provider must be one of openai or gemini"));
 }

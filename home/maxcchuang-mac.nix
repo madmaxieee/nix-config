@@ -91,8 +91,6 @@
     ./modules/yazi
 
     ./modules/git.nix
-    ./modules/git-google.nix
-    # my GCP project got suspended
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
@@ -115,6 +113,12 @@
       '';
     })
 
+    # google specific
     ./modules/mprocs.nix
+    ./modules/git-google.nix
+    (import ./modules/gscripts.nix {
+      inherit config;
+      platform = "gmac";
+    })
   ];
 }
