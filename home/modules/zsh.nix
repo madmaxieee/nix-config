@@ -6,6 +6,10 @@
     shellAliases = {
       flush = "printf '\\n%.0s' {1..$(tput lines)}";
       clear = "flush";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
+      "......" = "cd ../../../../..";
     };
     zsh-abbr = {
       enable = true;
