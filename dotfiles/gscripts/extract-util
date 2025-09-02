@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+
+import argparse
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+def setup_directory(file_path: Path) -> Path:
+    """
+    Creates a directory based on the file's stem and moves the file into it.
+    Args:
+        file_path: The path to the source file.
+    Returns:
+        The path to the newly created directory.
+    """
+    if not file_path.is_file():
+        print(f"Error: File not found at '{file_path}'", file=sys.stderr)
+        sys.exit(1)
+
+    # Create a directory named after the file, without its extension
+    target_dir = Path(file_path.stem)
+    print(f"Creating directory: '{target_dir}'")
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    # Move the file into the new directory
+    new_file_path = target_dir / file_path.name
+    print(f"Moving '{file_path}' to '{new_file_path}'")
+    shutil.move(str(file_path), str(new_file_path))
+
+    return target_dir
+
+
+def run_command(command: list[str], working_dir: Path):
+    """A helper to run an external command and handle errors."""
+    print(f"Running command: `{' '.join(command)}` in '{working_dir}'")
+    try:
+        subprocess.run(
+            command, cwd=working_dir, check=True, capture_output=True, text=True
+        )
+    except FileNotFoundError:
+        print(f"Error: Command '{command[0]}' not found.", file=sys.stderr)
+        print("Please ensure it is installed and in your PATH.", file=sys.stderr)
+        sys.exit(1)
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing command: `{' '.join(command)}`", file=sys.stderr)
+        print(f"Return Code: {e.returncode}", file=sys.stderr)
+        print(f"Stderr:\n{e.stderr}", file=sys.stderr)
+        sys.exit(1)
+
+
+def handle_coredump(filename: str):
+    """Processes a coredump file."""
+    print("--- Processing coredump ---")
+    file_path = Path(filename)
+
+    # Create dir and move file
+    target_dir = setup_directory(file_path)
+
+    # Extract the tarball
+    archive_name = file_path.name
+    run_command(["tar", "xf", archive_name], working_dir=target_dir)
+
+    print(f"✅ Crashdump extracted successfully into '{target_dir}'")
+
+
+def handle_bugreport(filename: str):
+    """Processes a bugreport file."""
+    print("--- Processing bugreport ---")
+    file_path = Path(filename)
+
+    # Create dir and move file
+    target_dir = setup_directory(file_path)
+
+    # 1. Unzip the main bugreport file
+    archive_name = file_path.name
+    run_command(["unzip", archive_name], working_dir=target_dir)
+
+    # 2. Handle dumpstate_board.bin
+    dumpstate_bin = target_dir / "dumpstate_board.bin"
+    if not dumpstate_bin.is_file():
+        print(
+            f"Warning: 'dumpstate_board.bin' not found in '{target_dir}'. "
+            "Skipping its extraction.",
+            file=sys.stderr,
+        )
+    else:
+        # Create dumpstate_board directory
+        dumpstate_dir = target_dir / "dumpstate_board"
+        print(f"Creating directory: '{dumpstate_dir}'")
+        dumpstate_dir.mkdir(exist_ok=True)
+
+        # Move dumpstate_board.bin into its directory
+        new_dumpstate_path = dumpstate_dir / dumpstate_bin.name
+        print(f"Moving '{dumpstate_bin}' to '{new_dumpstate_path}'")
+        shutil.move(str(dumpstate_bin), str(new_dumpstate_path))
+
+        # Extract dumpstate_board.bin
+        run_command(["tar", "xf", dumpstate_bin.name], working_dir=dumpstate_dir)
+
+    print(f"✅ Bugreport extracted successfully into '{target_dir}'")
+
+
+def main():
+    """Main function to parse arguments and dispatch to handlers."""
+    parser = argparse.ArgumentParser(
+        description="Extracts coredump or bugreport archives into organized folders.",
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # Subcommand for 'coredump'
+    parser_coredump = subparsers.add_parser(
+        "coredump",
+        aliases=["cd"],
+        help="Process a tarball coredump file.",
+        description="Creates a folder, moves the coredump into it, and extracts it using 'tar xf'.",
+    )
+    parser_coredump.add_argument(
+        "filename",
+        type=str,
+        help="The path to the coredump file (e.g., coredump_modem*.bin)",
+    )
+
+    # Subcommand for 'bugreport'
+    parser_bugreport = subparsers.add_parser(
+        "bugreport",
+        aliases=["br"],
+        help="Process a .zip bugreport file.",
+        description=(
+            "Creates a folder, moves the bugreport into it, and unzips it.\n"
+            "It then looks for 'dumpstate_board.bin', creates a subfolder for it,\n"
+            "moves it, and extracts it using 'tar xzf'."
+        ),
+    )
+    parser_bugreport.add_argument(
+        "filename",
+        type=str,
+        help="The path to the bugreport file (e.g., bugreport*.zip)",
+    )
+
+    args = parser.parse_args()
+
+    if args.command in ("corecump", "cd"):
+        handle_coredump(args.filename)
+    elif args.command in ("bugreport", "br"):
+        handle_bugreport(args.filename)
+
+
+if __name__ == "__main__":
+    main()
