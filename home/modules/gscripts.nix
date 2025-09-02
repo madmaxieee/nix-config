@@ -9,7 +9,6 @@ in {
   home.file = {
     ".local/bin/extract-util".source = linkDotfile "gscripts/extract-util";
   } // (if platform == "glinux" then {
-    ".local/bin/gob-create".source = linkDotfile "gscripts/gob-create";
     ".local/bin/gerrit-init".source = linkDotfile "gscripts/gerrit-init";
     ".local/bin/x20-share".source = linkDotfile "gscripts/x20-share";
   } else if platform == "gmac" then {
