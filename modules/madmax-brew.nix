@@ -10,6 +10,7 @@
       "discord"
       "espanso"
       "fantastical"
+      "google-chrome"
       "hammerspoon"
       "heptabase"
       "iina"

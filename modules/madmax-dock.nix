@@ -3,8 +3,7 @@
     persistent-apps = [
       "/System/Applications/Launchpad.app"
       "${pkgs.kitty}/Applications/kitty.app"
-      "/Applications/Arc.app"
-      "/Applications/Vivaldi.app"
+      "/Applications/Zen.app"
       "/Applications/Messenger.app"
       "/Applications/Telegram.app"
       "/Applications/LINE.app"
