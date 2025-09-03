@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ difftastic ];
+  home.packages = with pkgs; [ difftastic git-absorb ];
 
   xdg.configFile = {
     "git/basic_template.txt".text = ''
