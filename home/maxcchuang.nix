@@ -4,7 +4,7 @@
   home.username = "maxcchuang";
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
-  home.packages = with pkgs; [ minicom kitty ];
+  home.packages = with pkgs; [ kitty minicom patchelf ];
 
   programs.fish = {
     functions = {
