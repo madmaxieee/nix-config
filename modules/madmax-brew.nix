@@ -23,7 +23,6 @@
       "spotify"
       "squirrel-app"
       "thingsmacsandboxhelper"
-      "vivaldi"
       "zen"
     ];
     masApps = {

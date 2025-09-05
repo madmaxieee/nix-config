@@ -17,6 +17,7 @@
       "raycast"
       "spotify"
       "thingsmacsandboxhelper"
+      "zen"
     ];
     masApps = {
       "PastePal" = 1503446680;
