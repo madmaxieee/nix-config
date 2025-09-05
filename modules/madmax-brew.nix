@@ -37,7 +37,6 @@
       autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
-      extraFlags = [ "--verbose" "--debug" ];
     };
     global.autoUpdate = true;
   };
