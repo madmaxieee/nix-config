@@ -163,4 +163,7 @@
       };
     };
   };
+
+  programs.fish.shellAbbrs = { g = "git"; };
+  programs.zsh.zsh-abbr.abbreviations = { g = "git"; };
 }

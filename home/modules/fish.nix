@@ -6,7 +6,7 @@ let
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
   home.packages = with pkgs; [ fzf ];
-
+  home.shell.enableFishIntegration = true;
   programs.starship.enable = true;
 
   xdg.configFile = {
@@ -17,16 +17,14 @@ in {
 
   programs.fish = {
     enable = true;
-    shellAbbrs = {
-      md = "mkdir -p";
-      g = "git";
-      n = "nix";
-    };
+    shellAbbrs = { md = "mkdir -p"; };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";
       fish_greeting = "flush";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
+      cdn = ''
+        cd (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)'';
       __starship_no_git = {
         body = ''
           if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not timeout 0.5s git status >/dev/null 2>&1

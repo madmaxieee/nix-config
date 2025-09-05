@@ -1,29 +1,26 @@
 { pkgs, ... }:
 
 {
+  home.shell.enableZshIntegration = true;
+  programs.starship.enable = true;
+
   programs.zsh = {
     enable = true;
     shellAliases = {
-      flush = "printf '\\n%.0s' {1..$(tput lines)}";
-      clear = "flush";
+      clear = "printf '\\n%.0s' {1..$(tput lines)}";
       "..." = "cd ../..";
       "...." = "cd ../../..";
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
+      timestamp = "date +%Y-%m-%d_%H-%M-%S";
+      cdn = ''
+        cd "$(find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)"'';
     };
     zsh-abbr = {
       enable = true;
-      abbreviations = {
-        md = "mkdir -p";
-        g = "git";
-        n = "nix";
-      };
+      abbreviations = { md = "mkdir -p"; };
     };
     initContent = ''
-      function precmd() {
-        echo
-      }
-
       function _flush() {
         printf '\n%.0s' {1..$(tput lines)}
         zle reset-prompt
@@ -59,6 +56,4 @@
       src = pkgs.zsh-vi-mode;
     }];
   };
-
-  programs.starship.enableZshIntegration = true;
 }
