@@ -19,6 +19,7 @@
     jq
     lazygit
     just
+    htop
 
     tealdeer
     typos
