@@ -116,9 +116,5 @@
     # google specific
     ./modules/mprocs.nix
     ./modules/git-google.nix
-    (import ./modules/gscripts.nix {
-      inherit config;
-      platform = "gmac";
-    })
   ];
 }

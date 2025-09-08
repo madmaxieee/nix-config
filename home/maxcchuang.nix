@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 
 {
   home.username = "maxcchuang";
@@ -56,9 +56,5 @@
 
     # google specific
     ./modules/git-google.nix
-    (import ./modules/gscripts.nix {
-      inherit config;
-      platform = "glinux";
-    })
   ];
 }

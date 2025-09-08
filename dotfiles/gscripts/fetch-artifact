@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-temp_dir=$(ssh maxcchuang.c -- mktemp -d)
-ssh maxcchuang.c -t -- /google/data/ro/projects/android/fetch_artifact "$@" "$temp_dir"
-rsync -ar maxcchuang.c:"$temp_dir"'/*' .
