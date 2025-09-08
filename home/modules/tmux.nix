@@ -4,6 +4,11 @@ let
   nix_config_path = "${config.home.homeDirectory}/nix-config";
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
+  defaultCommand = if pkgs.stdenv.isDarwin then
+    ''
+      set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
+  else
+    "";
 in {
   home.packages = with pkgs; [ sesh fzf jq fd ];
 
@@ -32,7 +37,9 @@ in {
         '';
       }
     ];
-    extraConfig = "source-file ${nix_config_path}/dotfiles/tmux/tmux.conf";
+    extraConfig = ''
+      ${defaultCommand}
+      source-file ${nix_config_path}/dotfiles/tmux/tmux.conf'';
   };
 
   programs.fish = {
