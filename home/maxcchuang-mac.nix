@@ -118,5 +118,6 @@
     # google specific
     ./modules/mprocs.nix
     ./modules/git-google.nix
+    ./modules/gemini-cli.nix
   ];
 }
