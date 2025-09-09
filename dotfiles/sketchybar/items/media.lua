@@ -9,6 +9,11 @@ local app_colors = {
     ["Podcasts"] = colors.magenta,
 }
 
+local bundle_ids = {
+    ["com.apple.podcasts"] = "Podcasts",
+    ["com.spotify.client"] = "Spotify",
+}
+
 ---@class MediaState
 ---@field enabled boolean
 ---@field current_app string?
@@ -193,50 +198,64 @@ function M.setup(opts)
         end
     end)
 
-    -- media_change is broken on macOS > 15.4, this is a workaround for spotify
-    sbar.add("event", "spotify_change", "com.spotify.client.PlaybackStateChanged")
-    media:subscribe("spotify_change", function(env)
-        state.current_app = "Spotify"
-        state.artist = (env.INFO.Artist ~= "" and env.INFO.Artist) or nil
-        state.title = (env.INFO.Name ~= "" and env.INFO.Name) or nil
-        state.playing = env.INFO["Player State"] == "Playing"
-        rerender_media()
-        scroll(5)
-    end)
-
-    sbar.exec "~/.config/sketchybar/items/my_media_change.sh"
-
-    media:subscribe("my_media_change", function(env)
-        local app_color = app_colors[env.INFO.app]
-        if app_color ~= nil then
-            state.current_app = env.INFO.app
+    sbar.exec "~/.config/sketchybar/items/media_control_stream.sh"
+    media:subscribe("media_control_stream", function(env)
+        local app = bundle_ids[env.INFO.bundleIdentifier]
+        if app ~= nil then
+            state.current_app = app
             state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
             state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
-            if env.INFO.app ~= "Spotify" then
-                if env.INFO.state == nil then
-                    state.playing = nil
-                elseif env.INFO.state == "playing" then
-                    state.playing = true
-                else
-                    state.playing = false
-                end
-            end
+            state.playing = env.INFO.playing
             rerender_media()
             scroll(5)
         end
     end)
 
-    media:subscribe("media_change", function(env)
-        local app_color = app_colors[env.INFO.app]
-        if app_color ~= nil then
-            state.current_app = env.INFO.app
-            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
-            state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
-            state.playing = env.INFO.state == "playing"
-            rerender_media()
-            scroll(5)
-        end
-    end)
+    -- -- workaround for spotify that detects pause/play state
+    -- sbar.add("event", "spotify_change", "com.spotify.client.PlaybackStateChanged")
+    -- media:subscribe("spotify_change", function(env)
+    --     state.current_app = "Spotify"
+    --     state.artist = (env.INFO.Artist ~= "" and env.INFO.Artist) or nil
+    --     state.title = (env.INFO.Name ~= "" and env.INFO.Name) or nil
+    --     state.playing = env.INFO["Player State"] == "Playing"
+    --     rerender_media()
+    --     scroll(5)
+    -- end)
+
+    -- -- incomplete solution I wrote, can't detect pause/play state
+    -- sbar.exec "~/.config/sketchybar/items/my_media_change.sh"
+    -- media:subscribe("my_media_change", function(env)
+    --     local app_color = app_colors[env.INFO.app]
+    --     if app_color ~= nil then
+    --         state.current_app = env.INFO.app
+    --         state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+    --         state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
+    --         if env.INFO.app ~= "Spotify" then
+    --             if env.INFO.state == nil then
+    --                 state.playing = nil
+    --             elseif env.INFO.state == "playing" then
+    --                 state.playing = true
+    --             else
+    --                 state.playing = false
+    --             end
+    --         end
+    --         rerender_media()
+    --         scroll(5)
+    --     end
+    -- end)
+
+    -- -- media_change is broken on macOS > 15.4
+    -- media:subscribe("media_change", function(env)
+    --     local app_color = app_colors[env.INFO.app]
+    --     if app_color ~= nil then
+    --         state.current_app = env.INFO.app
+    --         state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+    --         state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
+    --         state.playing = env.INFO.state == "playing"
+    --         rerender_media()
+    --         scroll(5)
+    --     end
+    -- end)
 
     media:subscribe("media_toggle", function(_)
         state.enabled = not state.enabled
