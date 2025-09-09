@@ -98,6 +98,9 @@
 
       "ignore" = "update-index --skip-worktree";
       "noignore" = "update-index --no-skip-worktree";
+
+      "get-ignore" =
+        "! gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ | awk '! /https:/' | sed '/./,$!d'; }; gi";
     };
 
     ignores = (if pkgs.stdenv.isDarwin then [
