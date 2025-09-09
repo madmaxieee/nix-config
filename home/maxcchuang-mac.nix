@@ -4,7 +4,7 @@
   home.username = "maxcchuang";
   home.homeDirectory = "/Users/maxcchuang";
 
-  home.packages = with pkgs; [ rustup minicom d2 vscode ];
+  home.packages = with pkgs; [ minicom d2 vscode ];
 
   programs.ssh = {
     enable = true;
@@ -94,8 +94,10 @@
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
-    ./modules/python.nix
     ./modules/java.nix
+    ./modules/python.nix
+    ./modules/rust.nix
+    ./modules/web-dev.nix
 
     (import ./modules/window-management.nix {
       hs_extra_config = ''

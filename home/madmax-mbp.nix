@@ -4,7 +4,7 @@
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
-  home.packages = with pkgs; [ zig rustup typst ];
+  home.packages = with pkgs; [ zig typst ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
 
@@ -82,8 +82,9 @@
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
-    ./modules/python.nix
     ./modules/java.nix
+    ./modules/python.nix
+    ./modules/rust.nix
     ./modules/web-dev.nix
 
     (import ./modules/window-management.nix {

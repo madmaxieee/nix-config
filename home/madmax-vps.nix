@@ -4,13 +4,7 @@
   home.username = "madmax";
   home.homeDirectory = "/home/madmax";
 
-  home.packages = with pkgs; [
-    kitty
-    rustup
-    typst
-    zig
-    llvmPackages_18.libcxxClang
-  ];
+  home.packages = with pkgs; [ kitty typst zig llvmPackages_18.libcxxClang ];
 
   programs.fish = {
     shellAbbrs = {
@@ -45,8 +39,9 @@
     (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
-    ./modules/python.nix
     ./modules/java.nix
+    ./modules/python.nix
+    ./modules/rust.nix
     ./modules/web-dev.nix
 
     ./modules/moar.nix
