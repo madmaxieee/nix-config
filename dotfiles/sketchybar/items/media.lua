@@ -7,11 +7,13 @@ local M = {}
 local app_colors = {
     ["Spotify"] = colors.green,
     ["Podcasts"] = colors.magenta,
+    ["Zen"] = colors.grey,
 }
 
 local bundle_ids = {
     ["com.apple.podcasts"] = "Podcasts",
     ["com.spotify.client"] = "Spotify",
+    ["app.zen-browser.zen"] = "Zen",
 }
 
 ---@class MediaState
@@ -203,11 +205,16 @@ function M.setup(opts)
         local app = bundle_ids[env.INFO.bundleIdentifier]
         if app ~= nil then
             state.current_app = app
-            state.artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
-            state.title = (env.INFO.title ~= "" and env.INFO.title) or nil
+            local new_artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+            local new_title = (env.INFO.title ~= "" and env.INFO.title) or nil
+            local is_new_track = (new_artist ~= state.artist) or (new_title ~= state.title)
+            state.artist = new_artist
+            state.title = new_title
             state.playing = env.INFO.playing
             rerender_media()
-            scroll(5)
+            if is_new_track then
+                scroll(5)
+            end
         end
     end)
 
@@ -268,6 +275,14 @@ function M.setup(opts)
     end)
 
     media:subscribe("media_scroll_stop", function(_)
+        M.item:set { scroll_texts = false }
+    end)
+
+    media:subscribe("mouse.entered", function(_)
+        M.item:set { scroll_texts = true }
+    end)
+
+    media:subscribe("mouse.exited", function(_)
         M.item:set { scroll_texts = false }
     end)
 end
