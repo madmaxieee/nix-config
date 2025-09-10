@@ -7,13 +7,11 @@ local M = {}
 local app_colors = {
     ["Spotify"] = colors.green,
     ["Podcasts"] = colors.magenta,
-    ["Zen"] = colors.grey,
 }
 
 local bundle_ids = {
     ["com.apple.podcasts"] = "Podcasts",
     ["com.spotify.client"] = "Spotify",
-    ["app.zen-browser.zen"] = "Zen",
 }
 
 ---@class MediaState
