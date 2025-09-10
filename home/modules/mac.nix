@@ -25,9 +25,9 @@ in {
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
       url =
-        "https://raw.githubusercontent.com/Homebrew/brew/4.5.6/completions/fish/brew.fish";
+        "https://raw.githubusercontent.com/Homebrew/brew/4.6.7/completions/fish/brew.fish";
       sha256 =
-        "4c530d0297b65fa538cfd358e03da3726badfe1c5fb2b797febb1119f58e1dde";
+        "0714a26a5f9f999dc9d953c46e04ff2c64873cd69d34669aee8479954dd1565e";
     };
     "kitty" = {
       source = linkDotfile "kitty";
