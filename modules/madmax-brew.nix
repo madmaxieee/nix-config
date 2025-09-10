@@ -34,10 +34,8 @@
       "Things" = 904280696;
     };
     onActivation = {
-      autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
     };
-    global.autoUpdate = true;
   };
 }

@@ -14,10 +14,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-bundle = {
-      url = "github:homebrew/homebrew-bundle";
-      flake = false;
-    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -26,20 +22,18 @@
   };
 
   outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
-    , homebrew-cask, homebrew-bundle, home-manager }:
+    , homebrew-cask, home-manager }:
     let
       pkgs = import nixpkgs { system = "aarch64-darwin"; };
-      taps = {
-        "homebrew/core" = homebrew-core;
-        "homebrew/cask" = homebrew-cask;
-        "homebrew/bundle" = homebrew-bundle;
-      };
       brew_config = { username }: {
         nix-homebrew = {
           enable = true;
           enableRosetta = false;
           user = username;
-          taps = taps;
+          taps = {
+            "homebrew/core" = homebrew-core;
+            "homebrew/cask" = homebrew-cask;
+          };
           mutableTaps = false;
         };
       };
