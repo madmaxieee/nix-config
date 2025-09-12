@@ -71,7 +71,14 @@
     '';
   };
 
-  programs.fish.shellAbbrs = { ct = "cloudtop maxcchuang.c"; };
+  programs.fish.shellAbbrs = {
+    ct = "cloudtop maxcchuang.c";
+    a = "adb";
+    aw = "adb wait-for-device";
+    ar = "adb reboot";
+    as = "adb shell";
+    f = "fastboot";
+  };
 
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
