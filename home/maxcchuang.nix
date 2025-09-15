@@ -54,7 +54,6 @@
 
     ./modules/python.nix
 
-    # google specific
     ./modules/git-google.nix
   ];
 }

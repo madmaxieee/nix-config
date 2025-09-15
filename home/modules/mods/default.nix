@@ -15,23 +15,10 @@ in {
     };
   };
 
-  programs.password-store = {
-    enable = true;
-    settings = {
-      PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.password-store";
-    };
-  };
-  programs.gpg.enable = true;
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package =
-      if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-curses;
-  };
-
-  imports = if provider == "openai" then
+  imports = [ ../password-store.nix ] ++ (if provider == "openai" then
     [ ./openai.nix ]
   else if provider == "gemini" then
     [ ./gemini.nix ]
   else
-    (throw ("mods: provider must be one of openai or gemini"));
+    (throw ("mods: provider must be one of openai or gemini")));
 }

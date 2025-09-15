@@ -122,9 +122,9 @@
       '';
     })
 
-    # google specific
-    ./modules/mprocs.nix
     ./modules/git-google.nix
     ./modules/gemini-cli.nix
+    ./modules/mprocs.nix
+    ./modules/fabric-ai.nix
   ];
 }
