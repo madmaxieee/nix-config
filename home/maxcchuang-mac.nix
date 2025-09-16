@@ -60,14 +60,7 @@
           set -f ssh_host $argv[1]
       end
 
-      if type -q rw
-          set -f ssh_command "rw --check_remaining"
-      else
-          echo "roadwarrior not found, using ssh"
-          set -f ssh_command ssh
-      end
-
-      eval "$exec_cmd caffeinate -i $ssh_command $ssh_host"
+      eval "$exec_cmd caffeinate -i ssh $ssh_host"
     '';
   };
 
