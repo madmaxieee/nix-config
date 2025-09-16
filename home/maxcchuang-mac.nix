@@ -99,12 +99,14 @@
     ./modules/rust.nix
     ./modules/web-dev.nix
 
+    ./modules/fabric-ai.nix
+    ./modules/gemini-cli.nix
+
     (import ./modules/window-management.nix {
       hs_extra_config = ''
         local scratchpad = require("scratchpad")
         scratchpad.hide_on_cmd_w("Chrome Remote Desktop")
         scratchpad.hide_on_cmd_w("Lucid")
-
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",
@@ -116,8 +118,6 @@
     })
 
     ./modules/git-google.nix
-    ./modules/gemini-cli.nix
     ./modules/mprocs.nix
-    ./modules/fabric-ai.nix
   ];
 }

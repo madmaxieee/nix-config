@@ -87,6 +87,9 @@
     ./modules/rust.nix
     ./modules/web-dev.nix
 
+    ./modules/fabric-ai.nix
+    ./modules/gemini-cli.nix
+
     (import ./modules/window-management.nix {
       hs_extra_config = ''
         return {
