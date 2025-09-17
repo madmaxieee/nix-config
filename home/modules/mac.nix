@@ -11,10 +11,17 @@ in {
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    # replace darwin utils with gnu ones
     coreutils
-    gnused
+    diffutils
     findutils
 
+    gnugrep
+    gnumake
+    gnused
+    gnutar
+
+    # GUI apps
     vscode
     _1password-cli
     kitty
