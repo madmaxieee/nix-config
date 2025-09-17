@@ -36,124 +36,136 @@
     };
   };
 
-  programs.git = {
-    enable = true;
-    lfs.enable = true;
-    delta = {
+  programs.git = lib.mkMerge [
+    {
       enable = true;
-      options = {
-        line-numbers = true;
-        side-by-side = true;
-        navigate = true;
-        syntax-theme = "tokyonight-moon";
+      lfs.enable = true;
+      delta = {
+        enable = true;
+        options = {
+          line-numbers = true;
+          side-by-side = true;
+          navigate = true;
+          syntax-theme = "tokyonight-moon";
+        };
       };
-    };
 
-    aliases = {
-      "st" = "status --short --branch";
+      aliases = {
+        "st" = "status --short --branch";
 
-      "a" = "add";
-      "aa" = "add --all";
-      "ua" = "restore --staged";
+        "a" = "add";
+        "aa" = "add --all";
+        "ua" = "restore --staged";
 
-      "c" = "commit";
-      "cm" = "commit -m";
-      "amend" = "commit --amend";
+        "c" = "commit";
+        "cm" = "commit -m";
+        "amend" = "commit --amend";
 
-      "d" = "diff";
-      "ds" = "diff --staged";
+        "d" = "diff";
+        "ds" = "diff --staged";
 
-      "f" = "fetch";
-      "fa" = "fetch --all";
+        "f" = "fetch";
+        "fa" = "fetch --all";
 
-      "rb" = "rebase";
-      "cp" = "cherry-pick";
+        "rb" = "rebase";
+        "cp" = "cherry-pick";
 
-      "p" = "push";
-      "pushf" = "push --force-with-lease";
+        "p" = "push";
+        "pushf" = "push --force-with-lease";
 
-      "co" = "checkout";
-      "sw" = "switch";
-      "br" = "branch";
-      "brl" = "branch --list";
-      "brr" = "branch --remote";
-      "wt" = "worktree";
+        "co" = "checkout";
+        "sw" = "switch";
+        "br" = "branch";
+        "brl" = "branch --list";
+        "brr" = "branch --remote";
+        "wt" = "worktree";
 
-      "sa" = "stash apply";
-      "ss" = "stash push";
-      "sp" = "stash pop";
-      "sl" =
-        "stash list --pretty=format:'%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(70,trunc)%s %C(green)(%cr) %C(bold blue)<%an>%C(reset)'";
+        "sa" = "stash apply";
+        "ss" = "stash push";
+        "sp" = "stash pop";
+        "sl" =
+          "stash list --pretty=format:'%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(70,trunc)%s %C(green)(%cr) %C(bold blue)<%an>%C(reset)'";
 
-      "lg" =
-        "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ch) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      "rlog" =
-        "reflog --pretty=format:'%Cred%h%Creset %C(auto)%gd%Creset %C(auto)%gs%C(reset) %C(green)(%ch)%C(reset) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        "lg" =
+          "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ch) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        "rlog" =
+          "reflog --pretty=format:'%Cred%h%Creset %C(auto)%gd%Creset %C(auto)%gs%C(reset) %C(green)(%ch)%C(reset) %C(bold blue)<%an>%Creset' --abbrev-commit";
 
-      "sub" = "submodule";
-      "zip" = "archive HEAD --output";
-      "tgz" = "archive --format=tgz HEAD --output";
-      "bs" = "bisect";
-      "ls" = "ls-files";
+        "sub" = "submodule";
+        "zip" = "archive HEAD --output";
+        "tgz" = "archive --format=tgz HEAD --output";
+        "bs" = "bisect";
+        "ls" = "ls-files";
 
-      "ignore" = "update-index --skip-worktree";
-      "noignore" = "update-index --no-skip-worktree";
+        "ignore" = "update-index --skip-worktree";
+        "noignore" = "update-index --no-skip-worktree";
 
-      "get-ignore" =
-        "! gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ | awk '! /https:/' | sed '/./,$!d'; }; gi";
-    };
+        "get-ignore" =
+          "! gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ | awk '! /https:/' | sed '/./,$!d'; }; gi";
+      };
 
-    ignores = (if pkgs.stdenv.isDarwin then [
-      # General
-      ".DS_Store"
-      ".AppleDouble"
-      ".LSOverride"
+      extraConfig = {
+        init.defaultBranch = "main";
+        core.autocrlf = "false";
+        pull.rebase = "true";
+        push.autoSetupRemote = "true";
+        "url \"git@github.com:madmaxieee/\"".insteadof = "me:";
+        "url \"git@github.com:\"".insteadof = "gh:";
+        commit.template = "${config.xdg.configHome}/git/basic_template.txt";
+      };
 
-      # Icon must end with two \r
-      "Icon\r\r"
-
-      # Thumbnails
-      "._*"
-
-      # Files that might appear in the root of a volume
-      ".DocumentRevisions-V100"
-      ".fseventsd"
-      ".Spotlight-V100"
-      ".TemporaryItems"
-      ".Trashes"
-      ".VolumeIcon.icns"
-      ".com.apple.timemachine.donotpresent"
-
-      # Directories potentially created on remote AFP share
-      ".AppleDB"
-      ".AppleDesktop"
-      "Network Trash Folder"
-      "Temporary Items"
-      ".apdisk"
-    ] else
-      [ ]) ++ [
+      ignores = [
         # clangd
         ".cache"
         "compile_commands.json"
-
         # typos cli
         "typos.toml"
       ];
+    }
 
-    extraConfig = {
-      init.defaultBranch = "main";
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      ignores = [
+        # General
+        ".DS_Store"
+        ".AppleDouble"
+        ".LSOverride"
+        # Icon must end with two \r
+        "Icon\r\r"
+        # Thumbnails
+        "._*"
+        # Files that might appear in the root of a volume
+        ".DocumentRevisions-V100"
+        ".fseventsd"
+        ".Spotlight-V100"
+        ".TemporaryItems"
+        ".Trashes"
+        ".VolumeIcon.icns"
+        ".com.apple.timemachine.donotpresent"
+        # Directories potentially created on remote AFP share
+        ".AppleDB"
+        ".AppleDesktop"
+        "Network Trash Folder"
+        "Temporary Items"
+        ".apdisk"
+        # iCloud generated files
+        "*.icloud"
+      ];
+    })
 
-      core.autocrlf = "false";
-
-      pull.rebase = "true";
-      push.autoSetupRemote = "true";
-
-      "url \"git@github.com:madmaxieee/\"".insteadof = "me:";
-      "url \"git@github.com:\"".insteadof = "gh:";
-
-      commit.template = "${config.xdg.configHome}/git/basic_template.txt";
-    };
-  };
+    (lib.mkIf pkgs.stdenv.isLinux {
+      ignores = [
+        "*~"
+        # temporary files which can be created if a process still has a handle open of a deleted file
+        ".fuse_hidden*"
+        # KDE directory preferences
+        ".directory"
+        # Linux trash folder which might appear on any partition or disk
+        ".Trash-*"
+        # .nfs files are created when an open file is removed but is still being accessed
+        ".nfs*"
+      ];
+    })
+  ];
 
   programs.gh = {
     enable = true;

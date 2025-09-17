@@ -39,11 +39,10 @@
       else
         [ ]);
   };
-  home.sessionVariables = if pkgs.stdenv.isDarwin then {
+  home.sessionVariables = lib.mkIf pkgs.stdenv.isDarwin {
     # for sqlite.lua on macos
     "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
-  } else
-    { };
+  };
 
   programs.fish.shellAbbrs = {
     nv = lib.mkDefault "nvim";
