@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [ difftastic git-absorb ];
@@ -167,6 +167,6 @@
     };
   };
 
-  programs.fish.shellAbbrs = { g = "git"; };
-  programs.zsh.zsh-abbr.abbreviations = { g = "git"; };
+  programs.fish.shellAbbrs = { g = lib.mkDefault "git"; };
+  programs.zsh.zsh-abbr.abbreviations = { g = lib.mkDefault "git"; };
 }

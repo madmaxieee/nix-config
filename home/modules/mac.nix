@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   nix_config_path = "${config.home.homeDirectory}/nix-config";
@@ -53,16 +53,16 @@ in {
   };
 
   programs.fish.shellAbbrs = {
-    o = "open";
-    copy = "pbcopy";
-    paste = "pbpaste";
-    dr = "darwin-rebuild";
+    o = lib.mkDefault "open";
+    copy = lib.mkDefault "pbcopy";
+    paste = lib.mkDefault "pbpaste";
+    dr = lib.mkDefault "darwin-rebuild";
   };
 
   programs.zsh.zsh-abbr.abbreviations = {
-    o = "open";
-    copy = "pbcopy";
-    paste = "pbpaste";
-    dr = "darwin-rebuild";
+    o = lib.mkDefault "open";
+    copy = lib.mkDefault "pbcopy";
+    paste = lib.mkDefault "pbpaste";
+    dr = lib.mkDefault "darwin-rebuild";
   };
 }

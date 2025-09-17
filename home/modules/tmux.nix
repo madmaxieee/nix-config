@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   nix_config_path = "${config.home.homeDirectory}/nix-config";
@@ -43,18 +43,22 @@ in {
   };
 
   programs.fish = {
-    shellAliases = { t = "${config.xdg.configHome}/tmux/scripts/sesh.sh"; };
+    shellAliases = {
+      t = lib.mkDefault "${config.xdg.configHome}/tmux/scripts/sesh.sh";
+    };
     shellAbbrs = {
-      ta = "tmux attach";
-      tn = "tmux new -s";
+      ta = lib.mkDefault "tmux attach";
+      tn = lib.mkDefault "tmux new -s";
     };
   };
 
   programs.zsh = {
-    shellAliases = { t = "${config.xdg.configHome}/tmux/scripts/sesh.sh"; };
+    shellAliases = {
+      t = lib.mkDefault "${config.xdg.configHome}/tmux/scripts/sesh.sh";
+    };
     zsh-abbr.abbreviations = {
-      ta = "tmux attach";
-      tn = "tmux new -s";
+      ta = lib.mkDefault "tmux attach";
+      tn = lib.mkDefault "tmux new -s";
     };
   };
 

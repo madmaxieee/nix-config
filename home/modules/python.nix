@@ -1,18 +1,18 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   home.packages = with pkgs; [ micromamba uv python312 ];
   programs.fish = {
     shellAbbrs = {
-      mb = "mamba";
-      mba = "mamba activate";
-      py = "python3";
+      mb = lib.mkDefault "mamba";
+      mba = lib.mkDefault "mamba activate";
+      py = lib.mkDefault "python3";
     };
     shellAliases = { mamba = "micromamba"; };
   };
   programs.zsh = {
     zsh-abbr.abbreviations = {
-      mb = "mamba";
-      mba = "mamba activate";
-      py = "python3";
+      mb = lib.mkDefault "mamba";
+      mba = lib.mkDefault "mamba activate";
+      py = lib.mkDefault "python3";
     };
     shellAliases = { mamba = "micromamba"; };
   };

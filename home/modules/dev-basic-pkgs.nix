@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -51,39 +51,39 @@
 
   programs.fish = {
     shellAbbrs = {
-      rm = "rip";
-      rmm = "rm -rf";
-      j = "just";
-      lg = "lazygit";
+      rm = lib.mkDefault "rip";
+      rmm = lib.mkDefault "rm -rf";
+      j = lib.mkDefault "just";
+      lg = lib.mkDefault "lazygit";
     };
     shellAliases = {
-      cat = "bat -p";
-      l = "eza";
-      ls = "eza --icons=auto";
-      la = "eza --icons=auto --all";
-      ll = "eza --icons=auto --long --group";
-      lla = "eza --icons=auto --long --group --all";
-      tree = "eza -T -a -I .git";
-      icat = "kitten icat";
+      cat = lib.mkDefault "bat -p";
+      l = lib.mkDefault "eza";
+      ls = lib.mkDefault "eza --icons=auto";
+      la = lib.mkDefault "eza --icons=auto --all";
+      ll = lib.mkDefault "eza --icons=auto --long --group";
+      lla = lib.mkDefault "eza --icons=auto --long --group --all";
+      tree = lib.mkDefault "eza -T -a -I .git";
+      icat = lib.mkDefault "kitten icat";
     };
   };
 
   programs.zsh = {
     zsh-abbr.abbreviations = {
-      rm = "rip";
-      rmm = "rm -rf";
-      j = "just";
-      lg = "lazygit";
+      rm = lib.mkDefault "rip";
+      rmm = lib.mkDefault "rm -rf";
+      j = lib.mkDefault "just";
+      lg = lib.mkDefault "lazygit";
     };
     shellAliases = {
-      cat = "bat -p";
-      l = "eza";
-      ls = "eza --icons=auto";
-      la = "eza --icons=auto --all";
-      ll = "eza --icons=auto --long --group";
-      lla = "eza --icons=auto --long --group --all";
-      tree = "eza -T -a -I .git";
-      icat = "kitten icat";
+      cat = lib.mkDefault "bat -p";
+      l = lib.mkDefault "eza";
+      ls = lib.mkDefault "eza --icons=auto";
+      la = lib.mkDefault "eza --icons=auto --all";
+      ll = lib.mkDefault "eza --icons=auto --long --group";
+      lla = lib.mkDefault "eza --icons=auto --long --group --all";
+      tree = lib.mkDefault "eza -T -a -I .git";
+      icat = lib.mkDefault "kitten icat";
     };
   };
 }

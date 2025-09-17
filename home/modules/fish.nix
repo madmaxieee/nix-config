@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   nix_config_path = "${config.home.homeDirectory}/nix-config";
@@ -17,7 +17,7 @@ in {
 
   programs.fish = {
     enable = true;
-    shellAbbrs = { md = "mkdir -p"; };
+    shellAbbrs = { md = lib.mkDefault "mkdir -p"; };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";

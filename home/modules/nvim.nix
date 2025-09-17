@@ -46,18 +46,18 @@
     { };
 
   programs.fish.shellAbbrs = {
-    nv = "nvim";
-    v = "nvim";
-    vi = "nvim";
-    dv = "diffview";
+    nv = lib.mkDefault "nvim";
+    v = lib.mkDefault "nvim";
+    vi = lib.mkDefault "nvim";
+    dv = lib.mkDefault "diffview";
   };
   programs.fish.functions = { diffview = ''nvim +"DiffviewOpen $argv"''; };
 
   programs.zsh.zsh-abbr.abbreviations = {
-    nv = "nvim";
-    v = "nvim";
-    vi = "nvim";
-    dv = "diffview";
+    nv = lib.mkDefault "nvim";
+    v = lib.mkDefault "nvim";
+    vi = lib.mkDefault "nvim";
+    dv = lib.mkDefault "diffview";
   };
   programs.zsh.shellAliases = { diffview = ''nvim +"DiffviewOpen $@"''; };
 

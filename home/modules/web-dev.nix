@@ -2,15 +2,13 @@
   home.packages = with pkgs; [ fnm deno xh ];
 
   programs.fish.shellAbbrs = {
-    b = "bun";
-    pm = "pnpm";
-    yy = "yarn";
+    pm = lib.mkDefault "pnpm";
+    yy = lib.mkDefault "yarn";
   };
 
   programs.zsh.zsh-abbr.abbreviations = {
-    b = "bun";
-    pm = "pnpm";
-    yy = "yarn";
+    pm = lib.mkDefault "pnpm";
+    yy = lib.mkDefault "yarn";
   };
 
   programs.bun.enable = true;
