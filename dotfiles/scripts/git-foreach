@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+usage() {
+  echo "Usage: $0 [SEARCH_DIR] -- <command> [args...]"
+  echo ""
+  echo "Runs the specified command in parallel across all git repositories found under SEARCH_DIR."
+  echo "If SEARCH_DIR is not provided, the current directory is used."
+  echo ""
+  echo "Examples:"
+  echo "  $0 ~/Repos -- git pull"
+  echo "  $0 -- git status -s  # searches from current dir"
+}
+
+if ! command -v parallel &>/dev/null; then
+  echo "Error: GNU parallel is not installed." >&2
+  exit 1
+fi
+
+if ! command -v fd &>/dev/null; then
+  echo "Error: fd (fd-find) is not installed." >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+# Default search dir = current directory
+SEARCH_DIR="."
+if [[ "$1" != "--" ]]; then
+  SEARCH_DIR="$1"
+  shift
+fi
+SEARCH_DIR="$(realpath "$SEARCH_DIR")"
+
+# Expecting `--` as a separator
+set +o nounset
+if [[ "$1" != "--" ]]; then
+  echo "Error: missing -- separator before command" >&2
+  exit 1
+fi
+set -o nounset
+
+shift
+
+# The rest is user command
+if [[ $# -lt 1 ]]; then
+  echo "Error: missing command to run" >&2
+  exit 1
+fi
+
+USER_CMD=("$@")
+USER_CMD_STR="${USER_CMD[*]}"
+
+# Use fd to find ".git" directories and return their parent dir (repo root)
+fd --type d --hidden -I '\.git$' "$SEARCH_DIR" |
+  xargs -I{} dirname {} |
+  sort -u |
+  parallel -j"$(nproc)" --no-notice '
+      echo '\''>>>>>> Running command ['"$USER_CMD_STR"'] in {}'\''
+      cd "{}" && '"$USER_CMD_STR"'
+      echo ""
+      echo "<<<<<< Finished running in {}"
+      echo ""
+    '
