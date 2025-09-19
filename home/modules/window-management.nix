@@ -8,10 +8,7 @@ let
 in {
   home.packages = with pkgs; [ jq ];
 
-  home.sessionPath = [
-    "${nix_config_path}/dotfiles/script-kitty/scripts"
-    "${nix_config_path}/dotfiles/script-kitty"
-  ];
+  home.sessionPath = [ "${nix_config_path}/dotfiles/script-kitty" ];
 
   home.file = {
     ".hammerspoon" = {

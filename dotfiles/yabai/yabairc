@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-sudo yabai --load-sa
+if not csrutil status | grep -q 'System Integrity Protection status: enabled.'; then
+  sudo yabai --load-sa
+fi
 
 # global settings
 yabai -m config mouse_follows_focus off
@@ -60,7 +62,7 @@ yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
 yabai -m rule --add manage=off app='^Gemini$'
 yabai -m rule --add manage=off app='^T3 Chat$'
 yabai -m rule --add manage=off title='Google Single Sign On'
-yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid="5:3:1:1:1:2"
+yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid=5:3:1:1:1:2
 
 yabai -m signal --add label='refresh sketchybar space apps 1' event='space_created' action='sketchybar --trigger space_apps_refresh'
 yabai -m signal --add label='refresh sketchybar space apps 2' event='space_destroyed' action='sketchybar --trigger space_apps_refresh'

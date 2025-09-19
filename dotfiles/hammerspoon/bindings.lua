@@ -238,6 +238,11 @@ leader_bind("", "c", function()
     leader_mode:exit()
 end)
 
+leader_bind("shift", "c", function()
+    open_bg "raycast://extensions/raycast/window-management/reasonable-size"
+    leader_mode:exit()
+end)
+
 -- lock mode to avoid triggering shift-space
 local lock_mode = hs.hotkey.modal.new("ctrl-shift", "space")
 

@@ -28,10 +28,16 @@ trap cleanup EXIT INT TERM
 # main logic
 
 SCRIPT_KITTY_DIR="$HOME/nix-config/dotfiles/script-kitty"
-SCRIPT="$(
+script="$(
   find "$SCRIPT_KITTY_DIR"/scripts -type f -printf '%f\n' |
     sort |
-    fzf --prompt '$ '
+    fzf --cycle --layout=reverse --prompt '$ ' \
+      --border --border-label=' script kitty ' \
+      --preview="bat --color=always --plain $SCRIPT_KITTY_DIR/scripts/{}" \
+      --preview-window='right:50%'
 )"
 
-"$SCRIPT_KITTY_DIR/scripts/$SCRIPT"
+output=$("$SCRIPT_KITTY_DIR/scripts/$script")
+if [[ -n "$output" ]]; then
+  osascript -e 'display notification "'"$output"'" with title "script kitty - '"$script"'"'
+fi

@@ -262,10 +262,15 @@ function M.setup(opts)
     --     end
     -- end)
 
-    media:subscribe("media_toggle", function(_)
-        state.enabled = not state.enabled
+    media:subscribe("media_show", function(_)
+        state.enabled = true
         rerender_media()
         scroll(5)
+    end)
+
+    media:subscribe("media_hide", function(_)
+        state.enabled = false
+        rerender_media()
     end)
 
     media:subscribe("media_scroll_start", function(_)
