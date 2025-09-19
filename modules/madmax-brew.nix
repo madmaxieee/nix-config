@@ -21,7 +21,6 @@
       "orbstack"
       "raycast"
       "spotify"
-      "squirrel-app"
       "thingsmacsandboxhelper"
       "zen"
     ];
