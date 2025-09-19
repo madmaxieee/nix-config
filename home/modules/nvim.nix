@@ -15,7 +15,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraLuaPackages = ps: with ps; [ sqlite luv ];
+    extraLuaPackages = ps: with ps; [ luarocks ];
     extraPackages = with pkgs;
       [
         cargo
@@ -31,17 +31,19 @@
         sqlite
         imagemagick
         ghostscript
-      ] ++ (if stdenv.isDarwin then
-        [
-          # for obsidian.nvim, ObsidianPasteImg
-          pngpaste
-        ]
+      ] ++ (lib.optionals stdenv.isDarwin [
+        # for obsidian.nvim, ObsidianPasteImg
+        pngpaste
+      ]);
+    extraWrapperArgs = [
+      "--set"
+      "LIBSQLITE"
+      (if pkgs.stdenv.isDarwin then
+        "${pkgs.sqlite.out}/lib/libsqlite3.dylib"
       else
-        [ ]);
-  };
-  home.sessionVariables = lib.mkIf pkgs.stdenv.isDarwin {
-    # for sqlite.lua on macos
-    "LIBSQLITE" = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
+        "${pkgs.sqlite.out}/lib/libsqlite3.so")
+
+    ];
   };
 
   programs.fish.shellAbbrs = {
