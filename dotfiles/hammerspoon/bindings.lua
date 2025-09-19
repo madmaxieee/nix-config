@@ -257,3 +257,8 @@ end)
 lock_mode:bind({ "shift" }, "space", function()
     hs.alert "lock mode activated"
 end)
+
+-- non-modal key binding
+hs.hotkey.bind({ "cmd" }, ";", function()
+    os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
+end)

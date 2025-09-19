@@ -2,22 +2,20 @@
 { config, pkgs, ... }:
 
 let
-  script-kit = pkgs.callPackage ../../packages/script-kit.nix { };
   nix_config_path = "${config.home.homeDirectory}/nix-config";
   linkDotfile = path:
     config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
 in {
-  home.packages = with pkgs; [ jq script-kit ];
+  home.packages = with pkgs; [ jq ];
 
-  home.sessionPath = [ "${config.home.homeDirectory}/.kit/bin" ];
+  home.sessionPath = [
+    "${nix_config_path}/dotfiles/script-kitty/scripts"
+    "${nix_config_path}/dotfiles/script-kitty"
+  ];
 
   home.file = {
     ".hammerspoon" = {
       source = linkDotfile "hammerspoon";
-      recursive = false;
-    };
-    ".kenv" = {
-      source = linkDotfile "kenv";
       recursive = false;
     };
     # hack to make hammerspoon find nix binaries
