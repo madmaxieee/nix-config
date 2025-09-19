@@ -5,6 +5,7 @@
     brews = [ "mas" "media-control" ];
     casks = [
       "1password"
+      "1password-cli"
       "arc"
       "cleanshot"
       "discord"

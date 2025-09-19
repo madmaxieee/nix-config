@@ -23,7 +23,6 @@ in {
 
     # GUI apps
     vscode
-    _1password-cli
     kitty
   ];
 
