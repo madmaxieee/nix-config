@@ -20,6 +20,7 @@
     lazygit
     just
     htop
+    rsync
 
     tealdeer
     typos
