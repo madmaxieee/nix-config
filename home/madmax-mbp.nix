@@ -42,6 +42,11 @@
   xdg.configFile = {
     "sesh/sesh.toml".text = ''
       [[session]]
+      name = "linode"
+      path = "~"
+      startup_command = "exec ssh linode"
+
+      [[session]]
       name = "obsidian"
       path = "~/obsidian"
       startup_command = "exec nvim"
