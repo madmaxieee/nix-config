@@ -60,6 +60,7 @@ yabai -m rule --add manage=off app="^CleanShot X$"
 yabai -m rule --add manage=off app="^Script Kit$"
 yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
 yabai -m rule --add manage=off app='^Gemini$'
+yabai -m rule --add manage=off app='^Duckie$'
 yabai -m rule --add manage=off app='^T3 Chat$'
 yabai -m rule --add manage=off title='Google Single Sign On'
 yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid=5:3:1:1:1:2
