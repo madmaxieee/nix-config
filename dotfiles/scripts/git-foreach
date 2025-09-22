@@ -63,7 +63,7 @@ USER_CMD=("$@")
 USER_CMD_STR="${USER_CMD[*]}"
 
 # Use fd to find ".git" directories and return their parent dir (repo root)
-fd --type d --hidden -I '\.git$' "$SEARCH_DIR" |
+fd --type d --type l --hidden -I '\.git$' "$SEARCH_DIR" |
   xargs -I{} dirname {} |
   sort -u |
   parallel -j"$(nproc)" --no-notice '
