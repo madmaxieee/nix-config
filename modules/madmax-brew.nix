@@ -15,6 +15,7 @@
       "hammerspoon"
       "heptabase"
       "iina"
+      "inkscape"
       "jordanbaird-ice"
       "logi-options+"
       "nordvpn"
