@@ -65,12 +65,14 @@
   };
 
   programs.fish.shellAbbrs = {
-    ct = "cloudtop maxcchuang.c";
     a = "adb";
-    aw = "adb wait-for-device";
     ar = "adb reboot";
+    arb = "adb reboot bootloader";
     as = "adb shell";
+    aw = "adb wait-for-device";
     f = "fastboot";
+    fr = "fastboot reboot";
+    frb = "fastboot reboot bootloader";
   };
 
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
