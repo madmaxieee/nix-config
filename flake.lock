@@ -131,7 +131,24 @@
         "homebrew-core": "homebrew-core",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "sketchybar-app-font-src": "sketchybar-app-font-src"
+      }
+    },
+    "sketchybar-app-font-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758894342,
+        "narHash": "sha256-PlCWWJ77MlYNSY8FGuy/WgFcJXWOYhIh8RpaUXOMWTo=",
+        "owner": "madmaxieee",
+        "repo": "sketchybar-app-font",
+        "rev": "aac1cf25a18f8b646683d52b5cb5b29576c50135",
+        "type": "github"
+      },
+      "original": {
+        "owner": "madmaxieee",
+        "repo": "sketchybar-app-font",
+        "type": "github"
       }
     }
   },

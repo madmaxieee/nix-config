@@ -19,12 +19,28 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sketchybar-app-font-src = {
+      url = "github:madmaxieee/sketchybar-app-font";
+      flake = false;
+    };
   };
 
   outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
-    , homebrew-cask, home-manager }:
+    , homebrew-cask, home-manager, sketchybar-app-font-src }:
     let
-      pkgs = import nixpkgs { system = "aarch64-darwin"; };
+      pkgs = import nixpkgs {
+        system = "aarch64-darwin";
+        overlays = [
+          (final: prev: {
+            sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
+              version = "myfork";
+              src = sketchybar-app-font-src;
+            });
+          })
+        ];
+      };
+
       brew_config = { username }: {
         nix-homebrew = {
           enable = true;
@@ -178,9 +194,7 @@
         ];
       };
 
-      # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."madmax-mbp".pkgs;
-
+      # vps homemanager config
       homeConfigurations."vps" = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = "x86_64-linux";
@@ -190,7 +204,7 @@
         modules = [ ./home/madmax-vps.nix ];
       };
 
-      # cloudtop
+      # cloudtop homemanager config
       homeConfigurations."maxcchuang" =
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {

@@ -454,7 +454,7 @@ return {
 
     -- custom
     ["Cider"] = ":code:",
-    ["Gemini"] = ":gemini:",
+    ["Google Gemini"] = ":gemini:",
     ["Google Calendar"] = ":calendar:",
-    ["Google Chat"] = ":messages:",
+    ["Google Chat"] = ":google_chat:",
 }
