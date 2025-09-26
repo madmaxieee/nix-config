@@ -8,8 +8,8 @@ local app_bind_handlers = {}
 ---@param fn fun(app: hs.application)
 function M.app_bind(app_name, modifiers, key, fn)
     local handler = hs.hotkey.bind(modifiers, key, function()
-        local app = hs.application.find(app_name, true)
-        if app then
+        local app = hs.application.frontmostApplication()
+        if app and app:name() == app_name then
             fn(app)
         end
     end)
