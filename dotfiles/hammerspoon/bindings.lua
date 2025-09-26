@@ -267,3 +267,11 @@ end)
 hs.hotkey.bind({ "cmd" }, ";", function()
     os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
 end)
+
+-- app specific key binding
+local app_bind = require("app_bind").app_bind
+
+app_bind("Zen", { "cmd" }, "d", function(app)
+    -- pin and unpin ta, this is currently not customizable in Zen
+    hs.eventtap.keyStroke({ "alt" }, "p", 0, app)
+end)

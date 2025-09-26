@@ -2,8 +2,17 @@ local M = {}
 
 local app_bind_handlers = {}
 
-M.app_bind = function(app_name, modifiers, key, fn)
-    local handler = hs.hotkey.bind(modifiers, key, fn)
+---@param app_name string
+---@param modifiers string[]
+---@param key string
+---@param fn fun(app: hs.application)
+function M.app_bind(app_name, modifiers, key, fn)
+    local handler = hs.hotkey.bind(modifiers, key, function()
+        local app = hs.application.find(app_name, true)
+        if app then
+            fn(app)
+        end
+    end)
     if app_bind_handlers[app_name] == nil then
         app_bind_handlers[app_name] = {}
     end
