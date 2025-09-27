@@ -457,4 +457,5 @@ return {
     ["Google Gemini"] = ":gemini:",
     ["Google Calendar"] = ":calendar:",
     ["Google Chat"] = ":google_chat:",
+    ["Netflix"] = ":netflix:",
 }
