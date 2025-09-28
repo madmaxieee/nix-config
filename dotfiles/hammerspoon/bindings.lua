@@ -235,12 +235,9 @@ leader_bind("", "=", function()
 end, { repeatable = true })
 leader_bind("", "c", function()
     open_bg "raycast://extensions/raycast/window-management/center"
-    leader_mode:exit()
 end)
-
 leader_bind("shift", "c", function()
     open_bg "raycast://extensions/raycast/window-management/reasonable-size"
-    leader_mode:exit()
 end)
 
 -- lock mode to avoid triggering shift-space
@@ -272,6 +269,6 @@ end)
 local app_bind = require("app_bind").app_bind
 
 app_bind("Zen", { "cmd" }, "d", function(app)
-    -- pin and unpin ta, this is currently not customizable in Zen
+    -- pin and unpin tab, this is currently not customizable in Zen
     hs.eventtap.keyStroke({ "alt" }, "p", 0, app)
 end)

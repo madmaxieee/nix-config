@@ -8,7 +8,7 @@ if [[ -f "$LOCK_FILE" ]]; then
   old_pid="$(cat "$LOCK_FILE" || true)"
   if [[ -n "${old_pid:-}" ]] && ps -p "$old_pid" >/dev/null 2>&1; then
     echo "Killing previous instance (PID $old_pid)..."
-    kill -9 "$old_pid" 2>/dev/null || true
+    kill "$old_pid" 2>/dev/null || true
     rm -f "$LOCK_FILE"
     exit 0
   fi
