@@ -234,10 +234,11 @@ leader_bind("", "=", function()
     open_bg "raycast://extensions/raycast/window-management/make-larger"
 end, { repeatable = true })
 leader_bind("", "c", function()
-    open_bg "raycast://extensions/raycast/window-management/center"
+    -- open_bg "raycast://extensions/raycast/window-management/reasonable-size"
+    os.execute(yabai .. [[ -m window --grid 5:5:1:1:3:3]])
 end)
 leader_bind("shift", "c", function()
-    open_bg "raycast://extensions/raycast/window-management/reasonable-size"
+    open_bg "raycast://extensions/raycast/window-management/center"
 end)
 
 -- lock mode to avoid triggering shift-space
