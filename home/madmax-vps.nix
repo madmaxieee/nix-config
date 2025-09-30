@@ -21,6 +21,8 @@
   };
 
   imports = [
+    ./lib.nix
+
     ./modules/home-manager.nix
     ./modules/dev-basic-pkgs.nix
 

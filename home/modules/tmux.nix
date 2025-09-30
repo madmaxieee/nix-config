@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  nix_config_path = "${config.home.homeDirectory}/nix-config";
-  linkDotfile = path:
-    config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
+  nixConfigPath = config.lib.custom.nixConfigPath;
+  linkDotfile = config.lib.custom.linkDotfile;
   defaultCommand = if pkgs.stdenv.isDarwin then
     ''
       set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
@@ -39,7 +38,7 @@ in {
     ];
     extraConfig = ''
       ${defaultCommand}
-      source-file ${nix_config_path}/dotfiles/tmux/tmux.conf'';
+      source-file ${nixConfigPath}/dotfiles/tmux/tmux.conf'';
   };
 
   programs.fish = {

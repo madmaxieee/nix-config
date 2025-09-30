@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let
-  nix_config_path = "${config.home.homeDirectory}/nix-config";
-  linkDotfile = path:
-    config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
+let linkDotfile = config.lib.custom.linkDotfile;
 in {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 

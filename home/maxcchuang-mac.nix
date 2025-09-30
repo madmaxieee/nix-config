@@ -78,6 +78,8 @@
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
   imports = [
+    ./lib.nix
+
     ./modules/mac.nix
     ./modules/dev-basic-pkgs.nix
 

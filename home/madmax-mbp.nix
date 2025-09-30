@@ -69,6 +69,8 @@
   };
 
   imports = [
+    ./lib.nix
+
     ./modules/mac.nix
     ./modules/dev-basic-pkgs.nix
 

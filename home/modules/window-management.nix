@@ -2,13 +2,12 @@
 { config, pkgs, ... }:
 
 let
-  nix_config_path = "${config.home.homeDirectory}/nix-config";
-  linkDotfile = path:
-    config.lib.file.mkOutOfStoreSymlink "${nix_config_path}/dotfiles/${path}";
+  nixConfigPath = config.lib.custom.nixConfigPath;
+  linkDotfile = config.lib.custom.linkDotfile;
 in {
   home.packages = with pkgs; [ jq ];
 
-  home.sessionPath = [ "${nix_config_path}/dotfiles/script-kitty" ];
+  home.sessionPath = [ "${nixConfigPath}/dotfiles/script-kitty" ];
 
   home.file = {
     ".hammerspoon" = {
