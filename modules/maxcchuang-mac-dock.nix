@@ -5,7 +5,7 @@
       "${pkgs.kitty}/Applications/kitty.app"
       "/Applications/Google Chrome.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Chat.app"
-      "${homeDirectory}/Applications/Chrome Apps.localized/Gemini.app"
+      "${homeDirectory}/Applications/Chrome Apps.localized/Google Gemini.app"
       "/Applications/Spotify.app"
       "/Applications/Things3.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Calendar.app"
