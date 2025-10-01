@@ -1,8 +1,9 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
-  programs.fish.functions.opencode = {
-    body = ''
+  home.file = {
+    ".local/bin/opencode".text = ''
+      #!${pkgs.fish}/bin/fish
       set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
       pnpx opencode-ai@latest $argv
     '';
