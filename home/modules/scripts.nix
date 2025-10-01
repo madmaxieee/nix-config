@@ -2,8 +2,6 @@
 
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
-  home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
-
   home.file = lib.mkMerge [
     {
       ".local/bin/git-foreach".source = linkDotfile "scripts/git-foreach";
