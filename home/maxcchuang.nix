@@ -52,9 +52,13 @@
     ./modules/yazi
 
     ./modules/git.nix
-    (import ./modules/mods { provider = "gemini"; })
 
     ./modules/python.nix
+    ./modules/rust.nix
+
+    (import ./modules/mods.nix { provider = "gemini"; })
+    ./modules/fabric-ai.nix
+    ./modules/opencode.nix
 
     ./modules/git-google.nix
   ];

@@ -86,7 +86,6 @@
     ./modules/yazi
 
     ./modules/git.nix
-    (import ./modules/mods { provider = "gemini"; })
 
     ./modules/clang-tools.nix
     ./modules/java.nix
@@ -94,6 +93,7 @@
     ./modules/rust.nix
     ./modules/web-dev.nix
 
+    (import ./modules/mods.nix { provider = "gemini"; })
     ./modules/fabric-ai.nix
     ./modules/gemini-cli.nix
     ./modules/opencode.nix
