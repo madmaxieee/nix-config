@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
@@ -26,6 +26,9 @@ in {
       recursive = true;
     };
   };
+
+  programs.fish = { shellAbbrs.oc = lib.mkDefault "opencode"; };
+  programs.zsh = { zsh-abbr.abbreviations.oc = lib.mkDefault "opencode"; };
 
   imports = [ ./web-dev.nix ];
 }
