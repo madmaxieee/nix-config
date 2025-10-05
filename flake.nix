@@ -5,6 +5,11 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
@@ -15,19 +20,38 @@
       flake = false;
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # for nixpkgs overlay
     sketchybar-app-font-src = {
       url = "github:madmaxieee/sketchybar-app-font";
       flake = false;
     };
+
+    # yazi plugins
+    yazi-plugins = {
+      url = "github:yazi-rs/plugins";
+      flake = false;
+    };
+    yazi-lazygit = {
+      url = "github:Lil-Dank/lazygit.yazi";
+      flake = false;
+    };
+    yazi-searchjump = {
+      url = "github:DreamMaoMao/searchjump.yazi";
+      flake = false;
+    };
+    yazi-what-size = {
+      url = "github:pirafrank/what-size.yazi";
+      flake = false;
+    };
+    yazi-ouch = {
+      url = "github:ndtoan96/ouch.yazi";
+      flake = false;
+    };
   };
 
-  outputs = { self, nix-darwin, nixpkgs, nix-homebrew, homebrew-core
-    , homebrew-cask, home-manager, sketchybar-app-font-src }:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, nix-homebrew
+    , homebrew-core, homebrew-cask, sketchybar-app-font-src, yazi-plugins
+    , yazi-lazygit, yazi-searchjump, yazi-what-size, yazi-ouch }:
     let
       pkgs = import nixpkgs {
         system = "aarch64-darwin";
@@ -39,6 +63,13 @@
             });
           })
         ];
+      };
+
+      extraSpecialArgs = {
+        sources = {
+          inherit yazi-plugins yazi-lazygit yazi-searchjump yazi-what-size
+            yazi-ouch;
+        };
       };
 
       brew_config = { username }: {
@@ -53,6 +84,7 @@
           mutableTaps = false;
         };
       };
+
       darwin_config = { ... }: {
         nixpkgs.config.allowUnfree = true;
 
@@ -117,9 +149,8 @@
         };
         system.startup.chime = false;
       };
+
     in {
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#madmax-mbp
       darwinConfigurations."madmax-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
           darwin_config
@@ -145,6 +176,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.madmax = import ./home/madmax-mbp.nix;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = extraSpecialArgs;
           }
 
           (import ./modules/madmax-dock.nix {
@@ -183,6 +215,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.maxcchuang = import ./home/maxcchuang-mac.nix;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = extraSpecialArgs;
           }
 
           (import ./modules/maxcchuang-mac-dock.nix {
@@ -201,6 +234,8 @@
           config.allowUnfree = true;
         };
 
+        extraSpecialArgs = extraSpecialArgs;
+
         modules = [ ./home/madmax-vps.nix ];
       };
 
@@ -211,6 +246,8 @@
             system = "x86_64-linux";
             config.allowUnfree = true;
           };
+
+          extraSpecialArgs = extraSpecialArgs;
 
           modules = [ ./home/maxcchuang.nix ];
         };

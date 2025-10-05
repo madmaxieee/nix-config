@@ -21,6 +21,7 @@
     just
     htop
     rsync
+    ouch
 
     tealdeer
     typos

@@ -132,7 +132,12 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
-        "sketchybar-app-font-src": "sketchybar-app-font-src"
+        "sketchybar-app-font-src": "sketchybar-app-font-src",
+        "yazi-lazygit": "yazi-lazygit",
+        "yazi-ouch": "yazi-ouch",
+        "yazi-plugins": "yazi-plugins",
+        "yazi-searchjump": "yazi-searchjump",
+        "yazi-what-size": "yazi-what-size"
       }
     },
     "sketchybar-app-font-src": {
@@ -148,6 +153,86 @@
       "original": {
         "owner": "madmaxieee",
         "repo": "sketchybar-app-font",
+        "type": "github"
+      }
+    },
+    "yazi-lazygit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754466897,
+        "narHash": "sha256-rR7SMTtQYrvQjhkzulDaNH/LAA77UnXkcZ50WwBX2Uw=",
+        "owner": "Lil-Dank",
+        "repo": "lazygit.yazi",
+        "rev": "8f37dc5795f165021098b17d797c7b8f510aeca9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lil-Dank",
+        "repo": "lazygit.yazi",
+        "type": "github"
+      }
+    },
+    "yazi-ouch": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752401966,
+        "narHash": "sha256-C0wG8NQ+zjAMfd+J39Uvs3K4U6e3Qpo1yLPm2xcsAaI=",
+        "owner": "ndtoan96",
+        "repo": "ouch.yazi",
+        "rev": "0742fffea5229271164016bf96fb599d861972db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ndtoan96",
+        "repo": "ouch.yazi",
+        "type": "github"
+      }
+    },
+    "yazi-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758034653,
+        "narHash": "sha256-52Zn6OSSsuNNAeqqZidjOvfCSB7qPqUeizYq/gO+UbE=",
+        "owner": "yazi-rs",
+        "repo": "plugins",
+        "rev": "d1c8baab86100afb708694d22b13901b9f9baf00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "plugins",
+        "type": "github"
+      }
+    },
+    "yazi-searchjump": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752209953,
+        "narHash": "sha256-zH/X7YUpfDiOcEKuXG4J1MZFj3Dv28rWOi9XEod8NNo=",
+        "owner": "DreamMaoMao",
+        "repo": "searchjump.yazi",
+        "rev": "7fafec3e667f2b93d3ad21989ef75bbf95bb43fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DreamMaoMao",
+        "repo": "searchjump.yazi",
+        "type": "github"
+      }
+    },
+    "yazi-what-size": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1750345856,
+        "narHash": "sha256-s2BifzWr/uewDI6Bowy7J+5LrID6I6OFEA5BrlOPNcM=",
+        "owner": "pirafrank",
+        "repo": "what-size.yazi",
+        "rev": "d8966568f2a80394bf1f9a1ace6708ddd4cc8154",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pirafrank",
+        "repo": "what-size.yazi",
         "type": "github"
       }
     }

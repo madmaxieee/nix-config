@@ -92,7 +92,7 @@
 
     ./modules/atuin.nix
     ./modules/zoxide.nix
-    ./modules/yazi
+    ./modules/yazi.nix
 
     ./modules/git.nix
 

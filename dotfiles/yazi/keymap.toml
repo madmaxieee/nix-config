@@ -1,0 +1,33 @@
+[[mgr.prepend_keymap]]
+on = "-"
+run = "leave"
+
+[[mgr.prepend_keymap]]
+desc = "Enter the child directory, or open the file"
+on = "<enter>"
+run = "plugin smart-enter"
+
+[[mgr.prepend_keymap]]
+desc = "searchjump mode"
+on = "s"
+run = "plugin searchjump"
+
+[[mgr.prepend_keymap]]
+desc = "run lazygit"
+on = ["g", "i"]
+run = "plugin lazygit"
+
+[[mgr.prepend_keymap]]
+desc = "help"
+on = ["g", "?"]
+run = "help"
+
+[[mgr.prepend_keymap]]
+desc = "Calc size of selection or cwd"
+on = ["g", "s"]
+run = "plugin what-size"
+
+[[mgr.prepend_keymap]]
+on = ["C"]
+run = "plugin ouch"
+desc = "Compress with ouch"
