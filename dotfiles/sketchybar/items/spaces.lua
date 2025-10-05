@@ -142,8 +142,10 @@ function M.setup(opts)
     })
 
     -- triggered from yabai signal
-    sbar.add("event", "space_apps_refresh")
-    local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", { drawing = false })
+    local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {
+        drawing = false,
+        updates = true,
+    })
     space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
         for i = 1, NUM_SPACES do
             update_space_apps(i)
