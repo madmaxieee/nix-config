@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "autopair-fish": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1656950411,
+        "narHash": "sha256-qt3t1iKRRNuiLWiVoiAYOu+9E7jsyECyIqZJ/oRIT1A=",
+        "owner": "jorgebucaran",
+        "repo": "autopair.fish",
+        "rev": "4d1752ff5b39819ab58d7337c69220342e9de0e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jorgebucaran",
+        "repo": "autopair.fish",
+        "type": "github"
+      }
+    },
     "brew-src": {
       "flake": false,
       "locked": {
@@ -14,6 +30,22 @@
         "owner": "Homebrew",
         "ref": "4.6.7",
         "repo": "brew",
+        "type": "github"
+      }
+    },
+    "fzf-fish": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712464035,
+        "narHash": "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=",
+        "owner": "patrickf1",
+        "repo": "fzf.fish",
+        "rev": "8920367cf85eee5218cc25a11e209d46e2591e7a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "patrickf1",
+        "repo": "fzf.fish",
         "type": "github"
       }
     },
@@ -66,6 +98,22 @@
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-core",
+        "type": "github"
+      }
+    },
+    "lazygit-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754466897,
+        "narHash": "sha256-rR7SMTtQYrvQjhkzulDaNH/LAA77UnXkcZ50WwBX2Uw=",
+        "owner": "Lil-Dank",
+        "repo": "lazygit.yazi",
+        "rev": "8f37dc5795f165021098b17d797c7b8f510aeca9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lil-Dank",
+        "repo": "lazygit.yazi",
         "type": "github"
       }
     },
@@ -124,20 +172,55 @@
         "type": "github"
       }
     },
+    "ouch-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752401966,
+        "narHash": "sha256-C0wG8NQ+zjAMfd+J39Uvs3K4U6e3Qpo1yLPm2xcsAaI=",
+        "owner": "ndtoan96",
+        "repo": "ouch.yazi",
+        "rev": "0742fffea5229271164016bf96fb599d861972db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ndtoan96",
+        "repo": "ouch.yazi",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "autopair-fish": "autopair-fish",
+        "fzf-fish": "fzf-fish",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "lazygit-yazi": "lazygit-yazi",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs",
+        "ouch-yazi": "ouch-yazi",
+        "searchjump-yazi": "searchjump-yazi",
         "sketchybar-app-font-src": "sketchybar-app-font-src",
-        "yazi-lazygit": "yazi-lazygit",
-        "yazi-ouch": "yazi-ouch",
-        "yazi-plugins": "yazi-plugins",
-        "yazi-searchjump": "yazi-searchjump",
-        "yazi-what-size": "yazi-what-size"
+        "vipe-fish": "vipe-fish",
+        "what-size-yazi": "what-size-yazi",
+        "yazi-plugins": "yazi-plugins"
+      }
+    },
+    "searchjump-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752209953,
+        "narHash": "sha256-zH/X7YUpfDiOcEKuXG4J1MZFj3Dv28rWOi9XEod8NNo=",
+        "owner": "DreamMaoMao",
+        "repo": "searchjump.yazi",
+        "rev": "7fafec3e667f2b93d3ad21989ef75bbf95bb43fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DreamMaoMao",
+        "repo": "searchjump.yazi",
+        "type": "github"
       }
     },
     "sketchybar-app-font-src": {
@@ -156,35 +239,35 @@
         "type": "github"
       }
     },
-    "yazi-lazygit": {
+    "vipe-fish": {
       "flake": false,
       "locked": {
-        "lastModified": 1754466897,
-        "narHash": "sha256-rR7SMTtQYrvQjhkzulDaNH/LAA77UnXkcZ50WwBX2Uw=",
-        "owner": "Lil-Dank",
-        "repo": "lazygit.yazi",
-        "rev": "8f37dc5795f165021098b17d797c7b8f510aeca9",
+        "lastModified": 1728017279,
+        "narHash": "sha256-9plV/fZn1B6z2lUh153yLK/xQdpCOImxHPYGiIJO/lk=",
+        "owner": "madmaxieee",
+        "repo": "vipe.fish",
+        "rev": "95e1a08862a2c6149676217e725e351357c0e869",
         "type": "github"
       },
       "original": {
-        "owner": "Lil-Dank",
-        "repo": "lazygit.yazi",
+        "owner": "madmaxieee",
+        "repo": "vipe.fish",
         "type": "github"
       }
     },
-    "yazi-ouch": {
+    "what-size-yazi": {
       "flake": false,
       "locked": {
-        "lastModified": 1752401966,
-        "narHash": "sha256-C0wG8NQ+zjAMfd+J39Uvs3K4U6e3Qpo1yLPm2xcsAaI=",
-        "owner": "ndtoan96",
-        "repo": "ouch.yazi",
-        "rev": "0742fffea5229271164016bf96fb599d861972db",
+        "lastModified": 1759719587,
+        "narHash": "sha256-kyL1EkrZq1lC74GpRngM3DqzXwmxD29x8CeDd1Z6sPA=",
+        "owner": "madmaxieee",
+        "repo": "what-size.yazi",
+        "rev": "04da5423a10b7927b4bf2f166f6d88dca6f91af1",
         "type": "github"
       },
       "original": {
-        "owner": "ndtoan96",
-        "repo": "ouch.yazi",
+        "owner": "madmaxieee",
+        "repo": "what-size.yazi",
         "type": "github"
       }
     },
@@ -201,38 +284,6 @@
       "original": {
         "owner": "yazi-rs",
         "repo": "plugins",
-        "type": "github"
-      }
-    },
-    "yazi-searchjump": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1752209953,
-        "narHash": "sha256-zH/X7YUpfDiOcEKuXG4J1MZFj3Dv28rWOi9XEod8NNo=",
-        "owner": "DreamMaoMao",
-        "repo": "searchjump.yazi",
-        "rev": "7fafec3e667f2b93d3ad21989ef75bbf95bb43fc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DreamMaoMao",
-        "repo": "searchjump.yazi",
-        "type": "github"
-      }
-    },
-    "yazi-what-size": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1750345856,
-        "narHash": "sha256-s2BifzWr/uewDI6Bowy7J+5LrID6I6OFEA5BrlOPNcM=",
-        "owner": "pirafrank",
-        "repo": "what-size.yazi",
-        "rev": "d8966568f2a80394bf1f9a1ace6708ddd4cc8154",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pirafrank",
-        "repo": "what-size.yazi",
         "type": "github"
       }
     }

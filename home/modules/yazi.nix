@@ -16,10 +16,10 @@ in {
     plugins = {
       git = "${sources.yazi-plugins}/git.yazi";
       smart-enter = "${sources.yazi-plugins}/smart-enter.yazi";
-      lazygit = sources.yazi-lazygit;
-      searchjump = sources.yazi-searchjump;
-      what-size = sources.yazi-what-size;
-      ouch = sources.yazi-ouch;
+      lazygit = sources.lazygit-yazi;
+      searchjump = sources.searchjump-yazi;
+      what-size = sources.what-size-yazi;
+      ouch = sources.ouch-yazi;
     };
   };
 }

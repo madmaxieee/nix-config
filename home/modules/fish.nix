@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, sources, ... }:
 
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
@@ -64,30 +64,15 @@ in {
     plugins = [
       {
         name = "autopair.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "jorgebucaran";
-          repo = "autopair.fish";
-          rev = "1.0.4";
-          sha256 = "sha256-s1o188TlwpUQEN3X5MxUlD/2CFCpEkWu83U9O+wg3VU=";
-        };
+        src = sources.autopair-fish;
       }
       {
         name = "fzf.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "patrickf1";
-          repo = "fzf.fish";
-          rev = "v10.3";
-          sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
-        };
+        src = sources.fzf-fish;
       }
       {
         name = "vipe.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "madmaxieee";
-          repo = "vipe.fish";
-          rev = "95e1a08862a2c6149676217e725e351357c0e869";
-          hash = "sha256-9plV/fZn1B6z2lUh153yLK/xQdpCOImxHPYGiIJO/lk=";
-        };
+        src = sources.vipe-fish;
       }
     ];
   };

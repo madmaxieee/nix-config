@@ -31,27 +31,43 @@
       url = "github:yazi-rs/plugins";
       flake = false;
     };
-    yazi-lazygit = {
+    lazygit-yazi = {
       url = "github:Lil-Dank/lazygit.yazi";
       flake = false;
     };
-    yazi-searchjump = {
+    searchjump-yazi = {
       url = "github:DreamMaoMao/searchjump.yazi";
       flake = false;
     };
-    yazi-what-size = {
-      url = "github:pirafrank/what-size.yazi";
+    what-size-yazi = {
+      url = "github:madmaxieee/what-size.yazi";
       flake = false;
     };
-    yazi-ouch = {
+    ouch-yazi = {
       url = "github:ndtoan96/ouch.yazi";
+      flake = false;
+    };
+
+    # fish plugins
+    autopair-fish = {
+      url = "github:jorgebucaran/autopair.fish";
+      flake = false;
+    };
+    fzf-fish = {
+      url = "github:patrickf1/fzf.fish";
+      flake = false;
+    };
+    vipe-fish = {
+      url = "github:madmaxieee/vipe.fish";
       flake = false;
     };
   };
 
   outputs = { self, nix-darwin, nixpkgs, home-manager, nix-homebrew
     , homebrew-core, homebrew-cask, sketchybar-app-font-src, yazi-plugins
-    , yazi-lazygit, yazi-searchjump, yazi-what-size, yazi-ouch }:
+    , lazygit-yazi, searchjump-yazi, what-size-yazi, ouch-yazi, autopair-fish
+    , fzf-fish, vipe-fish }:
+
     let
       pkgs = import nixpkgs {
         system = "aarch64-darwin";
@@ -67,8 +83,9 @@
 
       extraSpecialArgs = {
         sources = {
-          inherit yazi-plugins yazi-lazygit yazi-searchjump yazi-what-size
-            yazi-ouch;
+          inherit yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi
+            ouch-yazi;
+          inherit autopair-fish fzf-fish vipe-fish;
         };
       };
 
