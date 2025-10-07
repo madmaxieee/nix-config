@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 let sbarLua = pkgs.callPackage ./SbarLua.nix { };
 in {

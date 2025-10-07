@@ -1,4 +1,5 @@
-{ pkgs, homeDirectory }: {
+{ homeDirectory }:
+{ pkgs, ... }: {
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"

@@ -21,6 +21,7 @@
     };
 
     # for nixpkgs overlay
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     sketchybar-app-font-src = {
       url = "github:madmaxieee/sketchybar-app-font";
       flake = false;
@@ -63,29 +64,26 @@
     };
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager, nix-homebrew
-    , homebrew-core, homebrew-cask, sketchybar-app-font-src, yazi-plugins
-    , lazygit-yazi, searchjump-yazi, what-size-yazi, ouch-yazi, autopair-fish
-    , fzf-fish, vipe-fish }:
+  outputs =
+    { self, nix-darwin, nixpkgs, home-manager, nix-homebrew, ... }@inputs:
 
     let
-      pkgs = import nixpkgs {
-        system = "aarch64-darwin";
-        overlays = [
-          (final: prev: {
-            sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
-              version = "myfork";
-              src = sketchybar-app-font-src;
-            });
-          })
-        ];
-      };
+      overlays = [
+        inputs.neovim-nightly-overlay.overlays.default
+        (final: prev: {
+          sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
+            version = "myfork";
+            src = inputs.sketchybar-app-font-src;
+          });
+        })
+      ];
 
       extraSpecialArgs = {
+        inherit overlays;
         sources = {
-          inherit yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi
-            ouch-yazi;
-          inherit autopair-fish fzf-fish vipe-fish;
+          inherit (inputs)
+            yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi ouch-yazi;
+          inherit (inputs) autopair-fish fzf-fish vipe-fish;
         };
       };
 
@@ -95,24 +93,18 @@
           enableRosetta = false;
           user = username;
           taps = {
-            "homebrew/core" = homebrew-core;
-            "homebrew/cask" = homebrew-cask;
+            "homebrew/core" = inputs.homebrew-core;
+            "homebrew/cask" = inputs.homebrew-cask;
           };
           mutableTaps = false;
         };
       };
 
-      darwin_config = { ... }: {
+      darwin_config = { pkgs, ... }: {
         nixpkgs.config.allowUnfree = true;
+        nixpkgs.overlays = overlays;
 
-        # List packages installed in system profile. To search by name, run:
-        environment.systemPackages = [
-          pkgs.git
-          pkgs.vim
-          pkgs.fish
-
-          pkgs.pam-reattach
-        ];
+        environment.systemPackages = [ pkgs.git pkgs.vim pkgs.fish ];
 
         fonts.packages = [ pkgs.nerd-fonts.symbols-only pkgs.victor-mono ];
 
@@ -171,7 +163,7 @@
       darwinConfigurations."madmax-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
           darwin_config
-          {
+          ({ pkgs, ... }: {
             system.primaryUser = "madmax";
             ids.gids.nixbld = 350;
             programs.zsh.enable = true;
@@ -181,7 +173,7 @@
               home = "/Users/madmax";
               shell = pkgs.fish;
             };
-          }
+          })
 
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "madmax"; })
@@ -197,18 +189,17 @@
           }
 
           (import ./modules/madmax-dock.nix {
-            inherit pkgs;
             homeDirectory = "/Users/madmax";
           })
 
-          (import ./modules/window-management { inherit pkgs; })
+          (import ./modules/window-management)
         ];
       };
 
       darwinConfigurations."maxcchuang-mac" = nix-darwin.lib.darwinSystem {
         modules = [
           darwin_config
-          {
+          ({ pkgs, ... }: {
             system.primaryUser = "maxcchuang";
             ids.gids.nixbld = 350;
             system.defaults.universalaccess.reduceMotion = true;
@@ -220,7 +211,7 @@
               home = "/Users/maxcchuang";
               shell = pkgs.fish;
             };
-          }
+          })
 
           nix-homebrew.darwinModules.nix-homebrew
           (brew_config { username = "maxcchuang"; })
@@ -236,11 +227,10 @@
           }
 
           (import ./modules/maxcchuang-mac-dock.nix {
-            inherit pkgs;
             homeDirectory = "/Users/maxcchuang";
           })
 
-          (import ./modules/window-management { inherit pkgs; })
+          (import ./modules/window-management)
         ];
       };
 
@@ -249,6 +239,7 @@
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
+          overlays = overlays;
         };
 
         extraSpecialArgs = extraSpecialArgs;
@@ -262,6 +253,7 @@
           pkgs = import nixpkgs {
             system = "x86_64-linux";
             config.allowUnfree = true;
+            overlays = overlays;
           };
 
           extraSpecialArgs = extraSpecialArgs;
