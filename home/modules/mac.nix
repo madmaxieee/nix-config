@@ -18,9 +18,6 @@ in {
     gnused
     gnutar
 
-    # misc
-    xz
-
     # GUI apps
     vscode
     kitty

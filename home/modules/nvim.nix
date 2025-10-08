@@ -23,6 +23,8 @@
         nodejs_20
         python312
         unzip
+        xz
+
         tree-sitter
 
         nixfmt-classic
