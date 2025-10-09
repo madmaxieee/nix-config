@@ -48,6 +48,9 @@ style = "green"
 [docker_context]
 disabled = true
 
+[hg_branch]
+disabled = false
+
 [nix_shell]
 disabled = false
 heuristic = true

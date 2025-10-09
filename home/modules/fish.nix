@@ -24,7 +24,9 @@ in {
         cd (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)'';
       __starship_no_git = {
         body = ''
-          if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not timeout 0.5s git status >/dev/null 2>&1
+          if pwd | grep -q '^/google'
+            set -gx STARSHIP_CONFIG ~/.config/starship_no_git.toml
+          else if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not timeout 0.5s git status >/dev/null 2>&1
             set -gx STARSHIP_CONFIG ~/.config/starship_no_git.toml
           else
             set -gx STARSHIP_CONFIG ~/.config/starship.toml
