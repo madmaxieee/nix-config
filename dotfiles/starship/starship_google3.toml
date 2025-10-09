@@ -14,8 +14,6 @@ vimcmd_visual_symbol = "[<-](bold yellow)"
 [directory]
 truncate_to_repo = false
 style = "bold blue"
-repo_root_style = "bold cyan"
-repo_root_format = '[$before_root_path]($style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 [hostname]
 ssh_only = true
@@ -28,22 +26,19 @@ style_user = "bold yellow"
 format = '[$user]($style)'
 
 [git_branch]
-style = "green"
-ignore_branches = ["main"]
+disabled = true
+
+[git_commit]
+disabled = true
+
+[git_state]
+disabled = true
+
+[git_metrics]
+disabled = true
 
 [git_status]
-format = '([$all_status$ahead_behind]($style))'
-conflicted = "=$count "
-ahead = "⇡$count "
-behind = "⇣$count "
-diverged = "⇡${ahead_count}⇣${behind_count}"
-untracked = "[?$count](blue) "
-stashed = "*$count "
-modified = "[!$count](yellow) "
-staged = "[++$count](green) "
-renamed = "»$count "
-deleted = "[✘$count](red) "
-style = "green"
+disabled = true
 
 [docker_context]
 disabled = true
@@ -57,3 +52,9 @@ disabled = false
 fish_indicator = ""
 zsh_indicator = "% "
 format = '[$indicator]($style)'
+
+[custom.fig]
+command = """ fish -c 'string replace -r '^/google/src/cloud/' "" $PWD' | cut -d'/' -f2 """
+when = """ pwd | grep -q '^/google/src/cloud' """
+style = "bold cyan"
+format = "[🌱 ($output) ]($style)"

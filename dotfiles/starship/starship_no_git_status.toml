@@ -14,6 +14,8 @@ vimcmd_visual_symbol = "[<-](bold yellow)"
 [directory]
 truncate_to_repo = false
 style = "bold blue"
+repo_root_style = "bold cyan"
+repo_root_format = '[$before_root_path]($style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 [hostname]
 ssh_only = true
@@ -25,29 +27,15 @@ format = '@[$ssh_symbol$hostname]($style) in '
 style_user = "bold yellow"
 format = '[$user]($style)'
 
-## begin git section
 [git_branch]
 style = "green"
 ignore_branches = ["main"]
 
-# [git_commit]
-# disabled = true
-#
-# [git_state]
-# disabled = true
-#
-# [git_metrics]
-# disabled = true
-
 [git_status]
 disabled = true
-## end git section
 
 [docker_context]
 disabled = true
-
-[hg_branch]
-disabled = false
 
 [nix_shell]
 disabled = false
