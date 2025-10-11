@@ -458,4 +458,5 @@ return {
     ["Google Calendar"] = ":calendar:",
     ["Google Chat"] = ":google_chat:",
     ["Netflix"] = ":netflix:",
+    ["stremio"] = ":youtube:",
 }

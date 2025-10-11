@@ -23,6 +23,7 @@
       "orbstack"
       "raycast"
       "spotify"
+      "stremio"
       "thingsmacsandboxhelper"
       "zen"
     ];
