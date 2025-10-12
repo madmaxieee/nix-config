@@ -9,7 +9,7 @@ in {
       text = ''
         #!${pkgs.fish}/bin/fish
         set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
-        pnpx opencode-ai@latest $argv
+        bunx --bun opencode-ai@latest $argv
       '';
       onChange = let local_bin = "${config.home.homeDirectory}/.local/bin";
       in ''
