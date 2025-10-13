@@ -33,6 +33,6 @@ session="$(
 # strip the icon from the session name
 session="${session#* }"
 
-tmux set-option -t "$session" detach-on-destroy off &
-tmux set-option -t "$session" status on &
+tmux set-option -t "$session" detach-on-destroy off 2>/dev/null &
+tmux set-option -t "$session" status on 2>/dev/null &
 sesh connect "$session"
