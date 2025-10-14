@@ -6,8 +6,6 @@
 
   home.packages = with pkgs; [ zig typst ];
 
-  home.sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
-
   programs.ssh = {
     enable = true;
     matchBlocks = {
@@ -88,6 +86,7 @@
     ./modules/git.nix
 
     ./modules/clang-tools.nix
+    ./modules/go.nix
     ./modules/java.nix
     ./modules/python.nix
     ./modules/rust.nix
