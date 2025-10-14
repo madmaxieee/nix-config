@@ -18,6 +18,10 @@
     extraLuaPackages = ps: with ps; [ luarocks ];
     extraPackages = with pkgs;
       [
+        # required for nvim-treesitter main branch
+        tree-sitter
+
+        # for mason
         cargo
         go
         nodejs_20
@@ -25,16 +29,18 @@
         unzip
         xz
 
-        tree-sitter
-
+        # for formatting, linting, etc.
         nixfmt-classic
-        nil
+        fennel-ls
 
+        # for sqlite.lua
         sqlite
+
+        # for snacks image
         imagemagick
         ghostscript
       ] ++ (lib.optionals stdenv.isDarwin [
-        # for obsidian.nvim, ObsidianPasteImg
+        # for obsidian.nvim, ":Obsidian paste_img"
         pngpaste
       ]);
     extraWrapperArgs = [
