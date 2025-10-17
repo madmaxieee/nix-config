@@ -30,7 +30,6 @@
     shellAbbrs = {
       copy = "kitten clipboard";
       paste = "kitten clipboard -g";
-      g = "";
     };
     interactiveShellInit = ''
       __hg_or_git_abbr
