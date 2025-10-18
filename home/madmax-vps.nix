@@ -45,7 +45,6 @@
     ./modules/rust.nix
     ./modules/web-dev.nix
 
-    ./modules/moar.nix
     ./modules/jujutsu.nix
   ];
 }

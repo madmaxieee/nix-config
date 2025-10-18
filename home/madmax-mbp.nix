@@ -109,7 +109,6 @@
       '';
     })
 
-    ./modules/moar.nix
     ./modules/jujutsu.nix
   ];
 

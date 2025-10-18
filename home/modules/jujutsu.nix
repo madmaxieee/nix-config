@@ -10,4 +10,7 @@ in {
       recursive = false;
     };
   };
+
+  # jj breaks common pager like less or more, so use moar instead
+  imports = [ ./moar.nix ];
 }
