@@ -5,6 +5,7 @@
     brews = [ "mas" "media-control" ];
     casks = [
       "1password"
+      "alfred"
       "discord"
       "espanso"
       "fantastical"
