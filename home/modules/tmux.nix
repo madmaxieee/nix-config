@@ -61,10 +61,5 @@ in {
     };
   };
 
-  xdg.configFile = {
-    "tmux/scripts" = {
-      source = linkDotfile "tmux/scripts";
-      recursive = true;
-    };
-  };
+  xdg.configFile."tmux/scripts".source = linkDotfile "tmux/scripts";
 }

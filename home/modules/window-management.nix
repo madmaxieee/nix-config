@@ -10,10 +10,8 @@ in {
   home.sessionPath = [ "${nixConfigPath}/dotfiles/script-kitty" ];
 
   home.file = {
-    ".hammerspoon" = {
-      source = linkDotfile "hammerspoon";
-      recursive = false;
-    };
+    ".hammerspoon".source = linkDotfile "hammerspoon";
+
     # hack to make hammerspoon find nix binaries
     "nix-config/dotfiles/hammerspoon/nix_path.lua".text = ''
       NIX_PATH = "${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
@@ -23,17 +21,8 @@ in {
   };
 
   xdg.configFile = {
-    "skhd" = {
-      source = linkDotfile "skhd";
-      recursive = false;
-    };
-    "yabai" = {
-      source = linkDotfile "yabai";
-      recursive = false;
-    };
-    "sketchybar" = {
-      source = linkDotfile "sketchybar";
-      recursive = false;
-    };
+    "skhd".source = linkDotfile "skhd";
+    "yabai".source = linkDotfile "yabai";
+    "sketchybar".source = linkDotfile "sketchybar";
   };
 }

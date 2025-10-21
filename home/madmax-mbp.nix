@@ -93,6 +93,7 @@
     ./modules/web-dev.nix
 
     (import ./modules/mods.nix { provider = "gemini"; })
+    ./modules/axon.nix
     ./modules/fabric-ai.nix
     ./modules/gemini-cli.nix
     ./modules/opencode.nix

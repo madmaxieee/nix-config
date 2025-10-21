@@ -1,0 +1,24 @@
+[general]
+model = "google/gemini-2.5-pro"
+
+[[pattern]]
+name = "summarize"
+steps = [{ prompt = "@summarize" }]
+
+[[patterns]]
+name = "git_commit_message"
+steps = [
+  { command = "git log --max-count=10", output = "commits", needs_input = false },
+  { prompt = "@commit_message", output = "commit_message" },
+  { command = "git commit -e -m {{ .commit_message }}", needs_input = false },
+]
+
+[[patterns]]
+name = "jj_desc"
+steps = [
+  { command = "jj diff --git", output = "diff", needs_input = false },
+  { command = "jj log -T builtin_log_detailed -n 10", output = "commits", needs_input = false },
+  { prompt = "@commit_message", output = "commit_message" },
+  # automatically shell quoted
+  { command = "jj desc -m {{ .commit_message }}", needs_input = false },
+]

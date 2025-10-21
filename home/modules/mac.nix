@@ -28,10 +28,7 @@ in {
       sha256 =
         "0714a26a5f9f999dc9d953c46e04ff2c64873cd69d34669aee8479954dd1565e";
     };
-    "kitty" = {
-      source = linkDotfile "kitty";
-      recursive = false;
-    };
+    "kitty".source = linkDotfile "kitty";
     "fish/conf.d/kitty.fish".text = ''
       status is-interactive || exit 0
       if test $TERM = 'xterm-kitty'
@@ -41,14 +38,8 @@ in {
         end
       end
     '';
-    "ghostty" = {
-      source = linkDotfile "ghostty";
-      recursive = false;
-    };
-    "espanso" = {
-      source = linkDotfile "espanso";
-      recursive = false;
-    };
+    "ghostty".source = linkDotfile "ghostty";
+    "espanso".source = linkDotfile "espanso";
   };
 
   programs.fish.shellAbbrs = {
