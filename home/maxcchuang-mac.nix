@@ -4,7 +4,7 @@
   home.username = "maxcchuang";
   home.homeDirectory = "/Users/maxcchuang";
 
-  home.packages = with pkgs; [ minicom d2 vscode ];
+  home.packages = with pkgs; [ minicom d2 ];
 
   programs.ssh = {
     enable = true;

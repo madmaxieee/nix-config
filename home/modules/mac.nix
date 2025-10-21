@@ -17,10 +17,6 @@ in {
     gnumake
     gnused
     gnutar
-
-    # GUI apps
-    vscode
-    kitty
   ];
 
   home.sessionVariables = { "XDG_CONFIG_HOME" = config.xdg.configHome; };

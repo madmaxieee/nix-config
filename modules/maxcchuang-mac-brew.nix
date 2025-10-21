@@ -14,11 +14,13 @@
       "heptabase"
       "iina"
       "jordanbaird-ice"
+      "kitty"
       "logi-options+"
       "obsidian"
       "raycast"
       "spotify"
       "thingsmacsandboxhelper"
+      "visual-studio-code"
       "zen"
     ];
     masApps = {

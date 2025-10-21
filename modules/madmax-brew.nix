@@ -18,6 +18,7 @@
       "iina"
       "inkscape"
       "jordanbaird-ice"
+      "kitty"
       "logi-options+"
       "nordvpn"
       "obsidian"
@@ -26,6 +27,7 @@
       "spotify"
       "stremio"
       "thingsmacsandboxhelper"
+      "visual-studio-code"
       "zen"
     ];
     masApps = {
