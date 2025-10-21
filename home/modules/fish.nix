@@ -66,6 +66,19 @@ in {
         tmux new-session -A -s main >/dev/null 2>&1
       end
     '';
+
+    # unmanaged fish config files con be placed in ~/.config/fish/after/
+    shellInitLast = ''
+      begin
+        set -l after_dir "$__fish_config_dir"/after
+        if test -d $after_dir
+            for f in (command ls "$after_dir"/*.fish | sort)
+                source $f
+            end
+        end
+      end
+    '';
+
     plugins = [
       {
         name = "autopair.fish";
