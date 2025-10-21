@@ -30,6 +30,8 @@
 
   programs.fastfetch.enable = true;
 
+  programs.man.enable = true;
+
   programs.bat = {
     enable = true;
     config.theme = "tokyonight-moon";
