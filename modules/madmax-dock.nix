@@ -3,7 +3,7 @@
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"
-      "${pkgs.kitty}/Applications/kitty.app"
+      "/Applications/kitty.app"
       "/Applications/Helium.app"
       "/Applications/Messenger.app"
       "/Applications/Telegram.app"
