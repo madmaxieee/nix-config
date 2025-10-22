@@ -62,6 +62,12 @@
       url = "github:madmaxieee/vipe.fish";
       flake = false;
     };
+
+    # misc
+    fabric = {
+      url = "github:danielmiessler/Fabric";
+      flake = false;
+    };
   };
 
   outputs =
@@ -84,6 +90,7 @@
           inherit (inputs)
             yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi ouch-yazi;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
+          inherit (inputs) fabric;
         };
       };
 

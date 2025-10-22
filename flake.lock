@@ -33,6 +33,22 @@
         "type": "github"
       }
     },
+    "fabric": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1760455643,
+        "narHash": "sha256-t9gL+BT8102fAL8yLuau4WZPa+XtX4y7JyuxQYqwkS8=",
+        "owner": "danielmiessler",
+        "repo": "Fabric",
+        "rev": "7d80fd6d1d0ece770fb267c491012322b73223eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danielmiessler",
+        "repo": "Fabric",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -370,6 +386,7 @@
     "root": {
       "inputs": {
         "autopair-fish": "autopair-fish",
+        "fabric": "fabric",
         "fzf-fish": "fzf-fish",
         "home-manager": "home-manager",
         "homebrew-cask": "homebrew-cask",
