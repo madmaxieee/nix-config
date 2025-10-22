@@ -72,7 +72,7 @@ in {
       begin
         set -l after_dir "$__fish_config_dir"/after
         if test -d $after_dir
-            for f in (command ls "$after_dir"/*.fish | sort)
+            for f in (find -L "$after_dir" -type f -name '*.fish' | sort)
                 source $f
             end
         end

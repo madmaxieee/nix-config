@@ -23,8 +23,8 @@
   home.activation = let fnm = "${pkgs.fnm}/bin/fnm";
   in {
     fnm_setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      $DRY_RUN_CMD ${fnm} install --corepack-enabled --lts
-      $DRY_RUN_CMD ${fnm} default lts-latest
+      run ${fnm} install --corepack-enabled --lts
+      run ${fnm} default lts-latest
     '';
   };
 }

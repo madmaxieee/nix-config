@@ -5,7 +5,7 @@
   in {
     clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d ${config.xdg.configHome}/nvim ]; then
-        $DRY_RUN_CMD ${git} clone git@github.com:madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
+        run ${git} clone git@github.com:madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
       fi
     '';
   };

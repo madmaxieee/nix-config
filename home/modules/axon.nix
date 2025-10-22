@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
@@ -18,12 +18,15 @@ in {
   programs.fish = {
     functions.axon.body = ''
       set -x GOOGLE_API_KEY (pass gemini/cli 2> /dev/null)
-      set -x OPENAI_API_KEY (pass openai/mods 2> /dev/null)
-      set -x ANTHROPIC_API_KEY (pass anthropic/mods 2> /dev/null)
-      go run github.com/madmaxieee/axon@latest $argv
+      command axon $argv
     '';
-    interactiveShellInit = ''
-      axon completion fish | source
+  };
+
+  home.activation = let go = "${pkgs.go}/bin/go";
+  in {
+    axon_install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${go} install github.com/madmaxieee/axon@latest
+      run ${config.home.homeDirectory}/go/bin/axon completion fish > ${config.xdg.configHome}/fish/completions/axon.fish
     '';
   };
 

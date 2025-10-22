@@ -73,6 +73,7 @@
     ./modules/rust.nix
 
     (import ./modules/mods.nix { provider = "gemini"; })
+    ./modules/axon.nix
     ./modules/fabric-ai.nix
     ./modules/opencode.nix
 

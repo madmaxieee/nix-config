@@ -6,8 +6,9 @@ name = "summarize"
 steps = [{ prompt = "@summarize" }]
 
 [[patterns]]
-name = "git_commit_message"
+name = "git_diff_staged_commit"
 steps = [
+  { command = "git diff --staged", output = "diff", needs_input = false },
   { command = "git log --max-count=10", output = "commits", needs_input = false },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "git commit -e -m {{ .commit_message }}", needs_input = false },
