@@ -219,26 +219,46 @@ leader_bind("", "0", function()
     go_to_space(10)
 end)
 
-local function open_bg(url)
-    os.execute([[open -g ']] .. url .. [[']])
+local function is_managed_by_yabai(win_id)
+    local win_info_raw = hs.execute((yabai .. [[ -m query --windows --window %d]]):format(win_id))
+    local win_info = hs.json.decode(win_info_raw)
+    if win_info == nil then
+        return false
+    end
+    return not win_info["is-floating"]
 end
 
--- raycast window management for floating windows
+---@param win hs.window
+---@param delta_ratio number
+local function relative_resize_keep_aspect(win, delta_ratio)
+    local frame = win:frame()
+    local new_w = frame.w * (1 + delta_ratio)
+    local new_h = frame.h * (1 + delta_ratio)
+    local new_x = frame.x - (new_w - frame.w) / 2
+    local new_y = frame.y - (new_h - frame.h) / 2
+    win:setFrame(hs.geometry.rect(new_x, new_y, new_w, new_h))
+end
+
 leader_bind("", "-", function()
-    open_bg "raycast://extensions/raycast/window-management/make-smaller"
+    relative_resize_keep_aspect(hs.window.focusedWindow(), -0.1)
 end, { repeatable = true })
 leader_bind("shift", "=", function()
-    open_bg "raycast://extensions/raycast/window-management/make-larger"
+    relative_resize_keep_aspect(hs.window.focusedWindow(), 0.1)
 end, { repeatable = true })
 leader_bind("", "=", function()
-    open_bg "raycast://extensions/raycast/window-management/make-larger"
+    relative_resize_keep_aspect(hs.window.focusedWindow(), 0.1)
 end, { repeatable = true })
 leader_bind("", "c", function()
-    -- open_bg "raycast://extensions/raycast/window-management/reasonable-size"
-    os.execute(yabai .. [[ -m window --grid 5:5:1:1:3:3]])
+    local win = hs.window.focusedWindow()
+    if is_managed_by_yabai(win:id()) then
+        return
+    end
+    win:setSize(hs.geometry.size(1350, 900))
+    hs.timer.usleep(100 * 1000)
+    win:centerOnScreen()
 end)
 leader_bind("shift", "c", function()
-    open_bg "raycast://extensions/raycast/window-management/center"
+    hs.window.focusedWindow():centerOnScreen()
 end)
 
 -- lock mode to avoid triggering shift-space
