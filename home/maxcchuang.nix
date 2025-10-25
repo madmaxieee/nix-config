@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-{
+rec {
   home.username = "maxcchuang";
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
@@ -44,10 +44,7 @@
                 fi
                 command gcert "$@"' --'';
     };
-    zsh-abbr.abbreviations = {
-      copy = "kitten clipboard";
-      paste = "kitten clipboard -g";
-    };
+    zsh-abbr.abbreviations = programs.fish.shellAbbrs;
   };
 
   imports = [

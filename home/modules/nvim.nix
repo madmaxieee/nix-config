@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-{
+rec {
   home.activation = let git = "${pkgs.git}/bin/git";
   in {
     clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -62,13 +62,8 @@
   };
   programs.fish.functions = { diffview = ''nvim +"DiffviewOpen $argv"''; };
 
-  programs.zsh.zsh-abbr.abbreviations = {
-    nv = lib.mkDefault "nvim";
-    v = lib.mkDefault "nvim";
-    vi = lib.mkDefault "nvim";
-    dv = lib.mkDefault "diffview";
-  };
-  programs.zsh.shellAliases = { diffview = ''nvim +"DiffviewOpen $@"''; };
+  programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
+  programs.zsh.shellAliases = programs.fish.functions;
 
   programs.git.aliases = {
     "dv" = "diffview";

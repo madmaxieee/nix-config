@@ -24,8 +24,13 @@ in {
       fish_greeting = "flush";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
-        cd (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)'';
-      __starship_no_git = {
+        set -f newest_dir (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)
+        cd $newest_dir
+      '';
+      __dotdot = ''
+        echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+      '';
+      __select_starship_config = {
         body = ''
           if pwd | grep -q '^/google/src/cloud'
             set -gx STARSHIP_CONFIG ~/.config/starship_google3.toml
@@ -44,7 +49,7 @@ in {
       end
 
       if test -d /google && type -q starship
-        __starship_no_git
+        __select_starship_config
       end
 
       if type -q brew
@@ -56,10 +61,7 @@ in {
         end
       end
 
-      function multicd
-        echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
-      end
-      abbr --add dotdot --regex '^\.\.+$' --function multicd
+      abbr --add dotdot --regex '^\.\.+$' --function __dotdot
 
       # if not in tmux, start a new session
       if not set -q TMUX && not set -q IN_NIX_SHELL && type -q tmux

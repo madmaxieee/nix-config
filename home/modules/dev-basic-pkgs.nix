@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-{
+rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   home.packages = with pkgs; [
@@ -60,7 +60,7 @@
       j = lib.mkDefault "just";
       lg = lib.mkDefault "lazygit";
     };
-    shellAliases = {
+    functions = {
       cat = lib.mkDefault "bat -p";
       l = lib.mkDefault "eza";
       ls = lib.mkDefault "eza --icons=auto";
@@ -73,21 +73,7 @@
   };
 
   programs.zsh = {
-    zsh-abbr.abbreviations = {
-      rm = lib.mkDefault "rip";
-      rmm = lib.mkDefault "rm -rf";
-      j = lib.mkDefault "just";
-      lg = lib.mkDefault "lazygit";
-    };
-    shellAliases = {
-      cat = lib.mkDefault "bat -p";
-      l = lib.mkDefault "eza";
-      ls = lib.mkDefault "eza --icons=auto";
-      la = lib.mkDefault "eza --icons=auto --all";
-      ll = lib.mkDefault "eza --icons=auto --long --group";
-      lla = lib.mkDefault "eza --icons=auto --long --group --all";
-      tree = lib.mkDefault "eza -T -a -I .git";
-      icat = lib.mkDefault "kitten icat";
-    };
+    zsh-abbr.abbreviations = programs.fish.shellAbbrs;
+    shellAliases = programs.fish.functions;
   };
 }

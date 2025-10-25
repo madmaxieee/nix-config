@@ -8,7 +8,7 @@ let
       set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
   else
     "";
-in {
+in rec {
   home.packages = with pkgs; [ sesh fzf jq fd ];
 
   programs.tmux = {
@@ -42,7 +42,7 @@ in {
   };
 
   programs.fish = {
-    shellAliases = {
+    functions = {
       t = lib.mkDefault "${config.xdg.configHome}/tmux/scripts/sesh.sh";
     };
     shellAbbrs = {
@@ -52,13 +52,8 @@ in {
   };
 
   programs.zsh = {
-    shellAliases = {
-      t = lib.mkDefault "${config.xdg.configHome}/tmux/scripts/sesh.sh";
-    };
-    zsh-abbr.abbreviations = {
-      ta = lib.mkDefault "tmux attach";
-      tn = lib.mkDefault "tmux new -s";
-    };
+    shellAliases = programs.fish.functions;
+    zsh-abbr.abbreviations = programs.fish.shellAbbrs;
   };
 
   xdg.configFile."tmux/scripts".source = linkDotfile "tmux/scripts";
