@@ -68,6 +68,10 @@
       url = "github:danielmiessler/Fabric";
       flake = false;
     };
+    tokyonight = {
+      url = "github:folke/tokyonight.nvim";
+      flake = false;
+    };
   };
 
   outputs =
@@ -90,7 +94,7 @@
           inherit (inputs)
             yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi ouch-yazi;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
-          inherit (inputs) fabric;
+          inherit (inputs) fabric tokyonight;
         };
       };
 

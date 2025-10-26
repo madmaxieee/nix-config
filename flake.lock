@@ -399,6 +399,7 @@
         "ouch-yazi": "ouch-yazi",
         "searchjump-yazi": "searchjump-yazi",
         "sketchybar-app-font-src": "sketchybar-app-font-src",
+        "tokyonight": "tokyonight",
         "vipe-fish": "vipe-fish",
         "what-size-yazi": "what-size-yazi",
         "yazi-plugins": "yazi-plugins"
@@ -433,6 +434,22 @@
       "original": {
         "owner": "madmaxieee",
         "repo": "sketchybar-app-font",
+        "type": "github"
+      }
+    },
+    "tokyonight": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761283703,
+        "narHash": "sha256-s0hIMoiE0wfAKGd9dwlfMtN+O59J7fKA0NYsJM5gqAk=",
+        "owner": "folke",
+        "repo": "tokyonight.nvim",
+        "rev": "4fe1b0c44f5d6ee769cdfbdffc7ccb703f53feda",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "tokyonight.nvim",
         "type": "github"
       }
     },

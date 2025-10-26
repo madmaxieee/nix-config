@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, sources, ... }:
 
 rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -37,12 +37,7 @@ rec {
     config.theme = "tokyonight-moon";
     themes = {
       tokyonight-moon = {
-        src = pkgs.fetchFromGitHub {
-          owner = "folke";
-          repo = "tokyonight.nvim";
-          rev = "9758827c3b380ba89da4a2212b6255d01afbcf08";
-          hash = "sha256-qEmfBs+rKP25RlS7VxNSw9w4GnlZiiEchs17nJg7vsE=";
-        };
+        src = sources.tokyonight;
         file = "extras/sublime/tokyonight_moon.tmTheme";
       };
     };
