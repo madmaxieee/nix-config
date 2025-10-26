@@ -13,23 +13,23 @@
       py = lib.mkDefault "python3";
       ipy = lib.mkDefault "ipython";
     };
-    shellAliases = { mamba = "micromamba"; };
+    functions = {
+      __mamba_init = ''
+        # >>> mamba initialize >>>
+        # !! Contents within this block are managed by 'mamba init' !!
+        set -gx MAMBA_EXE "${pkgs.micromamba}/bin/micromamba"
+        set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
+        $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+        # <<< mamba initialize <<<
+      '';
+      mamba = ''
+        if not set -q MAMBA_EXE
+          __mamba_init
+        end
+        micromamba $argv
+      '';
+    };
   };
 
-  programs.zsh = {
-    zsh-abbr.abbreviations = programs.fish.shellAbbrs;
-    shellAliases = programs.fish.shellAliases;
-  };
-
-  xdg.configFile = {
-    "fish/conf.d/mamba.fish".text = ''
-      status is-interactive || exit 0
-      # >>> mamba initialize >>>
-      # !! Contents within this block are managed by 'mamba init' !!
-      set -gx MAMBA_EXE "${pkgs.micromamba}/bin/micromamba"
-      set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/micromamba"
-      $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
-      # <<< mamba initialize <<<
-    '';
-  };
+  programs.zsh = { zsh-abbr.abbreviations = programs.fish.shellAbbrs; };
 }
