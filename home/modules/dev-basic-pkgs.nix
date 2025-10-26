@@ -55,7 +55,7 @@ rec {
       j = lib.mkDefault "just";
       lg = lib.mkDefault "lazygit";
     };
-    functions = {
+    shellAliases = {
       cat = lib.mkDefault "bat -p";
       l = lib.mkDefault "eza";
       ls = lib.mkDefault "eza --icons=auto";
@@ -69,6 +69,6 @@ rec {
 
   programs.zsh = {
     zsh-abbr.abbreviations = programs.fish.shellAbbrs;
-    shellAliases = programs.fish.functions;
+    shellAliases = programs.fish.shellAliases;
   };
 }

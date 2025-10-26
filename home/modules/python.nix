@@ -1,18 +1,24 @@
 { config, pkgs, lib, ... }: rec {
-  home.packages = with pkgs; [ micromamba uv python312 ];
+  home.packages = with pkgs; [
+    micromamba
+    uv
+    python312
+    python312Packages.ipython
+  ];
 
   programs.fish = {
     shellAbbrs = {
       mb = lib.mkDefault "mamba";
       mba = lib.mkDefault "mamba activate";
       py = lib.mkDefault "python3";
+      ipy = lib.mkDefault "ipython";
     };
-    functions = { mamba = "micromamba"; };
+    shellAliases = { mamba = "micromamba"; };
   };
 
   programs.zsh = {
     zsh-abbr.abbreviations = programs.fish.shellAbbrs;
-    shellAliases = programs.fish.functions;
+    shellAliases = programs.fish.shellAliases;
   };
 
   xdg.configFile = {

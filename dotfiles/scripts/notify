@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+
+
+def send_notification(title: str, message: str):
+    """Send a macOS notification using AppleScript via osascript,
+    replacing the current process (so exit code propagates)."""
+    quoted_script = (
+        f"display notification {json.dumps(message)} with title {json.dumps(title)}"
+    )
+    os.execlp("osascript", "osascript", "-e", quoted_script)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Send a macOS notification from the command line."
+    )
+    parser.add_argument(
+        "message",
+        type=str,
+        help="The content of the notification.",
+    )
+    parser.add_argument(
+        "-t",
+        "--title",
+        type=str,
+        default="Notification",
+        help="The title of the notification (default: 'Notification').",
+    )
+    args = parser.parse_args()
+
+    send_notification(args.title, args.message)
+
+
+if __name__ == "__main__":
+    main()

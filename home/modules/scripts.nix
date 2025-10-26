@@ -1,17 +1,21 @@
 { config, pkgs, lib, ... }:
 
-let linkDotfile = config.lib.custom.linkDotfile;
+let
+  flatMerge = sets: lib.mkMerge (lib.flatten sets);
+  linkScript = name: {
+    ".local/bin/${name}".source =
+      config.lib.custom.linkDotfile "scripts/${name}";
+  };
 in {
-  home.file = lib.mkMerge [
-    {
-      ".local/bin/git-foreach".source = linkDotfile "scripts/git-foreach";
-      ".local/bin/nr".source = linkDotfile "scripts/nr";
-      ".local/bin/ns".source = linkDotfile "scripts/ns";
-      ".local/bin/vipe".source = linkDotfile "scripts/vipe";
-    }
+  home.file = flatMerge [
+    (linkScript "git-foreach")
+    (linkScript "nr")
+    (linkScript "ns")
+    (linkScript "vipe")
 
-    (lib.mkIf pkgs.stdenv.isDarwin {
-      ".local/bin/things".source = linkDotfile "scripts/things";
-    })
+    (lib.optionals pkgs.stdenv.isDarwin [
+      (linkScript "notify")
+      (linkScript "things")
+    ])
   ];
 }
