@@ -239,26 +239,40 @@ local function relative_resize_keep_aspect(win, delta_ratio)
     win:setFrame(hs.geometry.rect(new_x, new_y, new_w, new_h))
 end
 
+---@return hs.window
+local function focused_window()
+    local app = hs.application.frontmostApplication()
+    local win = app:focusedWindow()
+    return win
+end
+
 leader_bind("", "-", function()
-    relative_resize_keep_aspect(hs.window.focusedWindow(), -0.1)
+    relative_resize_keep_aspect(focused_window(), -0.1)
 end, { repeatable = true })
 leader_bind("shift", "=", function()
-    relative_resize_keep_aspect(hs.window.focusedWindow(), 0.1)
+    relative_resize_keep_aspect(focused_window(), 0.1)
 end, { repeatable = true })
 leader_bind("", "=", function()
-    relative_resize_keep_aspect(hs.window.focusedWindow(), 0.1)
+    relative_resize_keep_aspect(focused_window(), 0.1)
 end, { repeatable = true })
 leader_bind("", "c", function()
-    local win = hs.window.focusedWindow()
+    local win = focused_window()
     if is_managed_by_yabai(win:id()) then
         return
     end
-    win:setSize(hs.geometry.size(1350, 900))
-    hs.timer.usleep(100 * 1000)
-    win:centerOnScreen()
+    local new_geometry = hs.geometry.size(1350, 900)
+    if win:size():equals(new_geometry) then
+        win:centerOnScreen()
+        return
+    end
+    while not win:size():equals(new_geometry) do
+        win:setSize(new_geometry)
+        hs.timer.usleep(100 * 1000)
+        win:centerOnScreen()
+    end
 end)
 leader_bind("shift", "c", function()
-    hs.window.focusedWindow():centerOnScreen()
+    focused_window():centerOnScreen()
 end)
 
 -- lock mode to avoid triggering shift-space
