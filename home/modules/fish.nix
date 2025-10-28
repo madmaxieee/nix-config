@@ -52,15 +52,13 @@ in {
         __select_starship_config
       end
 
-      begin
+      if type -q brew
         set -l brew_prefix (brew --prefix)
-        if type -q brew
-          if test -d "$brew_prefix/share/fish/completions"
-            set -p fish_complete_path "$brew_prefix/share/fish/completions"
-          end
-          if test -d "$brew_prefix/share/fish/vendor_completions.d"
-            set -p fish_complete_path "$brew_prefix/share/fish/vendor_completions.d"
-          end
+        if test -d "$brew_prefix/share/fish/completions"
+          set -p fish_complete_path "$brew_prefix/share/fish/completions"
+        end
+        if test -d "$brew_prefix/share/fish/vendor_completions.d"
+          set -p fish_complete_path "$brew_prefix/share/fish/vendor_completions.d"
         end
       end
 
