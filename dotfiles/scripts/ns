@@ -6,5 +6,4 @@ for package in "$@"; do
   PACKAGES="$PACKAGES nixpkgs#$package"
 done
 
-# shellcheck disable=SC2068
-nix shell ${PACKAGES[@]}
+nix shell "${PACKAGES[@]}"

@@ -2,7 +2,5 @@
 
 PACKAGE="$1"
 shift
-ARGS=$*
 
-# shellcheck disable=SC2068
-nix run "nixpkgs#$PACKAGE" -- ${ARGS[@]}
+nix run "nixpkgs#$PACKAGE" -- "$@"
