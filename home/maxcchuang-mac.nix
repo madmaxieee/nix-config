@@ -110,11 +110,6 @@
 
     (import ./modules/window-management.nix {
       hs_extra_config = ''
-        local scratchpad = require("scratchpad")
-        scratchpad.hide_on_cmd_w("Chrome Remote Desktop")
-        scratchpad.hide_on_cmd_w("Lucid")
-        scratchpad.hide_on_cmd_w("Google Gemini")
-        scratchpad.hide_on_cmd_w("T3 Chat")
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",

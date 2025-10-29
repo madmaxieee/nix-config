@@ -25,12 +25,16 @@ function M.toggle_scratchpad(app_name)
     end
 end
 
+local hide_on_cmd_w_apps = {}
+
 -- to make scratchpad work better
 function M.hide_on_cmd_w(app_name)
+    if hide_on_cmd_w_apps[app_name] then
+        return
+    end
     local app_bind = require("app_bind").app_bind
     app_bind(app_name, { "cmd" }, "w", function(app)
-        local num_windows = #app:allWindows()
-        if num_windows == 1 then
+        if #app:allWindows() == 1 then
             app:hide()
         else
             app:focusedWindow():close()
@@ -39,6 +43,7 @@ function M.hide_on_cmd_w(app_name)
     app_bind(app_name, { "cmd", "shift" }, "w", function(app)
         app:focusedWindow():close()
     end)
+    hide_on_cmd_w_apps[app_name] = true
 end
 
 return M

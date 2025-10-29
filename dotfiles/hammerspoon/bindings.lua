@@ -307,3 +307,18 @@ app_bind("Zen", { "cmd" }, "d", function(app)
     -- pin and unpin tab, this is currently not customizable in Zen
     hs.eventtap.keyStroke({ "alt" }, "p", 0, app)
 end)
+
+-- apply hide_on_cmd_w for all chrome PWAs
+local pwa_bundle_id_prefix = "com.google.Chrome.app."
+
+---@param app_name string
+---@param event_type any
+---@param app hs.application
+PWAAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
+    if event_type == hs.application.watcher.launching then
+        if app:bundleID():sub(1, #pwa_bundle_id_prefix) == pwa_bundle_id_prefix then
+            scratchpad.hide_on_cmd_w(app_name)
+        end
+    end
+end)
+PWAAppWatcher:start()

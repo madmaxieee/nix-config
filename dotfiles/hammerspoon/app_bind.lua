@@ -19,8 +19,11 @@ function M.app_bind(app_name, modifiers, key, fn)
     table.insert(app_bind_handlers[app_name], handler)
 end
 
+---@param app_name string
+---@param event_type any
+---@param app hs.application
 ---@diagnostic disable-next-line: unused-local
-App_watcher = hs.application.watcher.new(function(app_name, event_type, app)
+AppBindAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
     if event_type == hs.application.watcher.activated then
         for name, handlers in pairs(app_bind_handlers) do
             if name == app_name then
@@ -42,6 +45,6 @@ App_watcher = hs.application.watcher.new(function(app_name, event_type, app)
         end
     end
 end)
-App_watcher:start()
+AppBindAppWatcher:start()
 
 return M
