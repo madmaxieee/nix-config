@@ -23,6 +23,9 @@ rec {
     rsync
     ouch
 
+    unixtools.watch
+    unixtools.xxd
+
     tealdeer
     typos
     ripgrep-all
