@@ -15,10 +15,7 @@ rec {
                 command gcert "$@"' --'';
       __hg_or_git_abbr = {
         body = ''
-          # check for git repo first because its quicker
-          if git rev-parse --is-inside-work-tree >/dev/null 2>&1
-            abbr -a -- g git
-          else if type -q hg && hg root >/dev/null 2>&1
+          if pwd | grep -q '^/google/src/cloud' && type -q hg
             abbr -a -- g hg
           else
             abbr -a -- g git
