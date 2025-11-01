@@ -7,7 +7,7 @@ name = "jj_desc"
 steps = [
   { command = "jj diff --git", output = "diff", needs_input = false },
   { command = "jj log -T builtin_log_detailed -n 10", output = "commits", needs_input = false },
-  { prompt = "@commit_message", output = "commit_message" },
+  { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
   # automatically shell quoted
   { command = "jj desc --edit -m {{ .commit_message }}", needs_input = false, tty = true },
 ]
@@ -17,6 +17,6 @@ name = "git_commit"
 steps = [
   { command = "git diff --staged", output = "diff", needs_input = false },
   { command = "git log --max-count=10", output = "commits", needs_input = false },
-  { prompt = "@commit_message", output = "commit_message" },
+  { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
   { command = "git commit -e -m {{ .commit_message }}", needs_input = false, tty = true },
 ]
