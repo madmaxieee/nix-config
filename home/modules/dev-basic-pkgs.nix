@@ -8,10 +8,10 @@ rec {
     ripgrep
     fd
     sd
-    difftastic
     wget
     rm-improved
     dust
+    riffdiff
 
     parallel
     entr
@@ -31,9 +31,9 @@ rec {
     ripgrep-all
   ];
 
-  programs.fastfetch.enable = true;
-
   programs.man.enable = true;
+
+  programs.less.enable = true;
 
   programs.bat = {
     enable = true;
@@ -49,7 +49,10 @@ rec {
   home.sessionVariables = {
     MANROFFOPT = "-c";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    PAGER = "less -FR";
   };
+
+  programs.fastfetch.enable = true;
 
   programs.fish = {
     shellAbbrs = {

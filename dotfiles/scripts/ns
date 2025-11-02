@@ -1,9 +1,9 @@
 #!/bin/bash
 
-PACKAGES=""
+PACKAGES=()
 
 for package in "$@"; do
-  PACKAGES="$PACKAGES nixpkgs#$package"
+  PACKAGES+=("nixpkgs#$package")
 done
 
 nix shell "${PACKAGES[@]}"

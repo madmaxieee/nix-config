@@ -5,18 +5,35 @@ prompt_path = ["prompts", "fabric_prompts"]
 [[patterns]]
 name = "jj_desc"
 steps = [
-  { command = "jj diff --git", output = "diff", needs_input = false },
-  { command = "jj log -T builtin_log_detailed -n 10", output = "commits", needs_input = false },
+  { command = "jj diff --git", output = "diff" },
+  { command = "jj log -T builtin_log_detailed -n 10", output = "commits" },
   { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
   # automatically shell quoted
-  { command = "jj desc --edit -m {{ .commit_message }}", needs_input = false, tty = true },
+  { command = "jj desc --edit -m {{ .commit_message }}", tty = true },
 ]
 
 [[patterns]]
 name = "git_commit"
 steps = [
-  { command = "git diff --staged", output = "diff", needs_input = false },
-  { command = "git log --max-count=10", output = "commits", needs_input = false },
+  { command = "git diff --staged", output = "diff" },
+  { command = "git log --max-count=10", output = "commits" },
   { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
-  { command = "git commit -e -m {{ .commit_message }}", needs_input = false, tty = true },
+  { command = "git commit -e -m {{ .commit_message }}", tty = true },
+]
+
+[[patterns]]
+name = "proofread"
+steps = [
+  { command = "mktemp", output = "before_file" },
+  { command = "mktemp", output = "after_file" },
+
+  { command = "echo {{ .PROMPT }} > {{ .before_file }}", output = "" },
+  { command = "cat >> {{ .before_file }}", pipe_in = true },
+
+  { prompt = "@proofread", model = "google/gemini-flash-latest", output = "fixed_text" },
+  { command = "echo {{ .fixed_text }} > {{ .after_file }}" },
+
+  { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2", tty = true },
+
+  { command = "echo {{ .fixed_text }}" },
 ]
