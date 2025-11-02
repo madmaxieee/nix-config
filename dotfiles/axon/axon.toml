@@ -2,6 +2,10 @@
 model = "google/gemini-2.5-pro"
 prompt_path = ["prompts", "fabric_prompts"]
 
+[[providers]]
+name = "google"
+api_key_cmd = "pass gemini/cli"
+
 [[patterns]]
 name = "jj_desc"
 steps = [
