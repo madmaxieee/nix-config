@@ -6,7 +6,7 @@ imports:
   - symbols.yml
 
 matches:
-  - trigger: ":td"
+  - trigger: ";td"
     replace: "{{today}}"
     vars:
       - name: today
