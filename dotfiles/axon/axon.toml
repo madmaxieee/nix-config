@@ -34,7 +34,7 @@ steps = [
   { command = "echo {{ .PROMPT }} > {{ .before_file }}", output = "" },
   { command = "cat >> {{ .before_file }}", pipe_in = true },
 
-  { prompt = "@proofread", model = "google/gemini-flash-latest", output = "fixed_text" },
+  { prompt = "@proofread", output = "fixed_text", model = "google/gemini-flash-latest" },
   { command = "echo {{ .fixed_text }} > {{ .after_file }}" },
 
   { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2", tty = true },
