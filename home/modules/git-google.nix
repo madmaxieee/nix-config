@@ -3,25 +3,16 @@
     "git/mss_gitmessage.txt".text = ''
       {module_name (lower-case)}: {summary (1 line; <=50 chars; no ‘.’)}
 
-      Bug: {bug id}
-      Fix: {bug id (optional)}
-
       {Long description, wrap new line every 72 characters, use punctuation (optional)}
 
+      Bug: {bug id}
       Test: {test cases performed, with punctuation}
       Doc: {Design docs, manual, … (optional)}
-      Type: {Type: Choose one type of the following templates, and remove others}
-      Type: bugfix
-      Type: config
-      Type: feature: {develop, enable, or disable}
-      Type: code drop: {codebase}
-      Type: hotfix#{number}: {codebase}
-      CL dep: {Is dependent on AP change? (yes/no) (optional)}
     '';
   };
 
   programs.git = {
-    userName = "Max Chuang";
+    userName = "maxcchuang";
     userEmail = "maxcchuang@google.com";
     extraConfig = {
       http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
