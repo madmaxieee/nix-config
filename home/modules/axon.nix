@@ -8,13 +8,6 @@ in {
     "axon/fabric_prompts".source = "${sources.fabric}/data/patterns";
   };
 
-  programs.fish = {
-    functions.axon.body = ''
-      set -x GOOGLE_API_KEY (pass gemini/cli 2> /dev/null)
-      command axon $argv
-    '';
-  };
-
   home.activation = let go = "${pkgs.go}/bin/go";
   in {
     axon_install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

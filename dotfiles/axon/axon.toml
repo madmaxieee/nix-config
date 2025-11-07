@@ -37,7 +37,7 @@ steps = [
   { prompt = "@proofread", output = "fixed_text", model = "google/gemini-flash-latest" },
   { command = "echo {{ .fixed_text }} > {{ .after_file }}" },
 
-  { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2", tty = true },
+  { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2" },
 
   { command = "echo {{ .fixed_text }}" },
 ]
