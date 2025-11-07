@@ -1,5 +1,5 @@
 [general]
-model = "google/gemini-2.5-pro"
+model = "google/gemini-flash-latest"
 prompt_path = ["prompts", "fabric_prompts"]
 
 [[providers]]
@@ -11,7 +11,7 @@ name = "jj_desc"
 steps = [
   { command = "jj diff --git", output = "diff" },
   { command = "jj log -T builtin_log_detailed -n 10", output = "commits" },
-  { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
+  { prompt = "@commit_message", output = "commit_message" },
   # automatically shell quoted
   { command = "jj desc --edit -m {{ .commit_message }}", tty = true },
 ]
@@ -21,7 +21,7 @@ name = "git_commit"
 steps = [
   { command = "git diff --staged", output = "diff" },
   { command = "git log --max-count=10", output = "commits" },
-  { prompt = "@commit_message", output = "commit_message", model = "google/gemini-flash-latest" },
+  { prompt = "@commit_message", output = "commit_message" },
   { command = "git commit -e -m {{ .commit_message }}", tty = true },
 ]
 
@@ -34,7 +34,7 @@ steps = [
   { command = "echo {{ .PROMPT }} > {{ .before_file }}", output = "" },
   { command = "cat >> {{ .before_file }}", pipe_in = true },
 
-  { prompt = "@proofread", output = "fixed_text", model = "google/gemini-flash-latest" },
+  { prompt = "@proofread", output = "fixed_text" },
   { command = "echo {{ .fixed_text }} > {{ .after_file }}" },
 
   { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2" },
