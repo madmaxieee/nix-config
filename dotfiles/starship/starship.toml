@@ -1,7 +1,23 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """
+$all\
+\
+$fill\
+$time\
+\
+$line_break\
+$jobs\
+$battery\
+$status\
+$os\
+$container\
+$netns\
+$shell\
+$character"""
 
-format = "$all"
+[fill]
+symbol = " "
 
 [character]
 success_symbol = "[->](bold green)"
@@ -10,12 +26,6 @@ vimcmd_symbol = "[<-](bold green)"
 vimcmd_replace_one_symbol = "[<-](bold purple)"
 vimcmd_replace_symbol = "[<-](bold purple)"
 vimcmd_visual_symbol = "[<-](bold yellow)"
-
-[directory]
-truncate_to_repo = false
-style = "bold blue"
-repo_root_style = "bold cyan"
-repo_root_format = '[$before_root_path]($style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
 
 [hostname]
 ssh_only = true
@@ -26,24 +36,6 @@ format = '@[$ssh_symbol$hostname]($style) in '
 [username]
 style_user = "bold yellow"
 format = '[$user]($style)'
-
-[git_branch]
-style = "green"
-ignore_branches = ["main"]
-
-[git_status]
-format = '([$all_status$ahead_behind]($style))'
-conflicted = "=$count "
-ahead = "⇡$count "
-behind = "⇣$count "
-diverged = "⇡${ahead_count}⇣${behind_count}"
-untracked = "[?$count](blue) "
-stashed = "*$count "
-modified = "[!$count](yellow) "
-staged = "[++$count](green) "
-renamed = "»$count "
-deleted = "[✘$count](red) "
-style = "green"
 
 [docker_context]
 disabled = true
@@ -57,3 +49,36 @@ disabled = false
 fish_indicator = ""
 zsh_indicator = "% "
 format = '[$indicator]($style)'
+
+[time]
+disabled = false
+style = ""
+time_format = "%a %b %d  %H:%M:%S"
+format = '[$time]($style) '
+
+# begin overridden sections
+
+[directory]
+truncate_to_repo = false
+style = "bold blue"
+repo_root_style = "bold cyan"
+repo_root_format = '[$before_root_path]($style)[\[$repo_root\]]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+
+[git_status]
+disabled = false
+format = '([$all_status$ahead_behind]($style))'
+conflicted = "=$count "
+ahead = "⇡$count "
+behind = "⇣$count "
+diverged = "⇡${ahead_count}⇣${behind_count}"
+untracked = "[?$count](blue) "
+stashed = "*$count "
+modified = "[!$count](yellow) "
+staged = "[++$count](green) "
+renamed = "»$count "
+deleted = "[✘$count](red) "
+style = "green"
+
+[git_branch]
+style = "green"
+ignore_branches = ["main"]
