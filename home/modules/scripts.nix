@@ -11,6 +11,7 @@ in {
     (linkScript "git-foreach")
     (linkScript "nr")
     (linkScript "ns")
+    (linkScript "peek")
     (linkScript "vipe")
 
     (lib.optionals pkgs.stdenv.isDarwin [
