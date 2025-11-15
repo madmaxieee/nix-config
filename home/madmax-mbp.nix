@@ -82,6 +82,7 @@
     ./modules/atuin.nix
     ./modules/zoxide.nix
     ./modules/yazi.nix
+    ./modules/television.nix
 
     ./modules/git.nix
 

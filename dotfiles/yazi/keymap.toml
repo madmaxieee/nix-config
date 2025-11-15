@@ -31,3 +31,18 @@ run = "plugin what-size"
 on = ["C"]
 run = "plugin ouch"
 desc = "Compress with ouch"
+
+[[mgr.prepend_keymap]]
+on = ["f", "w"]
+run = "plugin tv -- text"
+desc = "search file by content"
+
+[[mgr.prepend_keymap]]
+on = ["f", "f"]
+run = "plugin tv -- files"
+desc = "find file by filename"
+
+[[mgr.prepend_keymap]]
+on = ["/"]
+run = "filter"
+desc = "filter"

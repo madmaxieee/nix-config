@@ -400,6 +400,7 @@
         "searchjump-yazi": "searchjump-yazi",
         "sketchybar-app-font-src": "sketchybar-app-font-src",
         "tokyonight": "tokyonight",
+        "tv-yazi": "tv-yazi",
         "vipe-fish": "vipe-fish",
         "what-size-yazi": "what-size-yazi",
         "yazi-plugins": "yazi-plugins"
@@ -471,6 +472,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "tv-yazi": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763183670,
+        "narHash": "sha256-vIqMhvQLRquGScYvYAJkdo/3Pm2ebv/qyTUVkDCmQVM=",
+        "owner": "madmaxieee",
+        "repo": "tv.yazi",
+        "rev": "57aa055074ce1d7c2b93880f8382e4d49188e001",
+        "type": "github"
+      },
+      "original": {
+        "owner": "madmaxieee",
+        "repo": "tv.yazi",
         "type": "github"
       }
     },

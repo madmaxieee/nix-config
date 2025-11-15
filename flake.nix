@@ -48,6 +48,10 @@
       url = "github:ndtoan96/ouch.yazi";
       flake = false;
     };
+    tv-yazi = {
+      url = "github:madmaxieee/tv.yazi";
+      flake = false;
+    };
 
     # fish plugins
     autopair-fish = {
@@ -92,7 +96,8 @@
         inherit overlays;
         sources = {
           inherit (inputs)
-            yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi ouch-yazi;
+            yazi-plugins lazygit-yazi searchjump-yazi what-size-yazi ouch-yazi
+            tv-yazi;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
           inherit (inputs) fabric tokyonight;
         };
