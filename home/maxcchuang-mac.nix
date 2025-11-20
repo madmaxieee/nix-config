@@ -121,6 +121,8 @@
       '';
     })
 
+    ./modules/jujutsu.nix
+
     ./modules/git-google.nix
     ./modules/mprocs.nix
   ];
