@@ -29,6 +29,8 @@ rec {
     tealdeer
     typos
     ripgrep-all
+
+    graphviz
   ];
 
   programs.man.enable = true;
