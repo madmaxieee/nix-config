@@ -10,7 +10,7 @@ api_key_cmd = "pass gemini/cli"
 name = "jj_desc"
 steps = [
   { command = "jj diff --git", output = "diff" },
-  { command = "jj log -T builtin_log_detailed -n 10", output = "commits" },
+  { command = "jj log -T builtin_log_detailed -n 5", output = "commits" },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "jj desc --edit -m {{ .commit_message }}", tty = true },
   { command = "echo -n {{ .commit_message }}" },
@@ -20,7 +20,7 @@ steps = [
 name = "git_commit"
 steps = [
   { command = "git diff --staged", output = "diff" },
-  { command = "git log --max-count=10", output = "commits" },
+  { command = "git log --max-count=5", output = "commits" },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "git commit -e -m {{ .commit_message }}", tty = true },
   { command = "echo -n {{ .commit_message }}" },
