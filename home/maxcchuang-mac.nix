@@ -116,7 +116,7 @@
             browser = "Google Chrome",
             note_app = "Obsidian",
             terminal_app = "kitty",
-            ai_app = "Duckie",
+            ai_app = "T3 Chat",
         }
       '';
     })
