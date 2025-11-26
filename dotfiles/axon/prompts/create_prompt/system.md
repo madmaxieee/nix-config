@@ -6,7 +6,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 # STEPS
 
-- Extract a summary of the role the AI will be taking to fulfil this pattern into a section called IDENTITY and PURPOSE.
+- Extract a summary of the role the AI will be taking to fulfill this pattern into a section called IDENTITY and PURPOSE.
 
 - Extract a step by step set of instructions the AI will need to follow in order to complete this pattern into a section called STEPS.
 
@@ -22,7 +22,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 
 - All sections should be Heading level 1
 
-- Subsections should be one Heading level higher than it's parent section
+- Subsections should be one Heading level higher than its parent section
 
 - All bullets should have their own paragraph
 

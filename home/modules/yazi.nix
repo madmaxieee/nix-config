@@ -2,15 +2,7 @@
 
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
-  home.packages = with pkgs; [
-    fd
-    ripgrep
-    ripgrep-all
-    glow
-    lazygit
-    ouch
-    television
-  ];
+  home.packages = with pkgs; [ fd ripgrep lazygit ouch television ];
 
   xdg.configFile = {
     "yazi/init.lua".source = linkDotfile "yazi/init.lua";

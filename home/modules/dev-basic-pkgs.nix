@@ -31,6 +31,7 @@ rec {
     typos
     ripgrep-all
 
+    glow
     graphviz
   ];
 

@@ -41,3 +41,10 @@ steps = [
 
   { command = "echo -n {{ .fixed_text }}" },
 ]
+
+[[patterns]]
+name = "code_review"
+steps = [
+  { prompt = "@review_code" },
+  { command = "glow --tui", pipe_in = true, tty = true },
+]

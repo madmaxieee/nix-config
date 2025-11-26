@@ -2,6 +2,8 @@
 
 let linkDotfile = config.lib.custom.linkDotfile;
 in {
+  home.packages = with pkgs; [ glow ];
+
   xdg.configFile = {
     "axon/axon.toml".source = linkDotfile "axon/axon.toml";
     "axon/prompts".source = linkDotfile "axon/prompts";
