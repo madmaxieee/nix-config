@@ -6,7 +6,7 @@
   xdg.configFile = {
     "fabric/.env".text = ''
       DEFAULT_VENDOR=Gemini
-      DEFAULT_MODEL=gemini-2.5-flash
+      DEFAULT_MODEL=gemini-flash-latest
       PATTERNS_LOADER_GIT_REPO_URL=https://github.com/danielmiessler/fabric.git
       PATTERNS_LOADER_GIT_REPO_PATTERNS_FOLDER=data/patterns
       PROMPT_STRATEGIES_GIT_REPO_URL=https://github.com/danielmiessler/fabric.git

@@ -8,7 +8,7 @@
       },
     },
   },
-  "model": "google/gemini-2.5-pro",
+  "model": "google/gemini-3-pro-preview",
   "keybinds": {
     "leader": "ctrl+x",
     "app_exit": "ctrl+c,ctrl+d,<leader>q",
