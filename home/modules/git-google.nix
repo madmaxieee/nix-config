@@ -12,10 +12,14 @@
   };
 
   programs.git = {
-    userName = "maxcchuang";
-    userEmail = "maxcchuang@google.com";
-    extraConfig = {
-      http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
+    settings = {
+      user = {
+        name = "maxcchuang";
+        email = "maxcchuang@google.com";
+      };
+      extraConfig = {
+        http.cookiefile = "${config.home.homeDirectory}/.gitcookies";
+      };
     };
     includes = [
       {

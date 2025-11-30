@@ -31,21 +31,23 @@
     };
   };
 
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      line-numbers = true;
+      side-by-side = true;
+      navigate = true;
+      syntax-theme = "tokyonight-moon";
+    };
+  };
+
   programs.git = lib.mkMerge [
     {
       enable = true;
       lfs.enable = true;
-      delta = {
-        enable = true;
-        options = {
-          line-numbers = true;
-          side-by-side = true;
-          navigate = true;
-          syntax-theme = "tokyonight-moon";
-        };
-      };
 
-      aliases = {
+      settings.alias = {
         "st" = "status --short --branch";
 
         "a" = "add";
@@ -99,7 +101,7 @@
           "! gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ | awk '! /https:/' | sed '/./,$!d'; }; gi";
       };
 
-      extraConfig = {
+      settings.extraConfig = {
         init.defaultBranch = "main";
         core.autocrlf = "false";
         pull.rebase = "true";

@@ -65,7 +65,7 @@ rec {
   programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
   programs.zsh.shellAliases = { diffview = ''nvim +"DiffviewOpen $@"''; };
 
-  programs.git.aliases = {
+  programs.git.settings.alias = {
     "dv" = "diffview";
     "diffview" = ''! nvim +"DiffviewOpen $@"'';
   };

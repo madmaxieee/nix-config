@@ -14,12 +14,12 @@ bind -M insert kk 'commandline -i k'
 bind \cl -M default 'flush; commandline -f repaint'
 bind \cl -M insert 'flush; commandline -f repaint'
 
-bind -k sr 'cd ..; commandline -f repaint'
-bind -k sleft 'prevd; commandline -f repaint'
-bind -k sright 'nextd; commandline -f repaint'
-bind -k sr -M insert 'cd ..; commandline -f repaint'
-bind -k sleft -M insert 'prevd; commandline -f repaint'
-bind -k sright -M insert 'nextd; commandline -f repaint'
+bind shift-up 'cd ..; commandline -f repaint'
+bind shift-left 'prevd; commandline -f repaint'
+bind shift-right 'nextd; commandline -f repaint'
+bind shift-up -M insert 'cd ..; commandline -f repaint'
+bind shift-left -M insert 'prevd; commandline -f repaint'
+bind shift-right -M insert 'nextd; commandline -f repaint'
 
 # unbind some keys
 bind \ev true

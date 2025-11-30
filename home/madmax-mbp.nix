@@ -62,8 +62,10 @@
   };
 
   programs.git = {
-    userName = "madmaxieee";
-    userEmail = "76544194+madmaxieee@users.noreply.github.com";
+    settings.user = {
+      name = "madmaxieee";
+      email = "76544194+madmaxieee@users.noreply.github.com";
+    };
   };
 
   imports = [
