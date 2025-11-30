@@ -425,11 +425,11 @@
     "sketchybar-app-font-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1758949157,
-        "narHash": "sha256-KNcx5aE2Tu2CN/MWbAEknx1FeljPuktXB12103m+t/A=",
+        "lastModified": 1764485640,
+        "narHash": "sha256-baRYVfa0RbxB4ltdxaSDoAcbx0fQnWcTWCOzQbyMa1Q=",
         "owner": "madmaxieee",
         "repo": "sketchybar-app-font",
-        "rev": "2cd954fdad982d9953d78888e45b2b3dd13b159c",
+        "rev": "92bf5cbf5a433f8c43ac89bf0928bcd3306b412d",
         "type": "github"
       },
       "original": {
