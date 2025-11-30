@@ -4,6 +4,7 @@
     persistent-apps = [
       "/System/Applications/Launchpad.app"
       "/Applications/kitty.app"
+      "/Applications/Arc.app"
       "/Applications/Helium.app"
       "/Applications/Messenger.app"
       "/Applications/Telegram.app"
