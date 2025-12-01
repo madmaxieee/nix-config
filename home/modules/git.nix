@@ -101,13 +101,13 @@
           "! gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ | awk '! /https:/' | sed '/./,$!d'; }; gi";
       };
 
-      settings.extraConfig = {
+      settings = {
         init.defaultBranch = "main";
         core.autocrlf = "false";
         pull.rebase = "true";
         push.autoSetupRemote = "true";
-        "url \"git@github.com:madmaxieee/\"".insteadof = "me:";
-        "url \"git@github.com:\"".insteadof = "gh:";
+        "url \"git@github.com:madmaxieee/\"".insteadOf = "me:";
+        "url \"git@github.com:\"".insteadOf = [ "gh:" "https://github.com/" ];
         commit.template = "${config.xdg.configHome}/git/basic_template.txt";
       };
 
