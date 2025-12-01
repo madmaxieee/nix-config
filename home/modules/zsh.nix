@@ -14,7 +14,15 @@
       "......" = "cd ../../../../..";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
-        cd "$(find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)"'';
+        target_dir="$(find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
+          grep -E -v '\.(git|jj)' |
+          sort -n |
+          tail -n1 |
+          cut -d' ' -f2-)"
+        if [ -n "$target_dir" ]; then
+          cd "$target_dir"
+        fi
+      '';
     };
     zsh-abbr = {
       enable = true;

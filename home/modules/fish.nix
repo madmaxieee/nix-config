@@ -24,8 +24,14 @@ in {
       fish_greeting = "flush";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
-        set -f newest_dir (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" | sort -n | tail -n1 | cut -d' ' -f2-)
-        cd $newest_dir
+        set -f target_dir (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
+          grep -E -v '\.(git|jj)' |
+          sort -n |
+          tail -n1 |
+          cut -d' ' -f2-)
+        if test -n "$target_dir"
+          cd $target_dir
+        end
       '';
       __dotdot = ''
         echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
