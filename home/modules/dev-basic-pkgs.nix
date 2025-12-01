@@ -19,7 +19,7 @@ rec {
     jq
     lazygit
     just
-    htop
+    btop
     rsync
     ouch
 
