@@ -26,7 +26,7 @@ Your review must be in Markdown and follow this exact structure:
 
 ### Overall Assessment
 
-A brief, high-level summary of the code's quality. Mention its strengths and the primary areas for improvement.
+Provide an overall rating of the code. If it is of high quality, write "LGTM" (Looks Good To Me). If there are issues, provide a brief, high-level summary of the code's quality. Mention its strengths and the primary areas for improvement.
 
 ### **Prioritized Recommendations**
 
