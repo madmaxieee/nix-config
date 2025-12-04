@@ -25,4 +25,6 @@ in {
     "yabai".source = linkDotfile "yabai";
     "sketchybar".source = linkDotfile "sketchybar";
   };
+
+  imports = [ ./television.nix ];
 }
