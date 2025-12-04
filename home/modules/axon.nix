@@ -12,8 +12,9 @@ in {
 
   home.activation = let go = "${pkgs.go}/bin/go";
   in {
+    # can't find gcc in this environment
     axon_install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run ${go} install github.com/madmaxieee/axon@latest
+      CGO_ENABLED=0 run ${go} install github.com/madmaxieee/axon@latest
       run ${config.home.homeDirectory}/go/bin/axon completion fish > ${config.xdg.configHome}/fish/completions/axon.fish
     '';
   };
