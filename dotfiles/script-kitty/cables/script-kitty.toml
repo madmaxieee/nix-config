@@ -1,0 +1,12 @@
+[metadata]
+name = "script-kitty"
+requirements = ["fd", "bat"]
+
+[source]
+command = "ls ~/nix-config/dotfiles/script-kitty/scripts"
+
+[preview]
+command = "bat --plain --color=always ~/nix-config/dotfiles/script-kitty/scripts/'{}'"
+
+[ui.preview_panel]
+size = 60

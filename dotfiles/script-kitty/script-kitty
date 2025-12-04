@@ -28,14 +28,11 @@ trap cleanup EXIT INT TERM
 # main logic
 
 SCRIPT_KITTY_DIR="$HOME/nix-config/dotfiles/script-kitty"
-script="$(
-  find "$SCRIPT_KITTY_DIR"/scripts -type f -printf '%f\n' |
-    sort |
-    fzf --cycle --layout=reverse --prompt '$ ' \
-      --border --border-label=' script kitty ' \
-      --preview="bat --color=always --plain $SCRIPT_KITTY_DIR/scripts/{}" \
-      --preview-window='right:50%'
-)"
+script="$(tv --no-status-bar --cable-dir "$SCRIPT_KITTY_DIR"/cables script-kitty)"
+
+if [[ -z "$script" ]]; then
+  exit 0
+fi
 
 output=$("$SCRIPT_KITTY_DIR/scripts/$script")
 if [[ -n "$output" ]]; then
