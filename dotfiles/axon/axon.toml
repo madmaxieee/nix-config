@@ -45,6 +45,11 @@ steps = [
 [[patterns]]
 name = "code_review"
 steps = [
-  { prompt = "@review_code" },
-  { command = "glow --tui", pipe_in = true, tty = true },
+  { command = "mktemp", output = "tmpfile" },
+
+  { prompt = "@review_code", model = "google/gemini-3-pro-preview" },
+  { command = "tee {{ .tmpfile }}", pipe_in = true },
+  { command = "glow --pager", pipe_in = true, tty = true },
+
+  { command = "cat {{ .tmpfile }}" },
 ]
