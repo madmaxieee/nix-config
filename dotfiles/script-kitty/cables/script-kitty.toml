@@ -10,3 +10,16 @@ command = "bat --plain --color=always ~/nix-config/dotfiles/script-kitty/scripts
 
 [ui.preview_panel]
 size = 60
+
+[keybindings]
+":" = "actions:open_scratchpad"
+
+[actions.open_scratchpad]
+description = "opens new tmux scratchpad session"
+command = """
+tmux new-session -d -s scratchpad -c ~
+tmux set-option -t scratchpad detach-on-destroy on
+tmux set-option -t scratchpad status off
+tmux attach -t scratchpad
+"""
+mode = "execute"
