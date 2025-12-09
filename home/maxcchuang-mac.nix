@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-{
+let linkDotfile = config.lib.custom.linkDotfile;
+in {
   home.username = "maxcchuang";
   home.homeDirectory = "/Users/maxcchuang";
 
@@ -52,17 +53,7 @@
   };
 
   xdg.configFile = {
-    "sesh/sesh.toml".text = ''
-      [[session]]
-      name = "cloud"
-      path = "~"
-      startup_command = "cloudtop --exec maxcchuang.c"
-
-      [[session]]
-      name = "obsidian"
-      path = "~/obsidian"
-      startup_command = "exec nvim"
-    '';
+    "sesh/sesh.toml".source = linkDotfile "sesh/sesh-maxcchuang-mac.toml";
   };
 
   programs.fish.functions = {

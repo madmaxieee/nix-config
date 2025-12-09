@@ -1,0 +1,14 @@
+[[session]]
+name = "cloud"
+path = "~"
+startup_command = "cloudtop --exec maxcchuang.c"
+
+[[session]]
+name = "btop"
+path = "~"
+startup_command = "exec ssh maxcchuang.c -t btop"
+
+[[session]]
+name = "obsidian"
+path = "~/obsidian"
+startup_command = "exec nvim"

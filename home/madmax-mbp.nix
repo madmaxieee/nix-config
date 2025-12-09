@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-{
+let linkDotfile = config.lib.custom.linkDotfile;
+in {
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
@@ -53,17 +54,7 @@
   };
 
   xdg.configFile = {
-    "sesh/sesh.toml".text = ''
-      [[session]]
-      name = "linode"
-      path = "~"
-      startup_command = "exec ssh linode"
-
-      [[session]]
-      name = "obsidian"
-      path = "~/obsidian"
-      startup_command = "exec nvim"
-    '';
+    "sesh/sesh.toml".source = linkDotfile "sesh/sesh-madmax-mbp.toml";
   };
 
   programs.fish.shellAbbrs = {
