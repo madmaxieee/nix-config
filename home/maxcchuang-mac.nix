@@ -72,8 +72,9 @@ in {
 
   programs.fish.shellAbbrs = {
     a = "adb";
-    ar = "adb reboot";
-    arb = "adb reboot bootloader";
+    al = "adb logcat";
+    ar = "adb root";
+    arr = "adb reboot";
     as = "adb shell";
     aw = "adb wait-for-device";
     f = "fastboot";
