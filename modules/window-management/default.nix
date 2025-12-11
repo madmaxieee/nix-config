@@ -1,20 +1,17 @@
+{ wm ? "yabai" }:
 { pkgs, ... }:
 
 let sbarLua = pkgs.callPackage ./SbarLua.nix { };
 in {
-  environment.systemPackages = [ pkgs.yabai ];
-  services.yabai = {
-    enable = true;
-    enableScriptingAddition = true;
-    package = pkgs.yabai;
-  };
   services.skhd = { enable = true; };
+
   services.jankyborders = {
     enable = true;
     active_color = "0xaae1e3e4";
     inactive_color = "0x00494d64";
     width = 3.0;
   };
+
   services.sketchybar = {
     enable = true;
     extraPackages =
@@ -24,4 +21,9 @@ in {
   homebrew.casks = [ "hammerspoon" ];
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono pkgs.sketchybar-app-font ];
-}
+} // (if wm == "yabai" then
+  (import ./yabai.nix { inherit pkgs; })
+else if wm == "aerospace" then
+  (import ./aerospace.nix { inherit pkgs; })
+else
+  throw "Unsupported window manager: ${wm}")

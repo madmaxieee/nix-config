@@ -208,7 +208,7 @@
             homeDirectory = "/Users/madmax";
           })
 
-          (import ./modules/window-management)
+          (import ./modules/window-management { wm = "yabai"; })
         ];
       };
 
@@ -246,7 +246,7 @@
             homeDirectory = "/Users/maxcchuang";
           })
 
-          (import ./modules/window-management)
+          (import ./modules/window-management { wm = "aerospace"; })
         ];
       };
 
