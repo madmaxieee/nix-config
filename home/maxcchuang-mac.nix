@@ -33,17 +33,18 @@ in {
       "*.c" = {
         hostname = "%h.googlers.com";
         forwardAgent = true;
+        # for remote sesh service
         localForwards = [{
           host.address = "127.0.0.1";
-          host.port = 5000;
+          host.port = 8080;
           bind.address = "127.0.0.1";
-          bind.port = 5000;
+          bind.port = 8080;
         }];
-        extraOptions = {
-          ControlMaster = "auto";
-          ControlPath = "~/.ssh/ctrl-%C";
-          ControlPersist = "yes";
-        };
+        controlMaster = "auto";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "yes";
+        proxyCommand =
+          "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue --vmodule=grue_transport=1 -dst_username=%r %h %p";
       };
       "auto gcert" = {
         match = ''
