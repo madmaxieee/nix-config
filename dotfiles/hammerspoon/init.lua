@@ -16,5 +16,6 @@ hs.application.enableSpotlightForNameSearches(true)
 
 hs.window.animationDuration = 0
 
+require "wm"
 require "bindings"
 require "globals"
