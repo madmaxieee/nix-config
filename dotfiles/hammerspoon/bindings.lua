@@ -1,65 +1,15 @@
-local path = "PATH=" .. PATH .. " HAMMERSPOON=1 "
+local path = "PATH=" .. PATH .. " "
 local yabai = path .. "yabai"
 
 local scratchpad = require "scratchpad"
 local config = require "my_config"
 
-local leader_mode = hs.hotkey.modal.new("shift", "space")
-
--- disable leader mode when the last key is not pressed in 1 second
-local last_defer_time = 0
-local function defer_exit_leader(second)
-    local current_time = hs.timer.absoluteTime()
-    -- this current time is bind to this specific callback
-    -- would only exit when the leader key is not pressed in the next 1 second
-    ---@diagnostic disable-next-line: cast-local-type
-    last_defer_time = current_time
-    hs.timer.doAfter(second, function()
-        if last_defer_time == current_time then
-            leader_mode:exit()
-        end
-    end)
-end
-
-function leader_mode:entered()
-    defer_exit_leader(1)
-end
-
-local bound_keys = {}
-
----@class LeaderBindOpts
----@field repeatable boolean
-
----@param modifiers string
----@param key string
----@param callback function
----@param opts LeaderBindOpts?
-local function leader_bind(modifiers, key, callback, opts)
-    opts = opts or {}
-    opts.repeatable = opts.repeatable or false
-    local key_str = modifiers .. "+" .. key
-    if bound_keys[key_str] then
-        local error_msg
-        if modifiers == "" then
-            error_msg = "key '" .. key .. "' is already bound"
-        else
-            error_msg = "key '" .. modifiers .. " " .. key .. "' is already bound"
-        end
-        error(error_msg)
-        return
-    end
-    leader_mode:bind(modifiers, key, function()
-        last_defer_time = 0
-        callback()
-        if not opts.repeatable then
-            leader_mode:exit()
-        end
-    end)
-    bound_keys[key_str] = true
-end
+local leader_mode = require "leader_mode"
+local leader_bind = leader_mode.bind
+local leader_exit = leader_mode.exit
 
 leader_bind("", "escape", function()
-    leader_mode:exit()
+    leader_exit()
 end)
 
 if config.message_app then
@@ -187,12 +137,11 @@ end
 --     )
 --     new_space_index = tonumber(new_space_index)
 --     go_to_space(new_space_index)
---     leader_mode:exit()
 -- end)
 
 leader_bind("", "x", function()
     local success = os.execute(yabai .. [[ -m space --destroy]])
-    leader_mode:exit()
+    leader_exit()
     if not success then
         local space_id = hs.spaces.activeSpaceOnScreen()
         go_to_space "recent"
@@ -280,7 +229,7 @@ local lock_mode = hs.hotkey.modal.new("ctrl-shift", "space")
 
 function lock_mode:entered()
     hs.alert "entered lock mode"
-    leader_mode:exit()
+    leader_exit()
 end
 function lock_mode:exited()
     hs.alert "exited lock mode"
