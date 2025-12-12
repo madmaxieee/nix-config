@@ -154,6 +154,22 @@
         "type": "github"
       }
     },
+    "mediosz-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764689098,
+        "narHash": "sha256-UAKwQDtU6lXqyN/ZsMeMmCvxyYbE/5heLQjQDpvkb1M=",
+        "owner": "mediosz",
+        "repo": "homebrew-tap",
+        "rev": "5dd8a5c21806eba4361e2dd19b6c991f11b634c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mediosz",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -286,6 +302,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "lazygit-yazi": "lazygit-yazi",
+        "mediosz-tap": "mediosz-tap",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",

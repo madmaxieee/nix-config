@@ -19,6 +19,11 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    # for mediosz/swipeaerospace
+    mediosz-tap = {
+      url = "github:mediosz/homebrew-tap";
+      flake = false;
+    };
 
     # for nixpkgs overlay
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -103,15 +108,18 @@
         };
       };
 
+      taps = {
+        "homebrew/core" = inputs.homebrew-core;
+        "homebrew/cask" = inputs.homebrew-cask;
+        "mediosz/homebrew-tap" = inputs.mediosz-tap;
+      };
+
       brew_config = { username }: {
         nix-homebrew = {
           enable = true;
           enableRosetta = false;
           user = username;
-          taps = {
-            "homebrew/core" = inputs.homebrew-core;
-            "homebrew/cask" = inputs.homebrew-cask;
-          };
+          taps = taps;
           mutableTaps = false;
         };
       };
@@ -126,6 +134,8 @@
 
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
+
+        homebrew.taps = [ "mediosz/homebrew-tap" ];
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
