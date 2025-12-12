@@ -23,6 +23,7 @@ in {
   xdg.configFile = {
     "skhd".source = linkDotfile "skhd";
     "yabai".source = linkDotfile "yabai";
+    "aerospace".source = linkDotfile "aerospace";
     "sketchybar".source = linkDotfile "sketchybar";
   };
 

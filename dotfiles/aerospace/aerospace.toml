@@ -1,0 +1,87 @@
+config-version = 2
+
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    '''
+    sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
+    ~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh
+    ''',
+]
+
+after-startup-command = [
+    "exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE",
+]
+
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+
+default-root-container-layout = 'tiles'
+
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+automatically-unhide-macos-hidden-apps = false
+
+persistent-workspaces = ["1", "2", "3", "4", "5"]
+
+on-mode-changed = []
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 3
+inner.vertical = 3
+outer.left = 3
+outer.bottom = 28
+outer.top = 3
+outer.right = 3
+
+[mode.main.binding]
+ctrl-shift-h = 'focus left'
+ctrl-shift-j = 'focus down'
+ctrl-shift-k = 'focus up'
+ctrl-shift-l = 'focus right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-0 = 'workspace 10'
+
+alt-a = 'workspace 1'
+alt-s = 'workspace 2'
+alt-d = 'workspace 3'
+alt-f = 'workspace 4'
+alt-g = 'workspace 4'
+
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+
+[exec]
+inherit-env-vars = true
+
+[exec.env-vars]
+PATH = '/run/current-system/sw/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'

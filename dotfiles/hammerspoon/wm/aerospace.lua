@@ -1,5 +1,6 @@
 local M = {}
 
+-- TODO: implement aerospace keymaps
 function M.setup()
     -- aerospace does not need any custom keybindings for now
 end

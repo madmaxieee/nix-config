@@ -124,7 +124,7 @@ function M.setup(opts)
                 y_offset = -1.5,
             },
             background = {
-                color = colors.bg1,
+                color = colors.bg_inactive,
                 corner_radius = 5,
                 height = 22,
             },

@@ -3,8 +3,6 @@
 
 let sbarLua = pkgs.callPackage ./SbarLua.nix { };
 in {
-  services.skhd = { enable = true; };
-
   services.jankyborders = {
     enable = true;
     active_color = "0xaae1e3e4";
