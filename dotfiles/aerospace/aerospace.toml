@@ -7,7 +7,12 @@ exec-on-workspace-change = [
     sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
     ~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh;
     echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
+    [[ "$AEROSPACE_FOCUSED_WORKSPACE" = 0 ]] && aerospace workspace 1;
     ''',
+]
+
+on-focus-changed = [
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh',
 ]
 
 start-at-login = true
@@ -79,9 +84,18 @@ alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-4 = 'move-node-to-workspace 4'
 alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-0 = 'move-node-to-workspace 10'
 
 cmd-backtick = 'workspace --auto-back-and-forth 1'
 cmd-esc = 'workspace-back-and-forth'
+
+cmd-h = 'move-node-to-workspace 0'
+cmd-alt-h = []                     # Disable "hide others"
+cmd-m = []                         # Disable "minimize window"
 
 [exec]
 inherit-env-vars = true

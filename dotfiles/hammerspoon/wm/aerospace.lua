@@ -20,12 +20,16 @@ function M.setup()
         hs.execute(table.concat({
             aerospace_cmd "list-workspaces --all",
             "|",
+            "grep -v '^0$'",
+            "|",
             aerospace_cmd "workspace --wrap-around --stdin next",
         }, " "))
     end)
     leader_bind("", "h", function()
         hs.execute(table.concat({
             aerospace_cmd "list-workspaces --all",
+            "|",
+            "grep -v '^0$'",
             "|",
             aerospace_cmd "workspace --wrap-around --stdin prev",
         }, " "))

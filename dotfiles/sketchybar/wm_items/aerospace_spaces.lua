@@ -110,7 +110,6 @@ function M.setup(opts)
     space_update_listener:subscribe("aerospace_workspace_change", function(env)
         update_spaces(rerender_all_spaces)
     end)
-    -- TODO: trigger event using hammerspoon app watcher
     space_update_listener:subscribe("aerospace_update_space_apps", function(env)
         local id = env.SPACE
         space_apps[id] = {}
