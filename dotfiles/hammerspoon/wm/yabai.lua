@@ -1,4 +1,4 @@
-local M = {}
+local M = { name = "yabai" }
 
 local path = "PATH=" .. PATH .. " "
 local yabai = path .. "yabai"
@@ -88,6 +88,18 @@ function M.is_managed(win_id)
         return false
     end
     return not win_info["is-floating"]
+end
+
+---@param window hs.window
+function M.move_window_to_current_space(window)
+    hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. window:id())
+    hs.spaces.moveWindowToSpace(window, hs.spaces.activeSpaceOnScreen())
+    window:moveToScreen(hs.screen.mainScreen())
+end
+
+---@param app hs.application
+function M.hide_app(app)
+    app:hide()
 end
 
 return M

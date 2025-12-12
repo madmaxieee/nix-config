@@ -16,11 +16,9 @@ function M.toggle_scratchpad(app_name)
     end
 
     if app:isFrontmost() then
-        app:hide()
+        require("wm").hide_app(app)
     else
-        hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. main_window:id())
-        hs.spaces.moveWindowToSpace(main_window, hs.spaces.activeSpaceOnScreen())
-        main_window:moveToScreen(hs.screen.mainScreen())
+        require("wm").move_window_to_current_space(main_window)
         app:activate()
     end
 end
@@ -35,7 +33,7 @@ function M.hide_on_cmd_w(app_name)
     local app_bind = require("app_bind").app_bind
     app_bind(app_name, { "cmd" }, "w", function(app)
         if #app:allWindows() == 1 then
-            app:hide()
+            require("wm").hide_app(app)
         else
             app:focusedWindow():close()
         end

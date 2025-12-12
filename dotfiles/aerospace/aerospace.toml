@@ -5,12 +5,9 @@ exec-on-workspace-change = [
     '-c',
     '''
     sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
-    ~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh
+    ~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh;
+    echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
     ''',
-]
-
-after-startup-command = [
-    "exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE",
 ]
 
 start-at-login = true
@@ -83,8 +80,33 @@ alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-4 = 'move-node-to-workspace 4'
 alt-shift-5 = 'move-node-to-workspace 5'
 
+cmd-backtick = 'workspace --auto-back-and-forth 1'
+cmd-esc = 'workspace-back-and-forth'
+
 [exec]
 inherit-env-vars = true
 
 [exec.env-vars]
 PATH = '/run/current-system/sw/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = ['layout floating']
+
+[[on-window-detected]]
+# TODO: resize the window to a specific size and position
+if.app-id = 'net.kovidgoyal.kitty'
+if.window-title-regex-substring = '^script kitty$'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Google Chat'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'T3 Chat'
+run = ['layout floating']

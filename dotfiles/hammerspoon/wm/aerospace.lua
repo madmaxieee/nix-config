@@ -1,4 +1,4 @@
-local M = {}
+local M = { name = "aerospace" }
 
 local leader_mode = require "leader_mode"
 local leader_bind = leader_mode.bind
@@ -43,7 +43,18 @@ end
 
 ---@diagnostic disable-next-line: unused-local
 function M.is_managed(win_id)
+    -- TODO: implement this properly
     return false
+end
+
+---@param window hs.window
+function M.move_window_to_current_space(window)
+    hs.execute([[PATH=]] .. PATH .. [[ ~/.config/aerospace/move_window_to_current_workspace.sh ]] .. window:id())
+end
+
+---@param app hs.application
+function M.hide_app(app)
+    aerospace(("move-node-to-workspace --window-id %d 0"):format(app:mainWindow():id()))
 end
 
 return M
