@@ -117,10 +117,12 @@ leader_bind("", "c", function()
         win:centerOnScreen()
         return
     end
-    while not win:size():equals(new_geometry) do
+    local try = 0
+    while not win:size():equals(new_geometry) and try < 10 do
         win:setSize(new_geometry)
         hs.timer.usleep(100 * 1000)
         win:centerOnScreen()
+        try = try + 1
     end
 end)
 leader_bind("shift", "c", function()

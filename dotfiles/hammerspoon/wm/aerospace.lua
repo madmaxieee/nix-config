@@ -12,6 +12,11 @@ local function aerospace(args)
 end
 
 function M.setup()
+    -- toggle window floating
+    leader_bind("", "f", function()
+        aerospace "layout floating tiling"
+    end)
+
     leader_bind("", "r", function()
         aerospace "workspace-back-and-forth"
     end)
@@ -45,10 +50,31 @@ function M.setup()
     end)
 end
 
----@diagnostic disable-next-line: unused-local
 function M.is_managed(win_id)
-    -- TODO: implement this properly
-    return false
+    local win = hs.window.get(win_id)
+    if not win then
+        return false
+    end
+
+    local title = win:title()
+    if title == "Google Chat" or title == "T3 Chat" then
+        return false
+    end
+
+    local app = win:application()
+    if not app then
+        return false
+    end
+    local bid = app:bundleID()
+    if bid == "com.apple.finder" or bid == "com.apple.systempreferences" then
+        return false
+    end
+
+    if app:name() == "kitty" and title == "script kitty" then
+        return false
+    end
+
+    return true
 end
 
 ---@param window hs.window
@@ -59,6 +85,36 @@ end
 ---@param app hs.application
 function M.hide_app(app)
     aerospace(("move-node-to-workspace --window-id %d 0"):format(app:mainWindow():id()))
+end
+
+function TryResizeScriptKitty(win_id)
+    local win = hs.window.get(win_id)
+    if not win then
+        return
+    end
+    if win:title() ~= "script kitty" then
+        return
+    end
+    local app = win:application()
+    if not app then
+        return
+    end
+    if app:name() ~= "kitty" then
+        return
+    end
+    -- do resize
+    local new_geometry = hs.geometry.size(600, 400)
+    if win:size():equals(new_geometry) then
+        win:centerOnScreen()
+        return
+    end
+    local try = 0
+    while not win:size():equals(new_geometry) and try < 10 do
+        win:setSize(new_geometry)
+        hs.timer.usleep(100 * 1000)
+        win:centerOnScreen()
+        try = try + 1
+    end
 end
 
 return M
