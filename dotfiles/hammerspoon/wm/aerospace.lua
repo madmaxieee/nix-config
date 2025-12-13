@@ -29,7 +29,7 @@ function M.setup()
             "|",
             aerospace_cmd "workspace --wrap-around --stdin next",
         }, " "))
-    end)
+    end, { repeatable = true })
     leader_bind("", "h", function()
         hs.execute(table.concat({
             aerospace_cmd "list-workspaces --all",
@@ -38,7 +38,7 @@ function M.setup()
             "|",
             aerospace_cmd "workspace --wrap-around --stdin prev",
         }, " "))
-    end)
+    end, { repeatable = true })
 
     for i = 1, 9 do
         leader_bind("", tostring(i), function()

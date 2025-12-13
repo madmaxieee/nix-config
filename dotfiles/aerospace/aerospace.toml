@@ -42,7 +42,7 @@ preset = 'qwerty'
 inner.horizontal = 3
 inner.vertical = 3
 outer.left = 3
-outer.bottom = 28
+outer.bottom = 31    # 28 (sketchybar) + 3
 outer.top = 3
 outer.right = 3
 

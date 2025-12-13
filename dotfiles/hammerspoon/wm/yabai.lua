@@ -67,10 +67,10 @@ function M.setup()
     end)
     leader_bind("", "l", function()
         go_to_space "next"
-    end)
+    end, { repeatable = true })
     leader_bind("", "h", function()
         go_to_space "prev"
-    end)
+    end, { repeatable = true })
     for i = 1, 9 do
         leader_bind("", tostring(i), function()
             go_to_space(i)
