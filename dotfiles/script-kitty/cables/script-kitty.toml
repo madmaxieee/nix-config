@@ -3,7 +3,14 @@ name = "script-kitty"
 requirements = ["fd", "bat"]
 
 [source]
-command = "ls ~/nix-config/dotfiles/script-kitty/scripts"
+command = """
+if which yabai >/dev/null 2>&1
+  set filter_out aerospace
+else
+  set filter_out yabai
+end
+ls ~/nix-config/dotfiles/script-kitty/scripts | grep -v $filter_out
+"""
 
 [preview]
 command = "bat --plain --color=always ~/nix-config/dotfiles/script-kitty/scripts/'{}'"

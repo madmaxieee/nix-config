@@ -28,6 +28,13 @@ alt + shift - l : ~/.config/yabai/swap_and_focus.sh east
 # cmd + shift - j : yabai -m window south --resize top:0:-50 || yabai -m window --resize top:0:-50
 # cmd + shift - l : yabai -m window east --resize left:50:0 || yabai -m window --resize left:50:0
 
+# go to space
+alt - a : ~/.config/yabai/focus_space.sh 1
+alt - s : ~/.config/yabai/focus_space.sh 2
+alt - d : ~/.config/yabai/focus_space.sh 3
+alt - f : ~/.config/yabai/focus_space.sh 4
+alt - g : ~/.config/yabai/focus_space.sh 5
+
 # move to space
 alt + shift - 1 : yabai -m window --space 1; ~/.config/yabai/focus_space.sh 1
 alt + shift - 2 : yabai -m window --space 2; ~/.config/yabai/focus_space.sh 2
