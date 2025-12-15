@@ -12,7 +12,6 @@ exec-on-workspace-change = [
 
 on-focus-changed = [
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh',
-    'exec-and-forget hs -c "TryResizeScriptKitty($AEROSPACE_WINDOW_ID)"',
 ]
 
 start-at-login = true
@@ -144,7 +143,10 @@ run = ['layout floating']
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
 if.window-title-regex-substring = '^script kitty$'
-run = ['layout floating']
+run = [
+    'layout floating',
+    'exec-and-forget hs -c "TryResizeScriptKitty($AEROSPACE_WINDOW_ID)"',
+]
 
 [[on-window-detected]]
 if.app-name-regex-substring = '^Google Chat$'
