@@ -50,27 +50,31 @@ function M.setup()
     end)
 end
 
+-- TODO: store floating window id somewhere
 function M.is_managed(win_id)
     local win = hs.window.get(win_id)
     if not win then
-        return false
-    end
-
-    local title = win:title()
-    if title == "Google Chat" or title == "T3 Chat" then
-        return false
+        return true
     end
 
     local app = win:application()
     if not app then
+        return true
+    end
+    ---@cast app hs.application
+
+    local app_name = app:name()
+    if app_name == "Google Chat" or app_name == "T3 Chat" then
         return false
     end
+
     local bid = app:bundleID()
     if bid == "com.apple.finder" or bid == "com.apple.systempreferences" then
         return false
     end
 
-    if app:name() == "kitty" and title == "script kitty" then
+    local win_title = win:title()
+    if app_name == "kitty" and win_title == "script kitty" then
         return false
     end
 
