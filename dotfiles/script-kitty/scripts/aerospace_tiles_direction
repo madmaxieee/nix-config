@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+current_space="$(cat /tmp/aerospace_current_space)"
+
+window_id="$(aerospace list-windows --workspace "$current_space" --format '%{window-id}' | head -n1)"
+
+aerospace layout --window-id "$window_id" tiles horizontal vertical

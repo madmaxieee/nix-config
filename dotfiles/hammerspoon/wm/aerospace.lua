@@ -17,6 +17,11 @@ function M.setup()
         aerospace "layout floating tiling"
     end)
 
+    -- zoom in/out a window (toggle accordion layout)
+    leader_bind("", "z", function()
+        aerospace "layout tiles accordion"
+    end)
+
     leader_bind("", "r", function()
         aerospace "workspace-back-and-forth"
     end)
@@ -107,7 +112,7 @@ function TryResizeScriptKitty(win_id)
         return
     end
     -- do resize
-    local new_geometry = hs.geometry.size(600, 400)
+    local new_geometry = hs.geometry.size(900, 600)
     if win:size():equals(new_geometry) then
         win:centerOnScreen()
         return

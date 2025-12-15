@@ -5,7 +5,6 @@ exec-on-workspace-change = [
     '-c',
     '''
     sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
-    ~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh;
     echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
     [[ "$AEROSPACE_FOCUSED_WORKSPACE" = 0 ]] && aerospace workspace 1;
     ''',
@@ -21,13 +20,13 @@ start-at-login = true
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-accordion-padding = 30
+accordion-padding = 50
 
 default-root-container-layout = 'tiles'
 
 default-root-container-orientation = 'auto'
 
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 automatically-unhide-macos-hidden-apps = false
 
@@ -47,15 +46,15 @@ outer.top = 3
 outer.right = 3
 
 [mode.main.binding]
-ctrl-shift-h = 'focus left'
-ctrl-shift-j = 'focus down'
-ctrl-shift-k = 'focus up'
-ctrl-shift-l = 'focus right'
+ctrl-shift-h = 'focus left --boundaries all-monitors-outer-frame'
+ctrl-shift-j = 'focus down --boundaries all-monitors-outer-frame'
+ctrl-shift-k = 'focus up --boundaries all-monitors-outer-frame'
+ctrl-shift-l = 'focus right --boundaries all-monitors-outer-frame'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+alt-shift-h = 'move left --boundaries all-monitors-outer-frame'
+alt-shift-j = 'move down --boundaries all-monitors-outer-frame'
+alt-shift-k = 'move up --boundaries all-monitors-outer-frame'
+alt-shift-l = 'move right --boundaries all-monitors-outer-frame'
 
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
@@ -78,18 +77,48 @@ alt-a = 'workspace 1'
 alt-s = 'workspace 2'
 alt-d = 'workspace 3'
 alt-f = 'workspace 4'
-alt-g = 'workspace 4'
+alt-g = 'workspace 5'
 
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-0 = 'move-node-to-workspace 10'
+alt-shift-1 = [
+    'move-node-to-workspace 1',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 1',
+]
+alt-shift-2 = [
+    'move-node-to-workspace 2',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 2',
+]
+alt-shift-3 = [
+    'move-node-to-workspace 3',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 3',
+]
+alt-shift-4 = [
+    'move-node-to-workspace 4',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 4',
+]
+alt-shift-5 = [
+    'move-node-to-workspace 5',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 5',
+]
+alt-shift-6 = [
+    'move-node-to-workspace 6',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 6',
+]
+alt-shift-7 = [
+    'move-node-to-workspace 7',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 7',
+]
+alt-shift-8 = [
+    'move-node-to-workspace 8',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 8',
+]
+alt-shift-9 = [
+    'move-node-to-workspace 9',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 9',
+]
+alt-shift-0 = [
+    'move-node-to-workspace 10',
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 10',
+]
 
 cmd-backtick = 'workspace --auto-back-and-forth 1'
 cmd-esc = 'workspace-back-and-forth'

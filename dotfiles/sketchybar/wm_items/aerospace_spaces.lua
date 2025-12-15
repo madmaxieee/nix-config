@@ -30,10 +30,12 @@ local function rerender_all_spaces()
     end
 end
 
-local function update_spaces(cb)
+local function update_spaces_exist(cb)
     sbar.exec("aerospace list-workspaces --all", function(result, exit_code)
         if exit_code == 0 and #result > 1 then
-            spaces_exist = {}
+            for k in pairs(spaces_exist) do
+                spaces_exist[k] = false
+            end
             for line in string.gmatch(result, "([^\n]+)") do
                 spaces_exist[line] = true
             end
@@ -83,15 +85,6 @@ function M.setup(opts)
             },
         })
         spaces[id] = space
-        space:subscribe("aerospace_workspace_change", function(env)
-            sbar.set(spaces[id], {
-                icon = { highlight = env.FOCUSED_WORKSPACE == id },
-                label = { highlight = env.FOCUSED_WORKSPACE == id },
-                background = {
-                    color = env.FOCUSED_WORKSPACE == id and colors.bg1 or colors.bg_inactive,
-                },
-            })
-        end)
         space:subscribe("mouse.clicked", function()
             sbar.exec(("aerospace workspace %s"):format(id))
             sbar.set(spaces[id], {
@@ -106,13 +99,24 @@ function M.setup(opts)
         drawing = false,
         updates = true,
     })
-    ---@diagnostic disable-next-line: unused-local
     space_update_listener:subscribe("aerospace_workspace_change", function(env)
-        update_spaces(rerender_all_spaces)
+        for id, _ in pairs(spaces) do
+            sbar.set(spaces[id], {
+                icon = { highlight = env.FOCUSED_WORKSPACE == id },
+                label = { highlight = env.FOCUSED_WORKSPACE == id },
+                background = {
+                    color = env.FOCUSED_WORKSPACE == id and colors.bg1 or colors.bg_inactive,
+                },
+            })
+        end
+        update_spaces_exist(rerender_all_spaces)
     end)
     space_update_listener:subscribe("aerospace_update_space_apps", function(env)
         local id = env.SPACE
         space_apps[id] = {}
+        if #env.APPS > 0 then
+            spaces_exist[id] = true
+        end
         for _, app in ipairs(env.APPS) do
             if env.VISIBLE[app] then
                 table.insert(space_apps[id], app)
@@ -121,18 +125,8 @@ function M.setup(opts)
         rerender_space_button(id)
     end)
 
-    update_spaces(rerender_all_spaces)
+    update_spaces_exist(rerender_all_spaces)
     sbar.exec "~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh"
-
-    -- local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {
-    --     drawing = false,
-    --     updates = true,
-    -- })
-    -- space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
-    --     for i = 1, NUM_SPACES do
-    --         update_space_apps(i)
-    --     end
-    -- end)
 end
 
 return M
