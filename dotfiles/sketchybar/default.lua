@@ -24,6 +24,8 @@ sbar.default {
         padding_left = 4,
         padding_right = 4,
     },
-    padding_left = 5,
-    padding_right = 5,
+    background = {
+        padding_left = 5,
+        padding_right = 5,
+    },
 }

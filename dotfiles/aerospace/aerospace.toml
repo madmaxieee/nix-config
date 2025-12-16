@@ -14,6 +14,10 @@ on-focus-changed = [
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh',
 ]
 
+on-focused-monitor-changed = [
+    'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh',
+]
+
 start-at-login = true
 
 enable-normalization-flatten-containers = true
@@ -24,8 +28,6 @@ accordion-padding = 50
 default-root-container-layout = 'tiles'
 
 default-root-container-orientation = 'auto'
-
-# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 automatically-unhide-macos-hidden-apps = false
 
@@ -41,7 +43,7 @@ inner.horizontal = 3
 inner.vertical = 3
 outer.left = 3
 outer.bottom = 31    # 28 (sketchybar) + 3
-outer.top = 3
+outer.top = 0
 outer.right = 3
 
 [mode.main.binding]
