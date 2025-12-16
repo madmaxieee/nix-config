@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+current_space="$(cat /tmp/aerospace_current_space)"
+
+aerospace move-workspace-to-monitor --workspace "$current_space" --wrap-around next

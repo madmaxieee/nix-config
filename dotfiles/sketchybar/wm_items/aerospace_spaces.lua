@@ -91,13 +91,22 @@ function M.setup(opts)
             },
         })
         spaces[id] = space
-        space:subscribe("mouse.clicked", function()
-            sbar.exec(("aerospace workspace %s"):format(id))
-            sbar.set(spaces[id], {
-                icon = { highlight = "true" },
-                label = { highlight = "true" },
-                background = { color = colors.bg1 },
-            })
+        space:subscribe("mouse.clicked", function(env)
+            if env.BUTTON == "left" then
+                sbar.exec(("aerospace workspace %s"):format(id))
+                sbar.set(spaces[id], {
+                    icon = { highlight = "true" },
+                    label = { highlight = "true" },
+                    background = { color = colors.bg1 },
+                })
+            elseif env.BUTTON == "right" then
+                sbar.exec(
+                    ("aerospace move-workspace-to-monitor --workspace '%s' --wrap-around next"):format(id),
+                    function()
+                        sbar.exec "~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh"
+                    end
+                )
+            end
         end)
     end
 
