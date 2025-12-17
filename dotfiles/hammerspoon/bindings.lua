@@ -155,7 +155,7 @@ hs.hotkey.bind({ "cmd" }, ";", function()
 end)
 
 -- app specific key binding
-local app_bind = require("app_bind").app_bind
+local app_bind = require("app_watch").app_bind
 
 app_bind("Zen", { "cmd" }, "d", function(app)
     -- pin and unpin tab, this is currently not customizable in Zen

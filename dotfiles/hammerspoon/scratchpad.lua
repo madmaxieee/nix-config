@@ -30,7 +30,7 @@ function M.hide_on_cmd_w(app_name)
     if hide_on_cmd_w_apps[app_name] then
         return
     end
-    local app_bind = require("app_bind").app_bind
+    local app_bind = require("app_watch").app_bind
     app_bind(app_name, { "cmd" }, "w", function(app)
         if #app:allWindows() == 1 then
             require("wm").hide_app(app)
