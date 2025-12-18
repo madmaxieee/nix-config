@@ -67,6 +67,10 @@ in {
           set -f ssh_host $argv[1]
       end
 
+      if type -q autogcert
+        autogcert $ssh_host
+      end
+
       eval "$exec_cmd caffeinate -i ssh $ssh_host"
     '';
   };
