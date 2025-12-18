@@ -19,7 +19,7 @@ steps = [
 [[patterns]]
 name = "git_commit"
 steps = [
-  { command = "git diff --staged", output = "diff" },
+  { command = "git diff --staged -U30", output = "diff" },
   { command = "git log --max-count=5", output = "commits" },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "git commit -e -m {{ .commit_message }}", tty = true },
