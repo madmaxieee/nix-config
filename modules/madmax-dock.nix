@@ -6,14 +6,11 @@
       "/Applications/kitty.app"
       "/Applications/Arc.app"
       "/Applications/Helium.app"
-      "/Applications/Messenger.app"
+      "${homeDirectory}/Applications/Chrome Apps.localized/Messenger.app"
       "/Applications/Telegram.app"
-      "/Applications/LINE.app"
       "/Applications/Spotify.app"
       "/Applications/Things3.app"
       "/Applications/Fantastical.app"
-      "/Applications/Heptabase.app"
-      "/Applications/Discord.app"
       "/System/Applications/Podcasts.app"
     ];
     persistent-others = [ "${homeDirectory}/Downloads" ];

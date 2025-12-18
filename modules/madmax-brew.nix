@@ -33,9 +33,9 @@
     masApps = {
       "Keymapp" = 6472865291;
       "LINE" = 539883307;
-      "Messenger" = 1480068668;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
+      "Telegram" = 747648890;
       "Things" = 904280696;
     };
     onActivation = {
