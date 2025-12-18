@@ -2,16 +2,28 @@ local M = {}
 
 hs.window.animationDuration = 0
 
-function M.toggle_scratchpad(app_name)
+---@param app_name string
+---@param opts {bundle_id: boolean}?
+function M.toggle_scratchpad(app_name, opts)
+    opts = opts or {}
+
+    local function launch_or_focus()
+        if opts.bundle_id then
+            hs.application.launchOrFocusByBundleID(app_name)
+        else
+            hs.application.launchOrFocus(app_name)
+        end
+    end
+
     local app = hs.application.find(app_name, true)
     if not app then
-        hs.application.launchOrFocus(app_name)
+        launch_or_focus()
         return
     end
 
     local main_window = app:mainWindow()
     if not main_window then
-        hs.application.launchOrFocus(app_name)
+        launch_or_focus()
         return
     end
 
@@ -19,7 +31,7 @@ function M.toggle_scratchpad(app_name)
         require("wm").hide_window(main_window)
     else
         require("wm").move_window_to_current_space(main_window)
-        app:activate()
+        require("wm").unhide_window(main_window)
     end
 end
 

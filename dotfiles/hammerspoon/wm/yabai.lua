@@ -107,4 +107,9 @@ function M.hide_window(window)
     app:hide()
 end
 
+---@param window hs.window
+function M.unhide_window(window)
+    window:focus()
+end
+
 return M

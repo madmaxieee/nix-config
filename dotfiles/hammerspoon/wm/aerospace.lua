@@ -98,6 +98,11 @@ function M.hide_window(window)
     window:minimize()
 end
 
+---@param window hs.window
+function M.unhide_window(window)
+    window:unminimize()
+end
+
 function TryResizeScriptKitty(win_id)
     local win = hs.window.get(win_id)
     if not win then

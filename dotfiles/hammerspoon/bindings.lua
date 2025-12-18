@@ -32,6 +32,11 @@ if config.ai_app then
     end)
 end
 
+leader_bind("", "t", function()
+    -- use bundle id so it would be confused with Things Helper
+    scratchpad.toggle_scratchpad("com.culturedcode.ThingsMac", { bundle_id = true })
+end)
+
 -- open new browser windows
 local function new_browser_window()
     local browser_app = hs.application.find(config.browser, true)
