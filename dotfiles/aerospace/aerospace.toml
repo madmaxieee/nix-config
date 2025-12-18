@@ -6,7 +6,6 @@ exec-on-workspace-change = [
     '''
     sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
     echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
-    [[ "$AEROSPACE_FOCUSED_WORKSPACE" = 0 ]] && aerospace workspace 1;
     ''',
 ]
 
@@ -124,9 +123,8 @@ alt-shift-0 = [
 cmd-backtick = 'workspace --auto-back-and-forth 1'
 cmd-esc = 'workspace-back-and-forth'
 
-cmd-h = 'move-node-to-workspace 0'
-cmd-alt-h = []                     # Disable "hide others"
-cmd-m = []                         # Disable "minimize window"
+cmd-h = []
+cmd-alt-h = []
 
 [exec]
 inherit-env-vars = true

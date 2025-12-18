@@ -16,7 +16,7 @@ function M.toggle_scratchpad(app_name)
     end
 
     if app:isFrontmost() then
-        require("wm").hide_app(app)
+        require("wm").hide_window(main_window)
     else
         require("wm").move_window_to_current_space(main_window)
         app:activate()
@@ -33,7 +33,7 @@ function M.hide_on_cmd_w(app_name)
     local app_bind = require("app_watch").app_bind
     app_bind(app_name, { "cmd" }, "w", function(app)
         if #app:allWindows() == 1 then
-            require("wm").hide_app(app)
+            require("wm").hide_window(app:mainWindow())
         else
             app:focusedWindow():close()
         end

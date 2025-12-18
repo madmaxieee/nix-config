@@ -91,9 +91,11 @@ function M.move_window_to_current_space(window)
     hs.execute([[PATH=]] .. PATH .. [[ ~/.config/aerospace/move_window_to_current_workspace.sh ]] .. window:id())
 end
 
----@param app hs.application
-function M.hide_app(app)
-    aerospace(("move-node-to-workspace --window-id %d 0"):format(app:mainWindow():id()))
+---@param window hs.window
+function M.hide_window(window)
+    -- use window:minimize() instead of app:hide() because aerospace
+    -- doesn't work well with windows of hidden app
+    window:minimize()
 end
 
 function TryResizeScriptKitty(win_id)

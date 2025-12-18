@@ -97,8 +97,13 @@ function M.move_window_to_current_space(window)
     window:moveToScreen(hs.screen.mainScreen())
 end
 
----@param app hs.application
-function M.hide_app(app)
+---@param window hs.window
+function M.hide_window(window)
+    -- app:hide() instead of window:hide() because the animation is faster
+    local app = window:application()
+    if not app then
+        return
+    end
     app:hide()
 end
 

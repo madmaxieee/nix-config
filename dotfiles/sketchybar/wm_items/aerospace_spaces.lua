@@ -159,13 +159,6 @@ function M.setup(opts)
             sbar.set(sep, { drawing = false })
         end
         for monitor_id, space_ids in ipairs(data) do
-            -- there is no item for space 0 (used for hiding stuff)
-            for i = 1, #space_ids do
-                if space_ids[i] == "0" then
-                    table.remove(space_ids, i)
-                    break
-                end
-            end
             if #space_ids > 0 then
                 local ref_space_id = space_ids[1]
                 if monitor_id > 1 then
