@@ -141,6 +141,10 @@ if.app-id = 'com.apple.systempreferences'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.app-id = 'com.culturedcode.ThingsMac'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
 if.window-title-regex-substring = '^script kitty$'
 run = [

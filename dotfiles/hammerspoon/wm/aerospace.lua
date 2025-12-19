@@ -74,7 +74,7 @@ function M.is_managed(win_id)
     end
 
     local bid = app:bundleID()
-    if bid == "com.apple.finder" or bid == "com.apple.systempreferences" then
+    if bid == "com.apple.finder" or bid == "com.apple.systempreferences" or bid == "com.culturedcode.ThingsMac" then
         return false
     end
 
@@ -101,6 +101,7 @@ end
 ---@param window hs.window
 function M.unhide_window(window)
     window:unminimize()
+    window:focus()
 end
 
 function TryResizeScriptKitty(win_id)
