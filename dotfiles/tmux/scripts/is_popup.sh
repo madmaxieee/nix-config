@@ -1,3 +1,3 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
-grep -q ".__popup$" <<< "$1"
+grep -q ".__popup$" <<<"$1"

@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
 if [[ "$(tmux show-options detach-on-destroy)" == "detach-on-destroy on" ]]; then
   exit 0
@@ -23,11 +23,13 @@ session="$(
   {
     sesh list --icons --tmux
     sesh list --icons --config
-    curl --silent localhost:8080/sesh/tmux | awk '{ print "'"$cloudtop_session_prefix"'" $0 }'
+    if [[ -z "$SSH_CONNECTION" ]]; then
+      curl --silent localhost:8080/sesh/tmux | awk '{ print "'"$cloudtop_session_prefix"'" $0 }'
+    fi
     sesh list --icons --zoxide
   } | grep -v '__popup$' | fzf-tmux -p 55%,60% \
     --no-sort --ansi --border-label "$border_label" --prompt "$prompt_prefix"'⚡  ' \
-    --header ' ^r reload ^a all ^t tmux ^g configs ^x zoxide ^d kill ^f find' \
+    --header ' [^r reload] [^a all] [^t tmux] [^g configs] [^x zoxide] [^f find] [^s cloud] [^d kill] ' \
     --bind 'tab:down,btab:up' \
     --bind 'ctrl-r:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons | grep -v __popup\$)' \
     --bind 'ctrl-a:change-prompt('"$prompt_prefix"'⚡  )+reload(sesh list --icons)' \

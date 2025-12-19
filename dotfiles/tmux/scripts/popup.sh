@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 command="$1"
 
 client_height=$(tmux display-message -p '#{client_height}')
