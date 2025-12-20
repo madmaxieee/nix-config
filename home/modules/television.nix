@@ -6,5 +6,10 @@ in {
     "television/config.toml".source = linkDotfile "television/config.toml";
   };
 
-  programs.television.enable = true;
+  programs.television = {
+    enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
+  };
 }
