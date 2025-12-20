@@ -114,6 +114,10 @@
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
       };
 
+      thirdPartyTapNames = builtins.filter
+        (name: name != "homebrew/core" && name != "homebrew/cask")
+        (builtins.attrNames taps);
+
       brew_config = { username }: {
         nix-homebrew = {
           enable = true;
@@ -135,7 +139,8 @@
         # Necessary for using flakes on this system.
         nix.settings.experimental-features = "nix-command flakes";
 
-        homebrew.taps = [ "mediosz/homebrew-tap" ];
+        # sync with nix-homebrew taps to avoid warning
+        homebrew.taps = thirdPartyTapNames;
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
