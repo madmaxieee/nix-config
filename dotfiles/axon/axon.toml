@@ -1,6 +1,6 @@
 [general]
 model = "google/gemini-flash-latest"
-prompt_path = ["prompts", "fabric_prompts"]
+prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
 
 [[providers]]
 name = "google"
