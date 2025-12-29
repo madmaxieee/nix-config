@@ -157,5 +157,13 @@ if.app-name-regex-substring = '^Google Chat$'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.app-name-regex-substring = '^Google Gemini$'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.app-name-regex-substring = '^T3 Chat$'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.window-title-regex-substring = '^Untitled - Google Chrome'
 run = ['layout floating']

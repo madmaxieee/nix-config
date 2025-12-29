@@ -69,7 +69,7 @@ function M.is_managed(win_id)
     ---@cast app hs.application
 
     local app_name = app:name()
-    if app_name == "Google Chat" or app_name == "T3 Chat" then
+    if app_name == "Google Chat" or app_name == "Google Gemini" or app_name == "T3 Chat" then
         return false
     end
 
