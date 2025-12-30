@@ -165,5 +165,5 @@ if.app-name-regex-substring = '^T3 Chat$'
 run = ['layout floating']
 
 [[on-window-detected]]
-if.window-title-regex-substring = '^Untitled - Google Chrome'
+if.window-title-regex-substring = '^(Untitled|Sign in - Google Accounts) - Google Chrome'
 run = ['layout floating']
