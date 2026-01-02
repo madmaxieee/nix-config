@@ -159,14 +159,6 @@ hs.hotkey.bind({ "cmd" }, ";", function()
     os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
 end)
 
--- app specific key binding
-local app_bind = require("app_watch").app_bind
-
-app_bind("Zen", { "cmd" }, "d", function(app)
-    -- pin and unpin tab, this is currently not customizable in Zen
-    hs.eventtap.keyStroke({ "alt" }, "p", 0, app)
-end)
-
 -- apply hide_on_cmd_w for all chrome PWAs
 local pwa_bundle_id_prefix = "com.google.Chrome.app."
 
