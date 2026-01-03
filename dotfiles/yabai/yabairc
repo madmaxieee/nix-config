@@ -55,6 +55,7 @@ yabai -m rule --add manage=off app='^Duckie$'
 yabai -m rule --add manage=off app='^T3 Chat$'
 yabai -m rule --add manage=off app='^Things$'
 yabai -m rule --add manage=off title='Google Single Sign On'
+yabai -m rule --add manage=off app='^Helium$' title='Picture in Picture'
 yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid=5:3:1:1:1:2
 
 yabai -m signal --add label='refresh sketchybar space apps 1' event='space_created' action='sketchybar --trigger space_apps_refresh'
