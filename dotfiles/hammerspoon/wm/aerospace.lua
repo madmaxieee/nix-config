@@ -88,7 +88,7 @@ function M.is_managed(win_id)
     end
 
     local win_title = win:title()
-    if app_name == "kitty" and win_title == "script kitty" then
+    if app_name == "kitty" and (win_title == "script kitty" or win_title == "scratch pad") then
         return false
     end
 
@@ -153,7 +153,6 @@ function TryResizeScriptKitty(win_id)
     TryResizeWindow(win_id, { app = "kitty", title = "script kitty" }, { width = 900, height = 600 })
 end
 
--- TODO: implement for yabai
 function TryResizeScratchPad(win_id)
     TryResizeWindow(win_id, { app = "kitty", title = "scratch pad" }, { width = 1200, height = 800 })
 end
