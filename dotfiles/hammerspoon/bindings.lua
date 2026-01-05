@@ -159,6 +159,10 @@ hs.hotkey.bind({ "cmd" }, ";", function()
     os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
 end)
 
+hs.hotkey.bind({ "cmd" }, ".", function()
+    os.execute(path .. [[~/nix-config/dotfiles/script-kitty/scratch-pad-window &]])
+end)
+
 -- apply hide_on_cmd_w for all chrome PWAs
 local pwa_bundle_id_prefix = "com.google.Chrome.app."
 

@@ -12,6 +12,15 @@ local function aerospace(args)
 end
 
 function M.setup()
+    -- aerospace debug query
+    leader_bind("shift", "q", function()
+        hs.execute(table.concat({
+            aerospace_cmd "list-windows --all --json",
+            ">/tmp/aerospace-debug-query.json",
+        }, " "))
+        hs.alert "saved aerospace query result"
+    end)
+
     -- toggle window floating
     leader_bind("", "f", function()
         aerospace "layout floating tiling"
@@ -104,34 +113,49 @@ function M.unhide_window(window)
     window:focus()
 end
 
-function TryResizeScriptKitty(win_id)
+local MAX_RESIZE_RETRIES = 10
+
+---@param win_id number
+---@param match {app:string?, title:string?}
+---@param size {width:number, height:number}
+function TryResizeWindow(win_id, match, size)
     local win = hs.window.get(win_id)
     if not win then
         return
     end
-    if win:title() ~= "script kitty" then
-        return
+    if match.title then
+        if win:title() ~= match.title then
+            return
+        end
     end
-    local app = win:application()
-    if not app then
-        return
-    end
-    if app:name() ~= "kitty" then
-        return
+    if match.app then
+        local app = win:application()
+        if not app or app:name() ~= match.app then
+            return
+        end
     end
     -- do resize
-    local new_geometry = hs.geometry.size(900, 600)
+    local new_geometry = hs.geometry.size(size.width, size.height)
     if win:size():equals(new_geometry) then
         win:centerOnScreen()
         return
     end
     local try = 0
-    while not win:size():equals(new_geometry) and try < 10 do
+    while not win:size():equals(new_geometry) and try < MAX_RESIZE_RETRIES do
         win:setSize(new_geometry)
         hs.timer.usleep(100 * 1000)
         win:centerOnScreen()
         try = try + 1
     end
+end
+
+function TryResizeScriptKitty(win_id)
+    TryResizeWindow(win_id, { app = "kitty", title = "script kitty" }, { width = 900, height = 600 })
+end
+
+-- TODO: implement for yabai
+function TryResizeScratchPad(win_id)
+    TryResizeWindow(win_id, { app = "kitty", title = "scratch pad" }, { width = 1200, height = 800 })
 end
 
 return M

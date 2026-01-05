@@ -153,6 +153,14 @@ run = [
 ]
 
 [[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+if.window-title-regex-substring = '^scratch pad$'
+run = [
+    'layout floating',
+    'exec-and-forget hs -c "TryResizeScratchPad($AEROSPACE_WINDOW_ID)"',
+]
+
+[[on-window-detected]]
 if.app-name-regex-substring = '^Google Chat$'
 run = ['layout floating']
 
