@@ -173,6 +173,7 @@
             showhidden = true;
             show-recents = false;
             mru-spaces = false;
+            mineffect = "scale";
           };
           NSGlobalDomain = {
             AppleICUForce24HourTime = true;
