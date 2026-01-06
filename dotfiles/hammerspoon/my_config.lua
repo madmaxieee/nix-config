@@ -1,9 +1,8 @@
 local M = {
     message_app = "Messenger",
     browser = "Arc",
-    note_app = "Heptabase",
     terminal_app = "kitty",
-    ai_app = "",
+    ai_app = "T3 Chat",
 }
 
 local extra_config = {}

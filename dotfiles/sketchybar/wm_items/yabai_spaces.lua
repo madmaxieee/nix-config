@@ -47,9 +47,9 @@ end
 
 local function update_space_apps(index)
     local cmd = table.concat({
-        [[yabai -m query --windows app,subrole,is-hidden,is-sticky --space ]],
+        [[yabai -m query --windows app,subrole,is-hidden,is-minimized,is-sticky --space ]],
         index,
-        [[ | jq -r  '.[] | select(.subrole == "AXStandardWindow" and ."is-hidden" == false and ."is-sticky" == false) | .app']],
+        [[ | jq -r  '.[] | select(.subrole == "AXStandardWindow" and ."is-hidden" == false and ."is-minimized" == false and ."is-sticky" == false) | .app']],
     }, "")
     sbar.exec(cmd, function(result, exit_code)
         if exit_code == 0 then

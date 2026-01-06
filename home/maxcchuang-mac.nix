@@ -126,7 +126,6 @@ in {
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",
-            note_app = "Obsidian",
             terminal_app = "kitty",
             ai_app = "T3 Chat",
         }

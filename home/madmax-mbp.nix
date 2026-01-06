@@ -112,7 +112,6 @@ in {
         return {
             message_app = "Messenger",
             browser = "Helium",
-            note_app = "Heptabase",
             terminal_app = "kitty",
             ai_app = "T3 Chat",
         }

@@ -14,27 +14,38 @@ end)
 if config.message_app then
     scratchpad.hide_on_cmd_w(config.message_app)
     leader_bind("", "m", function()
-        scratchpad.toggle_scratchpad(config.message_app)
-    end)
-end
-
-if config.note_app then
-    scratchpad.hide_on_cmd_w(config.note_app)
-    leader_bind("", "n", function()
-        scratchpad.toggle_scratchpad(config.note_app)
+        scratchpad.toggle_app_scratchpad(config.message_app)
     end)
 end
 
 if config.ai_app then
     scratchpad.hide_on_cmd_w(config.ai_app)
     leader_bind("", "g", function()
-        scratchpad.toggle_scratchpad(config.ai_app)
+        scratchpad.toggle_app_scratchpad(config.ai_app)
     end)
 end
 
+leader_bind("", "n", function()
+    scratchpad.toggle_scratchpad {
+        find_window = function()
+            local app = hs.application.get "net.kovidgoyal.kitty"
+            if not app then
+                return nil
+            end
+            return app:getWindow "scratch pad"
+        end,
+        launch = function()
+            os.execute(path .. [[kitty --single-instance --title='scratch pad' ~/.hammerspoon/quick-obsidian.sh &]])
+        end,
+        hide = function(window)
+            window:minimize()
+        end,
+    }
+end)
+
 leader_bind("", "t", function()
     -- use bundle id so it would be confused with Things Helper
-    scratchpad.toggle_scratchpad("com.culturedcode.ThingsMac", { bundle_id = true })
+    scratchpad.toggle_app_scratchpad("com.culturedcode.ThingsMac", { bundle_id = true })
 end)
 
 -- open new browser windows
@@ -157,10 +168,6 @@ end)
 -- non-modal key binding
 hs.hotkey.bind({ "cmd" }, ";", function()
     os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
-end)
-
-hs.hotkey.bind({ "cmd" }, ".", function()
-    os.execute(path .. [[~/nix-config/dotfiles/script-kitty/scratch-pad-window &]])
 end)
 
 -- apply hide_on_cmd_w for all chrome PWAs

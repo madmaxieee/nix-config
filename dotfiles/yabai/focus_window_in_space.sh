@@ -7,7 +7,7 @@ space_index=$1
 
 # if any non sticky window has focus
 space_has_focus=$(yabai -m query --windows --space "$space_index" |
-    jq '[ .[] | select(."is-sticky" | not) ] | map(.["has-focus"]) | any')
+    jq '[ .[] | select(."is-sticky" == false and ."is-minimized" == false) ] | map(.["has-focus"]) | any')
 
 if [[ "$space_has_focus" = "false" ]]; then
     first_window_id="null"
