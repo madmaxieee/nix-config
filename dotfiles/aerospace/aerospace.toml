@@ -6,6 +6,7 @@ exec-on-workspace-change = [
     '''
     sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
     echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
+    ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh;
     ''',
 ]
 
@@ -14,7 +15,13 @@ on-focus-changed = [
 ]
 
 on-focused-monitor-changed = [
+    'move-mouse monitor-lazy-center',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh',
+]
+
+# TODO: add mode indicator and update it here
+on-mode-changed = [
+    # '''exec-and-forget hs -c "hs.alert('$(aerospace list-modes --current) mode')"''',
 ]
 
 start-at-login = true
@@ -32,6 +39,18 @@ automatically-unhide-macos-hidden-apps = false
 
 persistent-workspaces = ["1", "2", "3", "4", "5"]
 
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'main'
+5 = 'main'
+6 = 'secondary'
+7 = 'secondary'
+8 = 'secondary'
+9 = 'secondary'
+10 = 'secondary'
+
 on-mode-changed = []
 
 [key-mapping]
@@ -46,18 +65,32 @@ outer.top = 0
 outer.right = 3
 
 [mode.main.binding]
-ctrl-shift-h = 'focus left --boundaries workspace --boundaries-action wrap-around-the-workspace'
-ctrl-shift-j = 'focus down --boundaries all-monitors-outer-frame'
-ctrl-shift-k = 'focus up --boundaries all-monitors-outer-frame'
-ctrl-shift-l = 'focus right --boundaries workspace --boundaries-action wrap-around-the-workspace'
+ctrl-shift-h = [
+    'focus left --boundaries workspace --boundaries-action wrap-around-the-workspace',
+    'exec-and-forget ~/.config/aerospace/restore_window_focus.sh',
+]
+ctrl-shift-j = [
+    'focus down --boundaries all-monitors-outer-frame',
+    'exec-and-forget ~/.config/aerospace/restore_window_focus.sh',
+]
+ctrl-shift-k = [
+    'focus up --boundaries all-monitors-outer-frame',
+    'exec-and-forget ~/.config/aerospace/restore_window_focus.sh',
+]
+ctrl-shift-l = [
+    'focus right --boundaries workspace --boundaries-action wrap-around-the-workspace',
+    'exec-and-forget ~/.config/aerospace/restore_window_focus.sh',
+]
 
 alt-shift-h = 'move left --boundaries all-monitors-outer-frame'
 alt-shift-j = 'move down --boundaries all-monitors-outer-frame'
 alt-shift-k = 'move up --boundaries all-monitors-outer-frame'
 alt-shift-l = 'move right --boundaries all-monitors-outer-frame'
 
-alt-minus = 'resize smart -50'
-alt-equal = 'resize smart +50'
+cmd-shift-h = 'join-with left'
+cmd-shift-j = 'join-with down'
+cmd-shift-k = 'join-with up'
+cmd-shift-l = 'join-with right'
 
 ctrl-right = 'workspace next'
 ctrl-left = 'workspace prev'
@@ -126,6 +159,18 @@ cmd-esc = 'workspace-back-and-forth'
 cmd-h = []
 cmd-alt-h = []
 
+alt-r = 'mode resize'
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height -50'
+k = 'resize height +50'
+l = 'resize width +50'
+equal = ['balance-sizes', 'mode main']
+enter = 'mode main'
+esc = 'mode main'
+alt-r = 'mode main'
+
 [exec]
 inherit-env-vars = true
 
@@ -173,5 +218,5 @@ if.app-name-regex-substring = '^T3 Chat$'
 run = ['layout floating']
 
 [[on-window-detected]]
-if.window-title-regex-substring = '^(Untitled|Sign in - Google Accounts) - Google Chrome'
+if.window-title-regex-substring = '^Sign in - Google Accounts - Google Chrome'
 run = ['layout floating']
