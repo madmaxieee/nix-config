@@ -88,7 +88,10 @@ function M.is_managed(win_id)
     end
 
     local win_title = win:title()
-    if app_name == "kitty" and (win_title == "script kitty" or win_title == "scratch pad") then
+    if
+        app_name == "kitty"
+        and (win_title == "script kitty" or win_title == "scratch pad" or win_title == "obsidian")
+    then
         return false
     end
 
@@ -116,7 +119,7 @@ end
 local MAX_RESIZE_RETRIES = 10
 
 ---@param win_id number
----@param match {app:string?, title:string?}
+---@param match {app:string?, title?:string|string[]}
 ---@param size {width:number, height:number}
 function TryResizeWindow(win_id, match, size)
     local win = hs.window.get(win_id)
@@ -124,9 +127,21 @@ function TryResizeWindow(win_id, match, size)
         return
     end
     if match.title then
-        if win:title() ~= match.title then
+        -- make lua_ls happy
+        local title = match.title
+        if type(title) == "string" then
+            if win:title() ~= title then
+                return
+            end
+        elseif type(title) == "table" then
+            for _, t in ipairs(title) do
+                if win:title() == t then
+                    goto matched
+                end
+            end
             return
         end
+        ::matched::
     end
     if match.app then
         local app = win:application()
@@ -154,7 +169,7 @@ function TryResizeScriptKitty(win_id)
 end
 
 function TryResizeScratchPad(win_id)
-    TryResizeWindow(win_id, { app = "kitty", title = "scratch pad" }, { width = 1200, height = 800 })
+    TryResizeWindow(win_id, { app = "kitty", title = { "scratch pad", "obsidian" } }, { width = 1200, height = 800 })
 end
 
 return M

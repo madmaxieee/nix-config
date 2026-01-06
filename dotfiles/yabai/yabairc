@@ -59,6 +59,7 @@ yabai -m rule --add manage=off app='^Helium$' title='Picture in Picture'
 # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid=5:3:1:1:1:2
 yabai -m rule --add manage=off app='^kitty$' title='^scratch pad$' grid=7:5:1:1:3:5
+yabai -m rule --add manage=off app='^kitty$' title='^obsidian$' grid=7:5:1:1:3:5
 
 yabai -m signal --add label='refresh sketchybar space apps 1' event='space_created' action='sketchybar --trigger space_apps_refresh'
 yabai -m signal --add label='refresh sketchybar space apps 2' event='space_destroyed' action='sketchybar --trigger space_apps_refresh'

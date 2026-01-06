@@ -199,7 +199,7 @@ run = [
 
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
-if.window-title-regex-substring = '^scratch pad$'
+if.window-title-regex-substring = '^(scratch pad|obsidian)$'
 run = [
     'layout floating',
     'exec-and-forget hs -c "TryResizeScratchPad($AEROSPACE_WINDOW_ID)"',

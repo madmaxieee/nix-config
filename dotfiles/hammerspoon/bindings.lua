@@ -32,10 +32,30 @@ leader_bind("", "n", function()
             if not app then
                 return nil
             end
+            return app:getWindow "obsidian"
+        end,
+        launch = function()
+            os.execute(path .. [[kitty --single-instance --title='obsidian' ~/.hammerspoon/quick-obsidian.sh &]])
+        end,
+        hide = function(window)
+            window:minimize()
+        end,
+    }
+end)
+
+hs.hotkey.bind({ "cmd" }, ".", function()
+    scratchpad.toggle_scratchpad {
+        find_window = function()
+            local app = hs.application.get "net.kovidgoyal.kitty"
+            if not app then
+                return nil
+            end
             return app:getWindow "scratch pad"
         end,
         launch = function()
-            os.execute(path .. [[kitty --single-instance --title='scratch pad' ~/.hammerspoon/quick-obsidian.sh &]])
+            os.execute(
+                path .. [[kitty --single-instance --title='scratch pad' nvim +startinsert /tmp/scratch-pad.md &]]
+            )
         end,
         hide = function(window)
             window:minimize()
