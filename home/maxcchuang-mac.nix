@@ -127,7 +127,7 @@ in {
             message_app = "Google Chat",
             browser = "Google Chrome",
             terminal_app = "kitty",
-            ai_app = "T3 Chat",
+            ai_app = "Google Gemini",
         }
       '';
     })
