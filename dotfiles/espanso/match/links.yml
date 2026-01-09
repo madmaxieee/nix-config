@@ -2,6 +2,6 @@ matches:
   - trigger: ";gh"
     replace: "https://github.com/madmaxieee"
   - trigger: ";linkedin"
-    replace: "https://www.linkedin.com/in/chuangjiaxu"
+    replace: "https://www.linkedin.com/in/kahiok"
   - trigger: ";web"
-    replace: "https://www.madmaxieee.dev"
+    replace: "https://www.kahiok.com"
