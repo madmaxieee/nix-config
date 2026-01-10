@@ -8,6 +8,7 @@ let
   };
 in {
   home.file = flatMerge [
+    (linkScript "fixquote")
     (linkScript "git-foreach")
     (linkScript "nr")
     (linkScript "ns")

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 temp_file=/tmp/vipe.$$.txt
 touch $temp_file
