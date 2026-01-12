@@ -17,14 +17,14 @@ prompt_prefix="$hostname_module"
 
 cloudtop_session_prefix='☁️[cloud] '
 # remote sesh service over ssh tunnel
-cloudtop_session_command="curl --silent localhost:8080/sesh/tmux | awk '!/__popup\$/ { print \"$cloudtop_session_prefix\" \$0 }'"
+cloudtop_session_command="curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup\$/ { print \"$cloudtop_session_prefix\" \$0 }'"
 
 session="$(
   {
     sesh list --icons --tmux
     sesh list --icons --config
     if [[ -z "$SSH_CONNECTION" ]]; then
-      curl --silent localhost:8080/sesh/tmux | awk '{ print "'"$cloudtop_session_prefix"'" $0 }'
+      eval "$cloudtop_session_command"
     fi
     sesh list --icons --zoxide
   } | grep -v '__popup$' | fzf-tmux -p 55%,60% \
