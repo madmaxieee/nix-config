@@ -15,7 +15,6 @@ on-focus-changed = [
 ]
 
 on-focused-monitor-changed = [
-    'move-mouse monitor-lazy-center',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh',
 ]
 
@@ -114,42 +113,52 @@ alt-g = 'workspace 5'
 
 alt-shift-1 = [
     'move-node-to-workspace 1',
+    'workspace 1',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 1',
 ]
 alt-shift-2 = [
     'move-node-to-workspace 2',
+    'workspace 2',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 2',
 ]
 alt-shift-3 = [
     'move-node-to-workspace 3',
+    'workspace 3',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 3',
 ]
 alt-shift-4 = [
     'move-node-to-workspace 4',
+    'workspace 4',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 4',
 ]
 alt-shift-5 = [
     'move-node-to-workspace 5',
+    'workspace 5',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 5',
 ]
 alt-shift-6 = [
     'move-node-to-workspace 6',
+    'workspace 6',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 6',
 ]
 alt-shift-7 = [
     'move-node-to-workspace 7',
+    'workspace 7',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 7',
 ]
 alt-shift-8 = [
     'move-node-to-workspace 8',
+    'workspace 8',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 8',
 ]
 alt-shift-9 = [
     'move-node-to-workspace 9',
+    'workspace 9',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 9',
 ]
 alt-shift-0 = [
     'move-node-to-workspace 10',
+    'workspace 10',
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_single_space_apps.sh 10',
 ]
 
