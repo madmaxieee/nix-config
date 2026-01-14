@@ -1,4 +1,4 @@
-local sbar = require "sketchybar"
+local sbar = require("sketchybar")
 
 local M = {}
 
@@ -23,7 +23,7 @@ function M.setup(opts)
     M.item = space_creator
 
     space_creator:subscribe("mouse.clicked", function(_)
-        sbar.exec "~/.config/yabai/new_space.sh"
+        sbar.exec("~/.config/yabai/new_space.sh")
     end)
 end
 

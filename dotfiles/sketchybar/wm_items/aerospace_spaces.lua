@@ -1,6 +1,6 @@
-local sbar = require "sketchybar"
-local colors = require "colors"
-local icon_map = require "icon_map"
+local sbar = require("sketchybar")
+local colors = require("colors")
+local icon_map = require("icon_map")
 
 local M = {}
 
@@ -16,7 +16,9 @@ local function rerender_space_button(id)
     local label_content = ""
     if space_apps[id] then
         for _, val in ipairs(space_apps[id]) do
-            label_content = label_content .. (icon_map[val] and icon_map[val] or ":default:") .. " "
+            label_content = label_content
+                .. (icon_map[val] and icon_map[val] or ":default:")
+                .. " "
         end
     end
     sbar.set(spaces[id], {
@@ -47,7 +49,9 @@ local function update_spaces_exist(cb)
 end
 
 local function move_item_after(item, ref_item)
-    sbar.exec(([[sketchybar --move '%s' after '%s']]):format(item.name, ref_item.name))
+    sbar.exec(
+        ([[sketchybar --move '%s' after '%s']]):format(item.name, ref_item.name)
+    )
 end
 
 function M.setup(opts)
@@ -101,9 +105,11 @@ function M.setup(opts)
                 })
             elseif env.BUTTON == "right" then
                 sbar.exec(
-                    ("aerospace move-workspace-to-monitor --workspace '%s' --wrap-around next"):format(id),
+                    ("aerospace move-workspace-to-monitor --workspace '%s' --wrap-around next"):format(
+                        id
+                    ),
                     function()
-                        sbar.exec "~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh"
+                        sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh")
                     end
                 )
             end
@@ -132,7 +138,8 @@ function M.setup(opts)
                 icon = { highlight = env.FOCUSED_WORKSPACE == id },
                 label = { highlight = env.FOCUSED_WORKSPACE == id },
                 background = {
-                    color = env.FOCUSED_WORKSPACE == id and colors.bg1 or colors.bg_inactive,
+                    color = env.FOCUSED_WORKSPACE == id and colors.bg1
+                        or colors.bg_inactive,
                 },
             })
         end
@@ -153,30 +160,42 @@ function M.setup(opts)
         rerender_space_button(id)
     end)
 
-    space_update_listener:subscribe("aerospace_update_monitor_spaces", function(env)
-        local data = env.DATA
-        for _, sep in ipairs(separators) do
-            sbar.set(sep, { drawing = false })
-        end
-        for monitor_id, space_ids in ipairs(data) do
-            if #space_ids > 0 then
-                local ref_space_id = space_ids[1]
-                if monitor_id > 1 then
-                    move_item_after(spaces[ref_space_id], separators[monitor_id - 1])
-                    sbar.set(separators[monitor_id - 1], { drawing = true })
+    space_update_listener:subscribe(
+        "aerospace_update_monitor_spaces",
+        function(env)
+            local data = env.DATA
+            for _, sep in ipairs(separators) do
+                sbar.set(sep, { drawing = false })
+            end
+            for monitor_id, space_ids in ipairs(data) do
+                if #space_ids > 0 then
+                    local ref_space_id = space_ids[1]
+                    if monitor_id > 1 then
+                        move_item_after(
+                            spaces[ref_space_id],
+                            separators[monitor_id - 1]
+                        )
+                        sbar.set(separators[monitor_id - 1], { drawing = true })
+                    end
+                    for i = 2, #space_ids do
+                        move_item_after(
+                            spaces[space_ids[i]],
+                            spaces[ref_space_id]
+                        )
+                        ref_space_id = space_ids[i]
+                    end
+                    move_item_after(
+                        separators[monitor_id],
+                        spaces[ref_space_id]
+                    )
                 end
-                for i = 2, #space_ids do
-                    move_item_after(spaces[space_ids[i]], spaces[ref_space_id])
-                    ref_space_id = space_ids[i]
-                end
-                move_item_after(separators[monitor_id], spaces[ref_space_id])
             end
         end
-    end)
+    )
 
     update_spaces_exist(rerender_all_spaces)
-    sbar.exec "~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh"
-    sbar.exec "~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh"
+    sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh")
+    sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh")
 end
 
 return M

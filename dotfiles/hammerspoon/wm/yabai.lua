@@ -3,7 +3,7 @@ local M = { name = "yabai" }
 local path = "PATH=" .. PATH .. " "
 local yabai = path .. "yabai"
 
-local leader_mode = require "leader_mode"
+local leader_mode = require("leader_mode")
 local leader_bind = leader_mode.bind
 local leader_exit = leader_mode.exit
 
@@ -29,8 +29,14 @@ local function go_to_space(space_sel)
     -- the previous command would fail with sip enabled
     -- if that's the case use hammerspoon to focus space instead
     if not success then
-        local space_id =
-            hs.execute(yabai .. [[ -m query --spaces id --space ]] .. space_sel .. [[ | ]] .. path .. [[jq .id]])
+        local space_id = hs.execute(
+            yabai
+                .. [[ -m query --spaces id --space ]]
+                .. space_sel
+                .. [[ | ]]
+                .. path
+                .. [[jq .id]]
+        )
         space_id = tonumber(space_id)
         hs.spaces.gotoSpace(space_id)
     end
@@ -39,8 +45,11 @@ end
 function M.setup()
     -- yabai debug query
     leader_bind("shift", "q", function()
-        os.execute(yabai .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]])
-        hs.alert "saved yabai query result"
+        os.execute(
+            yabai
+                .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]]
+        )
+        hs.alert("saved yabai query result")
     end)
 
     -- toggle window float or sticky
@@ -56,20 +65,20 @@ function M.setup()
         leader_exit()
         if not success then
             local space_id = hs.spaces.activeSpaceOnScreen()
-            go_to_space "recent"
+            go_to_space("recent")
             hs.timer.usleep(400 * 1000)
             hs.spaces.removeSpace(space_id)
         end
     end)
 
     leader_bind("", "r", function()
-        go_to_space "recent"
+        go_to_space("recent")
     end)
     leader_bind("", "l", function()
-        go_to_space "next"
+        go_to_space("next")
     end, { repeatable = true })
     leader_bind("", "h", function()
-        go_to_space "prev"
+        go_to_space("prev")
     end, { repeatable = true })
     for i = 1, 9 do
         leader_bind("", tostring(i), function()
@@ -82,7 +91,9 @@ function M.setup()
 end
 
 function M.is_managed(win_id)
-    local win_info_raw = hs.execute((yabai .. [[ -m query --windows --window %d]]):format(win_id))
+    local win_info_raw = hs.execute(
+        (yabai .. [[ -m query --windows --window %d]]):format(win_id)
+    )
     local win_info = hs.json.decode(win_info_raw)
     if win_info == nil then
         return false
@@ -92,7 +103,12 @@ end
 
 ---@param window hs.window
 function M.move_window_to_current_space(window)
-    hs.execute([[PATH=]] .. PATH .. [[ ~/.config/yabai/move_window_to_current_space.sh ]] .. window:id())
+    hs.execute(
+        [[PATH=]]
+            .. PATH
+            .. [[ ~/.config/yabai/move_window_to_current_space.sh ]]
+            .. window:id()
+    )
     hs.spaces.moveWindowToSpace(window, hs.spaces.activeSpaceOnScreen())
     window:moveToScreen(hs.screen.mainScreen())
 end

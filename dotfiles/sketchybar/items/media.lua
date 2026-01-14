@@ -1,6 +1,6 @@
-local sbar = require "sketchybar"
-local colors = require "colors"
-local app_icons = require "icon_map"
+local sbar = require("sketchybar")
+local colors = require("colors")
+local app_icons = require("icon_map")
 
 local M = {}
 
@@ -48,39 +48,41 @@ local function rerender_media()
             label = title
         end
 
-        M.item:set {
+        M.item:set({
             icon = {
                 string = get_app_icon(state.current_app),
                 color = app_colors[state.current_app],
             },
-        }
+        })
         sbar.animate("tanh", 10, function()
-            M.last_track_button:set { icon = { string = "" } }
+            M.last_track_button:set({ icon = { string = "" } })
             if state.playing == nil then
-                M.play_button:set { icon = { string = "" } }
+                M.play_button:set({ icon = { string = "" } })
             else
-                M.play_button:set { icon = { string = state.playing and "" or "" } }
+                M.play_button:set({
+                    icon = { string = state.playing and "" or "" },
+                })
             end
-            M.next_track_button:set { icon = { string = "" } }
-            M.item:set { label = { string = label } }
+            M.next_track_button:set({ icon = { string = "" } })
+            M.item:set({ label = { string = label } })
         end)
     else
         sbar.animate("tanh", 10, function()
-            M.last_track_button:set { icon = { string = "" } }
-            M.play_button:set { icon = { string = "" } }
-            M.next_track_button:set { icon = { string = "" } }
-            M.item:set { icon = { string = "" }, label = { string = "" } }
+            M.last_track_button:set({ icon = { string = "" } })
+            M.play_button:set({ icon = { string = "" } })
+            M.next_track_button:set({ icon = { string = "" } })
+            M.item:set({ icon = { string = "" }, label = { string = "" } })
         end)
     end
 end
 
 local function play_pause()
     if state.current_app == "Spotify" then
-        sbar.exec [[hs -c 'hs.spotify.playpause()']]
+        sbar.exec([[hs -c 'hs.spotify.playpause()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec [[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']]
+        sbar.exec([[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']])
     else
-        sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']]
+        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']])
     end
 end
 
@@ -97,27 +99,32 @@ end
 
 local function next_track()
     if state.current_app == "Spotify" then
-        sbar.exec [[hs -c 'hs.spotify.next()']]
+        sbar.exec([[hs -c 'hs.spotify.next()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "right", 0, hs.application.find("Podcasts"))']]
+        sbar.exec([[hs -c 'hs.eventtap.keyStroke({"cmd"}, "right", 0, hs.application.find("Podcasts"))']])
     else
-        sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()']]
+        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()']])
     end
 end
 
 local function last_track()
     if state.current_app == "Spotify" then
-        sbar.exec [[hs -c 'hs.spotify.previous()']]
+        sbar.exec([[hs -c 'hs.spotify.previous()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "left", 0, hs.application.find("Podcasts"))']]
+        sbar.exec([[hs -c 'hs.eventtap.keyStroke({"cmd"}, "left", 0, hs.application.find("Podcasts"))']])
     else
-        sbar.exec [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()']]
+        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()']])
     end
 end
 
 ---@param seconds number
 local function scroll(seconds)
-    sbar.exec(string.format("~/.config/sketchybar/items/scroll_media_title.sh %d &", seconds))
+    sbar.exec(
+        string.format(
+            "~/.config/sketchybar/items/scroll_media_title.sh %d &",
+            seconds
+        )
+    )
 end
 
 function M.setup(opts)
@@ -198,14 +205,16 @@ function M.setup(opts)
         end
     end)
 
-    sbar.exec "~/.config/sketchybar/items/media_control_stream.sh"
+    sbar.exec("~/.config/sketchybar/items/media_control_stream.sh")
     media:subscribe("media_control_stream", function(env)
         local app = bundle_ids[env.INFO.bundleIdentifier]
         if app ~= nil then
             state.current_app = app
-            local new_artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+            local new_artist = (env.INFO.artist ~= "" and env.INFO.artist)
+                or nil
             local new_title = (env.INFO.title ~= "" and env.INFO.title) or nil
-            local is_new_track = (new_artist ~= state.artist) or (new_title ~= state.title)
+            local is_new_track = (new_artist ~= state.artist)
+                or (new_title ~= state.title)
             state.artist = new_artist
             state.title = new_title
             state.playing = env.INFO.playing
@@ -274,19 +283,19 @@ function M.setup(opts)
     end)
 
     media:subscribe("media_scroll_start", function(_)
-        M.item:set { scroll_texts = true }
+        M.item:set({ scroll_texts = true })
     end)
 
     media:subscribe("media_scroll_stop", function(_)
-        M.item:set { scroll_texts = false }
+        M.item:set({ scroll_texts = false })
     end)
 
     media:subscribe("mouse.entered", function(_)
-        M.item:set { scroll_texts = true }
+        M.item:set({ scroll_texts = true })
     end)
 
     media:subscribe("mouse.exited", function(_)
-        M.item:set { scroll_texts = false }
+        M.item:set({ scroll_texts = false })
     end)
 end
 

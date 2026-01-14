@@ -1,9 +1,9 @@
 local path = "PATH=" .. PATH .. " "
 
-local scratchpad = require "scratchpad"
-local config = require "my_config"
+local scratchpad = require("scratchpad")
+local config = require("my_config")
 
-local leader_mode = require "leader_mode"
+local leader_mode = require("leader_mode")
 local leader_bind = leader_mode.bind
 local leader_exit = leader_mode.exit
 
@@ -26,46 +26,53 @@ if config.ai_app then
 end
 
 leader_bind("", "n", function()
-    scratchpad.toggle_scratchpad {
+    scratchpad.toggle_scratchpad({
         find_window = function()
-            local app = hs.application.get "net.kovidgoyal.kitty"
+            local app = hs.application.get("net.kovidgoyal.kitty")
             if not app then
                 return nil
             end
-            return app:getWindow "obsidian"
-        end,
-        launch = function()
-            os.execute(path .. [[kitty --single-instance --title='obsidian' ~/.hammerspoon/quick-obsidian.sh &]])
-        end,
-        hide = function(window)
-            window:minimize()
-        end,
-    }
-end)
-
-hs.hotkey.bind({ "cmd" }, ".", function()
-    scratchpad.toggle_scratchpad {
-        find_window = function()
-            local app = hs.application.get "net.kovidgoyal.kitty"
-            if not app then
-                return nil
-            end
-            return app:getWindow "scratch pad"
+            return app:getWindow("obsidian")
         end,
         launch = function()
             os.execute(
-                path .. [[kitty --single-instance --title='scratch pad' nvim +startinsert /tmp/scratch-pad.md &]]
+                path
+                    .. [[kitty --single-instance --title='obsidian' ~/.hammerspoon/quick-obsidian.sh &]]
             )
         end,
         hide = function(window)
             window:minimize()
         end,
-    }
+    })
+end)
+
+hs.hotkey.bind({ "cmd" }, ".", function()
+    scratchpad.toggle_scratchpad({
+        find_window = function()
+            local app = hs.application.get("net.kovidgoyal.kitty")
+            if not app then
+                return nil
+            end
+            return app:getWindow("scratch pad")
+        end,
+        launch = function()
+            os.execute(
+                path
+                    .. [[kitty --single-instance --title='scratch pad' nvim +startinsert /tmp/scratch-pad.md &]]
+            )
+        end,
+        hide = function(window)
+            window:minimize()
+        end,
+    })
 end)
 
 leader_bind("", "t", function()
     -- use bundle id so it would be confused with Things Helper
-    scratchpad.toggle_app_scratchpad("com.culturedcode.ThingsMac", { bundle_id = true })
+    scratchpad.toggle_app_scratchpad(
+        "com.culturedcode.ThingsMac",
+        { bundle_id = true }
+    )
 end)
 
 -- open new browser windows
@@ -169,11 +176,11 @@ end)
 local lock_mode = hs.hotkey.modal.new("ctrl-shift", "space")
 
 function lock_mode:entered()
-    hs.alert "entered lock mode"
+    hs.alert("entered lock mode")
     leader_exit()
 end
 function lock_mode:exited()
-    hs.alert "exited lock mode"
+    hs.alert("exited lock mode")
 end
 
 lock_mode:bind({ "ctrl", "shift" }, "space", function()
@@ -182,12 +189,14 @@ end)
 
 -- shadow leader mode keybinding
 lock_mode:bind({ "shift" }, "space", function()
-    hs.alert "lock mode activated"
+    hs.alert("lock mode activated")
 end)
 
 -- non-modal key binding
 hs.hotkey.bind({ "cmd" }, ";", function()
-    os.execute(path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]])
+    os.execute(
+        path .. [[~/nix-config/dotfiles/script-kitty/script-kitty-prompt &]]
+    )
 end)
 
 -- apply hide_on_cmd_w for all chrome PWAs
@@ -198,7 +207,9 @@ local pwa_bundle_id_prefix = "com.google.Chrome.app."
 ---@param app hs.application
 PWAAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
     if event_type == hs.application.watcher.launching then
-        if app:bundleID():sub(1, #pwa_bundle_id_prefix) == pwa_bundle_id_prefix then
+        if
+            app:bundleID():sub(1, #pwa_bundle_id_prefix) == pwa_bundle_id_prefix
+        then
             scratchpad.hide_on_cmd_w(app_name)
         end
     end

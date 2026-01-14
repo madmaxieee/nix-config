@@ -1,5 +1,5 @@
-local sbar = require "sketchybar"
-local colors = require "colors"
+local sbar = require("sketchybar")
+local colors = require("colors")
 
 local M = {}
 
@@ -62,17 +62,17 @@ function M.setup(opts)
     M.netstat_up = netstat_up
     M.netstat_down = netstat_down
 
-    sbar.exec "~/.config/sketchybar/items/netstat.sh"
+    sbar.exec("~/.config/sketchybar/items/netstat.sh")
 
     netstat_up:subscribe("netstat_update", function(env)
         local download = formatBytes(env.DOWNLOAD)
         local upload = formatBytes(env.UPLOAD)
-        netstat_up:set {
+        netstat_up:set({
             label = { string = upload },
-        }
-        netstat_down:set {
+        })
+        netstat_down:set({
             label = { string = download },
-        }
+        })
     end)
 end
 

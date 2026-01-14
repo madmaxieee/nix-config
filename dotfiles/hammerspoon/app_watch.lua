@@ -59,28 +59,30 @@ end
 ---@param event_type any
 ---@param app hs.application
 ---@diagnostic disable-next-line: unused-local
-AppBindAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
-    if event_type == hs.application.watcher.activated then
-        for name, handlers in pairs(app_watch_handlers) do
-            if name == app_name then
-                for _, handler in ipairs(handlers) do
-                    handler:enable()
-                end
-            else
-                for _, handler in ipairs(handlers) do
-                    handler:disable()
+AppBindAppWatcher = hs.application.watcher.new(
+    function(app_name, event_type, app)
+        if event_type == hs.application.watcher.activated then
+            for name, handlers in pairs(app_watch_handlers) do
+                if name == app_name then
+                    for _, handler in ipairs(handlers) do
+                        handler:enable()
+                    end
+                else
+                    for _, handler in ipairs(handlers) do
+                        handler:disable()
+                    end
                 end
             end
-        end
-    elseif event_type == hs.application.watcher.deactivated then
-        if app_watch_handlers[app_name] == nil then
-            return
-        end
-        for _, handler in ipairs(app_watch_handlers[app_name]) do
-            handler:disable()
+        elseif event_type == hs.application.watcher.deactivated then
+            if app_watch_handlers[app_name] == nil then
+                return
+            end
+            for _, handler in ipairs(app_watch_handlers[app_name]) do
+                handler:disable()
+            end
         end
     end
-end)
+)
 AppBindAppWatcher:start()
 
 return M

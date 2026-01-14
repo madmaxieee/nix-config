@@ -1,6 +1,6 @@
 local M = { name = "aerospace" }
 
-local leader_mode = require "leader_mode"
+local leader_mode = require("leader_mode")
 local leader_bind = leader_mode.bind
 
 local function aerospace_cmd(cmd)
@@ -15,42 +15,42 @@ function M.setup()
     -- aerospace debug query
     leader_bind("shift", "q", function()
         hs.execute(table.concat({
-            aerospace_cmd "list-windows --all --json",
+            aerospace_cmd("list-windows --all --json"),
             ">/tmp/aerospace-debug-query.json",
         }, " "))
-        hs.alert "saved aerospace query result"
+        hs.alert("saved aerospace query result")
     end)
 
     -- toggle window floating
     leader_bind("", "f", function()
-        aerospace "layout floating tiling"
+        aerospace("layout floating tiling")
     end)
 
     -- zoom in/out a window (toggle accordion layout)
     leader_bind("", "z", function()
-        aerospace "layout tiles accordion"
+        aerospace("layout tiles accordion")
     end)
 
     leader_bind("", "r", function()
-        aerospace "workspace-back-and-forth"
+        aerospace("workspace-back-and-forth")
     end)
 
     leader_bind("", "l", function()
         hs.execute(table.concat({
-            aerospace_cmd "list-workspaces --all",
+            aerospace_cmd("list-workspaces --all"),
             "|",
             "grep -v '^0$'",
             "|",
-            aerospace_cmd "workspace --wrap-around --stdin next",
+            aerospace_cmd("workspace --wrap-around --stdin next"),
         }, " "))
     end, { repeatable = true })
     leader_bind("", "h", function()
         hs.execute(table.concat({
-            aerospace_cmd "list-workspaces --all",
+            aerospace_cmd("list-workspaces --all"),
             "|",
             "grep -v '^0$'",
             "|",
-            aerospace_cmd "workspace --wrap-around --stdin prev",
+            aerospace_cmd("workspace --wrap-around --stdin prev"),
         }, " "))
     end, { repeatable = true })
 
@@ -60,7 +60,7 @@ function M.setup()
         end)
     end
     leader_bind("", "0", function()
-        aerospace "workspace 10"
+        aerospace("workspace 10")
     end)
 end
 
@@ -78,19 +78,31 @@ function M.is_managed(win_id)
     ---@cast app hs.application
 
     local app_name = app:name()
-    if app_name == "Google Chat" or app_name == "Google Gemini" or app_name == "T3 Chat" then
+    if
+        app_name == "Google Chat"
+        or app_name == "Google Gemini"
+        or app_name == "T3 Chat"
+    then
         return false
     end
 
     local bid = app:bundleID()
-    if bid == "com.apple.finder" or bid == "com.apple.systempreferences" or bid == "com.culturedcode.ThingsMac" then
+    if
+        bid == "com.apple.finder"
+        or bid == "com.apple.systempreferences"
+        or bid == "com.culturedcode.ThingsMac"
+    then
         return false
     end
 
     local win_title = win:title()
     if
         app_name == "kitty"
-        and (win_title == "script kitty" or win_title == "scratch pad" or win_title == "obsidian")
+        and (
+            win_title == "script kitty"
+            or win_title == "scratch pad"
+            or win_title == "obsidian"
+        )
     then
         return false
     end
@@ -100,7 +112,12 @@ end
 
 ---@param window hs.window
 function M.move_window_to_current_space(window)
-    hs.execute([[PATH=]] .. PATH .. [[ ~/.config/aerospace/move_window_to_current_workspace.sh ]] .. window:id())
+    hs.execute(
+        [[PATH=]]
+            .. PATH
+            .. [[ ~/.config/aerospace/move_window_to_current_workspace.sh ]]
+            .. window:id()
+    )
 end
 
 ---@param window hs.window
@@ -165,11 +182,19 @@ function TryResizeWindow(win_id, match, size)
 end
 
 function TryResizeScriptKitty(win_id)
-    TryResizeWindow(win_id, { app = "kitty", title = "script kitty" }, { width = 900, height = 600 })
+    TryResizeWindow(
+        win_id,
+        { app = "kitty", title = "script kitty" },
+        { width = 900, height = 600 }
+    )
 end
 
 function TryResizeScratchPad(win_id)
-    TryResizeWindow(win_id, { app = "kitty", title = { "scratch pad", "obsidian" } }, { width = 1200, height = 800 })
+    TryResizeWindow(
+        win_id,
+        { app = "kitty", title = { "scratch pad", "obsidian" } },
+        { width = 1200, height = 800 }
+    )
 end
 
 return M

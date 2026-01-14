@@ -39,7 +39,11 @@ function M.bind(modifiers, key, callback, opts)
         if modifiers == "" then
             error_msg = "key '" .. key .. "' is already bound"
         else
-            error_msg = "key '" .. modifiers .. " " .. key .. "' is already bound"
+            error_msg = "key '"
+                .. modifiers
+                .. " "
+                .. key
+                .. "' is already bound"
         end
         error(error_msg)
         return

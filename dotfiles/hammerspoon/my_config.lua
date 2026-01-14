@@ -8,7 +8,7 @@ local M = {
 local extra_config = {}
 
 local success, _ = pcall(function()
-    extra_config = require "extra_config"
+    extra_config = require("extra_config")
 end)
 
 if not success then

@@ -29,7 +29,7 @@ end
 ---@param opts {bundle_id: boolean}?
 function M.toggle_app_scratchpad(app_name, opts)
     opts = opts or {}
-    M.toggle_scratchpad {
+    M.toggle_scratchpad({
         find_window = function()
             local app
             if opts.bundle_id then
@@ -52,7 +52,7 @@ function M.toggle_app_scratchpad(app_name, opts)
         hide = function(window)
             require("wm").hide_window(window)
         end,
-    }
+    })
 end
 
 local hide_on_cmd_w_apps = {}

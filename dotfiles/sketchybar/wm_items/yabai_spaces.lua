@@ -1,6 +1,6 @@
-local sbar = require "sketchybar"
-local colors = require "colors"
-local icon_map = require "icon_map"
+local sbar = require("sketchybar")
+local colors = require("colors")
+local icon_map = require("icon_map")
 
 local M = {}
 
@@ -21,7 +21,9 @@ local function rerender_space_button(index)
     local label_content = ""
     if space_apps[index] then
         for _, val in ipairs(space_apps[index]) do
-            label_content = label_content .. (icon_map[val] and icon_map[val] or ":default:") .. " "
+            label_content = label_content
+                .. (icon_map[val] and icon_map[val] or ":default:")
+                .. " "
         end
     end
     sbar.set(spaces[index], {
@@ -54,7 +56,7 @@ local function update_space_apps(index)
     sbar.exec(cmd, function(result, exit_code)
         if exit_code == 0 then
             space_apps[index] = {}
-            for app in result:gmatch "[^\n]+" do
+            for app in result:gmatch("[^\n]+") do
                 table.insert(space_apps[index], app)
             end
             rerender_space_button(index)
@@ -142,10 +144,11 @@ function M.setup(opts)
     })
 
     -- triggered from yabai signal
-    local space_apps_refresh_listener = sbar.add("item", "space_apps_refresh_listener", {
-        drawing = false,
-        updates = true,
-    })
+    local space_apps_refresh_listener =
+        sbar.add("item", "space_apps_refresh_listener", {
+            drawing = false,
+            updates = true,
+        })
     space_apps_refresh_listener:subscribe("space_apps_refresh", function(_)
         for i = 1, NUM_SPACES do
             update_space_apps(i)

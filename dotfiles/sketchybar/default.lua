@@ -1,8 +1,8 @@
-local sbar = require "sketchybar"
-local colors = require "colors"
+local sbar = require("sketchybar")
+local colors = require("colors")
 
 -- Equivalent to the --default domain
-sbar.default {
+sbar.default({
     updates = "when_shown",
     icon = {
         font = {
@@ -28,4 +28,4 @@ sbar.default {
         padding_left = 5,
         padding_right = 5,
     },
-}
+})

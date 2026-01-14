@@ -1,7 +1,7 @@
 local M = {}
 
-local sbar = require "sketchybar"
-local icon_map = require "icon_map"
+local sbar = require("sketchybar")
+local icon_map = require("icon_map")
 
 function M.setup(opts)
     opts = opts or {}
@@ -21,13 +21,13 @@ function M.setup(opts)
 
     front_app:subscribe("front_app_switched", function(env)
         local icon = icon_map[env.INFO]
-        front_app:set {
+        front_app:set({
             label = { string = env.INFO },
             icon = {
                 drawing = icon ~= nil,
                 string = icon,
             },
-        }
+        })
     end)
 end
 
