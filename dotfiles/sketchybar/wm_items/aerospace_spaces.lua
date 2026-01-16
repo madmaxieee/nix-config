@@ -109,7 +109,9 @@ function M.setup(opts)
                         id
                     ),
                     function()
-                        sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh")
+                        sbar.exec(
+                            "~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh"
+                        )
                     end
                 )
             end
@@ -194,8 +196,12 @@ function M.setup(opts)
     )
 
     update_spaces_exist(rerender_all_spaces)
-    sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh")
-    sbar.exec("~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh")
+    sbar.exec(
+        "~/.config/sketchybar/wm_items/aerospace_update_space_apps_all.sh"
+    )
+    sbar.exec(
+        "~/.config/sketchybar/wm_items/aerospace_update_monitor_workspace.sh"
+    )
 end
 
 return M

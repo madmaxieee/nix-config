@@ -23,6 +23,7 @@
       "nordvpn"
       "obsidian"
       "orbstack"
+      "pocket-casts"
       "raycast"
       "spotify"
       "stremio"

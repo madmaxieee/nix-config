@@ -17,6 +17,7 @@
       "kitty"
       "logi-options+"
       "obsidian"
+      "pocket-casts"
       "raycast"
       "spotify"
       "thingsmacsandboxhelper"

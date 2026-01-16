@@ -551,4 +551,5 @@ return {
     ["Cider"] = ":code:",
     ["Google Calendar"] = ":calendar:",
     ["stremio"] = ":youtube:",
+    ["Pocket Casts"] = ":broadcasts:",
 }

@@ -6,11 +6,13 @@ local M = {}
 
 local app_colors = {
     ["Spotify"] = colors.green,
+    ["Pocket Casts"] = colors.orange,
     ["Podcasts"] = colors.magenta,
 }
 
 local bundle_ids = {
     ["com.apple.podcasts"] = "Podcasts",
+    ["com.electron.pocket-casts"] = "Pocket Casts",
     ["com.spotify.client"] = "Spotify",
 }
 
@@ -80,9 +82,13 @@ local function play_pause()
     if state.current_app == "Spotify" then
         sbar.exec([[hs -c 'hs.spotify.playpause()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec([[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.keyStroke({}, "space", 0, hs.application.find("Podcasts"))']]
+        )
     else
-        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()']]
+        )
     end
 end
 
@@ -101,9 +107,13 @@ local function next_track()
     if state.current_app == "Spotify" then
         sbar.exec([[hs -c 'hs.spotify.next()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec([[hs -c 'hs.eventtap.keyStroke({"cmd"}, "right", 0, hs.application.find("Podcasts"))']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "right", 0, hs.application.find("Podcasts"))']]
+        )
     else
-        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()']]
+        )
     end
 end
 
@@ -111,9 +121,13 @@ local function last_track()
     if state.current_app == "Spotify" then
         sbar.exec([[hs -c 'hs.spotify.previous()']])
     elseif state.current_app == "Podcasts" then
-        sbar.exec([[hs -c 'hs.eventtap.keyStroke({"cmd"}, "left", 0, hs.application.find("Podcasts"))']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.keyStroke({"cmd"}, "left", 0, hs.application.find("Podcasts"))']]
+        )
     else
-        sbar.exec([[hs -c 'hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()']])
+        sbar.exec(
+            [[hs -c 'hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()']]
+        )
     end
 end
 
