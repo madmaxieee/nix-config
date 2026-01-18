@@ -8,10 +8,9 @@
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Chat.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Gemini.app"
       "/Applications/Spotify.app"
+      "/Applications/Pocket Casts.app"
       "/Applications/Things3.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Calendar.app"
-      "/Applications/Obsidian.app"
-      "/Applications/Heptabase.app"
     ];
     persistent-others =
       [ "${homeDirectory}/Downloads" "${homeDirectory}/Desktop" ];
