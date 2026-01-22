@@ -23,6 +23,16 @@
     };
     includes = [
       {
+        condition = "hasconfig:remote.*.url:git@github.com:madmaxieee/**";
+        contentSuffix = "personal";
+        contents = {
+          user = {
+            name = "madmaxieee";
+            email = "76544194+madmaxieee@users.noreply.github.com";
+          };
+        };
+      }
+      {
         condition = "hasconfig:remote.*.url:sso://*android/**";
         contentSuffix = "mss";
         contents = {
