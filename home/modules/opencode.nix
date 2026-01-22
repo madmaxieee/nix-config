@@ -8,7 +8,7 @@ in {
       text = ''
         #!${pkgs.fish}/bin/fish
         set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
-        bunx opencode-ai@latest $argv
+        pnpx opencode-ai@latest $argv
       '';
     };
   };
@@ -18,5 +18,5 @@ in {
   programs.fish = { shellAbbrs.oc = lib.mkDefault "opencode"; };
   programs.zsh = { zsh-abbr.abbreviations.oc = lib.mkDefault "opencode"; };
 
-  imports = [ ./web-dev.nix ];
+  imports = [ ./password-store.nix ./web-dev.nix ];
 }

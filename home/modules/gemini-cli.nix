@@ -6,5 +6,5 @@
     '';
   };
 
-  imports = [ ./web-dev.nix ];
+  imports = [ ./password-store.nix ./web-dev.nix ];
 }
