@@ -13,7 +13,7 @@ matches:
         type: date
         params:
           format: "%Y/%m/%d"
-  - trigger: ":sig"
+  - trigger: ";sig"
     replace: |
       Best regards,
       Max
