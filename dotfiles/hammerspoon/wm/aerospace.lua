@@ -81,6 +81,7 @@ function M.is_managed(win_id)
     if
         app_name == "Google Chat"
         or app_name == "Google Gemini"
+        or app_name == "Duckie"
         or app_name == "T3 Chat"
     then
         return false

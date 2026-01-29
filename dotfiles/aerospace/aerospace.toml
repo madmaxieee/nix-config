@@ -223,6 +223,10 @@ if.app-name-regex-substring = '^Google Gemini$'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.app-name-regex-substring = '^Duckie$'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.app-name-regex-substring = '^T3 Chat$'
 run = ['layout floating']
 
