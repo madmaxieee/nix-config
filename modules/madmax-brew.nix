@@ -24,6 +24,7 @@
       "obsidian"
       "orbstack"
       "pocket-casts"
+      "raindropio"
       "raycast"
       "spotify"
       "stremio"

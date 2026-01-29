@@ -18,6 +18,7 @@
       "logi-options+"
       "obsidian"
       "pocket-casts"
+      "raindropio"
       "raycast"
       "spotify"
       "thingsmacsandboxhelper"
