@@ -111,7 +111,7 @@ in {
       hs_extra_config = ''
         return {
             message_app = "Messenger",
-            browser = "Helium",
+            browser = "Arc",
             terminal_app = "kitty",
             ai_app = "T3 Chat",
         }
