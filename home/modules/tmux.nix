@@ -30,7 +30,8 @@ in rec {
 
           set -g @catppuccin_flavour 'mocha'
           set -g @catppuccin_window_status_style 'rounded'
-          set -g @catppuccin_window_current_text " #{pane_current_path}#{?window_zoomed_flag, ,}"
+          set -g @catppuccin_window_current_text " #T#{?window_zoomed_flag, ,}"
+          set -g @catppuccin_window_text " #T#{?window_zoomed_flag, ,}"
           set -g @catppuccin_status_right_separator ' '
           set -g @catppuccin_status_connect_separator 'no'
         '';
