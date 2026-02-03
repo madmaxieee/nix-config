@@ -10,6 +10,7 @@ in {
   home.file = flatMerge [
     (linkScript "fixquote")
     (linkScript "git-foreach")
+    (linkScript "mkbash")
     (linkScript "nr")
     (linkScript "ns")
     (linkScript "peek")

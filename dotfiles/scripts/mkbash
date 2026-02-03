@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# quickly create and edit a bash script with strict mode enabled
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+file=$1
+
+if [ -z "$file" ]; then
+  echo "Usage: mkbash <script-file>"
+  exit 1
+fi
+
+if ! [[ -f "$file" ]]; then
+  {
+    echo "#!/usr/bin/env bash"
+    echo ""
+    echo "set -o errexit"
+    echo "set -o nounset"
+    echo "set -o pipefail"
+    echo ""
+  } >>"$file"
+fi
+
+chmod u+x "$file"
+
+if [ -z "$EDITOR" ]; then
+  export EDITOR=vim
+fi
+
+exec ${EDITOR} "$file"
