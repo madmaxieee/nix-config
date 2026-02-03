@@ -13,6 +13,7 @@ in {
     diffutils
     findutils
 
+    gawk
     gnugrep
     gnumake
     gnused
