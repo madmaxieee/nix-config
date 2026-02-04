@@ -3,7 +3,6 @@
 # quickly create and edit a bash script with strict mode enabled
 
 set -o errexit
-set -o nounset
 set -o pipefail
 
 file=$1
