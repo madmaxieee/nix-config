@@ -14,8 +14,7 @@
     '';
     "fabric/patterns".source = "${sources.fabric}/data/patterns";
     "fabric/strategies".source = "${sources.fabric}/data/strategies";
-    "fish/completions/fabric.fish".source =
-      "${sources.fabric}/completions/fabric.fish";
+    "fish/completions/fabric.fish".source = "${sources.fabric}/completions/fabric.fish";
   };
 
   programs.fish.functions.fabric = {

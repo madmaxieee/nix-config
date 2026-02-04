@@ -1,5 +1,6 @@
 { homeDirectory }:
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"
@@ -12,7 +13,9 @@
       "/Applications/Things3.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Calendar.app"
     ];
-    persistent-others =
-      [ "${homeDirectory}/Downloads" "${homeDirectory}/Desktop" ];
+    persistent-others = [
+      "${homeDirectory}/Downloads"
+      "${homeDirectory}/Desktop"
+    ];
   };
 }

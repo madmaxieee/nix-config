@@ -1,4 +1,10 @@
-{ config, pkgs, lib, sources, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  sources,
+  ...
+}:
 
 rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];

@@ -1,8 +1,21 @@
-{ config, pkgs, sources, ... }:
+{
+  config,
+  pkgs,
+  sources,
+  ...
+}:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
-  home.packages = with pkgs; [ fd ripgrep lazygit ouch television ];
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
+  home.packages = with pkgs; [
+    fd
+    ripgrep
+    lazygit
+    ouch
+    television
+  ];
 
   xdg.configFile = {
     "yazi/init.lua".source = linkDotfile "yazi/init.lua";

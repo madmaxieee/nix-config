@@ -1,11 +1,16 @@
 { config, pkgs, ... }:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
   home.username = "madmax";
   home.homeDirectory = "/Users/madmax";
 
-  home.packages = with pkgs; [ zig typst ];
+  home.packages = with pkgs; [
+    zig
+    typst
+  ];
 
   # former default options
   programs.ssh.matchBlocks."*" = {

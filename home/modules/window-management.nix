@@ -4,7 +4,8 @@
 let
   nixConfigPath = config.lib.custom.nixConfigPath;
   linkDotfile = config.lib.custom.linkDotfile;
-in {
+in
+{
   home.packages = with pkgs; [ jq ];
 
   home.sessionPath = [ "${nixConfigPath}/dotfiles/script-kitty" ];

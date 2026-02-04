@@ -2,7 +2,10 @@
   environment.systemPath = [ "/opt/homebrew/bin" ];
   homebrew = {
     enable = true;
-    brews = [ "mas" "media-control" ];
+    brews = [
+      "mas"
+      "media-control"
+    ];
     casks = [
       "1password"
       "1password-cli"

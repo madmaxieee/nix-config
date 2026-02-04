@@ -26,7 +26,9 @@
     };
     zsh-abbr = {
       enable = true;
-      abbreviations = { md = "mkdir -p"; };
+      abbreviations = {
+        md = "mkdir -p";
+      };
     };
     initContent = ''
       function _flush() {
@@ -48,20 +50,33 @@
         source ~/.zshrc.local
       fi
     '';
-    sessionVariables = { ZVM_VI_ESCAPE_BINDKEY = "kj"; };
+    sessionVariables = {
+      ZVM_VI_ESCAPE_BINDKEY = "kj";
+    };
     syntaxHighlighting = {
       enable = true;
-      highlighters = [ "main" "brackets" "pattern" "cursor" ];
+      highlighters = [
+        "main"
+        "brackets"
+        "pattern"
+        "cursor"
+      ];
     };
     autosuggestion = {
       enable = true;
       highlight = "fg=244";
-      strategy = [ "history" "completion" "match_prev_cmd" ];
+      strategy = [
+        "history"
+        "completion"
+        "match_prev_cmd"
+      ];
     };
-    plugins = [{
-      name = "zsh-vi-mode";
-      file = "./share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
-      src = pkgs.zsh-vi-mode;
-    }];
+    plugins = [
+      {
+        name = "zsh-vi-mode";
+        file = "./share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+        src = pkgs.zsh-vi-mode;
+      }
+    ];
   };
 }

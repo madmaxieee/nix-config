@@ -1,15 +1,26 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   nixConfigPath = config.lib.custom.nixConfigPath;
   linkDotfile = config.lib.custom.linkDotfile;
-  defaultCommand = if pkgs.stdenv.isDarwin then
-    ''
-      set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
-  else
-    "";
-in rec {
-  home.packages = with pkgs; [ sesh fzf jq fd ];
+  defaultCommand =
+    if pkgs.stdenv.isDarwin then
+      ''set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
+    else
+      "";
+in
+rec {
+  home.packages = with pkgs; [
+    sesh
+    fzf
+    jq
+    fd
+  ];
 
   programs.tmux = {
     enable = true;

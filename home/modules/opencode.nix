@@ -1,7 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
   home.file = {
     ".local/bin/opencode" = {
       executable = true;
@@ -15,8 +22,15 @@ in {
 
   xdg.configFile.opencode.source = linkDotfile "opencode";
 
-  programs.fish = { shellAbbrs.oc = lib.mkDefault "opencode"; };
-  programs.zsh = { zsh-abbr.abbreviations.oc = lib.mkDefault "opencode"; };
+  programs.fish = {
+    shellAbbrs.oc = lib.mkDefault "opencode";
+  };
+  programs.zsh = {
+    zsh-abbr.abbreviations.oc = lib.mkDefault "opencode";
+  };
 
-  imports = [ ./password-store.nix ./web-dev.nix ];
+  imports = [
+    ./password-store.nix
+    ./web-dev.nix
+  ];
 }

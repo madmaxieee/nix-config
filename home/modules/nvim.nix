@@ -1,22 +1,35 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 rec {
-  home.activation = let git = "${pkgs.git}/bin/git";
-  in {
-    clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d ${config.xdg.configHome}/nvim ]; then
-        run ${git} clone git@github.com:madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
-      fi
-    '';
-  };
+  home.activation =
+    let
+      git = "${pkgs.git}/bin/git";
+    in
+    {
+      clone_nvim_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ ! -d ${config.xdg.configHome}/nvim ]; then
+          run ${git} clone git@github.com:madmaxieee/nvim-config.git ${config.xdg.configHome}/nvim
+        fi
+      '';
+    };
 
-  home.packages = with pkgs; [ ripgrep fd lazygit ];
+  home.packages = with pkgs; [
+    ripgrep
+    fd
+    lazygit
+  ];
 
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     extraLuaPackages = ps: with ps; [ luarocks ];
-    extraPackages = with pkgs;
+    extraPackages =
+      with pkgs;
       [
         # required for nvim-treesitter main branch
         tree-sitter
@@ -30,7 +43,7 @@ rec {
         xz
 
         # for formatting, linting, etc.
-        nixfmt-classic
+        nixfmt
         fennel-ls
 
         # for sqlite.lua
@@ -39,17 +52,20 @@ rec {
         # for snacks image
         imagemagick
         ghostscript
-      ] ++ (lib.optionals stdenv.isDarwin [
+      ]
+      ++ (lib.optionals stdenv.isDarwin [
         # for obsidian.nvim, ":Obsidian paste_img"
         pngpaste
       ]);
     extraWrapperArgs = [
       "--set"
       "LIBSQLITE"
-      (if pkgs.stdenv.isDarwin then
-        "${pkgs.sqlite.out}/lib/libsqlite3.dylib"
-      else
-        "${pkgs.sqlite.out}/lib/libsqlite3.so")
+      (
+        if pkgs.stdenv.isDarwin then
+          "${pkgs.sqlite.out}/lib/libsqlite3.dylib"
+        else
+          "${pkgs.sqlite.out}/lib/libsqlite3.so"
+      )
 
     ];
   };
@@ -60,10 +76,14 @@ rec {
     vi = lib.mkDefault "nvim";
     dv = lib.mkDefault "diffview";
   };
-  programs.fish.functions = { diffview = ''nvim +"DiffviewOpen $argv"''; };
+  programs.fish.functions = {
+    diffview = ''nvim +"DiffviewOpen $argv"'';
+  };
 
   programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
-  programs.zsh.shellAliases = { diffview = ''nvim +"DiffviewOpen $@"''; };
+  programs.zsh.shellAliases = {
+    diffview = ''nvim +"DiffviewOpen $@"'';
+  };
 
   programs.git.settings.alias = {
     "dv" = "diffview";

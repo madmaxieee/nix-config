@@ -1,5 +1,10 @@
-{ pkgs, lib, ... }: {
-  home.packages = with pkgs; [ fnm deno xh ];
+{ pkgs, lib, ... }:
+{
+  home.packages = with pkgs; [
+    fnm
+    deno
+    xh
+  ];
 
   programs.fish.shellAbbrs = {
     pm = lib.mkDefault "pnpm";
@@ -20,11 +25,14 @@
     '';
   };
 
-  home.activation = let fnm = "${pkgs.fnm}/bin/fnm";
-  in {
-    fnm_setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run ${fnm} install --corepack-enabled --lts
-      run ${fnm} default lts-latest
-    '';
-  };
+  home.activation =
+    let
+      fnm = "${pkgs.fnm}/bin/fnm";
+    in
+    {
+      fnm_setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${fnm} install --corepack-enabled --lts
+        run ${fnm} default lts-latest
+      '';
+    };
 }

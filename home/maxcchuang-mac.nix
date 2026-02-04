@@ -1,11 +1,16 @@
 { config, pkgs, ... }:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
   home.username = "maxcchuang";
   home.homeDirectory = "/Users/maxcchuang";
 
-  home.packages = with pkgs; [ minicom d2 ];
+  home.packages = with pkgs; [
+    minicom
+    d2
+  ];
 
   # former default options
   programs.ssh.matchBlocks."*" = {
@@ -34,21 +39,21 @@ in {
         hostname = "%h.googlers.com";
         forwardAgent = true;
         # for remote sesh service
-        localForwards = [{
-          host.address = "127.0.0.1";
-          host.port = 8080;
-          bind.address = "127.0.0.1";
-          bind.port = 8080;
-        }];
+        localForwards = [
+          {
+            host.address = "127.0.0.1";
+            host.port = 8080;
+            bind.address = "127.0.0.1";
+            bind.port = 8080;
+          }
+        ];
         controlMaster = "auto";
         controlPath = "~/.ssh/master-%r@%n:%p";
         controlPersist = "yes";
-        proxyCommand =
-          "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue --vmodule=grue_transport=1 -dst_username=%r %h %p";
+        proxyCommand = "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue --vmodule=grue_transport=1 -dst_username=%r %h %p";
       };
       "auto gcert" = {
-        match = ''
-          host *.c.googlers.com exec  "find /var/run/ccache/sso-$USER/cookie ~/.sso/cookie -mmin -1200 2>/dev/null | grep -q . && gcertstatus --check_remaining=1h --nocheck_loas2 --quiet || gcert --noloas2"'';
+        match = ''host *.c.googlers.com exec  "find /var/run/ccache/sso-$USER/cookie ~/.sso/cookie -mmin -1200 2>/dev/null | grep -q . && gcertstatus --check_remaining=1h --nocheck_loas2 --quiet || gcert --noloas2"'';
       };
     };
   };

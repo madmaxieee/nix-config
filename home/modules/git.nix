@@ -1,4 +1,10 @@
-{ config, pkgs, lib, sources, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  sources,
+  ...
+}:
 
 {
   home.packages = with pkgs; [ git-absorb ];
@@ -107,7 +113,10 @@
         pull.rebase = "true";
         push.autoSetupRemote = "true";
         "url \"git@github.com:madmaxieee/\"".insteadOf = "me:";
-        "url \"git@github.com:\"".insteadOf = [ "gh:" "https://github.com/" ];
+        "url \"git@github.com:\"".insteadOf = [
+          "gh:"
+          "https://github.com/"
+        ];
         commit.template = "${config.xdg.configHome}/git/basic_template.txt";
       };
 
@@ -176,6 +185,10 @@
     };
   };
 
-  programs.fish.shellAbbrs = { g = lib.mkDefault "git"; };
-  programs.zsh.zsh-abbr.abbreviations = { g = lib.mkDefault "git"; };
+  programs.fish.shellAbbrs = {
+    g = lib.mkDefault "git";
+  };
+  programs.zsh.zsh-abbr.abbreviations = {
+    g = lib.mkDefault "git";
+  };
 }

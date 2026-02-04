@@ -1,7 +1,15 @@
-{ config, pkgs, lib, sources, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  sources,
+  ...
+}:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
   home.packages = with pkgs; [ fzf ];
   home.shell.enableFishIntegration = true;
   programs.starship.enable = true;
@@ -9,15 +17,15 @@ in {
   xdg.configFile = {
     "fish/conf.d/bind.fish".source = linkDotfile "fish/bind.fish";
     "starship.toml".source = linkDotfile "starship/starship.toml";
-    "starship_no_git_status.toml".source =
-      linkDotfile "starship/starship_no_git_status.toml";
-    "starship_google3.toml".source =
-      linkDotfile "starship/starship_google3.toml";
+    "starship_no_git_status.toml".source = linkDotfile "starship/starship_no_git_status.toml";
+    "starship_google3.toml".source = linkDotfile "starship/starship_google3.toml";
   };
 
   programs.fish = {
     enable = true;
-    shellAbbrs = { md = lib.mkDefault "mkdir -p"; };
+    shellAbbrs = {
+      md = lib.mkDefault "mkdir -p";
+    };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
       clear = "flush";

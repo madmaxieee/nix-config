@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.fish.functions.gemini = {
     body = ''
       set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
@@ -6,5 +7,8 @@
     '';
   };
 
-  imports = [ ./password-store.nix ./web-dev.nix ];
+  imports = [
+    ./password-store.nix
+    ./web-dev.nix
+  ];
 }

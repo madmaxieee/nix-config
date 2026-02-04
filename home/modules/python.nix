@@ -1,5 +1,10 @@
-{ pkgs, lib, ... }: rec {
-  home.packages = with pkgs; [ uv python312 python312Packages.ipython ];
+{ pkgs, lib, ... }:
+rec {
+  home.packages = with pkgs; [
+    uv
+    python312
+    python312Packages.ipython
+  ];
 
   programs.fish = {
     shellAbbrs = {
@@ -8,5 +13,7 @@
     };
   };
 
-  programs.zsh = { zsh-abbr.abbreviations = programs.fish.shellAbbrs; };
+  programs.zsh = {
+    zsh-abbr.abbreviations = programs.fish.shellAbbrs;
+  };
 }

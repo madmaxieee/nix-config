@@ -1,14 +1,15 @@
 { lib, pkgs }:
 
-let version = "3.10.12";
-in pkgs.stdenv.mkDerivation {
+let
+  version = "3.10.12";
+in
+pkgs.stdenv.mkDerivation {
   inherit version;
   name = "script-kit";
   pname = "script-kit";
 
   src = pkgs.fetchurl {
-    url =
-      "https://github.com/script-kit/app/releases/download/v${version}/Script-Kit-macOS-${version}-arm64.dmg";
+    url = "https://github.com/script-kit/app/releases/download/v${version}/Script-Kit-macOS-${version}-arm64.dmg";
     sha256 = "sha256-9EdWyIfQWmPjqBS0g6GpHLd8Hf87DabqGorRSQjDyB8=";
   };
 

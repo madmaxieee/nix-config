@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   xdg.configFile = {
     "git/mss_gitmessage.txt".text = ''
       {module_name (lower-case)}: {summary (1 line; <=50 chars; no ‘.’)}

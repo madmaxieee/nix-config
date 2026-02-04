@@ -1,7 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let linkDotfile = config.lib.custom.linkDotfile;
-in {
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
+{
   home.stateVersion = "24.05";
 
   # Let Home Manager install and manage itself.
@@ -20,14 +27,14 @@ in {
     gnutar
   ];
 
-  home.sessionVariables = { "XDG_CONFIG_HOME" = config.xdg.configHome; };
+  home.sessionVariables = {
+    "XDG_CONFIG_HOME" = config.xdg.configHome;
+  };
 
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
-      url =
-        "https://raw.githubusercontent.com/Homebrew/brew/5.0.3/completions/fish/brew.fish";
-      sha256 =
-        "f8ee0c4e9ee16d673032cd6f966dbca8ed5a168f9c7e91a536c593e041947830";
+      url = "https://raw.githubusercontent.com/Homebrew/brew/5.0.3/completions/fish/brew.fish";
+      sha256 = "f8ee0c4e9ee16d673032cd6f966dbca8ed5a168f9c7e91a536c593e041947830";
     };
     "kitty".source = linkDotfile "kitty";
     "fish/conf.d/kitty.fish".text = ''
