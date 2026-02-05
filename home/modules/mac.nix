@@ -41,7 +41,7 @@ in
       status is-interactive || exit 0
       if test $TERM = 'xterm-kitty'
         alias xssh='TERM=xterm-256color command ssh'
-        if not set -q TMUX
+        if not set -q TMUX && not set -q ZELLIJ
           alias ssh='kitty +kitten ssh'
         end
       end
