@@ -1,7 +1,7 @@
 local M = {
     message_app = "Messenger",
     browser = "Arc",
-    terminal_app = "kitty",
+    terminal_app = "Ghostty",
     ai_app = "T3 Chat",
 }
 

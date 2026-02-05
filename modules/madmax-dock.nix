@@ -4,7 +4,7 @@
   system.defaults.dock = {
     persistent-apps = [
       "/System/Applications/Launchpad.app"
-      "/Applications/kitty.app"
+      "/Applications/Ghostty.app"
       "/Applications/Arc.app"
       "/Applications/Helium.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Messenger.app"

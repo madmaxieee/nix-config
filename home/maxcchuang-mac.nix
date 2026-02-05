@@ -131,7 +131,7 @@ in
         return {
             message_app = "Google Chat",
             browser = "Google Chrome",
-            terminal_app = "kitty",
+            terminal_app = "Ghostty",
             ai_app = "Google Gemini",
         }
       '';
