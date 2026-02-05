@@ -96,12 +96,12 @@
     let
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
-        (final: prev: {
-          sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
-            version = "myfork";
-            src = inputs.sketchybar-app-font-src;
-          });
-        })
+        # (final: prev: {
+        # sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
+        #   version = "myfork";
+        #   src = inputs.sketchybar-app-font-src;
+        # });
+        # })
       ];
 
       extraSpecialArgs = {
