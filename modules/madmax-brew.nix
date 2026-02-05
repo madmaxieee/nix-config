@@ -15,6 +15,7 @@
       "discord"
       "espanso"
       "fantastical"
+      "ghostty"
       "google-chrome"
       "hammerspoon"
       "heptabase"

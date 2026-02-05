@@ -13,6 +13,7 @@
       "discord"
       "espanso"
       "fantastical"
+      "ghostty"
       "hammerspoon"
       "heptabase"
       "iina"

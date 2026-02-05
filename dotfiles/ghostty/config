@@ -2,27 +2,30 @@ macos-option-as-alt = true
 
 theme = Catppuccin Mocha
 
-font-family = Victor Mono
-font-style = SemiBold
-font-style-bold = Bold
-font-style-italic = SemiBold Italic
-font-style-bold-italic = Bold Italic
+font-family = MonoLisa
+font-style = Regular
+font-style-bold = ExtraBold
+font-style-italic = Regular Italic
+font-style-bold-italic = ExtraBold Italic
+font-feature = +liga, +calt, +ss02, +ss13
 
-font-size = 14
+font-size = 13
+adjust-cell-height = 10%
 
-adjust-underline-position = 5
-adjust-cursor-thickness = 2
+adjust-underline-position = 3
+adjust-underline-thickness = 2
 
-background-opacity = 0.95
+background-opacity = 0.85
+background-blur = true
 macos-titlebar-style = hidden
+
+adjust-cursor-thickness = 2
+cursor-color = "#C0CAF5"
+cursor-style-blink = false
+custom-shader = ./shaders/cursor_warp.glsl
 
 # get the escape sequence from `xxd -psd`
 # ctrl+alt+k
 keybind = cmd+k=text:\x1b\x0b
 # ctrl+alt+j
 keybind = cmd+j=text:\x1b\x0a
-
-# move left or right by word
-# got from kitty
-keybind = alt+left=esc:[1;3D
-keybind = alt+right=esc:[1;3C
