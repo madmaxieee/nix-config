@@ -13,6 +13,7 @@ let
 in
 {
   home.file = flatMerge [
+    (linkScript "clip")
     (linkScript "fixquote")
     (linkScript "git-foreach")
     (linkScript "mkbash")

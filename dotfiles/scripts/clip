@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# copy stdin to system clipboard with OSC 52
+
+buf="$(base64 -w 0)"
+printf "\e]52;c;%s\a" "$buf"
