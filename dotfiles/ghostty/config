@@ -1,5 +1,3 @@
-macos-option-as-alt = true
-
 theme = Catppuccin Mocha
 
 font-family = MonoLisa
@@ -12,17 +10,26 @@ font-feature = +liga, +calt, +ss02, +ss13
 font-size = 13
 adjust-cell-height = 10%
 
+# CJK Unified Ideographs, CJK Compatibility Ideographs
+font-codepoint-map = U+4E00-U+9FFF,U+F900-U+FAFF=PingFang TC Semibold
+
+font-shaping-break = cursor
+
 adjust-underline-position = 3
 adjust-underline-thickness = 2
 
 background-opacity = 0.85
 background-blur = true
 macos-titlebar-style = hidden
+macos-window-shadow = false
 
 adjust-cursor-thickness = 2
 cursor-color = "#C0CAF5"
 cursor-style-blink = false
 custom-shader = ./shaders/cursor_warp.glsl
+
+macos-option-as-alt = true
+macos-auto-secure-input = true
 
 # get the escape sequence from `xxd -psd`
 # ctrl+alt+k
