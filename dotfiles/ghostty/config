@@ -31,8 +31,8 @@ custom-shader = ./shaders/cursor_warp.glsl
 macos-option-as-alt = true
 macos-auto-secure-input = true
 
-window-padding-x = 6
-window-padding-y = 6
+window-padding-x = 4
+window-padding-y = 0
 
 # get the escape sequence from `xxd -psd`
 # ctrl+alt+k
