@@ -5,6 +5,7 @@ rec {
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
   home.packages = with pkgs; [
+    ghostty
     kitty
     minicom
     patchelf

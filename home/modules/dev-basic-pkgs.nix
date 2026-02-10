@@ -60,6 +60,8 @@ rec {
     MANROFFOPT = "-c";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     PAGER = "less -FR";
+    # make other programs aware of terminfos of terminals installed by home manager
+    TERMINFO_DIRS = "${config.home.profileDirectory}/share/terminfo:/usr/share/terminfo";
   };
 
   programs.fastfetch.enable = true;
