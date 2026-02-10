@@ -50,6 +50,11 @@ in
     "espanso".source = linkDotfile "espanso";
   };
 
+  home.file = {
+    ".local/bin/ghostty".source =
+      config.lib.file.mkOutOfStoreSymlink "/Applications/Ghostty.app/Contents/MacOS/ghostty";
+  };
+
   programs.fish.shellAbbrs = {
     o = lib.mkDefault "open";
     copy = lib.mkDefault "pbcopy";
