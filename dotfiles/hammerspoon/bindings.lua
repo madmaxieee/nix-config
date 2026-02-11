@@ -208,7 +208,9 @@ local pwa_bundle_id_prefix = "com.google.Chrome.app."
 PWAAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
     if event_type == hs.application.watcher.launching then
         if
-            app:bundleID():sub(1, #pwa_bundle_id_prefix) == pwa_bundle_id_prefix
+            app:bundleID():sub(1, #pwa_bundle_id_prefix)
+                == pwa_bundle_id_prefix
+            and app:name() ~= "Cider"
         then
             scratchpad.hide_on_cmd_w(app_name)
         end
