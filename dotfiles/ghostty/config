@@ -11,7 +11,7 @@ font-size = 13
 adjust-cell-height = 10%
 
 # CJK Unified Ideographs, CJK Compatibility Ideographs
-font-codepoint-map = U+4E00-U+9FFF,U+F900-U+FAFF=PingFang TC Semibold
+font-codepoint-map = U+4E00-U+9FFF,U+F900-U+FAFF=Lantinghei TC Demibold
 
 font-shaping-break = cursor
 
