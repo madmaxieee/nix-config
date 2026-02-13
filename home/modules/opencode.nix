@@ -14,7 +14,9 @@ in
       executable = true;
       text = ''
         #!${pkgs.fish}/bin/fish
-        set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
+        if not set -q GEMINI_API_KEY
+          set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
+        end
         pnpx opencode-ai@latest $argv
       '';
     };
