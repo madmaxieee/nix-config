@@ -8,8 +8,9 @@ in
   home.homeDirectory = "/Users/madmax";
 
   home.packages = with pkgs; [
-    zig
+    odin
     typst
+    zig
   ];
 
   # former default options
