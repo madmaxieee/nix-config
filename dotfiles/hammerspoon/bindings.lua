@@ -92,12 +92,14 @@ local function new_icognito_browser_window()
         hs.eventtap.keyStroke({ "command", "shift" }, "n", 0, browser_app)
     end
 end
-leader_bind("", "b", function()
-    new_browser_window()
-end)
-leader_bind("shift", "b", function()
-    new_icognito_browser_window()
-end)
+if config.browser then
+    leader_bind("", "b", function()
+        new_browser_window()
+    end)
+    leader_bind("shift", "b", function()
+        new_icognito_browser_window()
+    end)
+end
 
 -- new terminal instance
 if config.terminal_app == "kitty" then

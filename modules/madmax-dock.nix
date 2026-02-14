@@ -5,7 +5,7 @@
     persistent-apps = [
       "/System/Applications/Launchpad.app"
       "/Applications/Ghostty.app"
-      "/Applications/Arc.app"
+      "/Applications/Dia.app"
       "/Applications/Helium.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Messenger.app"
       "/Applications/Telegram.app"
