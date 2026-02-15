@@ -16,6 +16,8 @@ let
 in
 rec {
   home.packages = with pkgs; [
+    tmux.terminfo
+
     sesh
     fzf
     jq
