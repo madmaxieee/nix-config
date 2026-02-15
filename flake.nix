@@ -154,6 +154,8 @@
             pkgs.fish
           ];
 
+          environment.enableAllTerminfo = true;
+
           fonts.packages = [
             pkgs.nerd-fonts.symbols-only
             pkgs.victor-mono

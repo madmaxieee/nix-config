@@ -28,7 +28,7 @@
   imports = [
     ./lib.nix
 
-    ./modules/home-manager.nix
+    ./modules/linux.nix
     ./modules/dev-basic-pkgs.nix
 
     ./modules/fish.nix
