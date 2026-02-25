@@ -4,6 +4,11 @@ diff-formatter = ":git"
 pager = "delta"
 conflict-marker-style = "git"
 
+[aliases]
+e = ["edit"]
+rb = ["rebase"]
+llog = ["log", "-T", "builtin_log_detailed"]
+
 [working-copy]
 eol-conversion = "none"
 
