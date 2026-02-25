@@ -60,6 +60,7 @@ rec {
     MANROFFOPT = "-c";
     MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     PAGER = "less -FR";
+    XDG_CONFIG_HOME = config.xdg.configHome;
   };
 
   programs.fastfetch.enable = true;

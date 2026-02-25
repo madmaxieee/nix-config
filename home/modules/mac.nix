@@ -27,10 +27,6 @@ in
     gnutar
   ];
 
-  home.sessionVariables = {
-    "XDG_CONFIG_HOME" = config.xdg.configHome;
-  };
-
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
       url = "https://raw.githubusercontent.com/Homebrew/brew/5.0.3/completions/fish/brew.fish";
