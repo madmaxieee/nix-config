@@ -4,7 +4,9 @@ let
   linkDotfile = config.lib.custom.linkDotfile;
 in
 {
-  home.packages = with pkgs; [ jujutsu ];
-  home.sessionVariables.JJ_CONFIG = "${config.xdg.configHome}/jj/config.toml";
+  home.packages = with pkgs; [
+    jujutsu
+    delta
+  ];
   xdg.configFile."jj".source = linkDotfile "jujutsu";
 }

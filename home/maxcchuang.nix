@@ -78,5 +78,6 @@ rec {
     ./modules/opencode.nix
 
     ./modules/git-google.nix
+    ./modules/jujutsu.nix
   ];
 }

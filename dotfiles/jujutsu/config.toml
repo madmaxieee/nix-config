@@ -1,5 +1,11 @@
 [ui]
 default-command = "log"
+diff-formatter = ":git"
+pager = "delta"
+conflict-marker-style = "git"
+
+[working-copy]
+eol-conversion = "none"
 
 [user]
 name = "madmaxieee"
