@@ -1,7 +1,13 @@
 local M = { name = "yabai" }
 
 local path = "PATH=" .. PATH .. " "
-local yabai = path .. "yabai"
+local function yabai_cmd(cmd)
+    return ("PATH=%s yabai %s"):format(PATH, cmd)
+end
+
+local function yabai(args)
+    return hs.execute(yabai_cmd(args))
+end
 
 local leader_mode = require("leader_mode")
 local leader_bind = leader_mode.bind
@@ -14,12 +20,12 @@ local function go_to_space(space_sel)
     local success = os.execute(
         (path .. [[~/.config/yabai/focus_window_in_space.sh ]] .. space_sel)
             .. [[ || ]]
-            .. (yabai .. [[ -m space --focus ]] .. space_sel)
+            .. yabai_cmd([[ -m space --focus ]] .. space_sel)
             .. [[ || ]]
             .. (
-                yabai
-                .. [[ -m query --spaces has-focus --space ]]
-                .. space_sel
+                yabai_cmd(
+                    [[ -m query --spaces has-focus --space ]] .. space_sel
+                )
                 .. [[ | ]]
                 .. path
                 .. [[jq -e '."has-focus"']]
@@ -30,9 +36,7 @@ local function go_to_space(space_sel)
     -- if that's the case use hammerspoon to focus space instead
     if not success then
         local space_id = hs.execute(
-            yabai
-                .. [[ -m query --spaces id --space ]]
-                .. space_sel
+            yabai_cmd([[ -m query --spaces id --space ]] .. space_sel)
                 .. [[ | ]]
                 .. path
                 .. [[jq .id]]
@@ -45,23 +49,22 @@ end
 function M.setup()
     -- yabai debug query
     leader_bind("shift", "q", function()
-        os.execute(
-            yabai
-                .. [[ -m query --windows --space > /tmp/yabai-debug-query.json]]
-        )
+        yabai("-m query --windows --space > /tmp/yabai-debug-query.json")
         hs.alert("saved yabai query result")
     end)
 
-    -- toggle window float or sticky
+    -- toggle window floating
     leader_bind("", "f", function()
-        os.execute(yabai .. [[ -m window --toggle float]])
+        yabai("-m window --toggle float")
     end)
-    leader_bind("shift", "s", function()
-        os.execute(yabai .. [[ -m window --toggle sticky]])
+
+    -- zoom in/out a window
+    leader_bind("", "z", function()
+        yabai("-m window --toggle zoom-parent")
     end)
 
     leader_bind("", "x", function()
-        local success = os.execute(yabai .. [[ -m space --destroy]])
+        local _, success = yabai("-m space --destroy")
         leader_exit()
         if not success then
             local space_id = hs.spaces.activeSpaceOnScreen()
@@ -74,12 +77,14 @@ function M.setup()
     leader_bind("", "r", function()
         go_to_space("recent")
     end)
+
     leader_bind("", "l", function()
         go_to_space("next")
     end, { repeatable = true })
     leader_bind("", "h", function()
         go_to_space("prev")
     end, { repeatable = true })
+
     for i = 1, 9 do
         leader_bind("", tostring(i), function()
             go_to_space(i)
@@ -88,12 +93,16 @@ function M.setup()
     leader_bind("", "0", function()
         go_to_space(10)
     end)
+
+    -- yabai specific:
+    leader_bind("shift", "s", function()
+        yabai("-m window --toggle sticky")
+    end)
 end
 
 function M.is_managed(win_id)
-    local win_info_raw = hs.execute(
-        (yabai .. [[ -m query --windows --window %d]]):format(win_id)
-    )
+    local win_info_raw =
+        yabai(("-m query --windows is-floating --window %d"):format(win_id))
     local win_info = hs.json.decode(win_info_raw)
     if win_info == nil then
         return false
