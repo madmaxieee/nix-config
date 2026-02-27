@@ -4,7 +4,11 @@
   home.username = "madmax";
   home.homeDirectory = "/home/madmax";
 
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [
+    # for terminfo
+    ghostty
+    kitty
+  ];
 
   imports = [
     ./lib.nix

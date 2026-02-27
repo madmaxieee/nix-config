@@ -5,8 +5,10 @@ rec {
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
 
   home.packages = with pkgs; [
+    # for terminfo
     ghostty
     kitty
+
     minicom
     patchelf
   ];
