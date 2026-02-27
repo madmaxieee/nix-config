@@ -32,13 +32,8 @@ in
     enableDefaultConfig = false;
     matchBlocks = {
       "linode" = {
-        hostname = "linode.madmaxieee.dev";
+        hostname = "linode.kahiok.dev";
         user = "madmax";
-      };
-      "soft" = {
-        hostname = "soft.madmaxieee.dev";
-        port = 23231;
-        identityFile = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
       "cthulhu" = {
         hostname = "cthulhu.ee.ntu.edu.tw";
