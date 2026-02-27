@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "tokyonight",
+  "keybinds": {
+    "editor_open": "alt+e",
+    "session_child_cycle": "ctrl+j",
+    "session_child_cycle_reverse": "ctrl+k",
+    "messages_half_page_up": "ctrl+u",
+    "messages_half_page_down": "ctrl+d",
+    "input_newline": "shift+enter",
+  },
+}

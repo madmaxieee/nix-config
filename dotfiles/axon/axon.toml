@@ -1,5 +1,5 @@
 [general]
-model = "google/gemini-flash-latest"
+model = "google/gemini-3-flash-preview"
 prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
 
 [[providers]]
@@ -47,7 +47,7 @@ name = "code_review"
 steps = [
   { command = "mktemp", output = "tmpfile" },
 
-  { prompt = "@review_code", model = "google/gemini-3-pro-preview" },
+  { prompt = "@review_code", model = "google/gemini-3.1-pro-preview" },
   { command = "tee {{ .tmpfile }}", pipe_in = true },
   { command = "glow --pager", pipe_in = true, tty = true },
 
