@@ -4,26 +4,7 @@
   home.username = "madmax";
   home.homeDirectory = "/home/madmax";
 
-  home.packages = with pkgs; [
-    kitty
-    typst
-    zig
-    llvmPackages_18.libcxxClang
-  ];
-
-  programs.fish = {
-    shellAbbrs = {
-      copy = "kitten clipboard";
-      paste = "kitten clipboard -g";
-    };
-  };
-
-  programs.zsh = {
-    zsh-abbr.abbreviations = {
-      copy = "kitten clipboard";
-      paste = "kitten clipboard -g";
-    };
-  };
+  home.packages = with pkgs; [ ];
 
   imports = [
     ./lib.nix
@@ -32,7 +13,6 @@
     ./modules/dev-basic-pkgs.nix
 
     ./modules/fish.nix
-    ./modules/zsh.nix
     ./modules/nvim.nix
     ./modules/tmux.nix
 
@@ -41,16 +21,9 @@
     ./modules/atuin.nix
     ./modules/zoxide.nix
     ./modules/yazi.nix
-    ./modules/television.nix
 
     ./modules/git.nix
 
-    ./modules/clang-tools.nix
     ./modules/java.nix
-    ./modules/python.nix
-    ./modules/rust.nix
-    ./modules/web-dev.nix
-
-    ./modules/jujutsu.nix
   ];
 }
