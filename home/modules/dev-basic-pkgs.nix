@@ -33,7 +33,6 @@ rec {
     unixtools.xxd
 
     tealdeer
-    navi
     typos
     ripgrep-all
 
