@@ -10,34 +10,37 @@ rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
   home.packages = with pkgs; [
-    eza
-    ripgrep
-    fd
-    sd
-    wget
-    rm-improved
+    # better default tools
+    delta
     dust
-    riffdiff
+    eza
+    fd
+    ripgrep
+    rm-improved
+    sd
 
-    parallel
+    # other
+    btop
     entr
     fzf
-    jq
-    lazygit
-    just
-    btop
-    rsync
-    ouch
-
-    unixtools.watch
-    unixtools.xxd
-
-    tealdeer
-    typos
-    ripgrep-all
-
     glow
     graphviz
+    jq
+    just
+    ouch
+    parallel
+    riffdiff
+    ripgrep-all
+    rsync
+    tealdeer
+    typos
+    unixtools.watch
+    unixtools.xxd
+    wget
+
+    # compression tools
+    xz
+    zstd
   ];
 
   programs.man.enable = true;

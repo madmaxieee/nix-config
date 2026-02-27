@@ -7,7 +7,10 @@
 }:
 
 {
-  home.packages = with pkgs; [ git-absorb ];
+  home.packages = with pkgs; [
+    git-absorb
+    lazygit
+  ];
 
   xdg.configFile = {
     "git/basic_template.txt".text = ''
