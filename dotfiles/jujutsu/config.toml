@@ -5,9 +5,10 @@ pager = "delta"
 conflict-marker-style = "git"
 
 [aliases]
+d = ["diff"]
 e = ["edit"]
-rb = ["rebase"]
 llog = ["log", "-T", "builtin_log_detailed"]
+rb = ["rebase"]
 
 [working-copy]
 eol-conversion = "none"
