@@ -111,7 +111,7 @@ in
       hs_extra_config = ''
         return {
             message_app = "Messenger",
-            browser = "Dia",
+            browser = "Zen",
             terminal_app = "Ghostty",
             ai_app = "T3 Chat",
         }
