@@ -32,14 +32,13 @@ in
       url = "https://raw.githubusercontent.com/Homebrew/brew/5.0.3/completions/fish/brew.fish";
       sha256 = "f8ee0c4e9ee16d673032cd6f966dbca8ed5a168f9c7e91a536c593e041947830";
     };
+    # homebrew cask config files
     "kitty".source = linkDotfile "kitty";
     "fish/conf.d/kitty.fish".text = ''
       status is-interactive || exit 0
       if test $TERM = 'xterm-kitty'
-        alias xssh='TERM=xterm-256color command ssh'
-        if not set -q TMUX && not set -q ZELLIJ
-          alias ssh='kitty +kitten ssh'
-        end
+        alias ssh  'kitten ssh'
+        alias icat 'kitten icat';
       end
     '';
     "ghostty".source = linkDotfile "ghostty";

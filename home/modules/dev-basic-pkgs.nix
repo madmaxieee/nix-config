@@ -21,6 +21,7 @@ rec {
 
     # other
     btop
+    chafa
     entr
     fzf
     glow
@@ -82,7 +83,6 @@ rec {
       ll = lib.mkDefault "eza --icons=auto --long --group";
       lla = lib.mkDefault "eza --icons=auto --long --group --all";
       tree = lib.mkDefault "eza -T -a -I .git";
-      icat = lib.mkDefault "kitten icat";
     };
   };
 
