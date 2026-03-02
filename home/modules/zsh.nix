@@ -2,7 +2,6 @@
 
 {
   home.shell.enableZshIntegration = true;
-  programs.starship.enable = true;
 
   programs.zsh = {
     enable = true;

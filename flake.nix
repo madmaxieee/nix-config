@@ -27,6 +27,7 @@
 
     # for nixpkgs overlay
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    jj-starship.url = "github:dmmulroy/jj-starship";
     sketchybar-app-font-src = {
       url = "github:madmaxieee/sketchybar-app-font";
       flake = false;
@@ -96,6 +97,7 @@
     let
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
+        inputs.jj-starship.overlays.default
         # (final: prev: {
         # sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
         #   version = "myfork";

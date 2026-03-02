@@ -23,8 +23,9 @@
     ./modules/scripts.nix
 
     ./modules/atuin.nix
-    ./modules/zoxide.nix
+    ./modules/starship.nix
     ./modules/yazi.nix
+    ./modules/zoxide.nix
 
     ./modules/git.nix
 

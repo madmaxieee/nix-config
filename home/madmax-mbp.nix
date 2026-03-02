@@ -89,9 +89,10 @@ in
     ./modules/scripts.nix
 
     ./modules/atuin.nix
-    ./modules/zoxide.nix
-    ./modules/yazi.nix
+    ./modules/starship.nix
     ./modules/television.nix
+    ./modules/yazi.nix
+    ./modules/zoxide.nix
 
     ./modules/git.nix
 

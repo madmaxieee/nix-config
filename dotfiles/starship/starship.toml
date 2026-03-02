@@ -56,6 +56,11 @@ style = ""
 time_format = "%a %b %d  %H:%M:%S"
 format = '[$time]($style) '
 
+[custom.jj]
+when = "jj-starship detect"
+shell = ["jj-starship"]
+format = "$output "
+
 # begin overridden sections
 
 [directory]
