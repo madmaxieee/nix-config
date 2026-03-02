@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-PACKAGE="$1"
+package="$1"
 shift
 
-nix run "nixpkgs#$PACKAGE" -- "$@"
+if [[ $package != *#* && $package != *:* ]]; then
+  package="nixpkgs#$package"
+fi
+
+nix run "$package" -- "$@"

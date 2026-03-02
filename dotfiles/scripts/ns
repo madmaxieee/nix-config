@@ -3,7 +3,10 @@
 PACKAGES=()
 
 for package in "$@"; do
-  PACKAGES+=("nixpkgs#$package")
+  if [[ $package != *#* && $package != *:* ]]; then
+    package="nixpkgs#$package"
+  fi
+  PACKAGES+=("$package")
 done
 
 nix shell "${PACKAGES[@]}"
