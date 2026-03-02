@@ -79,6 +79,6 @@ rec {
     ./modules/opencode.nix
 
     ./modules/git-google.nix
-    ./modules/jujutsu.nix
+    (import ./modules/jujutsu.nix { use_system_binary = true; })
   ];
 }

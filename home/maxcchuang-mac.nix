@@ -112,6 +112,7 @@ in
     ./modules/zoxide.nix
     ./modules/yazi.nix
     ./modules/television.nix
+    ./modules/mprocs.nix
 
     ./modules/git.nix
 
@@ -137,9 +138,7 @@ in
       '';
     })
 
-    ./modules/jujutsu.nix
-
     ./modules/git-google.nix
-    ./modules/mprocs.nix
+    (import ./modules/jujutsu.nix { })
   ];
 }

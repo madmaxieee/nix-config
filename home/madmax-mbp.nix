@@ -118,7 +118,7 @@ in
       '';
     })
 
-    ./modules/jujutsu.nix
+    (import ./modules/jujutsu.nix { })
   ];
 
 }
