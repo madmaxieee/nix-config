@@ -1,0 +1,13 @@
+--when.repositories = ["/google/src/cloud"]
+--when.hostnames = ["maxcchuang.c.googlers.com"]
+
+[user]
+name = "maxcchuang"
+email = "maxcchuang@google.com"
+
+[jjd-aliases]
+ltp = "/wireless/android/pixel/modem/ltp/testcases/live/mss_bsp"
+ltp_legacy = "/wireless/android/pixel/modem/ltp/testcases/live/mss_functional"
+test_cases_config = "/configs/production/pod/pixel-modem-tools/ltp-be/test_cases_config"
+experimental = "/experimental/users/maxcchuang"
+git = "/configs/production/gerritcodereview/prod/user/maxcchuang"
