@@ -6,6 +6,10 @@ prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
 name = "google"
 api_key_cmd = "pass gemini/cli"
 
+[[providers]]
+name = "openai"
+api_key_cmd = "pass openai/axon"
+
 [[patterns]]
 name = "jj_desc"
 steps = [
