@@ -21,6 +21,7 @@ rec {
 
   programs.fish.shellAbbrs = {
     j = "jj";
+    jg = "jj git";
   };
 
   programs.zsh = {
