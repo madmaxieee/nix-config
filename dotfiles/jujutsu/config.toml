@@ -1,8 +1,13 @@
+[user]
+name = "madmaxieee"
+email = "76544194+madmaxieee@users.noreply.github.com"
+
 [ui]
+conflict-marker-style = "git"
 default-command = "log"
+diff-editor = ":builtin"
 diff-formatter = ":git"
 pager = "delta"
-conflict-marker-style = "git"
 
 [aliases]
 d = ["diff"]
@@ -12,7 +17,3 @@ rb = ["rebase"]
 
 [working-copy]
 eol-conversion = "none"
-
-[user]
-name = "madmaxieee"
-email = "76544194+madmaxieee@users.noreply.github.com"
