@@ -20,10 +20,15 @@ name = "jj_desc"
 steps = [
   { command = "jj diff --git", output = "diff" },
   { command = "jj log -T builtin_log_detailed -n 5 -r ::@-", output = "commits" },
-  { prompt = "@commit_message", output = "commit_message" },
-  { command = "jj describe --editor -m {{ .commit_message }}", tty = true },
+  # needs `commits` and `diff`
+  { prompt = "@commit_message", output = ">desc_file" },
 
-  { command = "echo -n {{ .commit_message }}" },
+  { command = "echo '\n\nJJ: original description:\n\n'", output = ">>desc_file" },
+  { command = "jj log -T description --no-graph -r @ | sed 's/^/JJ: /'", output = ">>desc_file" },
+
+  { command = "jj describe --editor --stdin <{{ .desc_file }}", tty = true },
+
+  { command = "cat {{ .desc_file }}" },
 ]
 
 [[patterns]]
@@ -31,7 +36,9 @@ name = "git_commit"
 steps = [
   { command = "git diff --staged -U30", output = "diff" },
   { command = "git log --max-count=5", output = "commits" },
+  # needs `commits` and `diff`
   { prompt = "@commit_message", output = "commit_message" },
+
   { command = "git commit -e -m {{ .commit_message }}", tty = true },
 
   { command = "echo -n {{ .commit_message }}" },
