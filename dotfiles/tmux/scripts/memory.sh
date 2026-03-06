@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-
 threshold=${1:-50}
 
 # Determine OS-specific shasum command

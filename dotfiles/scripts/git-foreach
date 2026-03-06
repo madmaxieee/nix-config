@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o pipefail
-set -o nounset
-
 usage() {
   echo "Usage: $0 [SEARCH_DIR] -- <command> [args...]"
   echo ""
@@ -44,12 +40,10 @@ fi
 SEARCH_DIR="$(realpath "$SEARCH_DIR")"
 
 # Expecting `--` as a separator
-set +o nounset
 if [[ "$1" != "--" ]]; then
   echo "Error: missing -- separator before command" >&2
   exit 1
 fi
-set -o nounset
 
 shift
 
