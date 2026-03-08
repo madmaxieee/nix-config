@@ -2,6 +2,11 @@
 model = "google/gemini-3-flash-preview"
 prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
 
+[general.model_aliases]
+flash = "google/gemini-3-flash-preview"
+gemini = "google/gemini-3.1-pro-preview"
+gpt = "openai/gpt-5.4"
+
 [[providers]]
 name = "google"
 api_key_cmd = "pass gemini/cli"
@@ -17,6 +22,7 @@ steps = [
   { command = "jj log -T builtin_log_detailed -n 5 -r ::@-", output = "commits" },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "jj describe --editor -m {{ .commit_message }}", tty = true },
+
   { command = "echo -n {{ .commit_message }}" },
 ]
 
@@ -27,33 +33,26 @@ steps = [
   { command = "git log --max-count=5", output = "commits" },
   { prompt = "@commit_message", output = "commit_message" },
   { command = "git commit -e -m {{ .commit_message }}", tty = true },
+
   { command = "echo -n {{ .commit_message }}" },
 ]
 
 [[patterns]]
 name = "proofread"
 steps = [
-  { command = "mktemp", output = "before_file" },
-  { command = "mktemp", output = "after_file" },
-
-  { command = "cat >> {{ .before_file }}", pipe_in = true },
-
-  { prompt = "@proofread", output = "fixed_text" },
-  { command = "echo -n {{ .fixed_text }} > {{ .after_file }}" },
+  { stdin = "{{ .INPUT }}", command = "cat", output = ">before_file" },
+  { prompt = "@proofread", model = "flash", output = ">after_file" },
 
   { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2" },
 
-  { command = "echo -n {{ .fixed_text }}" },
+  { command = "cat {{ .after_file }}" },
 ]
 
 [[patterns]]
 name = "code_review"
 steps = [
-  { command = "mktemp", output = "tmpfile" },
+  { prompt = "@review_code", model = "gemini", output = ">review" },
+  { command = "glow --pager {{ .review }}", tty = true },
 
-  { prompt = "@review_code", model = "google/gemini-3.1-pro-preview" },
-  { command = "tee {{ .tmpfile }}", pipe_in = true },
-  { command = "glow --pager", pipe_in = true, tty = true },
-
-  { command = "cat {{ .tmpfile }}" },
+  { command = "cat {{ .review }}" },
 ]
