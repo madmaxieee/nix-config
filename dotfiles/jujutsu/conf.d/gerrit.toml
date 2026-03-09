@@ -7,9 +7,8 @@ email = "maxcchuang@google.com"
 
 [aliases]
 # Push all commits in the chain to Gerrit.
-repo-up = ["util", "exec", "--", "bash", "-c", """
-set -euo pipefail
-REVSET=${1:-"@-"}
+up = ["util", "exec", "--", "bash", "-c", """
+REVSET=${1:-"@"}
 
 HASH=$(jj log -r "${REVSET}" -T commit_id --no-graph)
 DESCRIPTION=$(git log -n 1 ${HASH} --oneline --color=always)
