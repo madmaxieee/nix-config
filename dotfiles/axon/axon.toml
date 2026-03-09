@@ -23,7 +23,7 @@ steps = [
   # needs `commits` and `diff`
   { prompt = "@commit_message", output = ">desc_file" },
 
-  { command = "echo '\n\nJJ: original description:\n\n'", output = ">>desc_file" },
+  { command = "echo '\n\nJJ: original description:\n'", output = ">>desc_file" },
   { command = "jj log -T description --no-graph -r @ | sed 's/^/JJ: /'", output = ">>desc_file" },
 
   { command = "jj describe --editor --stdin <{{ .desc_file }}", tty = true },
