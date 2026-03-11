@@ -15,6 +15,7 @@
       "discord"
       "espanso"
       "fantastical"
+      "finetune"
       "ghostty"
       "google-chrome"
       "hammerspoon"
