@@ -1,12 +1,12 @@
 --when.repositories = ["/google/src/cloud"]
 --when.hostnames = ["maxcchuang.c.googlers.com"]
 
-[aliases]
-up = ["piper", "upload"]
-
 [user]
 name = "maxcchuang"
 email = "maxcchuang@google.com"
+
+[aliases]
+up = ["piper", "upload"]
 
 [jjd-aliases]
 ltp = "/wireless/android/pixel/modem/ltp/testcases/live/mss_bsp"

@@ -15,37 +15,5 @@ e = ["edit"]
 llog = ["log", "-T", "builtin_log_detailed"]
 rb = ["rebase"]
 
-up = ["util", "exec", "--", "bash", "-c", """
-get_commit_hash() {
-  rev=$1
-  jj log -r "$rev" --no-graph -T commit_id
-}
-  
-show_rev_info() {
-  rev=$1
-  echo
-  jj log -T builtin_log_compact --no-graph -r "$rev"
-  echo
-}
-
-main() {
-  if [[ "$#" == 0 ]]; then
-    revsets=("@")
-  else
-    revsets=("$@")
-  fi
-
-  for rev in "${revsets[@]}"; do
-    echo "Uploading revision:"
-    show_rev_info "$rev"
-    hash=$(get_commit_hash "$rev")
-    git push goog "$hash":refs/for/main 2>&1 | sed 's/^/git: /'
-    echo ---
-  done
-}
-
-main "$@"
-""", ""]
-
 [working-copy]
 eol-conversion = "none"

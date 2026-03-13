@@ -6,17 +6,11 @@ name = "maxcchuang"
 email = "maxcchuang@google.com"
 
 [aliases]
-# Push all commits in the chain to Gerrit.
-up = ["util", "exec", "--", "bash", "-c", """
-REVSET=${1:-"@"}
+up = ["gerrit", "upload"]
 
-HASH=$(jj log -r "${REVSET}" -T commit_id --no-graph)
-DESCRIPTION=$(git log -n 1 ${HASH} --oneline --color=always)
-echo "Pushing from commit ${DESCRIPTION}"
-
-git push goog "${HASH}":refs/for/main
-""", ""]
-
+[gerrit]
+default-remote = "goog"
+default-remote-branch = "main"
 
 [templates]
 commit_trailers = """
