@@ -22,7 +22,10 @@ in
     };
   };
 
-  xdg.configFile.opencode.source = linkDotfile "opencode";
+  xdg.configFile = {
+    "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode.jsonc";
+    "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
+  };
 
   programs.fish = {
     shellAbbrs.oc = lib.mkDefault "opencode";
