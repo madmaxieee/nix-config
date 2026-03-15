@@ -25,6 +25,9 @@
       flake = false;
     };
 
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
     # for nixpkgs overlay
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     jj-starship.url = "github:dmmulroy/jj-starship";
@@ -256,6 +259,9 @@
           })
 
           (import ./modules/window-management { wm = "yabai"; })
+
+          inputs.nix-index-database.darwinModules.nix-index
+          { programs.nix-index-database.comma.enable = true; }
         ];
       };
 
@@ -297,6 +303,9 @@
           })
 
           (import ./modules/window-management { wm = "aerospace"; })
+
+          inputs.nix-index-database.darwinModules.nix-index
+          { programs.nix-index-database.comma.enable = true; }
         ];
       };
 
@@ -323,7 +332,12 @@
 
         extraSpecialArgs = extraSpecialArgs;
 
-        modules = [ ./home/maxcchuang.nix ];
+        modules = [
+          ./home/maxcchuang.nix
+
+          inputs.nix-index-database.homeModules.default
+          { programs.nix-index-database.comma.enable = true; }
+        ];
       };
     };
 }
