@@ -154,21 +154,10 @@ leader_bind("", "=", function()
 end, { repeatable = true })
 leader_bind("", "c", function()
     local win = focused_window()
-    if is_managed(win:id()) then
+    if win and is_managed(win:id()) then
         return
     end
-    local new_geometry = hs.geometry.size(1350, 900)
-    if win:size():equals(new_geometry) then
-        win:centerOnScreen()
-        return
-    end
-    local try = 0
-    while not win:size():equals(new_geometry) and try < 10 do
-        win:setSize(new_geometry)
-        hs.timer.usleep(100 * 1000)
-        win:centerOnScreen()
-        try = try + 1
-    end
+    TryCenterWindow(win)
 end)
 leader_bind("shift", "c", function()
     focused_window():centerOnScreen()

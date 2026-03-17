@@ -6,7 +6,10 @@ let
   linkDotfile = config.lib.custom.linkDotfile;
 in
 {
-  home.packages = with pkgs; [ jq ];
+  home.packages = with pkgs; [
+    jq
+    sqlite
+  ];
 
   home.sessionPath = [ "${nixConfigPath}/dotfiles/script-kitty" ];
 
