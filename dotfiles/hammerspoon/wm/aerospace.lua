@@ -64,60 +64,33 @@ function M.setup()
     end)
 end
 
--- TODO: store floating window id somewhere
 function M.is_managed(win_id)
     local win = hs.window.get(win_id)
     if not win then
         return true
     end
 
-    local app = win:application()
-    if not app then
-        return true
-    end
-    ---@cast app hs.application
-
-    local app_name = app:name()
-    if
-        app_name == "Google Chat"
-        or app_name == "Google Gemini"
-        or app_name == "Duckie"
-        or app_name == "T3 Chat"
-    then
-        return false
-    end
-
-    local bid = app:bundleID()
-    if
-        bid == "com.apple.finder"
-        or bid == "com.apple.systempreferences"
-        or bid == "com.culturedcode.ThingsMac"
-    then
-        return false
-    end
-
-    local win_title = win:title()
-    if
-        app_name == "kitty"
-        and (
-            win_title == "script kitty"
-            or win_title == "scratch pad"
-            or win_title == "obsidian"
+    local output = hs.execute(
+        ([[PATH=%s ~/.config/aerospace/wm-ids.sh has %d]]):format(
+            PATH,
+            win:id()
         )
-    then
+    )
+
+    if output == "0\n" then
+        return true
+    else
         return false
     end
-
-    return true
 end
 
 ---@param window hs.window
 function M.move_window_to_current_space(window)
     hs.execute(
-        [[PATH=]]
-            .. PATH
-            .. [[ ~/.config/aerospace/move_window_to_current_workspace.sh ]]
-            .. window:id()
+        ([[PATH=%s ~/.config/aerospace/move_window_to_current_workspace.sh %d]]):format(
+            PATH,
+            window:id()
+        )
     )
 end
 

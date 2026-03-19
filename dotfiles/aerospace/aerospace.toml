@@ -4,9 +4,10 @@ exec-on-workspace-change = [
     '/bin/bash',
     '-c',
     '''
-    sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;
-    echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space;
-    ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh;
+    sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE &
+    ~/.config/aerospace/wm-id-maybe-cleanup.sh &
+    echo "$AEROSPACE_FOCUSED_WORKSPACE" > /tmp/aerospace_current_space
+    ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh
     ''',
 ]
 
@@ -190,15 +191,24 @@ PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:/etc/profiles/per-user/${USER}/bin:
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = ['layout floating']
+run = [
+    'layout floating',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
+]
 
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
-run = ['layout floating']
+run = [
+    'layout floating',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
+]
 
 [[on-window-detected]]
 if.app-id = 'com.culturedcode.ThingsMac'
-run = ['layout floating']
+run = [
+    'layout floating',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
+]
 
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
@@ -206,6 +216,7 @@ if.window-title-regex-substring = '^script kitty$'
 run = [
     'layout floating',
     'exec-and-forget hs -c "TryResizeScriptKitty($AEROSPACE_WINDOW_ID)"',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
 ]
 
 [[on-window-detected]]
@@ -214,24 +225,19 @@ if.window-title-regex-substring = '^(scratch pad|obsidian)$'
 run = [
     'layout floating',
     'exec-and-forget hs -c "TryResizeScratchPad($AEROSPACE_WINDOW_ID)"',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
 ]
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Google Chat$'
-run = ['layout floating']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '^(Google )?Gemini$'
-run = ['layout floating']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '^Duckie$'
-run = ['layout floating']
-
-[[on-window-detected]]
-if.app-name-regex-substring = '^T3 Chat$'
-run = ['layout floating']
+if.app-name-regex-substring = '^(Google Chat|Google Gemini|Gemini|Duckie|T3 Chat)$'
+run = [
+    'layout floating',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
+]
 
 [[on-window-detected]]
 if.window-title-regex-substring = '^Sign in - Google Accounts - Google Chrome'
-run = ['layout floating']
+run = [
+    'layout floating',
+    'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',
+]
