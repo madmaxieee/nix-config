@@ -95,6 +95,7 @@ in
     ./modules/zoxide.nix
 
     ./modules/git.nix
+    (import ./modules/jujutsu.nix { })
 
     ./modules/clang-tools.nix
     ./modules/go.nix
@@ -118,8 +119,5 @@ in
         }
       '';
     })
-
-    (import ./modules/jujutsu.nix { })
   ];
-
 }

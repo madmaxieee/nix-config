@@ -62,6 +62,7 @@ rec {
     ./modules/zsh.nix
     ./modules/nvim.nix
     ./modules/tmux.nix
+    ./modules/zellij.nix
 
     ./modules/scripts.nix
 
@@ -72,6 +73,7 @@ rec {
     ./modules/zoxide.nix
 
     ./modules/git.nix
+    (import ./modules/jujutsu.nix { use_system_binary = true; })
 
     ./modules/python.nix
     ./modules/rust.nix
@@ -80,7 +82,8 @@ rec {
     ./modules/fabric-ai.nix
     ./modules/opencode.nix
 
+    # work related
+    ./modules/adb.nix
     ./modules/git-google.nix
-    (import ./modules/jujutsu.nix { use_system_binary = true; })
   ];
 }

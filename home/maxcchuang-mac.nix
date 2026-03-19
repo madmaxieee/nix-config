@@ -80,18 +80,6 @@ in
     '';
   };
 
-  programs.fish.shellAbbrs = {
-    a = "adb";
-    al = "adb logcat";
-    ar = "adb root";
-    arr = "adb reboot";
-    as = "adb shell";
-    aw = "adb wait-for-device";
-    f = "fastboot";
-    fr = "fastboot reboot";
-    frb = "fastboot reboot bootloader";
-  };
-
   home.sessionPath = [ "/usr/local/git/git-google/bin" ];
 
   imports = [
@@ -116,6 +104,7 @@ in
     ./modules/zoxide.nix
 
     ./modules/git.nix
+    (import ./modules/jujutsu.nix { })
 
     ./modules/clang-tools.nix
     ./modules/java.nix
@@ -139,7 +128,8 @@ in
       '';
     })
 
+    # work related
+    ./modules/adb.nix
     ./modules/git-google.nix
-    (import ./modules/jujutsu.nix { })
   ];
 }
