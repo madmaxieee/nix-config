@@ -221,7 +221,7 @@ if.app-name-regex-substring = '^Google Chat$'
 run = ['layout floating']
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^Google Gemini$'
+if.app-name-regex-substring = '^(Google )?Gemini$'
 run = ['layout floating']
 
 [[on-window-detected]]
