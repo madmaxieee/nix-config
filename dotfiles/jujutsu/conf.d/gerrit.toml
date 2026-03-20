@@ -6,7 +6,27 @@ name = "maxcchuang"
 email = "maxcchuang@google.com"
 
 [aliases]
-up = ["gerrit", "upload"]
+# If any flag-like element is provided, pass everything to `jj gerrit upload`,
+# else insert `-r` before every argument to mimic the behavior of `jj piper upload`.
+up = ["util", "exec", "--", "bash", "-c", """
+    has_flag=false
+    for arg; do
+        if [[ $arg == -* ]]; then
+            has_flag=true
+            break
+        fi
+    done
+    if $has_flag; then
+        exec jj gerrit upload "$@"
+    else
+        args=()
+        for arg; do
+            args+=("-r" "$arg")
+        done
+        exec jj gerrit upload "${args[@]}"
+    fi
+""", ""]
+
 
 [gerrit]
 default-remote = "goog"
