@@ -4,7 +4,7 @@ requirements = ["fd", "bat"]
 
 [source]
 command = """
-if which yabai >/dev/null 2>&1
+if type -q yabai
   set filter_out aerospace
 else
   set filter_out yabai
