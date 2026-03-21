@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+# tv-tmux: starts tv in a tmux floating pane (popup)
+# usage: tv-tmux [LAYOUT OPTIONS] [--] [TV OPTIONS]
+
+fail() {
+  >&2 echo "$1"
+  exit 2
+}
+
+tv="$(command -v tv)" || fail 'tv executable not found'
+
+args=()
+opt="-E"
+skip=""
+
+help() {
+  >&2 echo 'usage: tv-tmux [LAYOUT OPTIONS] [--] [TV OPTIONS]
+
+  LAYOUT OPTIONS:
+    Popup window:
+      -p [WIDTH[%][,HEIGHT[%]]]  (default: 80%)
+      -w WIDTH[%]
+      -h HEIGHT[%]
+      -x COL
+      -y ROW
+'
+  exit
+}
+
+while [[ $# -gt 0 ]]; do
+  arg="$1"
+  shift
+  [[ -z $skip ]] && case "$arg" in
+  --help)
+    help
+    ;;
+  -p* | -w* | -h* | -x* | -y*)
+    if [[ ${#arg} -gt 2 ]]; then
+      size="${arg:2}"
+    else
+      if [[ $1 =~ ^[0-9%,]+$ ]] || [[ $1 =~ ^[A-Z]$ ]]; then
+        size="$1"
+        shift
+      else
+        # next argument is not a valid size
+        continue
+      fi
+    fi
+
+    if [[ $arg =~ ^-p ]]; then
+      if [[ -n $size ]]; then
+        w=${size%%,*}
+        h=${size##*,}
+        opt="$opt -w$w -h$h"
+      fi
+    elif [[ $arg =~ ^-[whxy] ]]; then
+      opt="$opt ${arg:0:2}$size"
+    fi
+    continue
+    ;;
+  --)
+    skip=1
+    continue
+    ;;
+  *)
+    args+=("$arg")
+    continue
+    ;;
+  esac
+  [[ -n $skip ]] && args+=("$arg")
+done
+
+if [[ -z $TMUX ]]; then
+  "$tv" "${args[@]}"
+  exit $?
+fi
+
+# Set default width and height if not specified
+[[ $opt =~ "-w" ]] || opt="$opt -w 80%"
+[[ $opt =~ "-h" ]] || opt="$opt -h 80%"
+
+out_file=$(mktemp "${TMPDIR:-/tmp}/tv-out.XXXXXX")
+script_file=$(mktemp "${TMPDIR:-/tmp}/tv-script.XXXXXX")
+
+cleanup() {
+  rm -f "$out_file" "$script_file"
+}
+trap cleanup EXIT INT TERM
+
+# Build arguments to tv safely
+opts=""
+for a in "${args[@]}"; do
+  opts="$opts $(printf "%q" "$a")"
+done
+
+# Script to run inside tmux popup
+cat <<EOF_INNER >"$script_file"
+export TMUX="\$(cut -d , -f 1,2 <<< "\$TMUX")"
+"$tv" $opts > "$out_file"
+exit \$?
+EOF_INNER
+
+# Run tmux popup
+tmux popup -B -d "$PWD" $opt "bash $script_file" >/dev/null 2>&1
+exit_code=$?
+
+if [[ -f "$out_file" ]]; then
+  cat "$out_file"
+fi
+
+exit $exit_code

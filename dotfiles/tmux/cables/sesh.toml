@@ -1,0 +1,47 @@
+[metadata]
+name = "sesh"
+description = "Session manager integrating tmux sessions, zoxide directories, and config paths"
+requirements = ["sesh", "fd"]
+
+[source]
+command = [
+  """
+  begin
+    sesh list --icons --tmux
+    sesh list --icons --config
+    if test -z "$SSH_CONNECTION"
+      curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "☁️[cloud] " $0 }'
+    end
+    sesh list --icons --zoxide
+  end | grep -v '__popup$'
+  """,
+  "sesh list --icons --tmux | grep -v '__popup$'",
+  "sesh list --icons --config",
+  "sesh list --icons --zoxide",
+  "fd -H -d 2 -t d -E .Trash -E .cache . ~",
+  """
+  if test -z "$SSH_CONNECTION"
+    curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "☁️[cloud] " $0 }'
+  end
+  """,
+]
+ansi = true
+output = "{strip_ansi}"
+
+[preview]
+command = "sesh preview '{strip_ansi|split: :1..|join: }'"
+
+[keybindings]
+# enter = "actions:connect"
+ctrl-d = ["actions:kill_session", "reload_source"]
+ctrl-alt-k = ["quit"]
+
+[actions.connect]
+description = "Connect to selected session"
+command = "sesh connect '{strip_ansi|split: :1..|join: }'"
+mode = "execute"
+
+[actions.kill_session]
+description = "Kill selected tmux session (press Ctrl+r to reload)"
+command = "tmux kill-session -t '{strip_ansi|split: :1..|join: }'"
+mode = "fork"
