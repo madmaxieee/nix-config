@@ -10,7 +10,7 @@ command = [
     sesh list --icons --tmux
     sesh list --icons --config
     if test -z "$SSH_CONNECTION"
-      curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "☁️[cloud] " $0 }'
+      curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "\\033[0m [cloud] " $0 }'
     end
     sesh list --icons --zoxide
   end | grep -v '__popup$'
@@ -21,7 +21,7 @@ command = [
   "fd -H -d 2 -t d -E .Trash -E .cache . ~",
   """
   if test -z "$SSH_CONNECTION"
-    curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "☁️[cloud] " $0 }'
+    curl --max-time 1 --silent localhost:8080/sesh/tmux | awk '!/__popup$/ { print "\\033[0m [cloud] " $0 }'
   end
   """,
 ]

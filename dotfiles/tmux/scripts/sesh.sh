@@ -15,7 +15,7 @@ fi
 input_header=" sesh$hostname_module"
 prompt_prefix="$hostname_module"
 
-cloudtop_session_prefix='☁️[cloud] '
+cloudtop_session_prefix=' [cloud] '
 
 session=$(
   tv-tmux -p 55%,60% -- \
@@ -30,13 +30,13 @@ if [[ -z "$session" ]]; then
   exit 0
 fi
 
-stripped_session="${session#* }"
-
 if [[ $session == "$cloudtop_session_prefix"* ]]; then
+  stripped_session=$(echo "$session" | cut -d' ' -f3-)
   tmux send-keys -t cloud C-space ':'
-  tmux send-keys -t cloud "attach -t $stripped_session" C-m &
+  tmux send-keys -t cloud "attach -t $stripped_session" Enter &
   sesh connect cloud
 else
+  stripped_session="${session#* }"
   tmux set-option -t "$stripped_session" detach-on-destroy off 2>/dev/null &
   tmux set-option -t "$stripped_session" status on 2>/dev/null &
   sesh connect "$stripped_session"
