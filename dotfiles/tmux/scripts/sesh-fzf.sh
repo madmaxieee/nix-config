@@ -7,12 +7,12 @@ fi
 tmux new-session -d -s main -c "$HOME" >/dev/null 2>&1
 
 if command -v starship &>/dev/null; then
-  hostname_module="$(starship module hostname | cut -d' ' -f1) "
+  hostname_module="$(starship module hostname | cut -d' ' -f1)"
 else
   hostname_module=''
 fi
 
-border_label=" sesh$hostname_module"
+border_label=" sesh$hostname_module "
 prompt_prefix="$hostname_module"
 
 cloudtop_session_prefix='☁️[cloud] '

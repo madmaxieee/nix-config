@@ -7,12 +7,17 @@ fi
 tmux new-session -d -s main -c "$HOME" >/dev/null 2>&1
 
 if command -v starship &>/dev/null; then
-  hostname_module="$(starship module hostname | cut -d' ' -f1) "
+  hostname_module="$(starship module hostname | sed 's/\x1b\[[0-9;]*[a-mGKH]//g')"
+  hostname_module="${hostname_module%% *}"
 else
   hostname_module=''
 fi
 
-input_header=" sesh$hostname_module"
+if [[ -n "$hostname_module" ]]; then
+  hostname_module=" $hostname_module"
+fi
+
+input_header="sesh$hostname_module"
 prompt_prefix="$hostname_module"
 
 cloudtop_session_prefix=' [cloud] '
@@ -21,7 +26,7 @@ session=$(
   tv-tmux -p 55%,60% -- \
     --no-status-bar \
     --input-header "$input_header" \
-    --input-prompt "$prompt_prefix>" \
+    --input-prompt "$prompt_prefix >" \
     --cable-dir ~/nix-config/dotfiles/tmux/cables \
     sesh
 )
