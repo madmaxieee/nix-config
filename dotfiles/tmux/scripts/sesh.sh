@@ -35,8 +35,10 @@ fi
 
 if [[ "$session" == " [cloud] "* ]]; then
   stripped_session=$(echo "$session" | cut -d' ' -f3-)
-  tmux send-keys -t cloud C-space ':'
-  tmux send-keys -t cloud "attach -t $stripped_session" Enter &
+  if tmux has-session -t cloud 2>/dev/null; then
+    tmux send-keys -t cloud C-space :
+    tmux send-keys -t cloud "attach -t $stripped_session" Enter &
+  fi
   sesh connect cloud
 elif [[ "$session" == "󰌪 "* ]]; then
   stripped_session="${session#* }"
