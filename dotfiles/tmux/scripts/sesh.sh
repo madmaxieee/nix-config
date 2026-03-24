@@ -20,8 +20,6 @@ fi
 input_header="sesh$hostname_module"
 prompt_prefix="$hostname_module"
 
-cloudtop_session_prefix=' [cloud] '
-
 session=$(
   tv-tmux -p 55%,60% -- \
     --no-status-bar \
@@ -35,11 +33,20 @@ if [[ -z "$session" ]]; then
   exit 0
 fi
 
-if [[ $session == "$cloudtop_session_prefix"* ]]; then
+if [[ "$session" == " [cloud] *" ]]; then
   stripped_session=$(echo "$session" | cut -d' ' -f3-)
   tmux send-keys -t cloud C-space ':'
   tmux send-keys -t cloud "attach -t $stripped_session" Enter &
   sesh connect cloud
+elif [[ "$session" == "󰌪 *" ]]; then
+  stripped_session="${session#* }"
+  session_name="${stripped_session//[.:]/_}"
+  if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name" -c "/google/src/cloud/$LOGNAME/$stripped_session"
+  fi
+  tmux set-option -t "$session_name" detach-on-destroy off 2>/dev/null &
+  tmux set-option -t "$session_name" status on 2>/dev/null &
+  sesh connect "$session_name"
 else
   stripped_session="${session#* }"
   tmux set-option -t "$stripped_session" detach-on-destroy off 2>/dev/null &

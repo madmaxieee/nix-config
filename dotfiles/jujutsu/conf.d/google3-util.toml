@@ -1,0 +1,49 @@
+--when.hostnames = ["maxcchuang.c.googlers.com"]
+
+[aliases]
+# cached `jj piper citc list`
+citc_list = ["util", "exec", "--", "bash", "-c", """
+  get_clients() {
+    jj piper citc list 2>/dev/null
+  }
+
+  if ! [[ -d "/google/src/cloud/$LOGNAME" ]]; then
+    exit 0
+  fi
+
+  cache_file="$HOME/.cache/jj_citc_workspaces"
+
+  workspaces_sha1=$(
+    ls "/google/src/cloud/$LOGNAME" 2>/dev/null |
+      grep -Ev '^(fig|jj)-export-' |
+      sha1sum |
+      awk '{print $1}'
+  )
+
+  # Read cache (if exists)
+  if [[ -f "$cache_file" ]]; then
+    mapfile -t cache <"$cache_file"
+  else
+    cache=()
+  fi
+
+  # Compare cached SHA1 to current
+  if [[ "${cache[0]}" != "$workspaces_sha1" ]]; then
+    if clients=$(get_clients); then
+      {
+        echo "$workspaces_sha1"
+        [[ -n "$clients" ]] && echo "$clients"
+      } >"$cache_file"
+      cache=("$workspaces_sha1")
+      [[ -n "$clients" ]] && cache+=("$clients")
+    else
+      # Command failed; don't update cache
+      exit 1
+    fi
+  fi
+
+  # Output cached clients (lines 2..end)
+  if ((${#cache[@]} > 1)); then
+    printf "%s\n" "${cache[@]:1}"
+  fi
+""", ""]
