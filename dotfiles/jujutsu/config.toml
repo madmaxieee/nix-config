@@ -14,6 +14,7 @@ d = ["diff"]
 e = ["edit"]
 llog = ["log", "-T", "builtin_log_detailed"]
 rb = ["rebase"]
+w = ["workspace"]
 
 [working-copy]
 eol-conversion = "none"
