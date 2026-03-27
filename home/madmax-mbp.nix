@@ -85,6 +85,7 @@ in
     ./modules/zsh.nix
     ./modules/nvim.nix
     ./modules/tmux.nix
+    ./modules/zellij.nix
 
     ./modules/scripts.nix
 
