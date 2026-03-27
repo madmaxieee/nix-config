@@ -170,6 +170,8 @@ cmd-alt-h = []
 
 alt-r = 'mode resize'
 
+cmd-semicolon = 'exec-and-forget ~/nix-config/dotfiles/script-kitty/script-kitty-prompt'
+
 [mode.resize.binding]
 h = 'resize width -50'
 j = 'resize height -50'
@@ -184,7 +186,7 @@ alt-r = 'mode main'
 inherit-env-vars = true
 
 [exec.env-vars]
-PATH = '/run/current-system/sw/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
+PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:/etc/profiles/per-user/${USER}/bin:/run/current-system/sw/bin:${PATH}'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
