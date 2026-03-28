@@ -1,5 +1,5 @@
 { pkgs, lib, ... }:
-{
+rec {
   home.packages = with pkgs; [
     fnm
     deno
@@ -9,12 +9,11 @@
   programs.fish.shellAbbrs = {
     pm = lib.mkDefault "pnpm";
     yy = lib.mkDefault "yarn";
+    b = lib.mkDefault "bun";
+    br = lib.mkDefault "bun run";
   };
 
-  programs.zsh.zsh-abbr.abbreviations = {
-    pm = lib.mkDefault "pnpm";
-    yy = lib.mkDefault "yarn";
-  };
+  programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
 
   programs.bun.enable = true;
 
