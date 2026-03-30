@@ -26,6 +26,7 @@ session=$(
     --input-header "$input_header" \
     --input-prompt "$prompt_prefix >" \
     --cable-dir ~/nix-config/dotfiles/tmux/cables \
+    --no-sort \
     sesh
 )
 
