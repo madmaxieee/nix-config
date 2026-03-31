@@ -124,7 +124,7 @@ in
             message_app = "Google Chat",
             browser = "Google Chrome",
             terminal_app = "Ghostty",
-            ai_app = "Google Gemini",
+            ai_app = "Gemini",
         }
       '';
     })
