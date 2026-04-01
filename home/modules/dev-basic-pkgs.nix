@@ -72,7 +72,7 @@ rec {
     shellAbbrs = {
       rm = lib.mkDefault "rip";
       rmm = lib.mkDefault "rm -rf";
-      j = lib.mkDefault "just";
+      js = lib.mkDefault "just";
       lg = lib.mkDefault "lazygit";
     };
     shellAliases = {
