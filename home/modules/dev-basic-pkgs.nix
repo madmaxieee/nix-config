@@ -28,6 +28,7 @@ rec {
     graphviz
     jq
     just
+    mise
     ouch
     parallel
     riffdiff
@@ -70,18 +71,19 @@ rec {
 
   programs.fish = {
     shellAbbrs = {
-      rm = lib.mkDefault "rip";
-      rmm = lib.mkDefault "rm -rf";
       js = lib.mkDefault "just";
       lg = lib.mkDefault "lazygit";
+      ms = lib.mkDefault "mise";
+      rm = lib.mkDefault "rip";
+      rmm = lib.mkDefault "rm -rf";
     };
     shellAliases = {
       cat = lib.mkDefault "bat -p";
       l = lib.mkDefault "eza";
-      ls = lib.mkDefault "eza --icons=auto";
       la = lib.mkDefault "eza --icons=auto --all";
       ll = lib.mkDefault "eza --icons=auto --long --group";
       lla = lib.mkDefault "eza --icons=auto --long --group --all";
+      ls = lib.mkDefault "eza --icons=auto";
       tree = lib.mkDefault "eza -T -a -I .git";
     };
   };
