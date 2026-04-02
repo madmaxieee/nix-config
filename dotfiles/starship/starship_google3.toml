@@ -81,8 +81,8 @@ disabled = true
 [git_metrics]
 disabled = true
 
-[custom.fig]
-command = """ fish -c 'string replace -r '^/google/src/cloud/' "" $PWD' | cut -d'/' -f2 """
-when = """ pwd | grep -q '^/google/src/cloud' """
-style = "bold cyan"
-format = "[🌱 ($output) ]($style)"
+[custom.citc]
+command = """ fish -c 'string replace -r "^/google/src/cloud/$USER/" "" "$PWD"' | cut -d/ -f1 """
+when = """ fish -c 'string match -q "/google/src/cloud/*" "$PWD"' """
+style = "bold"
+format = "[✈️ ($output) ]($style)"
