@@ -28,7 +28,6 @@ rec {
     graphviz
     jq
     just
-    mise
     ouch
     parallel
     riffdiff
@@ -48,6 +47,8 @@ rec {
   programs.man.enable = true;
 
   programs.less.enable = true;
+
+  programs.mise.enable = true;
 
   programs.bat = {
     enable = true;
