@@ -48,8 +48,6 @@ rec {
 
   programs.less.enable = true;
 
-  programs.mise.enable = true;
-
   programs.bat = {
     enable = true;
     config.theme = "tokyonight-moon";
@@ -74,7 +72,6 @@ rec {
     shellAbbrs = {
       js = lib.mkDefault "just";
       lg = lib.mkDefault "lazygit";
-      ms = lib.mkDefault "mise";
       rm = lib.mkDefault "rip";
       rmm = lib.mkDefault "rm -rf";
     };

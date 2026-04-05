@@ -101,6 +101,7 @@ in
     ./modules/clang-tools.nix
     ./modules/go.nix
     ./modules/java.nix
+    ./modules/mise.nix
     ./modules/python.nix
     ./modules/rust.nix
     ./modules/web-dev.nix

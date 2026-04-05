@@ -75,6 +75,7 @@ rec {
     ./modules/git.nix
     (import ./modules/jujutsu.nix { use_system_binary = true; })
 
+    ./modules/mise.nix
     ./modules/python.nix
     ./modules/rust.nix
 
