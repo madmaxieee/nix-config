@@ -31,6 +31,7 @@
       "pocket-casts"
       "raindropio"
       "raycast"
+      "responsively"
       "spotify"
       "stremio"
       "thingsmacsandboxhelper"

@@ -7,22 +7,25 @@
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
+  fff-mcp = pkgs.callPackage ../../packages/fff-mcp.nix { };
 in
 {
   home.file = {
     ".local/bin/opencode" = {
       executable = true;
       text = ''
-        #!${pkgs.fish}/bin/fish
-        if not set -q GEMINI_API_KEY
-          set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
-        end
-        pnpx opencode-ai@latest $argv
+        #!${lib.getExe pkgs.bash}
+        export PATH="${lib.makeBinPath [ fff-mcp ]}:$PATH"
+        if [[ -z "$GEMINI_API_KEY" ]]; then
+          export GEMINI_API_KEY=$(pass gemini/cli 2>/dev/null)
+        fi
+        pnpx opencode-ai@latest "$@"
       '';
     };
   };
 
   xdg.configFile = {
+    "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
     "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode.jsonc";
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/commands/review.md".source = linkDotfile "opencode/commands/review.md";

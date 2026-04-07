@@ -8,4 +8,13 @@
     },
   },
   "model": "google/gemini-3.1-pro-preview",
+  "mcp": {
+    "fff": {
+      "type": "local",
+      "command": [
+        "fff-mcp"
+      ],
+      "enabled": true,
+    },
+  },
 }
