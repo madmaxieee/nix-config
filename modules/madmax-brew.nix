@@ -5,6 +5,7 @@
     brews = [
       "mas"
       "media-control"
+      "tailscale"
     ];
     casks = [
       "1password"
@@ -34,6 +35,7 @@
       "responsively"
       "spotify"
       "stremio"
+      "tailscale-app"
       "thingsmacsandboxhelper"
       "visual-studio-code"
       "zen"
