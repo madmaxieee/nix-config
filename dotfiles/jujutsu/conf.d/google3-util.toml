@@ -47,3 +47,10 @@ citc_list = ["util", "exec", "--", "bash", "-c", """
     printf "%s\n" "${cache[@]:1}"
   fi
 """, ""]
+
+[jjd-aliases]
+ltp = "/wireless/android/pixel/modem/ltp/testcases/live/mss_bsp"
+ltp_legacy = "/wireless/android/pixel/modem/ltp/testcases/live/mss_functional"
+test_cases_config = "/configs/production/pod/pixel-modem-tools/ltp-be/test_cases_config"
+experimental = "/experimental/users/maxcchuang"
+git = "/configs/production/gerritcodereview/prod/user/maxcchuang"

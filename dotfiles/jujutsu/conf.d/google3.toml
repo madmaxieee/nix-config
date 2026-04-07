@@ -6,13 +6,7 @@ name = "maxcchuang"
 email = "maxcchuang@google.com"
 
 [aliases]
-up = ["piper", "upload"]
 cc = ["piper", "citc"]
 cw = ["piper", "citc", "workspace"]
-
-[jjd-aliases]
-ltp = "/wireless/android/pixel/modem/ltp/testcases/live/mss_bsp"
-ltp_legacy = "/wireless/android/pixel/modem/ltp/testcases/live/mss_functional"
-test_cases_config = "/configs/production/pod/pixel-modem-tools/ltp-be/test_cases_config"
-experimental = "/experimental/users/maxcchuang"
-git = "/configs/production/gerritcodereview/prod/user/maxcchuang"
+up = ["piper", "upload"]
+ux = ["piper", "upload", "--exported"]
