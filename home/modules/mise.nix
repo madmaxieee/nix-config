@@ -1,4 +1,10 @@
 { pkgs, lib, ... }:
+let
+  mise_setup_script = pkgs.writeShellScriptBin "mise_setup" ''
+    export PATH="${lib.makeBinPath [ pkgs.curl ]}:$PATH"
+    ${lib.getExe pkgs.mise} install
+  '';
+in
 rec {
   programs.mise = {
     enable = true;
@@ -17,7 +23,7 @@ rec {
 
   home.activation = {
     mise_setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run ${lib.getExe pkgs.mise} install
+      run ${lib.getExe mise_setup_script}
     '';
   };
 }
