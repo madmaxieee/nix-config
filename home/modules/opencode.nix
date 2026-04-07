@@ -15,7 +15,7 @@ rec {
     ".local/bin/opencode" = {
       executable = true;
       text = ''
-        #!${lib.getExe pkgs.bash}
+        #!${pkgs.bash}/bin/bash
         export PATH="${
           lib.makeBinPath [
             fff-mcp
@@ -29,6 +29,8 @@ rec {
       '';
     };
   };
+
+  home.packages = [ rtk ];
 
   home.activation = {
     rtk_init = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
