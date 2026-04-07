@@ -8,20 +8,32 @@
 let
   linkDotfile = config.lib.custom.linkDotfile;
   fff-mcp = pkgs.callPackage ../../packages/fff-mcp.nix { };
+  rtk = pkgs.callPackage ../../packages/rtk.nix { };
 in
-{
+rec {
   home.file = {
     ".local/bin/opencode" = {
       executable = true;
       text = ''
         #!${lib.getExe pkgs.bash}
-        export PATH="${lib.makeBinPath [ fff-mcp ]}:$PATH"
+        export PATH="${
+          lib.makeBinPath [
+            fff-mcp
+            rtk
+          ]
+        }:$PATH"
         if [[ -z "$GEMINI_API_KEY" ]]; then
           export GEMINI_API_KEY=$(pass gemini/cli 2>/dev/null)
         fi
         pnpx opencode-ai@latest "$@"
       '';
     };
+  };
+
+  home.activation = {
+    rtk_init = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${lib.getExe rtk} init -g --opencode
+    '';
   };
 
   xdg.configFile = {
@@ -35,9 +47,8 @@ in
   programs.fish = {
     shellAbbrs.oc = lib.mkDefault "opencode";
   };
-  programs.zsh = {
-    zsh-abbr.abbreviations.oc = lib.mkDefault "opencode";
-  };
+
+  programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
 
   imports = [
     ./password-store.nix
