@@ -1,44 +1,42 @@
 #!/usr/bin/env bash
 
-threshold=${1:-50}
+threshold=${1:-60}
 
-# Determine OS-specific shasum command
 case "$(uname)" in
 Darwin)
-  total_bytes=$(sysctl -n hw.memsize)
-  percentage_total_used=$(vm_stat | awk '
-    NR==1 {
-      match($0, /([0-9]+)/, arr);
-      page_size = arr[1]
-    }
-    /Pages (active|wired down)/ {
-      match($0, / +([0-9]+)/, arr);
-      used_pages += arr[1];
-    }
-    END {
-      total_bytes = '"$total_bytes"'
-      total_pages = (total_bytes / page_size)
-      gb = 1024 * 1024 * 1024;
-      percentage = (used_pages / total_pages) * 100;
-      total = int(total_bytes / gb + 0.5)
-      used = (used_pages * page_size) / gb
-      printf("%.0f,%dG,%.1fG", percentage, total, used)
-    }
-  ')
-  ;;
+	total_bytes=$(sysctl -n hw.memsize)
+	percentage_total_used=$(vm_stat | awk '
+	NR==1 {
+		match($0, /([0-9]+)/, arr);
+		page_size = arr[1]
+	}
+	/Pages (active|wired down)/ {
+		match($0, / +([0-9]+)/, arr);
+		used_pages += arr[1];
+	}
+	END {
+		total_bytes = '"$total_bytes"'
+		total_pages = (total_bytes / page_size)
+		gb = 1024 * 1024 * 1024;
+		percentage = (used_pages / total_pages) * 100;
+		total = int(total_bytes / gb + 0.5)
+		used = (used_pages * page_size) / gb
+		printf("%.0f,%dG,%.1fG", percentage, total, used)
+	}')
+	;;
 Linux)
-  percentage_total_used=$(free -h --giga | awk '/Mem/ { print int(($3/$2)*100) "," $2 "," $3 }')
-  ;;
+	percentage_total_used=$(free -h --giga | awk '/Mem/ { print int(($3/$2)*100) "," $2 "," $3 }')
+	;;
 *)
-  # Unknown OS
-  return 1
-  ;;
+	# Unknown OS
+	return 1
+	;;
 esac
 
 IFS=',' read -r percentage total used <<<"$percentage_total_used"
 
 if ((percentage < threshold)); then
-  exit
+	exit
 fi
 
 left_sep_char="#{E:@catppuccin_status_left_separator}"

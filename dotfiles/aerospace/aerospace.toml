@@ -13,7 +13,7 @@ exec-on-workspace-change = [
 
 on-focus-changed = [
     'exec-and-forget ~/.config/sketchybar/wm_items/aerospace_update_current_space_apps.sh',
-    'exec-and-forget ~/.config/aerospace/center_floating_window.lua $AEROSPACE_WINDOW_ID',
+    # 'exec-and-forget ~/.config/aerospace/center_floating_window.lua $AEROSPACE_WINDOW_ID',
 ]
 
 on-focused-monitor-changed = [
