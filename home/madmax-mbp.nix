@@ -109,7 +109,7 @@ in
     ./modules/axon.nix
     ./modules/fabric-ai.nix
     ./modules/gemini-cli.nix
-    ./modules/opencode.nix
+    (import ./modules/opencode.nix { profile = "personal"; })
 
     (import ./modules/window-management.nix {
       hs_extra_config = ''

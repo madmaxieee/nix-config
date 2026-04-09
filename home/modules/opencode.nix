@@ -1,3 +1,4 @@
+{ profile }:
 {
   config,
   pkgs,
@@ -40,7 +41,7 @@ rec {
 
   xdg.configFile = {
     "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
-    "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode.jsonc";
+    "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode-${profile}.jsonc";
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/commands/review.md".source = linkDotfile "opencode/commands/review.md";
     "opencode/commands/jj-desc.md".source = linkDotfile "opencode/commands/jj-desc.md";

@@ -81,7 +81,7 @@ rec {
 
     ./modules/axon.nix
     ./modules/fabric-ai.nix
-    ./modules/opencode.nix
+    (import ./modules/opencode.nix { profile = "work"; })
 
     # work related
     ./modules/adb.nix
