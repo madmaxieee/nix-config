@@ -7,7 +7,7 @@
       },
     },
   },
-  "model": "google/gemini-3.1-pro-preview",
+  "model": "opencode-go/kimi-k2.5",
   "mcp": {
     "fff": {
       "type": "local",
