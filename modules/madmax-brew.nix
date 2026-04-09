@@ -28,6 +28,7 @@
       "logi-options+"
       "nordvpn"
       "obsidian"
+      "opencode-desktop"
       "orbstack"
       "pocket-casts"
       "raindropio"
