@@ -66,6 +66,7 @@ format = "$output "
 [directory]
 truncate_to_repo = false
 style = "bold blue"
+
 [git_status]
 disabled = true
 
@@ -82,7 +83,10 @@ disabled = true
 disabled = true
 
 [custom.citc]
-command = """ fish -c 'string replace -r "^/google/src/cloud/$USER/" "" "$PWD"' | cut -d/ -f1 """
-when = """ fish -c 'string match -q "/google/src/cloud/*" "$PWD"' """
-style = "bold"
-format = "[✈️ ($output) ]($style)"
+command = """
+echo "$PWD" | sed "s|^/google/src/cloud/$USER/||" | cut -d/ -f1
+"""
+when = """
+echo "$PWD" | grep -q "^/google/src/cloud/"
+"""
+format = "[ ](white)[$output](bold) "
