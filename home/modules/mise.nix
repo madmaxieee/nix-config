@@ -15,6 +15,13 @@ rec {
     };
   };
 
+  programs.mise.enableFishIntegration = false;
+  programs.fish.interactiveShellInit = ''
+    if ! string match -q "/google/src/cloud/*" "$PWD"
+      ${lib.getExe pkgs.mise} activate fish | source
+    end
+  '';
+
   programs.fish.shellAbbrs = {
     ms = lib.mkDefault "mise";
   };
