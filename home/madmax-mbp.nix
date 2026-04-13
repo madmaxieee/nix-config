@@ -8,6 +8,8 @@ in
   home.homeDirectory = "/Users/madmax";
 
   home.packages = with pkgs; [
+    ntfy-sh
+
     odin
     typst
     zig
