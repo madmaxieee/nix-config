@@ -6,13 +6,12 @@ import json
 import os
 import subprocess
 import sys
-import urllib.error
 import urllib.parse
 import urllib.request
 import webbrowser
 
 THINGS_URL_METHOD = "things://"
-TODOIST_BASE_URL = "https://api.todoist.com/rest/v2"
+TODOIST_BASE_URL = "https://api.todoist.com/api/v1"
 TODOIST_API_TOKEN = None
 
 
@@ -77,7 +76,7 @@ def pull_command():
     # Find the inbox project ID
     inbox_project_id = None
     for project in projects:
-        if project.get("is_inbox_project"):
+        if project.get("inbox_project"):
             inbox_project_id = project["id"]
             break
 
@@ -139,7 +138,7 @@ def fetch_todoist_projects():
     headers = {"Authorization": f"Bearer {TODOIST_API_TOKEN}"}
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req) as response:
-        return json.loads(response.read().decode())
+        return json.loads(response.read().decode()).get("results")
 
 
 def fetch_todoist_tasks(project_id):
@@ -149,7 +148,7 @@ def fetch_todoist_tasks(project_id):
     url = f"{base_url}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req) as response:
-        return json.loads(response.read().decode())
+        return json.loads(response.read().decode()).get("results")
 
 
 def close_todoist_task(task_id):
