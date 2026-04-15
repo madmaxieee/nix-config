@@ -26,13 +26,12 @@ function M.toggle_scratchpad(opts)
 end
 
 ---@param app_name string
----@param opts {bundle_id: boolean}?
-function M.toggle_app_scratchpad(app_name, opts)
-    opts = opts or {}
+function M.toggle_app_scratchpad(app_name)
+    local is_bundle_id = string.find(app_name, ".", 1, true) ~= nil
     M.toggle_scratchpad({
         find_window = function()
             local app
-            if opts.bundle_id then
+            if is_bundle_id then
                 app = hs.application.get(app_name)
             else
                 app = hs.application.find(app_name, true)
@@ -43,7 +42,7 @@ function M.toggle_app_scratchpad(app_name, opts)
             return app:mainWindow()
         end,
         launch = function()
-            if opts.bundle_id then
+            if is_bundle_id then
                 hs.application.launchOrFocusByBundleID(app_name)
             else
                 hs.application.launchOrFocus(app_name)

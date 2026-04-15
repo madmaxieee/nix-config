@@ -25,6 +25,13 @@ if config.ai_app then
     end)
 end
 
+if config.todo_app then
+    scratchpad.hide_on_cmd_w(config.todo_app)
+    leader_bind("", "t", function()
+        scratchpad.toggle_app_scratchpad(config.todo_app)
+    end)
+end
+
 leader_bind("", "n", function()
     scratchpad.toggle_scratchpad({
         find_window = function()
@@ -65,14 +72,6 @@ hs.hotkey.bind({ "cmd" }, ".", function()
             window:minimize()
         end,
     })
-end)
-
-leader_bind("", "t", function()
-    -- use bundle id so it would be confused with Things Helper
-    scratchpad.toggle_app_scratchpad(
-        "com.culturedcode.ThingsMac",
-        { bundle_id = true }
-    )
 end)
 
 -- open new browser windows

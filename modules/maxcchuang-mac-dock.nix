@@ -10,7 +10,7 @@
       "/Applications/Gemini.app"
       "/Applications/Spotify.app"
       "/Applications/Pocket Casts.app"
-      "/Applications/Things3.app"
+      "${homeDirectory}/Applications/Chrome Apps.localized/Google Tasks.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Google Calendar.app"
     ];
     persistent-others = [

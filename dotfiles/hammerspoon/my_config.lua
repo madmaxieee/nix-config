@@ -1,8 +1,9 @@
 local M = {
-    message_app = "Messenger",
-    browser = "Helium",
-    terminal_app = "Ghostty",
     ai_app = "T3 Chat",
+    browser = "Helium",
+    message_app = "Messenger",
+    terminal_app = "Ghostty",
+    todo_app = "com.culturedcode.ThingsMac",
 }
 
 local extra_config = {}

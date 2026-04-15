@@ -230,7 +230,7 @@ run = [
 ]
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^(Google Chat|Google Gemini|Gemini|Duckie|T3 Chat)$'
+if.app-name-regex-substring = '^(Google Chat|Google Gemini|Gemini|Google Tasks|Duckie|T3 Chat)$'
 run = [
     'layout floating',
     'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',

@@ -121,10 +121,11 @@ in
     (import ./modules/window-management.nix {
       hs_extra_config = ''
         return {
-            message_app = "Google Chat",
-            browser = "Google Chrome",
-            terminal_app = "Ghostty",
             ai_app = "Gemini",
+            browser = "Google Chrome",
+            message_app = "Google Chat",
+            terminal_app = "Ghostty",
+            todo_app = "Google Tasks",
         }
       '';
     })
