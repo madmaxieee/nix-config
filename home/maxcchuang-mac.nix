@@ -50,7 +50,7 @@ in
         controlMaster = "auto";
         controlPath = "~/.ssh/master-%r@%n:%p";
         controlPersist = "yes";
-        proxyCommand = "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue --vmodule=grue_transport=1 -dst_username=%r %h %p";
+        proxyCommand = "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue -dst_username=%r %h %p";
       };
       "auto gcert" = {
         match = ''host *.c.googlers.com exec  "find /var/run/ccache/sso-$USER/cookie ~/.sso/cookie -mmin -1200 2>/dev/null | grep -q . && gcertstatus --check_remaining=1h --nocheck_loas2 --quiet || gcert --noloas2"'';
