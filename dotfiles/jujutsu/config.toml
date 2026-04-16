@@ -12,6 +12,7 @@ pager = "delta"
 [aliases]
 d = ["diff"]
 e = ["edit"]
+fa = ["git", "fetch", "--all-remotes"]
 llog = ["log", "-T", "builtin_log_detailed"]
 rb = ["rebase"]
 w = ["workspace"]
