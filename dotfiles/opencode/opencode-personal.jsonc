@@ -1,19 +1,25 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "google": {
-      "options": {
-        "apiKey": "{env:GEMINI_API_KEY}",
-      },
+  "experimental": { "openTelemetry": false },
+  "agent": {
+    "build": {
+      "model": "opencode-go/glm-5.1",
+      "color": "secondary",
+    },
+    "plan": {
+      "model": "opencode-go/kimi-k2.5",
+      "color": "accent",
+    },
+    "fast": {
+      "mode": "subagent",
+      "model": "opencode-go/minimax-m2.5",
+      "color": "success",
     },
   },
-  "model": "opencode-go/kimi-k2.5",
   "mcp": {
     "fff": {
       "type": "local",
-      "command": [
-        "fff-mcp"
-      ],
+      "command": ["fff-mcp"],
       "enabled": true,
     },
   },

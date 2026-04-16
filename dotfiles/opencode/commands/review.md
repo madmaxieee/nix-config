@@ -1,7 +1,6 @@
 ---
 description: review changes [revision|commit|branch|pr], defaults to uncommitted
 agent: plan
-model: google/gemini-3.1-pro-preview
 subtask: true
 ---
 
@@ -18,11 +17,13 @@ Input: $ARGUMENTS
 Based on the input provided, determine which type of review to perform:
 
 1. Determine what vcs this projects uses
+
    - Run: `jj root` for checking if jj is used (when both jj and git is active, use jj)
    - Run: `git rev-parse --is-inside-work-tree` for checking if git is used
    - Run: `hg root` for checking if hg is used
 
 2. **No arguments (default)**: Review all uncommitted changes
+
    - `git`:
      - Run: `git diff` for unstaged changes
      - Run: `git diff --cached` for staged changes
@@ -33,12 +34,15 @@ Based on the input provided, determine which type of review to perform:
      - Run: `hg diff` for all uncommitted changes
 
 3. **Commit hash** (40-char SHA or short hash): Review that specific commit
+
    - Run: `git show $ARGUMENTS`
 
 4. **Change ID** (an ID consists of a bunch of lowercase letters): Review that specific revision
+
    - Run: `jj show $ARGUMENTS`
 
 5. **Branch or Bookmark name**: Compare current branch/working copy to the specified branch/bookmark
+
    - `git`
      - Run: `git diff $ARGUMENTS...HEAD`
    - `jj`

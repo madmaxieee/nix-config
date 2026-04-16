@@ -23,9 +23,11 @@ rec {
             rtk
           ]
         }:$PATH"
-        if [[ -z "$GEMINI_API_KEY" ]]; then
-          export GEMINI_API_KEY=$(pass gemini/cli 2>/dev/null)
-        fi
+        ${lib.optionalString (profile == "work") ''
+          if [[ -z "$GEMINI_API_KEY" ]]; then
+            export GEMINI_API_KEY=$(pass gemini/cli 2>/dev/null)
+          fi
+        ''}
         pnpx opencode-ai@latest "$@"
       '';
     };

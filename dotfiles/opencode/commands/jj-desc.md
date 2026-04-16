@@ -1,7 +1,6 @@
 ---
 description: Generate and apply a commit description [revision|bookmark], defaults to working copy
-agent: plan
-model: google/gemini-3-flash-preview
+agent: fast
 subtask: true
 ---
 
@@ -18,10 +17,12 @@ Input: $ARGUMENTS
 Based on the input provided in `Input`, determine which revision to describe:
 
 1. **No arguments (default)**: Describe the current working copy.
+
    - Run: `jj diff` to get the changes.
    - Command to update description: `jj describe -m ...`
 
 2. **Revision, Change ID, or Bookmark**: If the input looks like a valid `jj` revision (e.g., short hash, change ID, bookmark name).
+
    - Run: `jj log -r "$ARGUMENTS" --no-graph` to verify it's a valid revision and read the existing description.
    - Run: `jj diff -r "$ARGUMENTS"` to get the changes for that specific revision.
    - Command to update description: `jj describe -r "$ARGUMENTS" -m ...`
@@ -37,11 +38,13 @@ _(If unsure whether the input is a revision or a hint, try running `jj log -r "$
 ## Steps
 
 1. **Gather Context**:
+
    - Run: `jj log -n 10 --no-graph -T 'description ++ "\n---\n"' -r ::@` to read the existing commit messages and learn the commit convention style used in the repo.
    - Run the appropriate `jj diff` command as determined above.
    - If the diff is empty, stop and report to the user that there are no changes.
 
 2. **Analyze**:
+
    - Figure out what the major changes and upgrades were that happened.
    - Incorporate any hints from `Input` if determined to be a hint.
 
