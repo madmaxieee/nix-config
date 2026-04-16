@@ -81,6 +81,7 @@ rec {
 
     ./modules/axon.nix
     ./modules/fabric-ai.nix
+    ./modules/gemini-cli.nix
     (import ./modules/opencode.nix { profile = "work"; })
 
     # work related

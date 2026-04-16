@@ -3,7 +3,7 @@
   programs.fish.functions.gemini = {
     body = ''
       if test -d /google/bin
-        /google/bin/releases/gemini-cli/tools/gemini --gfg $argv
+        /google/bin/releases/gemini-cli/tools/gemini $argv
       else
         set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
         pnpx https://github.com/google-gemini/gemini-cli $argv
