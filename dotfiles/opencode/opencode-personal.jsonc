@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "experimental": { "openTelemetry": false },
   "agent": {
     "build": {
       "model": "opencode-go/glm-5.1",
@@ -23,4 +22,6 @@
       "enabled": true,
     },
   },
+  "experimental": { "openTelemetry": false },
+  "share": "disabled",
 }

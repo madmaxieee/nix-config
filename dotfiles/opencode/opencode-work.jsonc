@@ -3,7 +3,6 @@
   "provider": {
     "google": { "options": { "apiKey": "{env:GEMINI_API_KEY}" } },
   },
-  "experimental": { "openTelemetry": false },
   "agent": {
     "build": {
       "model": "google/gemini-3-flash-preview",
@@ -28,4 +27,6 @@
       "enabled": true,
     },
   },
+  "experimental": { "openTelemetry": false },
+  "share": "disabled",
 }
