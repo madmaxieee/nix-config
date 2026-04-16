@@ -8,6 +8,7 @@
       "model": "google/gemini-3-flash-preview",
       "variant": "low",
       "color": "secondary",
+      "mode": "all",
     },
     "plan": {
       "model": "google/gemini-3-flash-preview",

@@ -4,14 +4,18 @@
     "build": {
       "model": "opencode-go/glm-5.1",
       "color": "secondary",
+      "mode": "all",
     },
     "plan": {
-      "model": "opencode-go/kimi-k2.5",
+      "model": "opencode-go/qwen3.6-plus",
       "color": "accent",
+    },
+    "general": {
+      "model": "opencode-go/glm-5.1",
     },
     "fast": {
       "mode": "subagent",
-      "model": "opencode-go/minimax-m2.5",
+      "model": "opencode-go/qwen3.5-plus",
       "color": "success",
     },
   },
