@@ -50,6 +50,9 @@ rec {
     "opencode/oh-my-opencode-slim.json" = lib.mkIf (profile == "personal") {
       source = linkDotfile "opencode/oh-my-opencode-slim.json";
     };
+    "opencode/plugins/jj-guard.ts" = lib.mkIf (profile == "personal") {
+      source = linkDotfile "opencode/plugins/jj-guard.ts";
+    };
   };
 
   programs.fish = {
