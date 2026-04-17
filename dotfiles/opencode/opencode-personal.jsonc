@@ -4,7 +4,6 @@
     "build": {
       "model": "opencode-go/glm-5.1",
       "color": "secondary",
-      "mode": "all",
     },
     "plan": {
       "model": "opencode-go/qwen3.6-plus",
