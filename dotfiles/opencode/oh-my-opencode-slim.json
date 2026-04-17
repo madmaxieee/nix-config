@@ -1,4 +1,5 @@
 {
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "opencode-go",
   "presets": {
     "opencode-go": {
@@ -7,35 +8,30 @@
         "skills": ["*"],
         "mcps": ["*"]
       },
+      "explorer": {
+        "model": "opencode-go/qwen3.5-plus",
+        "skills": [],
+        "mcps": ["fff"]
+      },
       "oracle": {
-        "model": "opencode-go/qwen3.6-plus",
-        "variant": "high",
+        "model": "opencode-go/glm-5.1",
         "skills": ["simplify"],
-        "mcps": []
+        "mcps": ["fff"]
       },
       "librarian": {
-        "model": "opencode-go/qwen3.5-plus",
-        "variant": "low",
+        "model": "opencode-go/minimax-m2.7",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
-      "explorer": {
-        "model": "opencode-go/qwen3.5-plus",
-        "variant": "low",
-        "skills": [],
-        "mcps": []
-      },
       "designer": {
-        "model": "opencode-go/qwen3.5-plus",
-        "variant": "medium",
+        "model": "opencode-go/mimo-v2-omni",
         "skills": ["agent-browser"],
-        "mcps": []
+        "mcps": ["fff"]
       },
       "fixer": {
-        "model": "opencode-go/qwen3.5-plus",
-        "variant": "low",
+        "model": "opencode-go/minimax-m2.5",
         "skills": [],
-        "mcps": []
+        "mcps": ["fff"]
       }
     }
   },
@@ -43,7 +39,7 @@
     "master": { "model": "opencode-go/qwen3.6-plus" },
     "presets": {
       "default": {
-        "alpha": { "model": "opencode-go/qwen3.5-plus" },
+        "alpha": { "model": "opencode-go/minimax-m2.7" },
         "beta": { "model": "opencode-go/glm-5.1" },
         "gamma": { "model": "opencode-go/kimi-k2.5" }
       }
