@@ -4,30 +4,20 @@
     "opencode-go": {
       "orchestrator": {
         "model": "opencode-go/qwen3.6-plus",
-        "skills": [
-          "*"
-        ],
-        "mcps": [
-          "*"
-        ]
+        "skills": ["*"],
+        "mcps": ["*"]
       },
       "oracle": {
         "model": "opencode-go/qwen3.6-plus",
         "variant": "high",
-        "skills": [
-          "simplify"
-        ],
+        "skills": ["simplify"],
         "mcps": []
       },
       "librarian": {
         "model": "opencode-go/qwen3.5-plus",
         "variant": "low",
         "skills": [],
-        "mcps": [
-          "websearch",
-          "context7",
-          "grep_app"
-        ]
+        "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
         "model": "opencode-go/qwen3.5-plus",
@@ -38,9 +28,7 @@
       "designer": {
         "model": "opencode-go/qwen3.5-plus",
         "variant": "medium",
-        "skills": [
-          "agent-browser"
-        ],
+        "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
@@ -48,12 +36,16 @@
         "variant": "low",
         "skills": [],
         "mcps": []
-      },
-      "council": {
-        "model": "opencode-go/qwen3.6-plus",
-        "variant": "high",
-        "skills": [],
-        "mcps": []
+      }
+    }
+  },
+  "council": {
+    "master": { "model": "opencode-go/qwen3.6-plus" },
+    "presets": {
+      "default": {
+        "alpha": { "model": "opencode-go/qwen3.5-plus" },
+        "beta": { "model": "opencode-go/glm-5.1" },
+        "gamma": { "model": "opencode-go/kimi-k2.5" }
       }
     }
   }
