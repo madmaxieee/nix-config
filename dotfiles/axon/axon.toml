@@ -5,6 +5,7 @@ prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
 [general.model_aliases]
 flash = "google/gemini-3-flash-preview"
 gemini = "google/gemini-3.1-pro-preview"
+lite = "google/gemini-3.1-flash-lite-preview"
 gpt = "openai/gpt-5.4"
 
 [[providers]]
@@ -48,7 +49,7 @@ steps = [
 name = "proofread"
 steps = [
   { stdin = "{{ .INPUT }}", command = "cat", output = ">before_file" },
-  { prompt = "@proofread", model = "flash", output = ">after_file" },
+  { prompt = "@proofread", model = "lite", output = ">after_file" },
 
   { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2" },
 
