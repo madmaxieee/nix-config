@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/tui.json",
-  "theme": "tokyonight-transparent",
+  "theme": "tokyonight",
   "keybinds": {
     "editor_open": "alt+e",
     "session_child_cycle": "ctrl+j",
