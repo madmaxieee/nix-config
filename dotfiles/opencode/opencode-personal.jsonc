@@ -3,15 +3,13 @@
   "agent": {
     "build": {
       "model": "opencode-go/glm-5.1",
-      "color": "secondary",
     },
     "plan": {
       "model": "opencode-go/qwen3.6-plus",
-      "color": "accent",
     },
-    "general": {
-      "model": "opencode-go/glm-5.1",
-    },
+    "general": { "disable": true },
+    "explore": { "disable": true },
+    // custom
     "fast": {
       "mode": "subagent",
       "model": "opencode-go/qwen3.5-plus",
@@ -27,4 +25,5 @@
   },
   "experimental": { "openTelemetry": false },
   "share": "disabled",
+  "plugin": ["oh-my-opencode-slim"],
 }

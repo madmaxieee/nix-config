@@ -47,6 +47,9 @@ rec {
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/commands/review.md".source = linkDotfile "opencode/commands/review.md";
     "opencode/commands/jj-desc.md".source = linkDotfile "opencode/commands/jj-desc.md";
+    "opencode/oh-my-opencode-slim.json" = lib.mkIf (profile == "personal") {
+      source = linkDotfile "opencode/oh-my-opencode-slim.json";
+    };
   };
 
   programs.fish = {
