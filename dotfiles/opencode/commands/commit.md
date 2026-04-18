@@ -1,5 +1,7 @@
 ---
 description: Generate and apply a commit based on current changes and chat context
+agent: fast
+subtask: false
 ---
 
 Detect the VCS in use and apply a commit with a well-crafted message.
