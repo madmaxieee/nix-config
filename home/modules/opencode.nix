@@ -34,22 +34,16 @@ rec {
   };
 
   home.packages = [ rtk ];
-  home.activation = {
-    rtk_init = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run ${lib.getExe rtk} init -g --opencode
-    '';
-  };
 
   xdg.configFile = {
     "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
     "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode-${profile}.jsonc";
-    "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/oh-my-opencode-slim.json" = lib.mkIf (profile == "personal") {
       source = linkDotfile "opencode/oh-my-opencode-slim.json";
     };
-    "opencode/plugins/jj-guard.ts" = lib.mkIf (profile == "personal") {
-      source = linkDotfile "opencode/plugins/jj-guard.ts";
-    };
+    "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
+    "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
+    "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
     "opencode/commands/commit.md".source = linkDotfile "opencode/commands/commit.md";
   };
 
