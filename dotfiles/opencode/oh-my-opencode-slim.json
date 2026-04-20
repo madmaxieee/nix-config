@@ -35,6 +35,43 @@
       }
     }
   },
+  "showStartupToast": false,
+  "fallback": {
+    "enabled": true,
+    "chains": {
+      "orchestrator": [
+        "opencode-go/qwen3.6-plus",
+        "opencode-go/glm-5.1",
+        "opencode-go/kimi-k2.5"
+      ],
+      "explorer": [
+        "opencode-go/qwen3.5-plus",
+        "opencode-go/minimax-m2.5",
+        "opencode-go/mimo-v2-omni"
+      ],
+      "oracle": [
+        "opencode-go/glm-5.1",
+        "opencode-go/qwen3.6-plus",
+        "opencode-go/kimi-k2.5"
+      ],
+      "librarian": [
+        "opencode-go/minimax-m2.7",
+        "opencode-go/glm-5.1",
+        "opencode-go/qwen3.6-plus",
+        "opencode-go/kimi-k2.5"
+      ],
+      "designer": [
+        "opencode-go/mimo-v2-omni",
+        "opencode-go/mimo-v2-pro",
+        "opencode-go/qwen3.6-plus"
+      ],
+      "fixer": [
+        "opencode-go/minimax-m2.5",
+        "opencode-go/qwen3.5-plus",
+        "opencode-go/mimo-v2-omni"
+      ]
+    }
+  },
   "council": {
     "master": { "model": "opencode-go/qwen3.6-plus" },
     "presets": {

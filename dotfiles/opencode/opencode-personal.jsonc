@@ -12,7 +12,7 @@
     // custom
     "fast": {
       "mode": "subagent",
-      "model": "opencode-go/qwen3.5-plus",
+      "model": "opencode-go/minimax-m2.5",
       "color": "success",
     },
   },
