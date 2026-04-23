@@ -45,6 +45,7 @@ rec {
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
     "opencode/commands/commit.md".source = linkDotfile "opencode/commands/commit.md";
+    "opencode/themes".source = linkDotfile "opencode/themes";
   };
 
   programs.fish = {
