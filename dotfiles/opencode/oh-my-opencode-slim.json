@@ -4,7 +4,7 @@
   "presets": {
     "opencode-go": {
       "orchestrator": {
-        "model": "opencode-go/qwen3.6-plus",
+        "model": "opencode-go/kimi-k2.6",
         "skills": ["*"],
         "mcps": ["*"]
       },
@@ -14,7 +14,7 @@
         "mcps": ["fff"]
       },
       "oracle": {
-        "model": "opencode-go/glm-5.1",
+        "model": "opencode-go/kimi-k2.6",
         "skills": ["simplify"],
         "mcps": ["fff"]
       },
@@ -24,12 +24,12 @@
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
-        "model": "opencode-go/mimo-v2-omni",
+        "model": "opencode-go/mimo-v2.5",
         "skills": ["agent-browser"],
         "mcps": ["fff"]
       },
       "fixer": {
-        "model": "opencode-go/minimax-m2.5",
+        "model": "opencode-go/glm-5",
         "skills": [],
         "mcps": ["fff"]
       }
@@ -40,9 +40,9 @@
     "enabled": true,
     "chains": {
       "orchestrator": [
-        "opencode-go/qwen3.6-plus",
-        "opencode-go/glm-5.1",
-        "opencode-go/kimi-k2.5"
+        "opencode-go/kimi-k2.6",
+        "opencode-go/mimo-v2.5-pro",
+        "opencode-go/qwen3.6-plus"
       ],
       "explorer": [
         "opencode-go/qwen3.5-plus",
@@ -50,35 +50,34 @@
         "opencode-go/mimo-v2-omni"
       ],
       "oracle": [
-        "opencode-go/glm-5.1",
-        "opencode-go/qwen3.6-plus",
-        "opencode-go/kimi-k2.5"
+        "opencode-go/kimi-k2.6",
+        "opencode-go/mimo-v2.5-pro",
+        "opencode-go/qwen3.6-plus"
       ],
       "librarian": [
         "opencode-go/minimax-m2.7",
-        "opencode-go/glm-5.1",
         "opencode-go/qwen3.6-plus",
         "opencode-go/kimi-k2.5"
       ],
       "designer": [
+        "opencode-go/mimo-v2.5",
         "opencode-go/mimo-v2-omni",
-        "opencode-go/mimo-v2-pro",
         "opencode-go/qwen3.6-plus"
       ],
       "fixer": [
-        "opencode-go/minimax-m2.5",
+        "opencode-go/glm-5",
         "opencode-go/qwen3.5-plus",
         "opencode-go/mimo-v2-omni"
       ]
     }
   },
   "council": {
-    "master": { "model": "opencode-go/qwen3.6-plus" },
+    "master": { "model": "opencode-go/kimi-k2.6" },
     "presets": {
       "default": {
         "alpha": { "model": "opencode-go/minimax-m2.7" },
         "beta": { "model": "opencode-go/glm-5.1" },
-        "gamma": { "model": "opencode-go/kimi-k2.5" }
+        "gamma": { "model": "opencode-go/qwen3.6-plus" }
       }
     }
   }
