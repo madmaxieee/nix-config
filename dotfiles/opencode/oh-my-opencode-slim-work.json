@@ -1,0 +1,49 @@
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "preset": "google",
+  "presets": {
+    "opencode-go": {
+      "orchestrator": {
+        "model": "google/gemini-3.1-pro-preview",
+        "skills": ["*"],
+        "mcps": ["*"]
+      },
+      "explorer": {
+        "model": "google/gemini-3-flash-preview",
+        "skills": [],
+        "mcps": ["fff"]
+      },
+      "oracle": {
+        "model": "google/gemini-3.1-pro-preview",
+        "variant": "high",
+        "skills": ["simplify"],
+        "mcps": ["fff"]
+      },
+      "librarian": {
+        "model": "google/gemini-3-flash-preview",
+        "skills": [],
+        "mcps": ["websearch", "context7", "grep_app"]
+      },
+      "designer": {
+        "model": "google/gemini-3-flash-preview",
+        "skills": ["agent-browser"],
+        "mcps": ["fff"]
+      },
+      "fixer": {
+        "model": "google/gemini-3-flash-preview",
+        "skills": [],
+        "mcps": ["fff"]
+      }
+    }
+  },
+  "showStartupToast": false,
+  "council": {
+    "master": { "model": "google/gemini-3.1-pro-preview" },
+    "presets": {
+      "default": {
+        "alpha": { "model": "google/gemini-3.1-pro-preview" },
+        "beta": { "model": "google/gemini-3-flash-preview" }
+      }
+    }
+  }
+}

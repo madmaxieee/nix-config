@@ -1,21 +1,17 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "google": { "options": { "apiKey": "{env:GEMINI_API_KEY}" } },
-  },
   "agent": {
     "build": {
       "model": "google/gemini-3-flash-preview",
       "variant": "low",
-      "color": "secondary",
     },
     "plan": {
       "model": "google/gemini-3.1-pro-preview",
-      "color": "accent",
+      "variant": "high",
     },
-    "general": {
-      "model": "google/gemini-3-flash-preview",
-    },
+    "general": { "disable": true },
+    "explore": { "disable": true },
+    // custom
     "fast": {
       "mode": "subagent",
       "model": "google/gemini-3.1-flash-lite-preview",
@@ -31,4 +27,5 @@
   },
   "experimental": { "openTelemetry": false },
   "share": "disabled",
+  "plugin": ["oh-my-opencode-slim"],
 }

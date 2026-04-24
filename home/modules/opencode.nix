@@ -23,11 +23,6 @@ rec {
             rtk
           ]
         }:$PATH"
-        ${lib.optionalString (profile == "work") ''
-          if [[ -z "$GEMINI_API_KEY" ]]; then
-            export GEMINI_API_KEY=$(pass gemini/cli 2>/dev/null)
-          fi
-        ''}
         pnpx opencode-ai@latest "$@"
       '';
     };
@@ -38,9 +33,8 @@ rec {
   xdg.configFile = {
     "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
     "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode-${profile}.jsonc";
-    "opencode/oh-my-opencode-slim.json" = lib.mkIf (profile == "personal") {
-      source = linkDotfile "opencode/oh-my-opencode-slim.json";
-    };
+    "opencode/oh-my-opencode-slim.json".source =
+      linkDotfile "opencode/oh-my-opencode-slim${profile}.jsonc";
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
