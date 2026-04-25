@@ -34,7 +34,7 @@ rec {
     "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
     "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode-${profile}.jsonc";
     "opencode/oh-my-opencode-slim.json".source =
-      linkDotfile "opencode/oh-my-opencode-slim${profile}.jsonc";
+      linkDotfile "opencode/oh-my-opencode-slim-${profile}.json";
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";

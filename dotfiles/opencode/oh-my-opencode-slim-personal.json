@@ -8,77 +8,55 @@
         "skills": ["*"],
         "mcps": ["*"]
       },
+      "oracle": {
+        "model": "opencode-go/glm-5.1",
+        "skills": ["simplify"],
+        "mcps": []
+      },
       "explorer": {
-        "model": "opencode-go/qwen3.5-plus",
+        "model": "opencode-go/deepseek-v4-flash",
+        "variant": "low",
         "skills": [],
         "mcps": ["fff"]
       },
-      "oracle": {
-        "model": "opencode-go/kimi-k2.6",
-        "skills": ["simplify"],
-        "mcps": ["fff"]
-      },
       "librarian": {
-        "model": "opencode-go/minimax-m2.7",
+        "model": "opencode-go/deepseek-v4-flash",
+        "variant": "low",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
-        "model": "opencode-go/mimo-v2.5",
+        "model": "opencode-go/qwen3.5-plus",
         "skills": ["agent-browser"],
-        "mcps": ["fff"]
+        "mcps": []
       },
       "fixer": {
-        "model": "opencode-go/glm-5",
+        "model": "opencode-go/kimi-k2.6",
         "skills": [],
-        "mcps": ["fff"]
+        "mcps": []
       }
-    }
-  },
-  "showStartupToast": false,
-  "fallback": {
-    "enabled": true,
-    "chains": {
-      "orchestrator": [
-        "opencode-go/kimi-k2.6",
-        "opencode-go/mimo-v2.5-pro",
-        "opencode-go/qwen3.6-plus"
-      ],
-      "explorer": [
-        "opencode-go/qwen3.5-plus",
-        "opencode-go/minimax-m2.5",
-        "opencode-go/mimo-v2-omni"
-      ],
-      "oracle": [
-        "opencode-go/kimi-k2.6",
-        "opencode-go/mimo-v2.5-pro",
-        "opencode-go/qwen3.6-plus"
-      ],
-      "librarian": [
-        "opencode-go/minimax-m2.7",
-        "opencode-go/qwen3.6-plus",
-        "opencode-go/kimi-k2.5"
-      ],
-      "designer": [
-        "opencode-go/mimo-v2.5",
-        "opencode-go/mimo-v2-omni",
-        "opencode-go/qwen3.6-plus"
-      ],
-      "fixer": [
-        "opencode-go/glm-5",
-        "opencode-go/qwen3.5-plus",
-        "opencode-go/mimo-v2-omni"
-      ]
     }
   },
   "council": {
     "master": { "model": "opencode-go/kimi-k2.6" },
     "presets": {
       "default": {
-        "alpha": { "model": "opencode-go/minimax-m2.7" },
+        "alpha": { "model": "opencode-go/deepseek-v4-pro" },
         "beta": { "model": "opencode-go/glm-5.1" },
         "gamma": { "model": "opencode-go/qwen3.6-plus" }
       }
     }
-  }
+  },
+  "multiplexer": {
+    "type": "auto",
+    "layout": "main-vertical",
+    "main_pane_size": 60
+  },
+  "todoContinuation": {
+    "maxContinuations": 50,
+    "cooldownMs": 3000,
+    "autoEnable": false,
+    "autoEnableThreshold": 4
+  },
+  "showStartupToast": false
 }

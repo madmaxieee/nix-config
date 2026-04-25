@@ -2,14 +2,16 @@
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "google",
   "presets": {
-    "opencode-go": {
+    "google": {
       "orchestrator": {
         "model": "google/gemini-3.1-pro-preview",
+        "variant": "high",
         "skills": ["*"],
         "mcps": ["*"]
       },
       "explorer": {
         "model": "google/gemini-3-flash-preview",
+        "variant": "low",
         "skills": [],
         "mcps": ["fff"]
       },
@@ -17,33 +19,47 @@
         "model": "google/gemini-3.1-pro-preview",
         "variant": "high",
         "skills": ["simplify"],
-        "mcps": ["fff"]
+        "mcps": []
       },
       "librarian": {
         "model": "google/gemini-3-flash-preview",
+        "variant": "low",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
         "model": "google/gemini-3-flash-preview",
+        "variant": "medium",
         "skills": ["agent-browser"],
-        "mcps": ["fff"]
+        "mcps": []
       },
       "fixer": {
         "model": "google/gemini-3-flash-preview",
+        "variant": "low",
         "skills": [],
-        "mcps": ["fff"]
+        "mcps": []
       }
     }
   },
-  "showStartupToast": false,
   "council": {
-    "master": { "model": "google/gemini-3.1-pro-preview" },
+    "master": { "model": "opencode-go/kimi-k2.6" },
     "presets": {
       "default": {
         "alpha": { "model": "google/gemini-3.1-pro-preview" },
         "beta": { "model": "google/gemini-3-flash-preview" }
       }
     }
-  }
+  },
+  "multiplexer": {
+    "type": "auto",
+    "layout": "main-vertical",
+    "main_pane_size": 60
+  },
+  "todoContinuation": {
+    "maxContinuations": 50,
+    "cooldownMs": 3000,
+    "autoEnable": false,
+    "autoEnableThreshold": 4
+  },
+  "showStartupToast": false
 }

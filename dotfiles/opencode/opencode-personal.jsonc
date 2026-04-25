@@ -1,18 +1,15 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "agent": {
-    "build": {
-      "model": "opencode-go/glm-5.1",
-    },
-    "plan": {
-      "model": "opencode-go/qwen3.6-plus",
-    },
+    "build": { "disable": true },
+    "plan": { "disable": true },
     "general": { "disable": true },
     "explore": { "disable": true },
     // custom
     "fast": {
       "mode": "subagent",
-      "model": "opencode-go/minimax-m2.5",
+      "model": "opencode-go/deepseek-v4-flash",
+      "variant": "low",
       "color": "success",
     },
   },
