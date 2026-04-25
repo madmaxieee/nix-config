@@ -1,3 +1,4 @@
+{ profile }:
 {
   config,
   lib,
@@ -16,6 +17,7 @@ in
     "axon/axon.toml".source = linkDotfile "axon/axon.toml";
     "axon/prompts".source = linkDotfile "axon/prompts";
     "axon/fabric_prompts".source = "${sources.fabric}/data/patterns";
+    "axon/conf.d/models.toml".source = linkDotfile "axon/conf.d/models-${profile}.toml";
   };
 
   home.activation =

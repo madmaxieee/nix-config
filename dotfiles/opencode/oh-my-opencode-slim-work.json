@@ -42,18 +42,13 @@
     }
   },
   "council": {
-    "master": { "model": "opencode-go/kimi-k2.6" },
+    "master": { "model": "google/gemini-3.1-pro-preview" },
     "presets": {
       "default": {
         "alpha": { "model": "google/gemini-3.1-pro-preview" },
         "beta": { "model": "google/gemini-3-flash-preview" }
       }
     }
-  },
-  "multiplexer": {
-    "type": "auto",
-    "layout": "main-vertical",
-    "main_pane_size": 60
   },
   "todoContinuation": {
     "maxContinuations": 50,

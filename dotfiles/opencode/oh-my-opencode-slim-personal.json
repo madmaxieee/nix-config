@@ -47,11 +47,6 @@
       }
     }
   },
-  "multiplexer": {
-    "type": "auto",
-    "layout": "main-vertical",
-    "main_pane_size": 60
-  },
   "todoContinuation": {
     "maxContinuations": 50,
     "cooldownMs": 3000,

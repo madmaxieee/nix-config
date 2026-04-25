@@ -113,9 +113,9 @@ in
     ./modules/rust.nix
     ./modules/web-dev.nix
 
-    ./modules/axon.nix
     ./modules/fabric-ai.nix
     ./modules/gemini-cli.nix
+    (import ./modules/axon.nix { profile = "work"; })
     (import ./modules/opencode.nix { profile = "work"; })
 
     (import ./modules/window-management.nix {

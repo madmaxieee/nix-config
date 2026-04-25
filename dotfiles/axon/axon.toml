@@ -1,20 +1,6 @@
 [general]
-model = "google/gemini-3-flash-preview"
+model = "default"
 prompt_path = ["prompts", "fabric_prompts", "private_prompts"]
-
-[general.model_aliases]
-flash = "google/gemini-3-flash-preview"
-gemini = "google/gemini-3.1-pro-preview"
-lite = "google/gemini-3.1-flash-lite-preview"
-gpt = "openai/gpt-5.4"
-
-[[providers]]
-name = "google"
-api_key_cmd = "pass gemini/cli"
-
-[[providers]]
-name = "openai"
-api_key_cmd = "pass openai/axon"
 
 [[patterns]]
 name = "jj_desc"
@@ -49,7 +35,7 @@ steps = [
 name = "proofread"
 steps = [
   { stdin = "{{ .INPUT }}", command = "cat", output = ">before_file" },
-  { prompt = "@proofread", model = "lite", output = ">after_file" },
+  { prompt = "@proofread", model = "fast", output = ">after_file" },
 
   { command = "riff --color=on {{ .before_file }} {{ .after_file }} >&2" },
 
@@ -59,7 +45,7 @@ steps = [
 [[patterns]]
 name = "code_review"
 steps = [
-  { prompt = "@review_code", model = "gemini", output = ">review" },
+  { prompt = "@review_code", model = "pro", output = ">review" },
   { command = "glow --pager {{ .review }}", tty = true },
 
   { command = "cat {{ .review }}" },

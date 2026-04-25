@@ -1,0 +1,8 @@
+[general.model_aliases]
+pro = "google/gemini-3.1-pro-preview"
+default = "google/gemini-3-flash-preview"
+fast = "google/gemini-3.1-flash-lite-preview"
+
+[[providers]]
+name = "google"
+api_key_cmd = "pass gemini/cli"

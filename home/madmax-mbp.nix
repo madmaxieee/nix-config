@@ -108,9 +108,8 @@ in
     ./modules/rust.nix
     ./modules/web-dev.nix
 
-    ./modules/axon.nix
     ./modules/fabric-ai.nix
-    ./modules/gemini-cli.nix
+    (import ./modules/axon.nix { profile = "personal"; })
     (import ./modules/opencode.nix { profile = "personal"; })
 
     (import ./modules/window-management.nix {
