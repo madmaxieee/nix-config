@@ -222,20 +222,20 @@ function M.setup(opts)
     sbar.exec("~/.config/sketchybar/items/media_control_stream.sh")
     media:subscribe("media_control_stream", function(env)
         local app = bundle_ids[env.INFO.bundleIdentifier]
-        if app ~= nil then
-            state.current_app = app
-            local new_artist = (env.INFO.artist ~= "" and env.INFO.artist)
-                or nil
-            local new_title = (env.INFO.title ~= "" and env.INFO.title) or nil
-            local is_new_track = (new_artist ~= state.artist)
-                or (new_title ~= state.title)
-            state.artist = new_artist
-            state.title = new_title
-            state.playing = env.INFO.playing
-            rerender_media()
-            if is_new_track then
-                scroll(5)
-            end
+        if app == nil then
+            return
+        end
+        state.current_app = app
+        local new_artist = (env.INFO.artist ~= "" and env.INFO.artist) or nil
+        local new_title = (env.INFO.title ~= "" and env.INFO.title) or nil
+        local is_new_track = (new_artist ~= state.artist)
+            or (new_title ~= state.title)
+        state.artist = new_artist
+        state.title = new_title
+        state.playing = env.INFO.playing
+        rerender_media()
+        if is_new_track then
+            scroll(5)
         end
     end)
 
