@@ -40,21 +40,36 @@ Check if the repo has a commit convention by looking for:
 Based on the diff, chat context from this session, and any discovered convention, write a commit message that:
 
 - Follows the repo's convention if one exists
-- Is concise but descriptive
 - Uses imperative mood ("fix bug" not "fixed bug")
+- Has a concise subject line (under 72 characters)
+- **Includes a body when useful**: explain *why* the change was made, not just *what* changed
 - References relevant context from our conversation
+- Uses a blank line between subject and body
 
 ## Step 5: Apply the commit
 
 **For jj:**
 
-- Use `jj describe -m 'MESSAGE'`
+- For single-line messages: `jj describe -m 'MESSAGE'`
+- For multi-line messages, use a heredoc:
+  ```
+  jj describe -m 'SUBJECT
+
+  BODY LINE 1
+  BODY LINE 2'
+  ```
 - Note: jj auto-commits on every change, so you're setting the description of the current change
 
 **For git:**
 
 - Stage all relevant changes: `git add -A`
-- Commit: `git commit -m 'MESSAGE'`
+- For single-line messages: `git commit -m 'MESSAGE'`
+- For multi-line messages, use multiple `-m` flags or a heredoc:
+  ```
+  git commit -m 'SUBJECT' -m 'BODY LINE 1
+
+  BODY LINE 2'
+  ```
 
 ## Rules
 
