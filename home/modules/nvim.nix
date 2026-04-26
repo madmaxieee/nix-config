@@ -33,6 +33,7 @@ rec {
       [
         # required for nvim-treesitter main branch
         tree-sitter
+        gcc
 
         # for mason
         cargo
