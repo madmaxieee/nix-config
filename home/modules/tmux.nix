@@ -72,4 +72,9 @@ rec {
   };
 
   xdg.configFile."tmux/scripts".source = linkDotfile "tmux/scripts";
+
+  imports = [
+    # for the sesh script
+    ./television.nix
+  ];
 }
