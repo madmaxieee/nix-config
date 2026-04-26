@@ -9,9 +9,13 @@
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
+  axon = pkgs.callPackage ../../packages/axon.nix { };
 in
 {
-  home.packages = with pkgs; [ glow ];
+  home.packages = with pkgs; [
+    axon
+    glow
+  ];
 
   xdg.configFile = {
     "axon/axon.toml".source = linkDotfile "axon/axon.toml";
@@ -20,20 +24,7 @@ in
     "axon/conf.d/models.toml".source = linkDotfile "axon/conf.d/models-${profile}.toml";
   };
 
-  home.activation =
-    let
-      go = "${pkgs.go}/bin/go";
-    in
-    {
-      # can't find gcc in this environment
-      axon_install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        CGO_ENABLED=0 run ${go} install github.com/madmaxieee/axon@latest
-        run ${config.home.homeDirectory}/go/bin/axon completion fish > ${config.xdg.configHome}/fish/completions/axon.fish
-      '';
-    };
-
   imports = [
     ./password-store.nix
-    ./go.nix
   ];
 }
