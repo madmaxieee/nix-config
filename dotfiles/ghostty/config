@@ -9,6 +9,7 @@ font-feature = +liga, +calt, +ss02, +ss13
 
 font-size = 13
 adjust-cell-height = 10%
+font-thicken = true
 
 # CJK Unified Ideographs, CJK Compatibility Ideographs
 font-codepoint-map = U+4E00-U+9FFF,U+F900-U+FAFF=Lantinghei TC
