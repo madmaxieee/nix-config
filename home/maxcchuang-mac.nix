@@ -125,7 +125,7 @@ in
             browser = "Google Chrome",
             message_app = "Google Chat",
             terminal_app = "Ghostty",
-            todo_app = "Google Tasks",
+            todo_app = "KiteTasks",
         }
       '';
     })

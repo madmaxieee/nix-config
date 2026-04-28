@@ -30,6 +30,7 @@
       "zen"
     ];
     masApps = {
+      "KiteTasks" = 6759640044;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
       "Things" = 904280696;
