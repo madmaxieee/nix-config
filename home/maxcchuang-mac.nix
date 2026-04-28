@@ -118,17 +118,7 @@ in
     (import ./modules/axon.nix { profile = "work"; })
     (import ./modules/opencode.nix { profile = "work"; })
 
-    (import ./modules/window-management.nix {
-      hs_extra_config = ''
-        return {
-            ai_app = "Gemini",
-            browser = "Google Chrome",
-            message_app = "Google Chat",
-            terminal_app = "Ghostty",
-            todo_app = "KiteTasks",
-        }
-      '';
-    })
+    (import ./modules/window-management.nix { profile = "work"; })
 
     # work related
     ./modules/adb.nix

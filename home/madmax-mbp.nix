@@ -112,16 +112,6 @@ in
     (import ./modules/axon.nix { profile = "personal"; })
     (import ./modules/opencode.nix { profile = "personal"; })
 
-    (import ./modules/window-management.nix {
-      hs_extra_config = ''
-        return {
-            ai_app = "T3 Chat",
-            browser = "Zen",
-            message_app = "Messenger",
-            terminal_app = "Ghostty",
-            todo_app = "com.culturedcode.ThingsMac",
-        }
-      '';
-    })
+    (import ./modules/window-management.nix { profile = "personal"; })
   ];
 }
