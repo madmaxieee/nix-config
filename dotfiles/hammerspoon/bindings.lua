@@ -163,7 +163,7 @@ leader_bind("shift", "c", function()
 end)
 
 -- lock mode to avoid triggering shift-space
-local lock_mode = hs.hotkey.modal.new("ctrl-shift", "space")
+local lock_mode = hs.hotkey.modal.new({ "ctrl", "cmd", "shift" }, "space")
 
 function lock_mode:entered()
     hs.alert("entered lock mode")
@@ -173,7 +173,7 @@ function lock_mode:exited()
     hs.alert("exited lock mode")
 end
 
-lock_mode:bind({ "ctrl", "shift" }, "space", function()
+lock_mode:bind({ "ctrl", "cmd", "shift" }, "space", function()
     lock_mode:exit()
 end)
 
