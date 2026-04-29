@@ -1,9 +1,26 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+
 [[session]]
 name = "linode"
 path = "~"
 startup_command = "exec ssh linode"
 
 [[session]]
+name = "btop"
+path = "~"
+startup_command = "exec ssh linode -t btop"
+
+[[session]]
 name = "obsidian"
 path = "~/obsidian"
 startup_command = "exec nvim"
+
+[[session]]
+name = "hermes"
+path = "~"
+startup_command = "exec ~/nix-config/dotfiles/sesh/scripts/hermes.sh"
+
+[[session]]
+name = "hermes-bash"
+path = "~"
+startup_command = "exec ~/nix-config/dotfiles/sesh/scripts/hermes-bash.sh"
