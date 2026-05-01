@@ -19,9 +19,10 @@ rec {
     };
 
   home.packages = with pkgs; [
-    ripgrep
+    ctags
     fd
     lazygit
+    ripgrep
   ];
 
   programs.neovim = {

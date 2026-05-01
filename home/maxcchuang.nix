@@ -9,7 +9,6 @@ rec {
     ghostty
     kitty
 
-    ctags
     minicom
     patchelf
   ];

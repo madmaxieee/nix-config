@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  loglit = pkgs.callPackage ../../packages/loglit.nix { };
+in
 rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
@@ -28,6 +31,7 @@ rec {
     graphviz
     jq
     just
+    loglit
     ouch
     parallel
     riffdiff
