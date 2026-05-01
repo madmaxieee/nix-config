@@ -43,24 +43,28 @@ in
     };
     interactiveShellInit = ''
       if echo $PATH | grep -q '/nix/store/'
-        set -gx IN_NIX_SHELL 1
+          set -gx IN_NIX_SHELL 1
       end
 
       if type -q brew
-        set -l brew_prefix (brew --prefix)
-        if test -d "$brew_prefix/share/fish/completions"
-          set -p fish_complete_path "$brew_prefix/share/fish/completions"
-        end
-        if test -d "$brew_prefix/share/fish/vendor_completions.d"
-          set -p fish_complete_path "$brew_prefix/share/fish/vendor_completions.d"
-        end
+          set -l brew_prefix (brew --prefix)
+          if test -d "$brew_prefix/share/fish/completions"
+              set -p fish_complete_path "$brew_prefix/share/fish/completions"
+          end
+          if test -d "$brew_prefix/share/fish/vendor_completions.d"
+              set -p fish_complete_path "$brew_prefix/share/fish/vendor_completions.d"
+          end
       end
 
       abbr --add dotdot --regex '^\.\.+$' --function __dotdot
 
       # if not in tmux, start a new session
-      if not set -q TMUX && not set -q ZELLIJ && not set -q IN_NIX_SHELL && type -q tmux
-        tmux new-session -A -s main >/dev/null 2>&1
+      if type -q tmux
+          and test "$TERM" = xterm-ghostty
+          and not set -q TMUX
+          and not set -q ZELLIJ
+          and not set -q IN_NIX_SHELL
+          tmux new-session -A -s main >/dev/null 2>&1
       end
     '';
 
