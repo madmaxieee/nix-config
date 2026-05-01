@@ -11,6 +11,7 @@ rec {
     with pkgs;
     [
       delta
+      lazyjj
     ]
     ++ pkgs.lib.optional (!use_system_binary) jujutsu;
 
@@ -22,6 +23,7 @@ rec {
   programs.fish.shellAbbrs = {
     j = "jj";
     jg = "jj git";
+    lj = "lazyjj";
   };
 
   programs.zsh = {

@@ -6,10 +6,9 @@
   ...
 }:
 
-{
+rec {
   home.packages = with pkgs; [
     git-absorb
-    lazygit
   ];
 
   xdg.configFile = {
@@ -190,8 +189,8 @@
 
   programs.fish.shellAbbrs = {
     g = lib.mkDefault "git";
+    lg = lib.mkDefault "lazygit";
   };
-  programs.zsh.zsh-abbr.abbreviations = {
-    g = lib.mkDefault "git";
-  };
+
+  programs.zsh.zsh-abbr.abbreviations = programs.fish.shellAbbrs;
 }

@@ -75,7 +75,6 @@ rec {
   programs.fish = {
     shellAbbrs = {
       js = lib.mkDefault "just";
-      lg = lib.mkDefault "lazygit";
       rm = lib.mkDefault "rip";
       rmm = lib.mkDefault "rm -rf";
     };

@@ -21,7 +21,6 @@ rec {
   home.packages = with pkgs; [
     ctags
     fd
-    lazygit
     ripgrep
   ];
 
