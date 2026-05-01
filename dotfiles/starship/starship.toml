@@ -56,9 +56,15 @@ style = ""
 time_format = "%a %b %d  %H:%M:%S"
 format = '[$time]($style) '
 
+[git_commit]
+disabled = true
+
+[git_branch]
+disabled = true
+
 [custom.jj]
 when = "jj-starship detect"
-shell = ["jj-starship"]
+shell = "jj-starship"
 format = "$output "
 
 # begin overridden sections
@@ -83,7 +89,3 @@ staged = "[++$count](green) "
 renamed = "»$count "
 deleted = "[✘$count](red) "
 style = "green"
-
-[git_branch]
-style = "green"
-ignore_branches = ["main"]
