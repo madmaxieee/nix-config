@@ -10,8 +10,10 @@
     casks = [
       "1password"
       "1password-cli"
+      "adobe-digital-editions"
       "alfred"
       "arc"
+      "calibre"
       "cleanshot"
       "discord"
       "espanso"
@@ -25,6 +27,7 @@
       "inkscape"
       "jordanbaird-ice"
       "kitty"
+      "kobo"
       "logi-options+"
       "nordvpn"
       "obsidian"
