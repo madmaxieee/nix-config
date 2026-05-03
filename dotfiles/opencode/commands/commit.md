@@ -31,7 +31,6 @@ Run the appropriate commands to understand current state:
 
 Check if the repo has a commit convention by looking for:
 
-- `AGENTS.md` at repo root (look for commit/message conventions)
 - `.gitmessage` or `.gitmessage.txt`
 - Recent commit history for patterns: `jj log -n 10 --no-graph -T 'description.first_line() ++ "\n"' -r ::@-` or `git log --oneline -10`
 
@@ -42,7 +41,7 @@ Based on the diff, chat context from this session, and any discovered convention
 - Follows the repo's convention if one exists
 - Uses imperative mood ("fix bug" not "fixed bug")
 - Has a concise subject line (under 72 characters)
-- **Includes a body when useful**: explain *why* the change was made, not just *what* changed
+- **Includes a body when useful**: explain _why_ the change was made, not just _what_ changed
 - References relevant context from our conversation
 - Uses a blank line between subject and body
 
@@ -52,12 +51,14 @@ Based on the diff, chat context from this session, and any discovered convention
 
 - For single-line messages: `jj describe -m 'MESSAGE'`
 - For multi-line messages, use a heredoc:
+
   ```
   jj describe -m 'SUBJECT
 
   BODY LINE 1
   BODY LINE 2'
   ```
+
 - Note: jj auto-commits on every change, so you're setting the description of the current change
 
 **For git:**
@@ -65,6 +66,7 @@ Based on the diff, chat context from this session, and any discovered convention
 - Stage all relevant changes: `git add -A`
 - For single-line messages: `git commit -m 'MESSAGE'`
 - For multi-line messages, use multiple `-m` flags or a heredoc:
+
   ```
   git commit -m 'SUBJECT' -m 'BODY LINE 1
 
