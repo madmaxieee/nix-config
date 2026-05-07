@@ -1,12 +1,14 @@
 {
   wm ? "yabai",
 }:
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-let
-  sbarLua = pkgs.callPackage ./SbarLua.nix { };
-in
 {
+  imports =
+    lib.optional (wm == "yabai") ./yabai.nix ++ lib.optional (wm == "aerospace") ./aerospace.nix;
+
+  environment.systemPackages = [ pkgs.sketchybar ];
+
   services.jankyborders = {
     enable = true;
     active_color = "0xaae1e3e4";
@@ -16,8 +18,9 @@ in
 
   services.sketchybar = {
     enable = true;
+    package = pkgs.sketchybar;
     extraPackages = [
-      (pkgs.lua54Packages.lua.withPackages (ps: [ sbarLua ]))
+      (pkgs.lua54Packages.lua.withPackages (ps: [ pkgs.sbarlua ]))
       pkgs.jq
     ];
   };
@@ -29,11 +32,3 @@ in
     pkgs.sketchybar-app-font
   ];
 }
-// (
-  if wm == "yabai" then
-    (import ./yabai.nix { inherit pkgs; })
-  else if wm == "aerospace" then
-    (import ./aerospace.nix { inherit pkgs; })
-  else
-    throw "Unsupported window manager: ${wm}"
-)
