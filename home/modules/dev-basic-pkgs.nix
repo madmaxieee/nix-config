@@ -8,6 +8,7 @@
 
 let
   loglit = pkgs.callPackage ../../packages/loglit.nix { };
+  hunk = pkgs.callPackage ../../packages/hunk.nix { };
 in
 rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -29,6 +30,7 @@ rec {
     fzf
     glow
     graphviz
+    hunk
     jq
     just
     loglit
@@ -74,6 +76,7 @@ rec {
 
   programs.fish = {
     shellAbbrs = {
+      hd = lib.mkDefault "hunk diff";
       js = lib.mkDefault "just";
       rm = lib.mkDefault "rip";
       rmm = lib.mkDefault "rm -rf";

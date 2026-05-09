@@ -7,7 +7,7 @@ conflict-marker-style = "git"
 default-command = "log"
 diff-editor = ":builtin"
 diff-formatter = ":git"
-pager = "delta"
+pager = ["hunk", "pager"]
 
 [aliases]
 d = ["diff"]
