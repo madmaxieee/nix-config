@@ -1,69 +1,71 @@
 #!/usr/bin/env bash
 
 usage() {
-  echo "Usage: $0 [SEARCH_DIR] -- <command> [args...]"
-  echo ""
-  echo "Runs the specified command in parallel across all git repositories found under SEARCH_DIR."
-  echo "If SEARCH_DIR is not provided, the current directory is used."
-  echo ""
-  echo "Examples:"
-  echo "  $0 ~/Repos -- git pull"
-  echo "  $0 -- git status -s  # searches from current dir"
+	echo "Usage: $0 [SEARCH_DIR] -- <command> [args...]"
+	echo ""
+	echo "Runs the specified command in parallel across all git repositories found under SEARCH_DIR."
+	echo "If SEARCH_DIR is not provided, the current directory is used."
+	echo ""
+	echo "Examples:"
+	echo "  $0 ~/Repos -- git pull"
+	echo "  $0 -- git status -s  # searches from current dir"
 }
 
 if ! command -v parallel &>/dev/null; then
-  echo "Error: GNU parallel is not installed." >&2
-  exit 1
+	echo "Error: GNU parallel is not installed." >&2
+	exit 1
 fi
 
 if ! command -v fd &>/dev/null; then
-  echo "Error: fd (fd-find) is not installed." >&2
-  exit 1
+	echo "Error: fd (fd-find) is not installed." >&2
+	exit 1
 fi
 
 if [[ $# -eq 0 ]]; then
-  usage
-  exit 1
+	usage
+	exit 1
 fi
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-  usage
-  exit 0
+	usage
+	exit 0
 fi
 
 # Default search dir = current directory
 SEARCH_DIR="."
 if [[ "$1" != "--" ]]; then
-  SEARCH_DIR="$1"
-  shift
+	SEARCH_DIR="$1"
+	shift
 fi
 SEARCH_DIR="$(realpath "$SEARCH_DIR")"
 
 # Expecting `--` as a separator
 if [[ "$1" != "--" ]]; then
-  echo "Error: missing -- separator before command" >&2
-  exit 1
+	echo "Error: missing -- separator before command" >&2
+	exit 1
 fi
 
 shift
 
 # The rest is user command
 if [[ $# -lt 1 ]]; then
-  echo "Error: missing command to run" >&2
-  exit 1
+	echo "Error: missing command to run" >&2
+	exit 1
 fi
 
 USER_CMD=("$@")
 USER_CMD_STR="${USER_CMD[*]}"
 
 # Use fd to find ".git" directories and return their parent dir (repo root)
-fd --type d --type l --hidden -I '\.git$' "$SEARCH_DIR" |
-  xargs -I{} dirname {} |
-  sort -u |
-  parallel -j"$(nproc)" --no-notice '
-      echo '\''>>>>>> Running command ['"$USER_CMD_STR"'] in {}'\''
-      cd "{}" && '"$USER_CMD_STR"'
-      echo ""
-      echo "<<<<<< Finished running in {}"
-      echo ""
-    '
+fd -0 --type d --type l --hidden -I '\.git$' "$SEARCH_DIR" |
+	xargs -0 -I{} dirname -z {} |
+	sort -z -u |
+	parallel -0 -j8 --no-notice "$(
+		cat <<-EOF
+			echo '>>>>>> Running command \`$USER_CMD_STR\` in {}'
+			cd "{}" && $USER_CMD_STR
+			EXIT_CODE=\$?
+			echo "<<<<<< Finished running in {} (exit code: \$EXIT_CODE)"
+			echo ""
+		EOF
+	)"
