@@ -3,6 +3,7 @@
   config,
   pkgs,
   lib,
+  sources,
   ...
 }:
 
@@ -31,15 +32,25 @@ rec {
   home.packages = [ rtk ];
 
   xdg.configFile = {
+    # basic opencode config
     "opencode/AGENTS.md".source = linkDotfile "opencode/AGENTS.md";
     "opencode/opencode.jsonc".source = linkDotfile "opencode/opencode-${profile}.jsonc";
-    "opencode/oh-my-opencode-slim.json".source =
-      linkDotfile "opencode/oh-my-opencode-slim-${profile}.json";
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
+    "opencode/themes".source = linkDotfile "opencode/themes";
+
+    # plugin
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
+
+    # global skills
+    "opencode/skills/productivity".source = "${sources.mattpocock-skills}/skills/productivity";
+
+    # commands
     "opencode/commands/commit.md".source = linkDotfile "opencode/commands/commit.md";
-    "opencode/themes".source = linkDotfile "opencode/themes";
+
+    # omo-slim
+    "opencode/oh-my-opencode-slim.json".source =
+      linkDotfile "opencode/oh-my-opencode-slim-${profile}.json";
   };
 
   programs.fish = {

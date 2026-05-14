@@ -76,6 +76,12 @@
       flake = false;
     };
 
+    # agent skills
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+
     # misc
     fabric = {
       url = "github:danielmiessler/Fabric";
@@ -121,6 +127,7 @@
             tv-yazi
             ;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
+          inherit (inputs) mattpocock-skills;
           inherit (inputs) fabric tokyonight;
         };
       };
