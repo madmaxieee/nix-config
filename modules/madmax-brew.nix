@@ -40,6 +40,7 @@
       "spotify"
       "stremio"
       "tailscale-app"
+      "telegram"
       "thingsmacsandboxhelper"
       "visual-studio-code"
       "zen"
@@ -49,7 +50,6 @@
       "LINE" = 539883307;
       "PastePal" = 1503446680;
       "RunCat" = 1429033973;
-      "Telegram" = 747648890;
       "Things" = 904280696;
     };
     onActivation = {
