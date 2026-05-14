@@ -123,6 +123,7 @@ rec {
       };
 
       ignores = [
+        ".*cli/project.json"
         # clangd
         ".cache"
         "compile_commands.json"
