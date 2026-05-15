@@ -38,7 +38,8 @@ rec {
     "opencode/tui.jsonc".source = linkDotfile "opencode/tui.jsonc";
     "opencode/themes".source = linkDotfile "opencode/themes";
 
-    # plugin
+    # plugins
+    "opencode/plugins/bun-guard.ts".source = linkDotfile "opencode/plugins/bun-guard.ts";
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
 
