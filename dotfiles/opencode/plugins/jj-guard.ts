@@ -4,6 +4,13 @@ import type { Plugin } from "@opencode-ai/plugin";
 // Throws an error with guidance so the agent sees the message and
 // decides to use jj commands instead. Git-specific operations that
 // have no jj equivalent ask the agent to request user approval.
+// Also injects a system prompt line so the agent proactively uses jj.
+
+const JJ_SYSTEM_LINE = [
+  "IMPORTANT: This repository uses Jujutsu (jj) for version control, NOT git.",
+  "Use `jj` commands: `jj status`, `jj diff`, `jj log`, `jj new`, `jj edit`, `jj describe`, etc.",
+  "Do NOT run `git` commands unless the user explicitly approves it.",
+].join(" ");
 
 // Direct 1:1 equivalents — same concept, just different command name.
 const JJ_EQUIVALENTS: Record<string, string> = {
@@ -148,6 +155,11 @@ export const JjGuardPlugin: Plugin = async ({ $ }) => {
   }
 
   return {
+    "experimental.chat.system.transform": async (_input, output) => {
+      if (!output.system.includes(JJ_SYSTEM_LINE)) {
+        output.system.push(JJ_SYSTEM_LINE);
+      }
+    },
     "tool.execute.before": async (input, output) => {
       const tool = String(input?.tool ?? "").toLowerCase();
       if (tool !== "bash" && tool !== "shell") return;
@@ -160,13 +172,28 @@ export const JjGuardPlugin: Plugin = async ({ $ }) => {
 
       const trimmed = command.trim();
 
-      // Detect both `git ...` and `rtk git ...` commands
-      const isRtkGit = trimmed.startsWith("rtk git ");
-      if (!trimmed.startsWith("git ") && trimmed !== "git" && !isRtkGit) return;
+      // Split compound commands by shell operators (&&, ||, ;, |)
+      // so that git commands buried in chains or pipelines are caught.
+      const SEGMENT_SPLIT = /\s*(?:&&|\|\||[;|])\s*/;
+      const segments = trimmed
+        .split(SEGMENT_SPLIT)
+        .map((s) => s.trim())
+        .filter(Boolean);
 
-      const parts = trimmed.split(/\s+/);
-      // For `rtk git <cmd>`, the git subcommand is at index 2
-      const gitCmd = isRtkGit ? parts[2] || "" : parts[1] || "";
+      let gitCmd: string | null = null;
+      let segParts: string[] = [];
+
+      for (const segment of segments) {
+        const rtkMatch = segment.startsWith("rtk git ");
+        if (segment.startsWith("git ") || segment === "git" || rtkMatch) {
+          segParts = segment.split(/\s+/);
+          // For `rtk git <cmd>`, the git subcommand is at index 2
+          gitCmd = rtkMatch ? segParts[2] || "" : segParts[1] || "";
+          break;
+        }
+      }
+
+      if (gitCmd === null) return;
 
       // Git-specific operations — ask agent to request user approval
       if (GIT_SPECIFIC_OPS.includes(gitCmd)) {
@@ -179,7 +206,7 @@ If the user approves, they can run it with: JJ_GUARD_BYPASS=1 ${trimmed}`);
       // config --global/--system
       if (
         gitCmd === "config" &&
-        (parts.includes("--global") || parts.includes("--system"))
+        (segParts.includes("--global") || segParts.includes("--system"))
       ) {
         throw new Error(`JJ-GUARD: Global/system git config is outside the jj repository scope.
 This requires user approval. Ask the user before proceeding.
