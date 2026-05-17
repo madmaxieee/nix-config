@@ -3,6 +3,14 @@ import type { Plugin } from "@opencode-ai/plugin";
 // Bun-Guard OpenCode plugin — blocks npm, npx, yarn, pnpm commands in bun projects.
 // Activated when bun.lock or bun.lockb is present in the repository root.
 // Simply blocks and tells the agent this project uses bun.
+// Also injects a system prompt line so the agent proactively uses bun.
+
+const BUN_SYSTEM_LINE = [
+  "IMPORTANT: This project uses bun as its package manager.",
+  "Use `bun` commands: `bun install`, `bun run`, `bun add`, `bun remove`, `bun test`.",
+  "Use `bunx` instead of `npx`.",
+  "Do NOT use npm, yarn, or pnpm unless the user explicitly approves it.",
+].join(" ");
 
 const BLOCKED = ["npm", "npx", "yarn", "pnpm", "pnpx"];
 
@@ -35,6 +43,11 @@ export const BunGuardPlugin: Plugin = async ({ $ }) => {
   }
 
   return {
+    "experimental.chat.system.transform": async (_input, output) => {
+      if (!output.system.includes(BUN_SYSTEM_LINE)) {
+        output.system.push(BUN_SYSTEM_LINE);
+      }
+    },
     "tool.execute.before": async (input, output) => {
       const tool = String(input?.tool ?? "").toLowerCase();
       if (tool !== "bash" && tool !== "shell") return;
@@ -55,7 +68,7 @@ export const BunGuardPlugin: Plugin = async ({ $ }) => {
             throw new Error(
               `BUN-GUARD: This project uses bun as its package manager.\n\n` +
                 `Blocked: ${trimmed}\n` +
-                `Use bun commands instead (bun install, bun run, bun add, etc.).`
+                `Use bun commands instead (bun install, bun run, bun add, etc.).`,
             );
           }
         }
