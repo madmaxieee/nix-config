@@ -4,45 +4,43 @@
   "presets": {
     "google": {
       "orchestrator": {
-        "model": "google/gemini-3.1-pro-preview",
-        "variant": "high",
+        "model": "google/gemini-3.5-flash",
         "skills": ["*"],
         "mcps": ["*"]
       },
       "explorer": {
-        "model": "google/gemini-3-flash-preview",
+        "model": "google/gemini-3.5-flash",
         "variant": "low",
         "skills": [],
         "mcps": ["fff"]
       },
       "oracle": {
-        "model": "google/gemini-3.1-pro-preview",
+        "model": "google/gemini-3.5-flash",
         "variant": "high",
         "skills": ["simplify"],
         "mcps": []
       },
       "librarian": {
-        "model": "google/gemini-3-flash-preview",
+        "model": "google/gemini-3.5-flash",
         "variant": "low",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
-        "model": "google/gemini-3-flash-preview",
+        "model": "google/gemini-3.5-flash",
         "variant": "medium",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "google/gemini-3-flash-preview",
-        "variant": "low",
+        "model": "google/gemini-3.5-flash",
         "skills": [],
         "mcps": []
       }
     }
   },
   "council": {
-    "master": { "model": "google/gemini-3.1-pro-preview" },
+    "master": { "model": "google/gemini-3.5-flash" },
     "presets": {
       "default": {
         "alpha": { "model": "google/gemini-3.1-pro-preview" },
