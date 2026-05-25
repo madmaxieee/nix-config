@@ -79,7 +79,6 @@ rec {
     ./modules/rust.nix
 
     ./modules/fabric-ai.nix
-    ./modules/gemini-cli.nix
     (import ./modules/axon.nix { profile = "work"; })
     (import ./modules/opencode.nix { profile = "work"; })
 
