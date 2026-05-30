@@ -20,6 +20,7 @@
       "jordanbaird-ice"
       "kitty"
       "logi-options+"
+      "meetingbar"
       "obsidian"
       "pocket-casts"
       "raindropio"
