@@ -29,6 +29,7 @@
       "kitty"
       "kobo"
       "logi-options+"
+      "meetingbar"
       "nordvpn"
       "obsidian"
       "opencode-desktop"
