@@ -78,6 +78,7 @@ rec {
     shellAbbrs = {
       hd = lib.mkDefault "hunk diff";
       js = lib.mkDefault "just";
+      nd = lib.mkDefault "nix develop";
       rm = lib.mkDefault "rip";
       rmm = lib.mkDefault "rm -rf";
     };

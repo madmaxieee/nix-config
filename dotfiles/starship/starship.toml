@@ -14,6 +14,7 @@ $os\
 $container\
 $netns\
 $shell\
+$nix_shell\
 $character"""
 
 [fill]
@@ -43,6 +44,8 @@ disabled = true
 [nix_shell]
 disabled = false
 heuristic = true
+symbol = "❄️"
+format = '[$symbol]($style) '
 
 [shell]
 disabled = false
