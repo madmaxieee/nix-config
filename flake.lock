@@ -36,11 +36,11 @@
     "fabric": {
       "flake": false,
       "locked": {
-        "lastModified": 1760455643,
-        "narHash": "sha256-t9gL+BT8102fAL8yLuau4WZPa+XtX4y7JyuxQYqwkS8=",
+        "lastModified": 1780443089,
+        "narHash": "sha256-GQwLczftFoIlqkUAKyzzObMi6fyWEXK9ZZsPbQj8DV8=",
         "owner": "danielmiessler",
         "repo": "Fabric",
-        "rev": "7d80fd6d1d0ece770fb267c491012322b73223eb",
+        "rev": "29b32f9ff2ced48ff3425cd61c6e5083047f88d3",
         "type": "github"
       },
       "original": {
@@ -162,11 +162,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1769370163,
-        "narHash": "sha256-YfcFlJsPCRfqhN+3JUWE77c+eHIp5RAu2rq/JhSxCec=",
+        "lastModified": 1778676598,
+        "narHash": "sha256-NLds7i1ZmscicaNLmkZCWmc7A+367BXxGioRd4yYof8=",
         "owner": "dmmulroy",
         "repo": "jj-starship",
-        "rev": "76cf00619b0cce5bd08a1b9a49b310ed928794d5",
+        "rev": "292224a93d5490332f32cc26d77676ccaeec0bfa",
         "type": "github"
       },
       "original": {
@@ -194,11 +194,11 @@
     "mattpocock-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1778677518,
-        "narHash": "sha256-5Rr5BQe8bdQXWt/H6QjYpoM4X+GuWPK26rU2VSqTZVI=",
+        "lastModified": 1780927324,
+        "narHash": "sha256-v8gOB1tvmytemH05C0j+WjwdfzaDgXg+MnKk5mDSblY=",
         "owner": "mattpocock",
         "repo": "skills",
-        "rev": "e74f0061bb67222181640effa98c675bdb2fdaa7",
+        "rev": "2bf70051928429983de3b5718d277150926f8c89",
         "type": "github"
       },
       "original": {
