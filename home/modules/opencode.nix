@@ -44,6 +44,7 @@ rec {
     "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
 
     # global skills
+    "opencode/skills/improve".source = "${sources.shadcn-improve}/skills/improve";
     "opencode/skills/productivity".source = "${sources.mattpocock-skills}/skills/productivity";
 
     # commands

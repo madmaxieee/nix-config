@@ -81,6 +81,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    shadcn-improve = {
+      url = "github:shadcn/improve";
+      flake = false;
+    };
 
     # misc
     fabric = {
@@ -127,7 +131,7 @@
             tv-yazi
             ;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
-          inherit (inputs) mattpocock-skills;
+          inherit (inputs) mattpocock-skills shadcn-improve;
           inherit (inputs) fabric tokyonight;
         };
       };
