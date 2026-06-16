@@ -63,6 +63,7 @@ in
           and test "$TERM" = xterm-ghostty
           and not set -q TMUX
           and not set -q ZELLIJ
+          and not set -q ZMX_SESSION
           and not set -q IN_NIX_SHELL
           tmux new-session -A -s main >/dev/null 2>&1
       end
