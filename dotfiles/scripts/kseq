@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+
+import argparse
+import sys
+
+FUNCTIONAL = {
+    "escape": 27,
+    "enter": 13,
+    "tab": 9,
+    "backspace": 127,
+    "space": 32,
+    "up": 57352,
+    "down": 57353,
+    "right": 57354,
+    "left": 57355,
+    "insert": 57348,
+    "delete": 57349,
+    "home": 57350,
+    "end": 57351,
+    "pageup": 57358,
+    "pagedown": 57359,
+    "f1": 57364,
+    "f2": 57365,
+    "f3": 57366,
+    "f4": 57367,
+    "f5": 57368,
+    "f6": 57369,
+    "f7": 57370,
+    "f8": 57371,
+    "f9": 57372,
+    "f10": 57373,
+    "f11": 57374,
+    "f12": 57375,
+}
+
+MODS = {
+    "shift": 1,
+    "alt": 2,
+    "ctrl": 4,
+    "control": 4,
+    "super": 8,
+    "cmd": 8,
+    "command": 8,
+    "hyper": 16,
+    "meta": 32,
+}
+
+parser = argparse.ArgumentParser(
+    description="Generate Kitty keyboard protocol escape sequences for key combinations.",
+    epilog="Examples: kseq ctrl+escape  |  kseq shift+f1  |  kseq escape  |  kseq ctrl+escape shift+f1",
+)
+parser.add_argument(
+    "keyspecs",
+    metavar="KEYSPEC",
+    nargs="+",
+    help="key specification: a named key optionally prefixed by modifiers joined by '+' (e.g. ctrl+escape, shift+f1, alt+up)",
+)
+args = parser.parse_args()
+
+for raw_spec in args.keyspecs:
+    spec = raw_spec.lower()
+    parts = spec.split("+")
+
+    # Validate: no empty segments (e.g. "ctrl+", "+c", "ctrl++c")
+    if any(p == "" for p in parts):
+        parser.error(
+            f"invalid keyspec {raw_spec!r}: empty segment (check for stray '+' or missing key/modifier)"
+        )
+
+    # Validate: no duplicate modifiers
+    seen = set()
+    for m in parts[:-1]:
+        if m in seen:
+            parser.error(f"invalid keyspec {raw_spec!r}: duplicate modifier {m!r}")
+        seen.add(m)
+
+    # Validate modifiers
+    unknown_mods = [m for m in parts[:-1] if m not in MODS]
+    if unknown_mods:
+        valid = ", ".join(sorted(MODS))
+        parser.error(
+            f"unknown modifier {unknown_mods[0]!r} in {raw_spec!r}\nValid modifiers: {valid}"
+        )
+
+    key = parts[-1]
+    mod_bits = sum(MODS[m] for m in parts[:-1])
+
+    if key in FUNCTIONAL:
+        code = FUNCTIONAL[key]
+    elif len(key) == 1 and mod_bits:
+        code = ord(key)
+    else:
+        if len(key) == 1 and not mod_bits:
+            parser.error(
+                f"invalid keyspec {raw_spec!r}: bare character {key!r} doesn't need an escape sequence (just type it)"
+            )
+        valid_keys = ", ".join(sorted(FUNCTIONAL))
+        parser.error(f"invalid key {key!r} in {raw_spec!r}\nValid keys: {valid_keys}")
+
+    mod_field = mod_bits + 1 if mod_bits else 1
+
+    if mod_bits:
+        seq = f"\x1b[{code};{mod_field}u"
+    else:
+        seq = f"\x1b[{code}u"
+
+    sys.stdout.buffer.write(seq.encode())

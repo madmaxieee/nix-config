@@ -16,6 +16,7 @@ in
     (linkScript "clip")
     (linkScript "fixquote")
     (linkScript "git-foreach")
+    (linkScript "kseq")
     (linkScript "mkbash")
     (linkScript "nr")
     (linkScript "ns")
