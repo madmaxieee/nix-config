@@ -93,6 +93,7 @@ in
     ./modules/nvim.nix
     ./modules/tmux.nix
     ./modules/zellij.nix
+    ./modules/zmx.nix
 
     ./modules/scripts.nix
 
