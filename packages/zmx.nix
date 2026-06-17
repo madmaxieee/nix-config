@@ -2,6 +2,7 @@
   lib,
   stdenvNoCC,
   fetchurl,
+  installShellFiles,
 }:
 
 let
@@ -34,10 +35,19 @@ stdenvNoCC.mkDerivation {
 
   sourceRoot = ".";
 
+  nativeBuildInputs = [ installShellFiles ];
+
   installPhase = ''
     runHook preInstall
     install -Dm755 zmx "$out/bin/zmx"
     runHook postInstall
+  '';
+
+  postInstall = ''
+    installShellCompletion --cmd zmx \
+      --bash <($out/bin/zmx completions bash) \
+      --fish <($out/bin/zmx completions fish) \
+      --zsh <($out/bin/zmx completions zsh)
   '';
 
   meta = with lib; {
