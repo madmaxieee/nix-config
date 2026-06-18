@@ -46,13 +46,13 @@
       "visual-studio-code"
       "zen"
     ];
-    masApps = {
-      "Keymapp" = 6472865291;
-      "LINE" = 539883307;
-      "PastePal" = 1503446680;
-      "RunCat" = 1429033973;
-      "Things" = 904280696;
-    };
+    # masApps = {
+    #   "Keymapp" = 6472865291;
+    #   "LINE" = 539883307;
+    #   "PastePal" = 1503446680;
+    #   "RunCat" = 1429033973;
+    #   "Things" = 904280696;
+    # };
     onActivation = {
       cleanup = "zap";
       upgrade = true;
