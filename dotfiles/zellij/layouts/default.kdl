@@ -1,0 +1,17 @@
+layout {
+    pane_template name="large-floating" {
+        x "10%"
+        y "10%"
+        width "80%"
+        height "80%"
+    }
+    new_tab_template hide_floating_panes=true {
+        pane
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        floating_panes {
+            large-floating
+        }
+    }
+}
