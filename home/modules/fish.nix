@@ -29,7 +29,7 @@ in
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
         set -f target_dir (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
-          grep -E -v '\.(git|jj)' |
+          grep -E -v '^\.(git|jj)$' |
           sort -n |
           tail -n1 |
           cut -d' ' -f2-)
