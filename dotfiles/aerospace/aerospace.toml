@@ -107,12 +107,6 @@ alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 alt-0 = 'workspace 10'
 
-alt-a = 'workspace 1'
-alt-s = 'workspace 2'
-alt-d = 'workspace 3'
-alt-f = 'workspace 4'
-alt-g = 'workspace 5'
-
 alt-shift-1 = [
     'move-node-to-workspace 1',
     'workspace 1',
