@@ -10,7 +10,8 @@ in
   home.packages = with pkgs; [
     ntfy-sh
 
-    odin
+    # remove odin temporarily because it does not build
+    # odin
     typst
     zig
   ];
