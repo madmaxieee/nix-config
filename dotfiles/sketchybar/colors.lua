@@ -11,7 +11,8 @@ return {
     grey = 0xff939ab7,
     transparent = 0x00000000,
 
-    bar = { bg = 0x40000000 },
+    -- double the opacity because blur is broken on this version
+    bar = { bg = 0x80000000 },
     bg1 = 0x4affffff,
     bg_inactive = 0x20ffffff,
     bg2 = 0xff494d64,
