@@ -27,6 +27,7 @@ rec {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    sideloadInitLua = true;
     extraLuaPackages = ps: with ps; [ luarocks ];
     extraPackages =
       with pkgs;
