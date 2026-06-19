@@ -38,8 +38,8 @@ rec {
         # for mason
         cargo
         go
-        nodejs_20
-        python312
+        nodejs_24
+        python313
         unzip
         xz
 

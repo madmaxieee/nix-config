@@ -16,7 +16,7 @@ in
   ];
 
   # former default options
-  programs.ssh.matchBlocks."*" = {
+  programs.ssh.settings."*" = {
     forwardAgent = false;
     addKeysToAgent = "no";
     compression = false;
@@ -32,7 +32,7 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "linode" = {
         hostname = "linode.kahiok.dev";
         user = "madmax";

@@ -13,7 +13,7 @@ in
   ];
 
   # former default options
-  programs.ssh.matchBlocks."*" = {
+  programs.ssh.settings."*" = {
     forwardAgent = false;
     addKeysToAgent = "no";
     compression = false;
@@ -29,7 +29,7 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "soft" = {
         hostname = "soft.madmaxieee.dev";
         port = 23231;
@@ -39,7 +39,7 @@ in
         hostname = "%h.googlers.com";
         forwardAgent = true;
         # for remote sesh service
-        localForwards = [
+        LocalForward = [
           {
             host.address = "127.0.0.1";
             host.port = 8080;

@@ -2,8 +2,8 @@
 rec {
   home.packages = with pkgs; [
     uv
-    python312
-    python312Packages.ipython
+    python313
+    python313Packages.ipython
   ];
 
   programs.fish = {

@@ -20,7 +20,7 @@
     enable = true;
     package = pkgs.sketchybar;
     extraPackages = [
-      (pkgs.lua54Packages.lua.withPackages (ps: [ pkgs.sbarlua ]))
+      (pkgs.lua55Packages.lua.withPackages (ps: [ pkgs.sbarlua ]))
       pkgs.jq
     ];
   };
