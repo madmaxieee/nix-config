@@ -21,6 +21,10 @@ in
     enable = true;
     shellAbbrs = {
       md = lib.mkDefault "mkdir -p";
+      dotdot = {
+        regex = ''^\.\.+$'';
+        function = "__dotdot";
+      };
     };
     functions = {
       flush = "string repeat -n(tput lines) \\n";
@@ -42,10 +46,6 @@ in
       '';
     };
     interactiveShellInit = ''
-      if echo $PATH | grep -q '/nix/store/'
-          set -gx IN_NIX_SHELL 1
-      end
-
       if type -q brew
           set -l brew_prefix (brew --prefix)
           if test -d "$brew_prefix/share/fish/completions"
@@ -55,29 +55,17 @@ in
               set -p fish_complete_path "$brew_prefix/share/fish/vendor_completions.d"
           end
       end
-
-      abbr --add dotdot --regex '^\.\.+$' --function __dotdot
-
-      # if not in tmux, start a new session
-      if type -q tmux
-          and test "$TERM" = xterm-ghostty
-          and not set -q TMUX
-          and not set -q ZELLIJ
-          and not set -q ZMX_SESSION
-          and not set -q IN_NIX_SHELL
-          tmux new-session -A -s main >/dev/null 2>&1
-      end
     '';
 
     # unmanaged fish config files con be placed in ~/.config/fish/after/
     shellInitLast = ''
       begin
-        set -l after_dir "$__fish_config_dir"/after
-        if test -d $after_dir
-            for f in (find -L "$after_dir" -type f -name '*.fish' | sort)
-                source $f
-            end
-        end
+          set -l after_dir "$__fish_config_dir"/after
+          if test -d $after_dir
+              for f in (find -L "$after_dir" -type f -name '*.fish' | sort)
+                  source $f
+              end
+          end
       end
     '';
 
