@@ -60,7 +60,7 @@ function M.setup()
 
     -- zoom in/out a window
     leader_bind("", "z", function()
-        yabai("-m window --toggle zoom-parent")
+        yabai("-m space --layout stack")
     end)
 
     leader_bind("", "x", function()
