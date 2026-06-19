@@ -29,8 +29,8 @@ in
 
   xdg.configFile = {
     "fish/completions/brew.fish".source = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/Homebrew/brew/5.0.3/completions/fish/brew.fish";
-      sha256 = "f8ee0c4e9ee16d673032cd6f966dbca8ed5a168f9c7e91a536c593e041947830";
+      url = "https://raw.githubusercontent.com/Homebrew/brew/6.0.1/completions/fish/brew.fish";
+      sha256 = "1345327c60d2e6b791315fbbb7cc43a77b84482d8852d551c1ecf6518ad73903";
     };
     # homebrew cask config files
     "kitty".source = linkDotfile "kitty";
