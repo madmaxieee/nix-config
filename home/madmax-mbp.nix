@@ -8,8 +8,6 @@ in
   home.homeDirectory = "/Users/madmax";
 
   home.packages = with pkgs; [
-    ntfy-sh
-
     # remove odin temporarily because it does not build
     # odin
     typst
