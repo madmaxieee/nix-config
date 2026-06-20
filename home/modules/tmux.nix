@@ -64,15 +64,15 @@ rec {
       ta = lib.mkDefault "tmux attach";
       tn = lib.mkDefault "tmux new -s";
     };
-    interactiveShellInit = ''
-      if test "$TERM" = xterm-ghostty
-          and not set -q NVIM
-          and not set -q TMUX
-          and not set -q ZELLIJ
-          and not set -q ZMX_SESSION
-          tmux new-session -A -s main >/dev/null 2>&1
-      end
-    '';
+    # interactiveShellInit = ''
+    #   if test "$TERM" = xterm-ghostty
+    #       and not set -q NVIM
+    #       and not set -q TMUX
+    #       and not set -q ZELLIJ
+    #       and not set -q ZMX_SESSION
+    #       tmux new-session -A -s main >/dev/null 2>&1
+    #   end
+    # '';
   };
 
   programs.zsh = {
