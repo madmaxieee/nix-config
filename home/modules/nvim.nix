@@ -28,6 +28,12 @@ rec {
     enable = true;
     defaultEditor = true;
     sideloadInitLua = true;
+
+    withNodeJs = false;
+    withPerl = false;
+    withPython3 = false;
+    withRuby = false;
+
     extraLuaPackages = ps: with ps; [ luarocks ];
     extraPackages =
       with pkgs;
@@ -68,7 +74,6 @@ rec {
         else
           "${pkgs.sqlite.out}/lib/libsqlite3.so"
       )
-
     ];
   };
 
