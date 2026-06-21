@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   home.stateVersion = "24.05";
@@ -18,9 +23,15 @@
     TERMINFO_DIRS = "${config.home.profileDirectory}/share/terminfo:/usr/share/terminfo";
   };
 
-  xdg.configFile = {
-    "nix/nix.conf".text = ''
-      extra-experimental-features = nix-command flakes
-    '';
+  # needed for nix.settings to work
+  nix.package = pkgs.nix;
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    download-buffer-size = 512 * 1024 * 1024;
+    auto-optimise-store = true;
   };
 }

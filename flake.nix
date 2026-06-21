@@ -177,8 +177,14 @@
             pkgs.victor-mono
           ];
 
-          # Necessary for using flakes on this system.
-          nix.settings.experimental-features = "nix-command flakes";
+          nix.settings = {
+            experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
+            download-buffer-size = 512 * 1024 * 1024;
+            auto-optimise-store = true;
+          };
 
           # sync with nix-homebrew taps to avoid warning
           homebrew.taps = thirdPartyTapNames;
