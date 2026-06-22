@@ -14,6 +14,7 @@
       "alfred"
       "arc"
       "calibre"
+      "chatgpt"
       "cleanshot"
       "discord"
       "espanso"
