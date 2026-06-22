@@ -15,24 +15,25 @@
         "mcps": []
       },
       "librarian": {
-        "model": "openai/gpt-5.3-codex-spark",
+        "model": "openai/gpt-5.4-mini",
         "variant": "low",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "openai/gpt-5.3-codex-spark",
+        "model": "openai/gpt-5.4-mini",
         "variant": "low",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "github-copilot/gemini-3.1-pro-preview",
+        "model": "openai/gpt-5.4-mini",
+        "variant": "medium",
         "skills": [],
         "mcps": []
       },
       "fixer": {
-        "model": "openai/gpt-5.3-codex-spark",
+        "model": "openai/gpt-5.5-fast",
         "variant": "low",
         "skills": [],
         "mcps": []
@@ -79,9 +80,8 @@
   "council": {
     "presets": {
       "default": {
-        "alpha": { "model": "opencode-go/deepseek-v4-pro" },
-        "beta": { "model": "opencode-go/glm-5.2" },
-        "gamma": { "model": "opencode-go/qwen3.7-plus" }
+        "alpha": { "model": "openai/gpt-5.5-fast" },
+        "beta": { "model": "openai/gpt-5.4-mini" }
       }
     }
   },
