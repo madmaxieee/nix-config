@@ -32,11 +32,13 @@ in
       fish_greeting = "flush";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
-        set -f target_dir (find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
-          grep -E -v '^\.(git|jj)$' |
-          sort -n |
-          tail -n1 |
-          cut -d' ' -f2-)
+        set -f target_dir (${pkgs.findutils}/bin/find . -mindepth 1 -maxdepth 1 -type d \
+          ! -name .git \
+          ! -name .jj \
+          -printf "%T@\t%p\n" |
+          sort -nr |
+          head -n1 |
+          cut -f2-)
         if test -n "$target_dir"
           cd $target_dir
         end
