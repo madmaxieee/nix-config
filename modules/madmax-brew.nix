@@ -16,6 +16,8 @@
       "calibre"
       "chatgpt"
       "cleanshot"
+      "codex"
+      "codex-app"
       "discord"
       "espanso"
       "fantastical"
