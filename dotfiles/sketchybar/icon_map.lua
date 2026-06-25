@@ -775,6 +775,8 @@ return {
     -- custom
     [ [[Cider]] ] = ":code:",
     [ [[Google Calendar]] ] = ":calendar:",
+    [ [[Google Tasks]] ] = ":things:",
+    [ [[KiteTasks]] ] = ":things:",
     [ [[Pocket Casts]] ] = ":broadcasts:",
     [ [[stremio]] ] = ":youtube:",
 }
