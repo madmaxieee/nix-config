@@ -108,6 +108,12 @@ navigate_workspace_down = ["down", "n"]
 # type = "pane"
 # command = "lazygit"
 
+[[keys.command]]
+key = ["ctrl+alt+k", "cmd+k"]
+type = "plugin_action"
+command = "madmax.herdr-sesh-workspaces.workspaces"
+description = "Open sesh-backed workspace picker"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

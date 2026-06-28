@@ -1,0 +1,17 @@
+id = "madmax.herdr-sesh-workspaces"
+name = "Herdr Sesh Workspaces"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Focus existing herdr workspaces or create new workspaces from sesh zoxide entries."
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "workspaces"
+title = "Sesh Workspaces"
+command = ["python3", "./herdr-sesh-workspaces.py", "launch"]
+
+[[panes]]
+id = "picker"
+title = "Sesh Workspaces"
+placement = "overlay"
+command = ["python3", "./herdr-sesh-workspaces.py", "picker"]
