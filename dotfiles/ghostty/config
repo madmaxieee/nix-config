@@ -35,8 +35,8 @@ macos-auto-secure-input = true
 window-padding-x = 4
 window-padding-y = 0
 
-# get the escape sequence from `xxd -psd`
+# get KKP escape sequence from my `kseq` script
 # ctrl+alt+k
-keybind = cmd+k=text:\x1b\x0b
+keybind = cmd+k=text:\x1b[107;7u
 # ctrl+alt+j
-keybind = cmd+j=text:\x1b\x0a
+keybind = cmd+j=text:\x1b[106;7u
