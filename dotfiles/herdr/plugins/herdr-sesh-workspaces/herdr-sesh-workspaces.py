@@ -35,9 +35,21 @@ class Entry:
     value: str
 
     def line(self, index: int) -> str:
+        cyan = "\033[36m"
+        yellow = "\033[33m"
+        dim = "\033[90m"
+        reset = "\033[0m"
+
+        color = cyan if self.kind == "workspace" else yellow
+        if self.title:
+            title_part = f"{color}{self.title[0]}{reset}{self.title[1:]}"
+        else:
+            title_part = ""
+
         if self.subtitle:
-            return f"{index:3d}. {self.title}  —  {self.subtitle}"
-        return f"{index:3d}. {self.title}"
+            subtitle_part = f"{dim}{self.subtitle}{reset}"
+            return f"{index:3d}. {title_part}  {dim}—{reset} {subtitle_part}"
+        return f"{index:3d}. {title_part}"
 
 
 def herdr_bin() -> str:
