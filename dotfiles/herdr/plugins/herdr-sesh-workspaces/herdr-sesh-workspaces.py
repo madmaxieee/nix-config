@@ -165,7 +165,9 @@ def choose_numbered(entries: list[Entry]) -> Entry | None:
 
 
 def choose(entries: list[Entry]) -> Entry | None:
-    return choose_with_fzf(entries) or choose_numbered(entries)
+    if shutil.which("fzf"):
+        return choose_with_fzf(entries)
+    return choose_numbered(entries)
 
 
 def focus_or_create(entry: Entry) -> None:
