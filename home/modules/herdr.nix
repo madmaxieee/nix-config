@@ -23,6 +23,11 @@ rec {
   xdg.configFile = {
     "fish/completions/herdr.fish".source = linkDotfile "fish/completions/herdr.fish";
     "herdr/config.toml".source = linkDotfile "herdr/config.toml";
-    "herdr/plugins/herdr-sesh-workspaces".source = linkDotfile "herdr/plugins/herdr-sesh-workspaces";
+  };
+
+  home.activation = {
+    herdr_plugin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/herdr-sesh-workspaces
+    '';
   };
 }
