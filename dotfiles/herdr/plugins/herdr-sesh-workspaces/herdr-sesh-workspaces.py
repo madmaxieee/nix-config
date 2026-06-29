@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 """herdr-sesh-workspaces: a tiny herdr workspace picker backed by sesh.
 
-This is intentionally a single-file plugin implementation. herdr still needs a
-`herdr-plugin.toml` manifest next to this file; generate the tiny manifest with:
-
-    ./herdr-sesh-workspaces.py manifest > herdr-plugin.toml
-
-Then link the directory:
-
-    herdr plugin link /path/to/this/directory
-
 What it does:
 
   - Shows existing herdr workspaces and focuses the selected one.
@@ -34,26 +25,6 @@ from pathlib import Path
 
 PLUGIN_ID = "madmax.herdr-sesh-workspaces"
 PICKER_ENTRYPOINT = "picker"
-
-
-MANIFEST = f'''id = "{PLUGIN_ID}"
-name = "Herdr Sesh Workspaces"
-version = "0.1.0"
-min_herdr_version = "0.7.0"
-description = "Focus existing herdr workspaces or create new workspaces from sesh zoxide entries."
-platforms = ["linux", "macos"]
-
-[[actions]]
-id = "workspaces"
-title = "Sesh Workspaces"
-command = ["python3", "./herdr-sesh-workspaces.py", "launch"]
-
-[[panes]]
-id = "{PICKER_ENTRYPOINT}"
-title = "Sesh Workspaces"
-placement = "overlay"
-command = ["python3", "./herdr-sesh-workspaces.py", "picker"]
-'''
 
 
 @dataclass(frozen=True)
@@ -100,9 +71,19 @@ def run_checked(argv: list[str]) -> None:
 
 def workspace_entries() -> list[Entry]:
     data = run_json([herdr_bin(), "workspace", "list"])
-    workspaces = ((data or {}).get("result") or {}).get("workspaces") or []
+    if not isinstance(data, dict):
+        return []
+    result = data.get("result")
+    if not isinstance(result, dict):
+        return []
+    workspaces = result.get("workspaces")
+    if not isinstance(workspaces, list):
+        return []
+
     entries: list[Entry] = []
     for ws in workspaces:
+        if not isinstance(ws, dict):
+            continue
         wid = str(ws.get("workspace_id") or "")
         if not wid:
             continue
@@ -245,12 +226,10 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="herdr workspace picker backed by sesh zoxide"
     )
-    parser.add_argument("command", choices=["launch", "picker", "manifest", "version"])
+    parser.add_argument("command", choices=["launch", "picker", "version"])
     args = parser.parse_args(argv)
 
-    if args.command == "manifest":
-        print(MANIFEST, end="")
-    elif args.command == "version":
+    if args.command == "version":
         print("herdr-sesh-workspaces 0.1.0")
     elif args.command == "launch":
         launch()
