@@ -62,6 +62,7 @@ rec {
     ./modules/nvim.nix
     ./modules/tmux.nix
     ./modules/zellij.nix
+    ./modules/herdr.nix
 
     ./modules/scripts.nix
 
