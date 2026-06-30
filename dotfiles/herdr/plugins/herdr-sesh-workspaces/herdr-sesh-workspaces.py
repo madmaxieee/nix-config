@@ -32,6 +32,7 @@ TITLE_PAD_WIDTH = 40
 @dataclass(frozen=True)
 class Entry:
     kind: str
+    icon: str
     title: str
     subtitle: str
     value: str
@@ -46,13 +47,16 @@ class Entry:
         reset = "\033[0m"
 
         color = colors.get(self.kind, "\033[33m")
-        if self.title:
-            padded_title = self.title
-            if len(self.title) < TITLE_PAD_WIDTH:
-                padded_title = self.title + " " * (TITLE_PAD_WIDTH - len(self.title))
-            title_part = f"{color}{padded_title[0]}{reset}{padded_title[1:]}"
+        icon_part = f"{color}{self.icon}{reset}" if self.icon else ""
+
+        padded_title = self.title
+        if len(self.title) < TITLE_PAD_WIDTH:
+            padded_title = self.title + " " * (TITLE_PAD_WIDTH - len(self.title))
+
+        if icon_part:
+            title_part = f"{icon_part}   {padded_title}"
         else:
-            title_part = ""
+            title_part = padded_title
 
         if self.subtitle:
             subtitle_part = f"{dim}{self.subtitle}{reset}"
@@ -116,7 +120,8 @@ def workspace_entries() -> list[Entry]:
         entries.append(
             Entry(
                 kind="workspace",
-                title=f"󰍹 {focused} {number}: {label}",
+                icon="󰍹",
+                title=f"{focused} {number}: {label}",
                 subtitle=f"{tabs} tabs, {panes} panes, {status}",
                 value=wid,
             )
@@ -158,7 +163,8 @@ def zoxide_entries() -> list[Entry]:
         entries.append(
             Entry(
                 kind="zoxide",
-                title=f"   {display_path}",
+                icon="",
+                title=display_path,
                 subtitle=path,
                 value=path,
             )
@@ -202,7 +208,8 @@ def citc_entries() -> list[Entry]:
         entries.append(
             Entry(
                 kind="citc",
-                title=f"   {workspace_name}",
+                icon="",
+                title=workspace_name,
                 subtitle=path,
                 value=path,
             )
