@@ -40,27 +40,27 @@ class Entry:
     def line(self) -> str:
         colors = {
             "workspace": "\033[36m",  # cyan
-            "citc": "\033[37m",       # white
-            "zoxide": "\033[33m",     # yellow
+            "citc": "\033[37m",  # white
+            "zoxide": "\033[33m",  # yellow
         }
         dim = "\033[90m"
         reset = "\033[0m"
 
         color = colors.get(self.kind, "\033[33m")
-        icon_part = f"{color}{self.icon}{reset}" if self.icon else ""
+        icon_part = f"{color}{self.icon:<3}{reset}" if self.icon else ""
 
         padded_title = self.title
         if len(self.title) < TITLE_PAD_WIDTH:
             padded_title = self.title + " " * (TITLE_PAD_WIDTH - len(self.title))
 
         if icon_part:
-            title_part = f"{icon_part}   {padded_title}"
+            title_part = f"{icon_part} {padded_title}"
         else:
             title_part = padded_title
 
         if self.subtitle:
             subtitle_part = f"{dim}{self.subtitle}{reset}"
-            return f"{title_part}  {dim}—{reset} {subtitle_part}"
+            return f"{title_part}  {dim}{reset} {subtitle_part}"
         return f"{title_part}"
 
 
@@ -120,8 +120,8 @@ def workspace_entries() -> list[Entry]:
         entries.append(
             Entry(
                 kind="workspace",
-                icon="󰍹",
-                title=f"{focused} {number}: {label}",
+                icon=f"󰍹 {focused}",
+                title=f"{number}: {label}",
                 subtitle=f"{tabs} tabs, {panes} panes, {status}",
                 value=wid,
             )
