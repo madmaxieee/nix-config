@@ -136,44 +136,6 @@ def workspace_entries() -> list[Entry]:
     if not isinstance(workspaces, list):
         return []
 
-    pane_data = run_json([herdr_bin(), "pane", "list"])
-    panes_list = []
-    if isinstance(pane_data, dict):
-        pane_result = pane_data.get("result")
-        if isinstance(pane_result, dict):
-            panes_list = pane_result.get("panes") or []
-
-    panes_by_ws: dict[str, list[dict]] = {}
-    for pane in panes_list:
-        if not isinstance(pane, dict):
-            continue
-        wid = pane.get("workspace_id")
-        if wid:
-            panes_by_ws.setdefault(wid, []).append(pane)
-
-    ws_cwds: dict[str, str] = {}
-    for ws in workspaces:
-        if not isinstance(ws, dict):
-            continue
-        wid = ws.get("workspace_id")
-        if not wid:
-            continue
-        active_tab = ws.get("active_tab_id")
-        cwds = panes_by_ws.get(wid, [])
-
-        active_pane = None
-        if active_tab:
-            for p in cwds:
-                if p.get("tab_id") == active_tab:
-                    active_pane = p
-                    break
-        if not active_pane and cwds:
-            active_pane = cwds[0]
-        if active_pane:
-            cwd = active_pane.get("foreground_cwd") or active_pane.get("cwd")
-            if cwd:
-                ws_cwds[wid] = to_display_path(cwd)
-
     entries: list[Entry] = []
     for ws in workspaces:
         if not isinstance(ws, dict):
@@ -188,11 +150,7 @@ def workspace_entries() -> list[Entry]:
         tabs = ws.get("tab_count", 0)
         status = ws.get("agent_status", "unknown")
 
-        cwd_str = ws_cwds.get(wid, "")
-        if cwd_str:
-            subtitle = f"{cwd_str}  ({tabs}t, {panes}p, {status})"
-        else:
-            subtitle = f"{tabs} tabs, {panes} panes, {status}"
+        subtitle = f"{tabs} tabs, {panes} panes, {status}"
 
         entries.append(
             Entry(
