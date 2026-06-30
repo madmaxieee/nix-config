@@ -37,12 +37,15 @@ class Entry:
     value: str
 
     def line(self) -> str:
-        cyan = "\033[36m"
-        yellow = "\033[33m"
+        colors = {
+            "workspace": "\033[36m",  # cyan
+            "citc": "\033[37m",       # white
+            "zoxide": "\033[33m",     # yellow
+        }
         dim = "\033[90m"
         reset = "\033[0m"
 
-        color = cyan if self.kind == "workspace" else yellow
+        color = colors.get(self.kind, "\033[33m")
         if self.title:
             padded_title = self.title
             if len(self.title) < TITLE_PAD_WIDTH:
@@ -163,8 +166,52 @@ def zoxide_entries() -> list[Entry]:
     return entries
 
 
+def citc_entries() -> list[Entry]:
+    logname = os.environ.get("LOGNAME") or os.environ.get("USER")
+    if not logname:
+        return []
+    citc_dir = f"/google/src/cloud/{logname}"
+    if not os.path.isdir(citc_dir):
+        return []
+
+    try:
+        proc = subprocess.run(
+            ["jj", "citc_list"],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except FileNotFoundError:
+        return []
+    if proc.returncode != 0 or not proc.stdout.strip():
+        return []
+
+    entries: list[Entry] = []
+    seen_paths: set[str] = set()
+
+    for line in proc.stdout.splitlines():
+        workspace_name = line.strip()
+        if not workspace_name:
+            continue
+        path = f"{citc_dir}/{workspace_name}"
+        if path in seen_paths:
+            continue
+        seen_paths.add(path)
+
+        entries.append(
+            Entry(
+                kind="citc",
+                title=f"   {workspace_name}",
+                subtitle=path,
+                value=path,
+            )
+        )
+    return entries
+
+
 def all_entries() -> list[Entry]:
-    return workspace_entries() + zoxide_entries()
+    return workspace_entries() + citc_entries() + zoxide_entries()
 
 
 def choose_with_fzf(entries: list[Entry]) -> Entry | None:
@@ -227,7 +274,7 @@ def focus_or_create(entry: Entry) -> None:
         run_checked([herdr_bin(), "workspace", "focus", entry.value])
         return
 
-    if entry.kind == "zoxide":
+    if entry.kind in ("zoxide", "citc"):
         path = Path(entry.value).expanduser()
         if not path.is_dir():
             raise SystemExit(f"not a directory: {path}")
