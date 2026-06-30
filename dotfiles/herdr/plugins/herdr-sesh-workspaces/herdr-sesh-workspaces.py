@@ -26,6 +26,8 @@ from pathlib import Path
 PLUGIN_ID = "madmax.herdr-sesh-workspaces"
 PICKER_ENTRYPOINT = "picker"
 
+TITLE_PAD_WIDTH = 40
+
 
 @dataclass(frozen=True)
 class Entry:
@@ -42,7 +44,10 @@ class Entry:
 
         color = cyan if self.kind == "workspace" else yellow
         if self.title:
-            title_part = f"{color}{self.title[0]}{reset}{self.title[1:]}"
+            padded_title = self.title
+            if len(self.title) < TITLE_PAD_WIDTH:
+                padded_title = self.title + " " * (TITLE_PAD_WIDTH - len(self.title))
+            title_part = f"{color}{padded_title[0]}{reset}{padded_title[1:]}"
         else:
             title_part = ""
 
