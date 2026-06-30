@@ -8,7 +8,7 @@ platforms = ["linux", "macos"]
 [[actions]]
 id = "workspaces"
 title = "Sesh Workspaces"
-command = ["python3", "./herdr-sesh-workspaces.py", "launch"]
+command = ["python3", "./herdr-sesh-workspaces.py", "toggle"]
 
 [[panes]]
 id = "picker"

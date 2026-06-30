@@ -303,7 +303,56 @@ def focus_or_create(entry: Entry) -> None:
     raise SystemExit(f"unknown entry type: {entry.kind}")
 
 
-def launch() -> None:
+def get_current_workspace_id() -> str | None:
+    data = run_json([herdr_bin(), "pane", "current"])
+    if not isinstance(data, dict):
+        return None
+    result = data.get("result")
+    if not isinstance(result, dict):
+        return None
+    pane = result.get("pane")
+    if not isinstance(pane, dict):
+        return None
+    return pane.get("workspace_id")
+
+
+def find_existing_picker_pane(current_workspace_id: str) -> str | None:
+    data = run_json([herdr_bin(), "pane", "list"])
+    if not isinstance(data, dict):
+        return None
+    result = data.get("result")
+    if not isinstance(result, dict):
+        return None
+    panes = result.get("panes")
+    if not isinstance(panes, list):
+        return None
+
+    plugin_dir = str(Path(__file__).parent.resolve())
+    for pane in panes:
+        if not isinstance(pane, dict):
+            continue
+        if pane.get("workspace_id") != current_workspace_id:
+            continue
+
+        is_picker = False
+        if pane.get("label") == "Sesh Workspaces":
+            is_picker = True
+        elif pane.get("cwd") == plugin_dir or pane.get("foreground_cwd") == plugin_dir:
+            is_picker = True
+
+        if is_picker:
+            return pane.get("pane_id")
+    return None
+
+
+def toggle() -> None:
+    current_ws = get_current_workspace_id()
+    if current_ws:
+        existing_pane_id = find_existing_picker_pane(current_ws)
+        if existing_pane_id:
+            run_checked([herdr_bin(), "pane", "close", existing_pane_id])
+            return
+
     plugin_id = os.environ.get("HERDR_PLUGIN_ID") or PLUGIN_ID
     run_checked(
         [
@@ -335,13 +384,13 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="herdr workspace picker backed by sesh zoxide"
     )
-    parser.add_argument("command", choices=["launch", "picker", "version"])
+    parser.add_argument("command", choices=["toggle", "picker", "version"])
     args = parser.parse_args(argv)
 
     if args.command == "version":
         print("herdr-sesh-workspaces 0.1.0")
-    elif args.command == "launch":
-        launch()
+    elif args.command == "toggle":
+        toggle()
     elif args.command == "picker":
         picker()
     return 0
