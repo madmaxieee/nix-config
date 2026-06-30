@@ -94,6 +94,37 @@ def run_checked(argv: list[str]) -> None:
         raise SystemExit(proc.returncode)
 
 
+def to_display_path(path: str) -> str:
+    home = str(Path.home())
+    if path == home:
+        return "~"
+    if path.startswith(home + "/"):
+        return "~" + path[len(home) :]
+
+    username = os.environ.get("LOGNAME") or os.environ.get("USER")
+    if not username:
+        return path
+
+    citc_prefix = f"/google/src/cloud/{username}/"
+    if not path.startswith(citc_prefix):
+        return path
+
+    rel_path = path[len(citc_prefix) :]
+    parts = rel_path.split("/", 1)
+    client_name = parts[0]
+    rest = parts[1] if len(parts) > 1 else ""
+    if rest.startswith("google3/"):
+        sub_path = rest[len("google3/") :]
+        return f"{client_name}@//{sub_path}"
+    elif rest == "google3":
+        return f"{client_name}@//"
+    else:
+        if rest:
+            return f"{client_name}@//depot/{rest}"
+        else:
+            return f"{client_name}@//depot"
+
+
 def workspace_entries() -> list[Entry]:
     data = run_json([herdr_bin(), "workspace", "list"])
     if not isinstance(data, dict):
@@ -104,6 +135,44 @@ def workspace_entries() -> list[Entry]:
     workspaces = result.get("workspaces")
     if not isinstance(workspaces, list):
         return []
+
+    pane_data = run_json([herdr_bin(), "pane", "list"])
+    panes_list = []
+    if isinstance(pane_data, dict):
+        pane_result = pane_data.get("result")
+        if isinstance(pane_result, dict):
+            panes_list = pane_result.get("panes") or []
+
+    panes_by_ws: dict[str, list[dict]] = {}
+    for pane in panes_list:
+        if not isinstance(pane, dict):
+            continue
+        wid = pane.get("workspace_id")
+        if wid:
+            panes_by_ws.setdefault(wid, []).append(pane)
+
+    ws_cwds: dict[str, str] = {}
+    for ws in workspaces:
+        if not isinstance(ws, dict):
+            continue
+        wid = ws.get("workspace_id")
+        if not wid:
+            continue
+        active_tab = ws.get("active_tab_id")
+        cwds = panes_by_ws.get(wid, [])
+
+        active_pane = None
+        if active_tab:
+            for p in cwds:
+                if p.get("tab_id") == active_tab:
+                    active_pane = p
+                    break
+        if not active_pane and cwds:
+            active_pane = cwds[0]
+        if active_pane:
+            cwd = active_pane.get("foreground_cwd") or active_pane.get("cwd")
+            if cwd:
+                ws_cwds[wid] = to_display_path(cwd)
 
     entries: list[Entry] = []
     for ws in workspaces:
@@ -118,12 +187,19 @@ def workspace_entries() -> list[Entry]:
         panes = ws.get("pane_count", 0)
         tabs = ws.get("tab_count", 0)
         status = ws.get("agent_status", "unknown")
+
+        cwd_str = ws_cwds.get(wid, "")
+        if cwd_str:
+            subtitle = f"{cwd_str}  ({tabs}t, {panes}p, {status})"
+        else:
+            subtitle = f"{tabs} tabs, {panes} panes, {status}"
+
         entries.append(
             Entry(
                 kind="workspace",
                 icon=f"󰍹 {focused}",
                 title=f"{number}: {label}",
-                subtitle=f"{tabs} tabs, {panes} panes, {status}",
+                subtitle=subtitle,
                 value=wid,
             )
         )
@@ -146,7 +222,6 @@ def zoxide_entries() -> list[Entry]:
 
     entries: list[Entry] = []
     seen_paths: set[str] = set()
-    home = str(Path.home())
 
     for line in proc.stdout.splitlines():
         path = line.strip()
@@ -154,18 +229,11 @@ def zoxide_entries() -> list[Entry]:
             continue
         seen_paths.add(path)
 
-        # Replace home path with tilde
-        display_path = path
-        if path == home:
-            display_path = "~"
-        elif path.startswith(home + "/"):
-            display_path = "~" + path[len(home) :]
-
         entries.append(
             Entry(
                 kind="zoxide",
                 icon="",
-                title=display_path,
+                title=to_display_path(path),
                 subtitle=path,
                 value=path,
             )
