@@ -117,20 +117,43 @@ def workspace_entries() -> list[Entry]:
 
 
 def zoxide_entries() -> list[Entry]:
-    data = run_json(["sesh", "list", "--json", "--zoxide"])
-    if not isinstance(data, list):
+    try:
+        proc = subprocess.run(
+            ["zoxide", "query", "--list"],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except FileNotFoundError:
+        return []
+    if proc.returncode != 0 or not proc.stdout.strip():
         return []
 
     entries: list[Entry] = []
     seen_paths: set[str] = set()
-    for item in data:
-        path = str(item.get("Path") or "")
+    home = str(Path.home())
+
+    for line in proc.stdout.splitlines():
+        path = line.strip()
         if not path or path in seen_paths:
             continue
         seen_paths.add(path)
-        name = str(item.get("Name") or Path(path).name or path)
+
+        # Replace home path with tilde
+        display_path = path
+        if path == home:
+            display_path = "~"
+        elif path.startswith(home + "/"):
+            display_path = "~" + path[len(home) :]
+
         entries.append(
-            Entry(kind="zoxide", title=f" {name}", subtitle=path, value=path)
+            Entry(
+                kind="zoxide",
+                title=f"   {display_path}",
+                subtitle=path,
+                value=path,
+            )
         )
     return entries
 
