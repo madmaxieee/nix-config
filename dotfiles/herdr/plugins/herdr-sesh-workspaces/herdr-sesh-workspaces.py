@@ -452,7 +452,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="herdr workspace picker backed by sesh zoxide"
     )
-    parser.add_argument("command", choices=["toggle", "picker", "version"])
+    parser.add_argument("command", choices=["toggle", "picker", "version", "list"])
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -461,6 +461,9 @@ def main(argv: list[str]) -> int:
         toggle()
     elif args.command == "picker":
         picker()
+    elif args.command == "list":
+        for entry in all_entries():
+            print(entry.line())
     return 0
 
 
