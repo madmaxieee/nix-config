@@ -172,9 +172,21 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     if not fzf:
         return None
 
-    lines = [entry.line() for entry in entries]
+    lines = [f"{i}\t{entry.line()}" for i, entry in enumerate(entries)]
     proc = subprocess.run(
-        [fzf, "--ansi", "--prompt", "workspace > ", "--height", "100%", "--reverse"],
+        [
+            fzf,
+            "--ansi",
+            "--prompt",
+            "workspace > ",
+            "--height",
+            "100%",
+            "--reverse",
+            "-d",
+            "\t",
+            "--with-nth",
+            "2..",
+        ],
         input="\n".join(lines) + "\n",
         text=True,
         stdout=subprocess.PIPE,
@@ -183,7 +195,7 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     if proc.returncode != 0 or not proc.stdout.strip():
         return None
     try:
-        selected = int(proc.stdout.strip().split(".", 1)[0]) - 1
+        selected = int(proc.stdout.split("\t", 1)[0])
     except ValueError:
         return None
     return entries[selected] if 0 <= selected < len(entries) else None
@@ -191,8 +203,8 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
 
 def choose_numbered(entries: list[Entry]) -> Entry | None:
     print("Sesh Workspaces\n")
-    for entry in entries:
-        print(entry.line())
+    for i, entry in enumerate(entries, 1):
+        print(f"{i:3d}. {entry.line()}")
     print()
     raw = input("workspace > ").strip()
     if not raw:
