@@ -1,16 +1,21 @@
-onboarding = false
 # herdr configuration
 # Place this file at ~/.config/herdr/config.toml
 
 # Show first-run notification setup on startup.
 # Missing also shows onboarding; set false after you've chosen.
-# onboarding = true
+onboarding = false
 
 [theme]
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-name = "catppuccin"
+# name = "catppuccin"
+
+# Follow host terminal light/dark appearance and switch Herdr UI themes.
+# Existing manual behavior is unchanged unless this is true.
+# auto_switch = false
+# dark_name = "catppuccin"
+# light_name = "catppuccin-latte"
 
 # Override individual color tokens on top of the base theme.
 # Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
@@ -35,9 +40,15 @@ name = "catppuccin"
 # new_cwd = "follow"
 
 [update]
-# Update channel used by background checks and `herdr update`.
+# Update channel used by background version checks and `herdr update`.
 # Use "stable" for normal releases or "preview" for opt-in preview builds.
 # channel = "stable"
+
+# Check herdr.dev for new Herdr versions in the background.
+# version_check = true
+
+# Check herdr.dev for remote agent-detection manifest updates in the background.
+# manifest_check = true
 
 [keys]
 # Prefix key to enter prefix mode (default: "ctrl+b")
@@ -64,11 +75,12 @@ prefix = "ctrl+space"
 # remove_worktree = ""  # optional, unset by default; opens confirmation
 # rename_workspace = "prefix+shift+w"
 # close_workspace = "prefix+shift+d"
-# previous_workspace = "" # optional, unset by default
-# next_workspace = ""     # optional, unset by default
+previous_workspace = "prefix+up" # optional, unset by default
+next_workspace = "prefix+down"   # optional, unset by default
 # previous_agent = ""     # optional, unset by default
 # next_agent = ""         # optional, unset by default
 # focus_agent = ""        # optional indexed binding, e.g. "prefix+alt+1..9"
+# remote_image_paste = "ctrl+v" # only active in herdr --remote; empty disables raw-key image paste
 # new_tab = "prefix+c"
 # rename_tab = "prefix+shift+t"
 # previous_tab = "prefix+p"
@@ -110,10 +122,10 @@ navigate_workspace_down = ["down", "n"]
 # command = "lazygit"
 
 [[keys.command]]
-key = ["ctrl+alt+k", "cmd+k"]
+key = ["ctrl+alt+k", "cmd+k", "prefix+t"]
 type = "plugin_action"
 command = "madmax.herdr-sesh-workspaces.workspaces"
-description = "Open sesh-backed workspace picker"
+description = "Open sesh-like workspace picker"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -163,11 +175,18 @@ description = "Open sesh-backed workspace picker"
 # Set false to create tabs immediately with generated names.
 prompt_new_tab_name = false
 
+# Draw borders around split panes.
+# pane_borders = true
+
+# Keep split panes visually separated instead of sharing divider borders.
+# pane_gaps = true
+
 # Show detected/reported agent labels in split pane borders when no manual pane name is set.
 # show_agent_labels_on_pane_borders = false
 
-# Agent panel scope: "current" or "all". Toggling it in the sidebar saves this setting.
-# agent_panel_scope = "all"
+# Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
+# "workspaces" is accepted as an alias for "spaces".
+# agent_panel_sort = "spaces"
 
 # Accent color for highlights, borders, and navigation UI.
 # Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
