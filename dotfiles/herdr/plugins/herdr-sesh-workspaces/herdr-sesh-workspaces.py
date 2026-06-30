@@ -36,7 +36,7 @@ class Entry:
     subtitle: str
     value: str
 
-    def line(self, index: int) -> str:
+    def line(self) -> str:
         cyan = "\033[36m"
         yellow = "\033[33m"
         dim = "\033[90m"
@@ -53,8 +53,8 @@ class Entry:
 
         if self.subtitle:
             subtitle_part = f"{dim}{self.subtitle}{reset}"
-            return f"{index:3d}. {title_part}  {dim}—{reset} {subtitle_part}"
-        return f"{index:3d}. {title_part}"
+            return f"{title_part}  {dim}—{reset} {subtitle_part}"
+        return f"{title_part}"
 
 
 def herdr_bin() -> str:
@@ -172,7 +172,7 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     if not fzf:
         return None
 
-    lines = [entry.line(i + 1) for i, entry in enumerate(entries)]
+    lines = [entry.line() for entry in entries]
     proc = subprocess.run(
         [fzf, "--ansi", "--prompt", "workspace > ", "--height", "100%", "--reverse"],
         input="\n".join(lines) + "\n",
@@ -191,8 +191,8 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
 
 def choose_numbered(entries: list[Entry]) -> Entry | None:
     print("Sesh Workspaces\n")
-    for i, entry in enumerate(entries, 1):
-        print(entry.line(i))
+    for entry in entries:
+        print(entry.line())
     print()
     raw = input("workspace > ").strip()
     if not raw:
