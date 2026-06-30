@@ -37,6 +37,7 @@ class Entry:
     title: str
     subtitle: str
     value: str
+    is_focused: bool = False
 
     def line(self) -> str:
         colors = {
@@ -159,6 +160,7 @@ def workspace_entries() -> list[Entry]:
                 title=f"{number}: {label}",
                 subtitle=subtitle,
                 value=wid,
+                is_focused=ws.get("focused", False),
             )
         )
     return entries
@@ -254,20 +256,29 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
         return None
 
     lines = [f"{i}\t{entry.line()}" for i, entry in enumerate(entries)]
+    fzf_args = [
+        fzf,
+        "--ansi",
+        "--prompt",
+        "workspace > ",
+        "--height",
+        "100%",
+        "--reverse",
+        "-d",
+        "\t",
+        "--with-nth",
+        "2..",
+    ]
+
+    # Find the focused entry to set initial cursor position
+    for i, entry in enumerate(entries):
+        if entry.is_focused:
+            # fzf pos() is 1-indexed
+            fzf_args.extend(["--bind", f"load:pos({i + 1})"])
+            break
+
     proc = subprocess.run(
-        [
-            fzf,
-            "--ansi",
-            "--prompt",
-            "workspace > ",
-            "--height",
-            "100%",
-            "--reverse",
-            "-d",
-            "\t",
-            "--with-nth",
-            "2..",
-        ],
+        fzf_args,
         input="\n".join(lines) + "\n",
         text=True,
         stdout=subprocess.PIPE,
