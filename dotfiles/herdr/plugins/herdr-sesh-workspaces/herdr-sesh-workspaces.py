@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""herdr-sesh-workspaces: a tiny herdr workspace picker backed by sesh.
+"""herdr-sesh-workspaces: a tiny herdr workspace picker backed by zoxide and CITC.
 
 What it does:
 
   - Shows existing herdr workspaces and focuses the selected one.
-  - Shows `sesh list --json --zoxide` entries and creates/focuses a new herdr
-    workspace rooted at the selected zoxide path.
-
-No cloud/CITC/custom session types yet; this only covers sesh's built-in zoxide
-source plus herdr's own workspaces.
+  - Shows zoxide entries directly (via `zoxide query --list`) and creates/focuses
+    a new herdr workspace rooted at the selected zoxide path.
+  - Shows CITC workspaces (via `jj citc_list`) and creates/focuses a new herdr
+    workspace rooted at the selected CITC path.
+  - Uses fzf with hidden indices and ANSI colors for a clean, aligned, and
+    interactive picker experience.
 """
 
 from __future__ import annotations
