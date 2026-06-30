@@ -64,19 +64,25 @@ in
 
   programs.fish.functions = {
     cloudtop = ''
-      if test \( (count $argv) -gt 1 \) -a \( "$argv[1]" = --exec \)
-          set -f exec_cmd exec
+      if test (count $argv) -gt 1; and contains -- "$argv[1]" -e --exec
+          set -f should_exec true
           set -f ssh_host $argv[2]
+          set -f extra_args $argv[3..]
       else
-          set -f exec_cmd ""
+          set -f should_exec false
           set -f ssh_host $argv[1]
+          set -f extra_args $argv[2..]
       end
 
       if type -q autogcert
         autogcert $ssh_host
       end
 
-      eval "$exec_cmd caffeinate -i ssh $ssh_host"
+      if $should_exec
+          exec caffeinate -i ssh $ssh_host $extra_args
+      else
+          caffeinate -i ssh $ssh_host $extra_args
+      end
     '';
   };
 
