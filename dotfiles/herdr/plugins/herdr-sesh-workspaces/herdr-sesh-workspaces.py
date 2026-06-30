@@ -370,7 +370,49 @@ def toggle() -> None:
     )
 
 
+def ensure_main_workspace() -> None:
+    try:
+        data = run_json([herdr_bin(), "workspace", "list"])
+        if not isinstance(data, dict):
+            return
+        result = data.get("result")
+        if not isinstance(result, dict):
+            return
+        workspaces = result.get("workspaces")
+        if not isinstance(workspaces, list):
+            return
+
+        has_main = False
+        for ws in workspaces:
+            if not isinstance(ws, dict):
+                continue
+            if ws.get("label") == "main" or ws.get("workspace_id") == "main":
+                has_main = True
+                break
+
+        if not has_main:
+            home = str(Path.home())
+            subprocess.run(
+                [
+                    herdr_bin(),
+                    "workspace",
+                    "create",
+                    "--cwd",
+                    home,
+                    "--label",
+                    "main",
+                    "--no-focus",
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
+    except Exception:
+        pass
+
+
 def picker() -> None:
+    ensure_main_workspace()
     entries = all_entries()
     if not entries:
         raise SystemExit("no herdr workspaces or sesh zoxide entries found")
