@@ -8,12 +8,43 @@ import sys
 from pathlib import Path
 
 TEMP_DIR = Path(os.environ.get("TMPDIR", "/tmp"))
-CURRENT_WORKSPACE_FILE = TEMP_DIR / "herdr_mru_workspaces"
-LAST_WORKSPACE_FILE = TEMP_DIR / "herdr_mru_workspaces.last"
+
+
+def state_file(name: str) -> Path:
+    session = get_session_name()
+    return TEMP_DIR / f"herdr_mru_workspaces.{session}{name}"
+
+
+def safe_state_part(value: str) -> str:
+    return "".join(c if c.isalnum() or c in "._-" else "_" for c in value) or "default"
 
 
 def get_herdr_bin():
     return os.environ.get("HERDR_BIN_PATH") or shutil.which("herdr") or "herdr"
+
+
+def get_session_name():
+    session = os.environ.get("HERDR_SESSION")
+    if session:
+        return safe_state_part(session)
+
+    socket_path = os.environ.get("HERDR_SOCKET_PATH")
+    data = run_json([get_herdr_bin(), "session", "list", "--json"])
+    sessions = data.get("sessions") if isinstance(data, dict) else None
+    if isinstance(sessions, list):
+        default_session = None
+        for item in sessions:
+            if not isinstance(item, dict):
+                continue
+            if socket_path and item.get("socket_path") == socket_path:
+                return safe_state_part(str(item.get("name") or "default"))
+            if item.get("default") is True:
+                default_session = str(item.get("name") or "default")
+
+        if default_session:
+            return safe_state_part(default_session)
+
+    return "default"
 
 
 def run_json(argv: list[str]) -> dict | list | None:
@@ -60,25 +91,30 @@ def track():
     if not current:
         return
 
-    if CURRENT_WORKSPACE_FILE.exists():
+    current_workspace_file = state_file("")
+    last_workspace_file = state_file(".last")
+
+    if current_workspace_file.exists():
         try:
-            prev = CURRENT_WORKSPACE_FILE.read_text().strip()
+            prev = current_workspace_file.read_text().strip()
             if prev and prev != current:
-                LAST_WORKSPACE_FILE.write_text(f"{prev}\n")
-                CURRENT_WORKSPACE_FILE.write_text(f"{current}\n")
+                last_workspace_file.write_text(f"{prev}\n")
+                current_workspace_file.write_text(f"{current}\n")
         except Exception as e:
             sys.stderr.write(f"Error updating state files: {e}\n")
     else:
         try:
-            CURRENT_WORKSPACE_FILE.write_text(f"{current}\n")
+            current_workspace_file.write_text(f"{current}\n")
         except Exception as e:
             sys.stderr.write(f"Error creating state file: {e}\n")
 
 
 def toggle():
-    if LAST_WORKSPACE_FILE.exists():
+    last_workspace_file = state_file(".last")
+
+    if last_workspace_file.exists():
         try:
-            target = LAST_WORKSPACE_FILE.read_text().strip()
+            target = last_workspace_file.read_text().strip()
             if target:
                 subprocess.run(
                     [get_herdr_bin(), "workspace", "focus", target], check=False
