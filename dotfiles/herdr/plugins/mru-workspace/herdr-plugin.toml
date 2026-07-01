@@ -1,0 +1,17 @@
+id = "mru-workspace"
+name = "MRU Workspace Tracker"
+version = "0.1.0"
+description = "Tracks workspace focus events and toggles to the previous recent workspace"
+min_herdr_version = "0.1.0"
+platforms = ["linux", "macos"]
+
+[[events]]
+on = "workspace.focused"
+command = ["python3", "./mru.py", "track"]
+
+[[actions]]
+id = "toggle-recent"
+name = "Toggle Previous Workspace"
+title = "Toggle Previous Workspace"
+key = "prefix+space"
+command = ["python3", "./mru.py", "toggle"]

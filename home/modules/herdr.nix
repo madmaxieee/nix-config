@@ -27,7 +27,9 @@ rec {
 
   home.activation = {
     herdr_plugin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${herdr}/bin/herdr integration install opencode
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/herdr-sesh-workspaces
+      run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/mru-workspace
     '';
   };
 }

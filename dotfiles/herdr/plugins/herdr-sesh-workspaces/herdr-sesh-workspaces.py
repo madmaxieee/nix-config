@@ -21,6 +21,7 @@ import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 
@@ -65,7 +66,8 @@ class Entry:
         return f"{title_part}"
 
 
-def herdr_bin() -> str:
+@lru_cache()
+def get_herdr_bin() -> str:
     return os.environ.get("HERDR_BIN_PATH") or shutil.which("herdr") or "herdr"
 
 
@@ -126,7 +128,7 @@ def to_display_path(path: str) -> str:
 
 
 def workspace_entries() -> list[Entry]:
-    data = run_json([herdr_bin(), "workspace", "list"])
+    data = run_json([get_herdr_bin(), "workspace", "list"])
     if not isinstance(data, dict):
         return []
     result = data.get("result")
@@ -305,7 +307,7 @@ def choose(entries: list[Entry]) -> Entry | None:
 
 def focus_or_create(entry: Entry) -> None:
     if entry.kind == "workspace":
-        run_checked([herdr_bin(), "workspace", "focus", entry.value])
+        run_checked([get_herdr_bin(), "workspace", "focus", entry.value])
         return
 
     if entry.kind in ("zoxide", "citc"):
@@ -315,7 +317,7 @@ def focus_or_create(entry: Entry) -> None:
         label = f"{entry.icon} {path.name or str(path)}"
         run_checked(
             [
-                herdr_bin(),
+                get_herdr_bin(),
                 "workspace",
                 "create",
                 "--cwd",
@@ -331,7 +333,7 @@ def focus_or_create(entry: Entry) -> None:
 
 
 def get_current_workspace_id() -> str | None:
-    data = run_json([herdr_bin(), "pane", "current"])
+    data = run_json([get_herdr_bin(), "pane", "current"])
     if not isinstance(data, dict):
         return None
     result = data.get("result")
@@ -344,7 +346,7 @@ def get_current_workspace_id() -> str | None:
 
 
 def find_existing_picker_pane(current_workspace_id: str) -> str | None:
-    data = run_json([herdr_bin(), "pane", "list"])
+    data = run_json([get_herdr_bin(), "pane", "list"])
     if not isinstance(data, dict):
         return None
     result = data.get("result")
@@ -377,13 +379,13 @@ def toggle() -> None:
     if current_ws:
         existing_pane_id = find_existing_picker_pane(current_ws)
         if existing_pane_id:
-            run_checked([herdr_bin(), "pane", "close", existing_pane_id])
+            run_checked([get_herdr_bin(), "pane", "close", existing_pane_id])
             return
 
     plugin_id = os.environ.get("HERDR_PLUGIN_ID") or PLUGIN_ID
     run_checked(
         [
-            herdr_bin(),
+            get_herdr_bin(),
             "plugin",
             "pane",
             "open",
@@ -399,7 +401,7 @@ def toggle() -> None:
 
 def ensure_main_workspace() -> None:
     try:
-        data = run_json([herdr_bin(), "workspace", "list"])
+        data = run_json([get_herdr_bin(), "workspace", "list"])
         if not isinstance(data, dict):
             return
         result = data.get("result")
@@ -421,7 +423,7 @@ def ensure_main_workspace() -> None:
             home = str(Path.home())
             subprocess.run(
                 [
-                    herdr_bin(),
+                    get_herdr_bin(),
                     "workspace",
                     "create",
                     "--cwd",

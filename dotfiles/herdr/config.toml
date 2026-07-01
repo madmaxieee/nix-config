@@ -127,6 +127,12 @@ type = "plugin_action"
 command = "madmax.herdr-sesh-workspaces.workspaces"
 description = "Open sesh-like workspace picker"
 
+[[keys.command]]
+key = "prefix+space"
+type = "plugin_action"
+command = "mru-workspace.toggle-recent"
+description = "Toggle to the previous active workspace"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
@@ -198,7 +204,7 @@ prompt_new_tab_name = false
 # herdr = show in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-# delivery = "off"
+delivery = "herdr"
 # delay_seconds = 1
 
 [ui.toast.herdr]
