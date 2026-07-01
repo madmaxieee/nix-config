@@ -312,6 +312,7 @@ def focus_or_create(entry: Entry) -> None:
         path = Path(entry.value).expanduser()
         if not path.is_dir():
             raise SystemExit(f"not a directory: {path}")
+        label = f"{entry.icon} {path.name or str(path)}"
         run_checked(
             [
                 herdr_bin(),
@@ -320,7 +321,7 @@ def focus_or_create(entry: Entry) -> None:
                 "--cwd",
                 str(path),
                 "--label",
-                path.name or str(path),
+                label,
                 "--focus",
             ]
         )
