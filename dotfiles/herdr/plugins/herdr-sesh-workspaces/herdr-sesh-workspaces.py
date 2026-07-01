@@ -36,8 +36,8 @@ class Entry:
     kind: str
     icon: str
     title: str
-    subtitle: str
     value: str
+    subtitle: str | None = None
 
     def line(self) -> str:
         colors = {
@@ -62,7 +62,7 @@ class Entry:
 
         if self.subtitle:
             subtitle_part = f"{dim}{self.subtitle}{reset}"
-            return f"{title_part}  {dim}{reset} {subtitle_part}"
+            return f"{title_part}  {dim}{reset}{subtitle_part}"
         return f"{title_part}"
 
 
@@ -194,7 +194,6 @@ def zoxide_entries() -> list[Entry]:
                 kind="zoxide",
                 icon="",
                 title=to_display_path(path),
-                subtitle=path,
                 value=path,
             )
         )
@@ -239,7 +238,6 @@ def citc_entries() -> list[Entry]:
                 kind="citc",
                 icon="",
                 title=workspace_name,
-                subtitle=path,
                 value=path,
             )
         )
@@ -259,11 +257,10 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     proc = subprocess.run(
         [
             fzf,
+            "--no-sort",
             "--ansi",
             "--prompt",
             "workspace > ",
-            "--height",
-            "100%",
             "--reverse",
             "-d",
             "\t",
