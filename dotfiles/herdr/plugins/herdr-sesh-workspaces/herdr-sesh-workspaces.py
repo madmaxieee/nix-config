@@ -39,7 +39,7 @@ class Entry:
     value: str
     subtitle: str | None = None
 
-    def line(self) -> str:
+    def display_fields(self) -> tuple[str, str]:
         colors = {
             "workspace": "\033[36m",  # cyan
             "citc": "\033[37m",  # white
@@ -60,9 +60,13 @@ class Entry:
         else:
             title_part = padded_title
 
+        subtitle_part = f"{dim}{self.subtitle}{reset}" if self.subtitle else ""
+        return title_part, subtitle_part
+
+    def line(self) -> str:
+        title_part, subtitle_part = self.display_fields()
         if self.subtitle:
-            subtitle_part = f"{dim}{self.subtitle}{reset}"
-            return f"{title_part}  {dim}{reset}{subtitle_part}"
+            return f"{title_part}\t{subtitle_part}"
         return f"{title_part}"
 
 
@@ -194,6 +198,7 @@ def zoxide_entries() -> list[Entry]:
                 kind="zoxide",
                 icon="",
                 title=to_display_path(path),
+                subtitle=path,
                 value=path,
             )
         )
@@ -253,21 +258,26 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     if not fzf:
         return None
 
-    lines = [f"{i}\t{entry.line()}" for i, entry in enumerate(entries)]
+    lines = []
+    for i, entry in enumerate(entries):
+        title_part, subtitle_part = entry.display_fields()
+        lines.append(f"{i}\t{title_part}\t{subtitle_part}")
+
     proc = subprocess.run(
         [
             fzf,
             "--no-sort",
             "--ansi",
-            "--prompt",
-            "workspace > ",
             "--reverse",
-            "-d",
-            "\t",
-            "--with-nth",
-            "2..",
+            "--delimiter=\t",
+            # on accept, print the 1st field BEFORE transformation, the index
+            "--accept-nth=1",
+            # transform line to hide the 1st field (index)
+            "--with-nth=2..",
+            # limit search scope to the 1st field AFTER transformation, which is the original 2nd field (title)
+            "--nth=1",
         ],
-        input="\n".join(lines) + "\n",
+        input="\n".join(lines),
         text=True,
         stdout=subprocess.PIPE,
         check=False,
@@ -275,7 +285,7 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
     if proc.returncode != 0 or not proc.stdout.strip():
         return None
     try:
-        selected = int(proc.stdout.split("\t", 1)[0])
+        selected = int(proc.stdout)
     except ValueError:
         return None
     return entries[selected] if 0 <= selected < len(entries) else None
@@ -286,7 +296,7 @@ def choose_numbered(entries: list[Entry]) -> Entry | None:
     for i, entry in enumerate(entries, 1):
         print(f"{i:3d}. {entry.line()}")
     print()
-    raw = input("workspace > ").strip()
+    raw = input("> ").strip()
     if not raw:
         return None
     try:
