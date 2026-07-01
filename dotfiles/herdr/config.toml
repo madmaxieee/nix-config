@@ -133,6 +133,12 @@ type = "plugin_action"
 command = "mru-workspace.toggle-recent"
 description = "Toggle to the previous active workspace"
 
+[[keys.command]]
+key = "ctrl+period"
+type = "shell"
+command = "python3 ~/nix-config/dotfiles/herdr/scripts/agent-or-send-ctrl-period.py"
+description = "Leave agent panes, otherwise send Ctrl-."
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
