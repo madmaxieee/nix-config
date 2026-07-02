@@ -492,11 +492,11 @@
     "tv-yazi": {
       "flake": false,
       "locked": {
-        "lastModified": 1782975574,
-        "narHash": "sha256-RRKvovCiIg9lgbv9AXJaPhBkYsXEbPVrql/mMNEQjfs=",
+        "lastModified": 1782999957,
+        "narHash": "sha256-L3Ial6AUF1DsY+j1o89MEOuqECp+TRx9qi50fc8OdEs=",
         "owner": "madmaxieee",
         "repo": "tv.yazi",
-        "rev": "1e81a99bd2467809a8de9f504c2d2eee8c8c8a6a",
+        "rev": "daa1e2f568d30620e3e2f1a0f21a215e32224226",
         "type": "github"
       },
       "original": {
