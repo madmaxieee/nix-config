@@ -12,11 +12,30 @@ in
 rec {
   home.packages = [ herdr ];
 
-  programs.fish.shellAbbrs = {
-    h = lib.mkDefault "herdr";
+  programs.fish = {
+    functions = {
+      herdr-remote = lib.mkDefault ''
+        if test (count $argv) -ne 1
+            echo "Usage: herdr-remote <remote-host>"
+            return
+        end
+        set -f ssh_host $argv[1]
+
+        if type -q autogcert
+            autogcert $ssh_host
+        end
+
+        caffeinate -i herdr --remote-keybindings server --remote $ssh_host
+      '';
+    };
+    shellAbbrs = {
+      h = lib.mkDefault "herdr";
+      hr = lib.mkDefault "herdr-remote";
+    };
   };
 
   programs.zsh = {
+    shellAliases = programs.fish.functions;
     zsh-abbr.abbreviations = programs.fish.shellAbbrs;
   };
 

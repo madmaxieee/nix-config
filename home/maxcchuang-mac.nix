@@ -75,7 +75,7 @@ in
       end
 
       if type -q autogcert
-        autogcert $ssh_host
+          autogcert $ssh_host
       end
 
       if $should_exec
