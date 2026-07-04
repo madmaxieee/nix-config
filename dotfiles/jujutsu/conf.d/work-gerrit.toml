@@ -1,11 +1,7 @@
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
---when.repositories = ["~/Repos"]
 --when.hostnames = ["maxcchuang.c.googlers.com"]
-
-[user]
-name = "maxcchuang"
-email = "maxcchuang@google.com"
+--when.repositories = ["~/Repos"]
 
 [aliases]
 # If any flag-like element is provided, pass everything to `jj gerrit upload`,
@@ -28,7 +24,6 @@ up = ["util", "exec", "--", "bash", "-c", """
         exec jj gerrit upload "${args[@]}"
     fi
 """, ""]
-
 
 [gerrit]
 default-remote = "goog"

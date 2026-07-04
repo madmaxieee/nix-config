@@ -1,0 +1,8 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+--when.hostnames = ["maxcchuang.c.googlers.com"]
+--when.repositories = ["~/Repos", "/google/src/cloud"]
+
+[user]
+name = "maxcchuang"
+email = "maxcchuang@google.com"
