@@ -5,15 +5,24 @@
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
+  hunk = pkgs.callPackage ../../packages/hunk.nix { };
 in
 rec {
   home.packages =
     with pkgs;
-    [
+    pkgs.lib.optional (!use_system_binary) jujutsu
+    ++ [
+      # diff pagers
       delta
+      hunk
+
+      # fix tools
+      stylua
+      nixfmt
+
+      # other tools
       lazyjj
-    ]
-    ++ pkgs.lib.optional (!use_system_binary) jujutsu;
+    ];
 
   xdg.configFile = {
     "jj/config.toml".source = linkDotfile "jujutsu/config.toml";

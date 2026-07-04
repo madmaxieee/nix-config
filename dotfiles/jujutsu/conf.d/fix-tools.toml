@@ -1,0 +1,9 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[fix.tools.stylua]
+command = ["stylua", "-"]
+patterns = ["glob:'**/*.lua'"]
+
+[fix.tools.nixfmt]
+command = ["nixfmt", "-"]
+patterns = ["glob:'**/*.nix'"]
