@@ -4,6 +4,7 @@ rec {
     uv
     python313
     python313Packages.ipython
+    ruff
   ];
 
   programs.fish = {

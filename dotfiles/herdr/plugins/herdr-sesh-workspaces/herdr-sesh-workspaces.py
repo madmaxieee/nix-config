@@ -24,7 +24,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
-
 PLUGIN_ID = "madmax.herdr-sesh-workspaces"
 PICKER_ENTRYPOINT = "picker"
 

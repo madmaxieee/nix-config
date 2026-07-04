@@ -1,9 +1,16 @@
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
-[fix.tools.stylua]
-command = ["stylua", "-"]
-patterns = ["glob:'**/*.lua'"]
-
 [fix.tools.nixfmt]
 command = ["nixfmt", "-"]
 patterns = ["glob:'**/*.nix'"]
+enabled = false
+
+[fix.tools.ruff-format]
+command = ["ruff", "format", "--stdin-filename=$path", "-"]
+patterns = ["glob:'**/*.py'"]
+enabled = false
+
+[fix.tools.stylua]
+command = ["stylua", "-"]
+patterns = ["glob:'**/*.lua'"]
+enabled = false

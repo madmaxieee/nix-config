@@ -17,8 +17,9 @@ rec {
       hunk
 
       # fix tools
-      stylua
       nixfmt
+      ruff
+      stylua
 
       # other tools
       lazyjj
