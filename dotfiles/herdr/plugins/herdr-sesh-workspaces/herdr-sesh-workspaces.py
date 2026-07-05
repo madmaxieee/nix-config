@@ -24,6 +24,8 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
+import citc
+
 PLUGIN_ID = "madmax.herdr-sesh-workspaces"
 PICKER_ENTRYPOINT = "picker"
 
@@ -106,28 +108,11 @@ def to_display_path(path: str) -> str:
     if path.startswith(home + "/"):
         return "~" + path[len(home) :]
 
-    username = os.environ.get("LOGNAME") or os.environ.get("USER")
-    if not username:
-        return path
+    citc_path = citc.to_citc_display_path(path)
+    if citc_path is not None:
+        return citc_path
 
-    citc_prefix = f"/google/src/cloud/{username}/"
-    if not path.startswith(citc_prefix):
-        return path
-
-    rel_path = path[len(citc_prefix) :]
-    parts = rel_path.split("/", 1)
-    client_name = parts[0]
-    rest = parts[1] if len(parts) > 1 else ""
-    if rest.startswith("google3/"):
-        sub_path = rest[len("google3/") :]
-        return f"{client_name}@//{sub_path}"
-    elif rest == "google3":
-        return f"{client_name}@//"
-    else:
-        if rest:
-            return f"{client_name}@//depot/{rest}"
-        else:
-            return f"{client_name}@//depot"
+    return path
 
 
 def workspace_entries() -> list[Entry]:
@@ -205,47 +190,7 @@ def zoxide_entries() -> list[Entry]:
 
 
 def citc_entries() -> list[Entry]:
-    logname = os.environ.get("LOGNAME") or os.environ.get("USER")
-    if not logname:
-        return []
-    citc_dir = f"/google/src/cloud/{logname}"
-    if not os.path.isdir(citc_dir):
-        return []
-
-    try:
-        proc = subprocess.run(
-            ["jj", "citc_list"],
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-        )
-    except FileNotFoundError:
-        return []
-    if proc.returncode != 0 or not proc.stdout.strip():
-        return []
-
-    entries: list[Entry] = []
-    seen_paths: set[str] = set()
-
-    for line in proc.stdout.splitlines():
-        workspace_name = line.strip()
-        if not workspace_name:
-            continue
-        path = f"{citc_dir}/{workspace_name}"
-        if path in seen_paths:
-            continue
-        seen_paths.add(path)
-
-        entries.append(
-            Entry(
-                kind="citc",
-                icon="",
-                title=workspace_name,
-                value=path,
-            )
-        )
-    return entries
+    return citc.citc_entries(Entry)
 
 
 def all_entries() -> list[Entry]:
