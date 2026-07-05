@@ -53,6 +53,7 @@ rec {
         # for formatting, linting, etc.
         nixfmt
         fennel-ls
+        fnlfmt
 
         # for sqlite.lua
         sqlite
