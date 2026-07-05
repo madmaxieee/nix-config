@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import hashlib
 import os
 import subprocess
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable, TypeVar
 
 T = TypeVar("T")
@@ -43,6 +45,58 @@ def to_citc_display_path(path: str) -> str | None:
             return f"{client_name}@//depot"
 
 
+def _fetch_citc_client_names(citc_dir: str) -> list[str]:
+    try:
+        entries = sorted(
+            [
+                name
+                for name in os.listdir(citc_dir)
+                if not name.startswith((".", "fig-export-", "jj-export-"))
+            ]
+        )
+    except OSError:
+        return []
+
+    content = "".join(f"{name}\n" for name in entries)
+    workspaces_sha1 = hashlib.sha1(content.encode("utf-8")).hexdigest()
+
+    cache_file = Path.home() / ".cache" / "jj_citc_workspaces"
+    cache_lines: list[str] = []
+    if cache_file.is_file():
+        try:
+            cache_lines = cache_file.read_text().splitlines()
+        except OSError:
+            cache_lines = []
+
+    if cache_lines and cache_lines[0] == workspaces_sha1:
+        return cache_lines[1:]
+
+    try:
+        proc = subprocess.run(
+            ["jj", "piper", "citc", "list"],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except FileNotFoundError:
+        return []
+
+    if proc.returncode != 0:
+        return []
+
+    clients = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+
+    try:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        cache_content = "\n".join([workspaces_sha1] + clients) + "\n"
+        cache_file.write_text(cache_content)
+    except OSError:
+        pass
+
+    return clients
+
+
 def list_citc_workspaces() -> list[CitcWorkspace]:
     logname = get_citc_username()
     if not logname:
@@ -51,24 +105,13 @@ def list_citc_workspaces() -> list[CitcWorkspace]:
     if not os.path.isdir(citc_dir):
         return []
 
-    try:
-        proc = subprocess.run(
-            ["jj", "citc_list"],
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-        )
-    except FileNotFoundError:
-        return []
-    if proc.returncode != 0 or not proc.stdout.strip():
-        return []
+    client_names = _fetch_citc_client_names(citc_dir)
 
     workspaces: list[CitcWorkspace] = []
     seen_paths: set[str] = set()
 
-    for line in proc.stdout.splitlines():
-        workspace_name = line.strip()
+    for workspace_name in client_names:
+        workspace_name = workspace_name.strip()
         if not workspace_name:
             continue
         path = f"{citc_dir}/{workspace_name}"
