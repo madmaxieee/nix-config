@@ -776,6 +776,7 @@ return {
     [ [[Cider]] ] = ":code:",
     [ [[Google Calendar]] ] = ":calendar:",
     [ [[Google Tasks]] ] = ":things:",
+    [ [[Jetski Web]] ] = ":antigravity:",
     [ [[KiteTasks]] ] = ":things:",
     [ [[Pocket Casts]] ] = ":broadcasts:",
     [ [[stremio]] ] = ":youtube:",
