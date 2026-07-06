@@ -4,10 +4,10 @@
 What it does:
 
   - Shows existing herdr workspaces and focuses the selected one.
-  - Shows zoxide entries directly (via `zoxide query --list`) and creates/focuses
-    a new herdr workspace rooted at the selected zoxide path.
-  - Shows CITC workspaces (via `jj citc_list`) and creates/focuses a new herdr
-    workspace rooted at the selected CITC path.
+  - Shows zoxide entries directly (via `zoxide query --list`) and
+    creates/focuses a new herdr workspace rooted at the selected zoxide path.
+  - Shows CITC JJ workspaces and creates/focuses a new herdr workspace rooted
+    at the selected CITC path.
   - Uses fzf with hidden indices and ANSI colors for a clean, aligned, and
     interactive picker experience.
 """

@@ -10,7 +10,13 @@ let
   linkDotfile = config.lib.custom.linkDotfile;
 in
 rec {
-  home.packages = [ herdr ];
+  home.packages = [
+    herdr
+
+    # personal plugin dependencies
+    pkgs.fzf
+    pkgs.python313
+  ];
 
   programs.fish = {
     functions = {
@@ -51,4 +57,9 @@ rec {
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/mru-workspace
     '';
   };
+
+  imports = [
+    # for creating workspaces from zoxide query
+    ./zoxide.nix
+  ];
 }
