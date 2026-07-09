@@ -2,21 +2,22 @@
   lib,
   stdenvNoCC,
   fetchurl,
+  installShellFiles,
 }:
 
 let
-  version = "0.7.1";
+  version = "0.7.3";
   release =
     {
       x86_64-linux = {
         os = "linux";
         arch = "x86_64";
-        hash = "sha256-uWWsr/wsIvVLbmxkr3z46Yo/SsJiJjCgWZxnpLnYplQ=";
+        hash = "sha256-BD70Psur2ihGXc/x7sMYRRgVDVZ7i48gzanGyIdwZB0=";
       };
       aarch64-darwin = {
         os = "macos";
         arch = "aarch64";
-        hash = "sha256-FvRlPwSR6h59K0a1sCVC8Y4bguiNqvnikAVy5btjTfg=";
+        hash = "sha256-sxNFOS0ATsHxssgh4a1gEBn6g4X+HkxpMTIetYqSB3M=";
       };
     }
     .${stdenvNoCC.hostPlatform.system} or (throw ''
@@ -38,6 +39,15 @@ stdenvNoCC.mkDerivation {
     runHook preInstall
     install -Dm755 $src "$out/bin/herdr"
     runHook postInstall
+  '';
+
+  nativeBuildInputs = [ installShellFiles ];
+
+  postInstall = ''
+    installShellCompletion --cmd herdr \
+      --bash <($out/bin/herdr completion bash) \
+      --fish <($out/bin/herdr completion fish) \
+      --zsh <($out/bin/herdr completion zsh)
   '';
 
   meta = with lib; {

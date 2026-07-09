@@ -46,7 +46,6 @@ rec {
   };
 
   xdg.configFile = {
-    "fish/completions/herdr.fish".source = linkDotfile "fish/completions/herdr.fish";
     "herdr/config.toml".source = linkDotfile "herdr/config.toml";
   };
 
