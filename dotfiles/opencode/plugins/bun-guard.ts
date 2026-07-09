@@ -14,7 +14,7 @@ const BUN_SYSTEM_LINE = [
 
 const BLOCKED = ["npm", "npx", "yarn", "pnpm", "pnpx"];
 
-export const BunGuardPlugin: Plugin = async ({ $ }) => {
+export const BunGuardPlugin: Plugin = async ({ $, client }) => {
   let isBunProject = false;
 
   try {
@@ -23,7 +23,7 @@ export const BunGuardPlugin: Plugin = async ({ $ }) => {
     ).trim();
     if (!root) return {};
     for (const lock of ["bun.lockb", "bun.lock"]) {
-      const exists = await $`test -f ${root}/${lock}`.quiet().nothrow()
+      const exists = (await $`test -f ${root}/${lock}`.quiet().nothrow())
         .exitCode;
       if (exists === 0) {
         isBunProject = true;
@@ -31,14 +31,24 @@ export const BunGuardPlugin: Plugin = async ({ $ }) => {
       }
     }
   } catch {
-    console.warn(
-      "[bun-guard] Failed to detect bun lock file — plugin disabled",
-    );
+    await client.app.log({
+      body: {
+        service: "bun-guard",
+        level: "info",
+        message: "Failed to detect bun lock file — plugin disabled",
+      },
+    });
     return {};
   }
 
   if (!isBunProject) {
-    console.warn("[bun-guard] No bun lock file found — plugin disabled");
+    await client.app.log({
+      body: {
+        service: "bun-guard",
+        level: "info",
+        message: "No bun lock file found — plugin disabled",
+      },
+    });
     return {};
   }
 

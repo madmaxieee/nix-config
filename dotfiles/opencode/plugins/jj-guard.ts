@@ -146,11 +146,17 @@ const GIT_SPECIFIC_OPS = [
   "update-ref",
 ];
 
-export const JjGuardPlugin: Plugin = async ({ $ }) => {
+export const JjGuardPlugin: Plugin = async ({ $, client }) => {
   try {
     await $`jj root`.quiet();
   } catch {
-    console.warn("[jj-guard] Not in a jj repository — plugin disabled");
+    await client.app.log({
+      body: {
+        service: "jj-guard",
+        level: "info",
+        message: "Not in a jj repository — plugin disabled",
+      },
+    });
     return {};
   }
 
