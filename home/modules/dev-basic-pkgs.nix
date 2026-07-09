@@ -23,6 +23,10 @@ rec {
     rm-improved
     sd
 
+    # compression tools
+    xz
+    zstd
+
     # other
     btop
     chafa
@@ -36,7 +40,6 @@ rec {
     loglit
     ouch
     parallel
-    riffdiff
     ripgrep-all
     rsync
     tealdeer
@@ -44,10 +47,6 @@ rec {
     unixtools.watch
     unixtools.xxd
     wget
-
-    # compression tools
-    xz
-    zstd
   ];
 
   programs.man.enable = true;

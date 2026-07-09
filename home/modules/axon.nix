@@ -15,6 +15,7 @@ in
   home.packages = with pkgs; [
     axon
     glow
+    riffdiff
   ];
 
   xdg.configFile = {

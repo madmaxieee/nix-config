@@ -19,6 +19,7 @@ rec {
       # fix tools
       nixfmt
       ruff
+      shfmt
       stylua
 
       # other tools
