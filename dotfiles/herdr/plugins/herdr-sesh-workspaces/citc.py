@@ -97,6 +97,10 @@ def _fetch_citc_client_names(citc_dir: str) -> list[str]:
     return clients
 
 
+def _citc_workspace_should_skip(name: str):
+    return not name or name.startswith("subagent-")
+
+
 def list_citc_workspaces() -> list[CitcWorkspace]:
     logname = get_citc_username()
     if not logname:
@@ -112,7 +116,7 @@ def list_citc_workspaces() -> list[CitcWorkspace]:
 
     for workspace_name in client_names:
         workspace_name = workspace_name.strip()
-        if not workspace_name:
+        if _citc_workspace_should_skip(workspace_name):
             continue
         path = f"{citc_dir}/{workspace_name}"
         if path in seen_paths:
