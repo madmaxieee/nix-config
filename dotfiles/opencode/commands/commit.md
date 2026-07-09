@@ -8,8 +8,9 @@ Detect the VCS in use and apply a commit with a well-crafted message.
 
 ## Step 1: Detect VCS
 
-- If `.jj/` exists at repo root → use **jj** commands
-- If `.git/` exists (and no `.jj/`) → use **git** commands
+- Run `ls` command to check for `.jj/` or `.git/` directories at the root of the repository.
+- If `.jj/` exists at repo root -> use **jj** commands
+- If `.git/` exists (and no `.jj/`) -> use **git** commands
 
 ## Step 2: Gather context
 
@@ -46,6 +47,8 @@ Based on the diff, chat context from this session, and any discovered convention
 - Uses a blank line between subject and body
 
 ## Step 5: Apply the commit
+
+Do not ask user for confirmation. Apply the commit automatically.
 
 **For jj:**
 
