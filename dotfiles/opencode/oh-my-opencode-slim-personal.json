@@ -4,41 +4,42 @@
   "presets": {
     "openai": {
       "orchestrator": {
-        "model": "openai/gpt-5.5-fast",
+        "model": "openai/gpt-5.6-sol",
+        "variant": "low",
         "skills": ["*"],
         "mcps": ["*", "!context7"]
       },
       "oracle": {
-        "model": "openai/gpt-5.5-fast",
+        "model": "openai/gpt-5.6-sol",
         "variant": "high",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "openai/gpt-5.4-mini",
+        "model": "openai/gpt-5.6-terra",
         "variant": "low",
         "skills": [],
-        "mcps": ["websearch", "context7", "grep_app"]
+        "mcps": ["websearch", "context7", "gh_grep"]
       },
       "explorer": {
-        "model": "openai/gpt-5.4-mini",
+        "model": "openai/gpt-5.6-terra",
         "variant": "low",
         "skills": [],
-        "mcps": []
+        "mcps": ["fff"]
       },
       "designer": {
-        "model": "openai/gpt-5.4-mini",
+        "model": "openai/gpt-5.6-terra",
         "variant": "medium",
         "skills": [],
         "mcps": []
       },
       "fixer": {
-        "model": "openai/gpt-5.5-fast",
+        "model": "openai/gpt-5.6-terra",
         "variant": "low",
         "skills": [],
         "mcps": []
       },
-      "council": { "model": "openai/gpt-5.5-fast" }
+      "council": { "model": "openai/gpt-5.6-terra" }
     },
     "opencode-go": {
       "orchestrator": {
@@ -80,8 +81,9 @@
   "council": {
     "presets": {
       "default": {
-        "alpha": { "model": "openai/gpt-5.5-fast" },
-        "beta": { "model": "openai/gpt-5.4-mini" }
+        "alpha": { "model": "openai/gpt-5.6-terra" },
+        "beta": { "model": "openai/gpt-5.5" },
+        "gamma": { "model": "openai/gpt-5.4-mini" }
       }
     }
   },
