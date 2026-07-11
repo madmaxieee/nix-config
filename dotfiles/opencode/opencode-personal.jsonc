@@ -7,14 +7,12 @@
     },
     "general": { "disable": true },
     "explore": { "disable": true },
-    "title": { "model": "openai/gpt-5.4-mini" },
-    "summary": { "model": "openai/gpt-5.4-mini" },
+    "title": { "model": "openai/gpt-5.6-luna" },
+    "summary": { "model": "openai/gpt-5.6-luna" },
     // custom
     "fast": {
       "mode": "subagent",
-      "model": "openai/gpt-5.4-mini",
-      // somehow can't use luna
-      // "model": "openai/gpt-5.6-luna",
+      "model": "openai/gpt-5.6-luna",
       "color": "success",
     },
   },
