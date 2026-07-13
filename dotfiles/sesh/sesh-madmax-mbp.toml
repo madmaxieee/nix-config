@@ -14,13 +14,3 @@ startup_command = "exec ssh linode -t btop"
 name = "obsidian"
 path = "~/obsidian"
 startup_command = "exec nvim"
-
-[[session]]
-name = "hermes"
-path = "~"
-startup_command = "exec ~/nix-config/dotfiles/sesh/scripts/hermes.sh"
-
-[[session]]
-name = "hermes-bash"
-path = "~"
-startup_command = "exec ~/nix-config/dotfiles/sesh/scripts/hermes-bash.sh"
