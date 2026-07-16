@@ -6,18 +6,18 @@
 }:
 
 let
-  version = "0.7.3";
+  version = "0.7.4";
   release =
     {
       x86_64-linux = {
         os = "linux";
         arch = "x86_64";
-        hash = "sha256-BD70Psur2ihGXc/x7sMYRRgVDVZ7i48gzanGyIdwZB0=";
+        hash = "sha256-vA/ALUulAPnKwjU6Q+Z/4DZ4Xsym61U3jgUPrDwQMFk=";
       };
       aarch64-darwin = {
         os = "macos";
         arch = "aarch64";
-        hash = "sha256-sxNFOS0ATsHxssgh4a1gEBn6g4X+HkxpMTIetYqSB3M=";
+        hash = "sha256-JJkuFiXb3LGDVKWeKZ5LJjwxJACzE5bNwHzUbtV/JKc=";
       };
     }
     .${stdenvNoCC.hostPlatform.system} or (throw ''
