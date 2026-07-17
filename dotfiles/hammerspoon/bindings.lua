@@ -193,7 +193,7 @@ PWAAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
         if
             app:bundleID():sub(1, #pwa_bundle_id_prefix)
                 == pwa_bundle_id_prefix
-            and app:name() ~= "Cider"
+            and app:name() ~= "Cider V"
         then
             scratchpad.hide_on_cmd_w(app_name)
         end

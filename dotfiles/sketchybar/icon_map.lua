@@ -773,7 +773,7 @@ return {
     [ [[Zulip]] ] = ":zulip:",
 
     -- custom
-    [ [[Cider]] ] = ":code:",
+    [ [[Cider V]] ] = ":code:",
     [ [[Google Calendar]] ] = ":calendar:",
     [ [[Google Tasks]] ] = ":things:",
     [ [[Jetski Web]] ] = ":antigravity:",
