@@ -1,26 +1,45 @@
 #:schema https://docs.jj-vcs.dev/latest/config-schema.json
 
-[fix.tools.nixfmt]
-command = ["nixfmt", "-"]
-patterns = ["glob:'**/*.nix'"]
-enabled = false
-
-[fix.tools.ruff-format]
-command = ["ruff", "format", "--stdin-filename=$path", "-"]
-patterns = ["glob:'**/*.py'"]
-enabled = false
-
-[fix.tools.stylua]
-command = ["stylua", "-"]
-patterns = ["glob:'**/*.lua'"]
-enabled = false
-
-[fix.tools.shfmt]
-command = ["shfmt", "-"]
-patterns = ["glob:'**/*.sh'"]
-enabled = false
+# keep-sorted start group_start_regex=['^\[fix\.tools\.'] newline_separated=yes
+[fix.tools.gofmt]
+command = ["gofmt"]
+patterns = ["glob:'**/*.go'"]
 
 [fix.tools.keep-sorted]
 command = ["keep-sorted", "-"]
 patterns = ["glob:'**/*'"]
-enabled = false
+
+[fix.tools.nixfmt]
+command = ["nixfmt", "-"]
+patterns = ["glob:'**/*.nix'"]
+
+[fix.tools.ruff-format]
+command = ["ruff", "format", "--stdin-filename=$path", "-"]
+patterns = ["glob:'**/*.py'"]
+
+[fix.tools.rustfmt]
+command = ["rustfmt"]
+patterns = ["glob:'**/*.rs'"]
+
+[fix.tools.shfmt]
+command = ["shfmt", "-"]
+patterns = ["glob:'**/*.sh'"]
+
+[fix.tools.stylua]
+command = ["stylua", "-"]
+patterns = ["glob:'**/*.lua'"]
+# keep-sorted end
+
+# default to off on work machine
+[[--scope]]
+--when.hostnames = ["maxcchuang.c.googlers.com"]
+[--scope.fix.tools]
+# keep-sorted start
+gofmt = { enabled = false }
+keep-sorted = { enabled = false }
+nixfmt = { enabled = false }
+ruff-format = { enabled = false }
+rustfmt = { enabled = false }
+shfmt = { enabled = false }
+stylua = { enabled = false }
+# keep-sorted end
