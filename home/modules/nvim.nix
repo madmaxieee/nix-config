@@ -50,10 +50,11 @@ rec {
         unzip
         xz
 
-        # for formatting, linting, etc.
-        nixfmt
+        # lsp/formatter/linters not managed by mason
         fennel-ls
         fnlfmt
+        keep-sorted
+        nixfmt
 
         # for sqlite.lua
         sqlite

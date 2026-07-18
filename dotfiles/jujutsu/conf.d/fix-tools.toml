@@ -19,3 +19,8 @@ enabled = false
 command = ["shfmt", "-"]
 patterns = ["glob:'**/*.sh'"]
 enabled = false
+
+[fix.tools.keep-sorted]
+command = ["keep-sorted", "-"]
+patterns = ["glob:'**/*'"]
+enabled = false

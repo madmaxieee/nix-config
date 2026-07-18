@@ -15,6 +15,7 @@ rec {
 
   home.packages = with pkgs; [
     # better default tools
+    # keep-sorted start
     delta
     dust
     eza
@@ -22,12 +23,10 @@ rec {
     ripgrep
     rm-improved
     sd
-
-    # compression tools
-    xz
-    zstd
+    # keep-sorted end
 
     # other
+    # keep-sorted start
     btop
     chafa
     entr
@@ -47,6 +46,9 @@ rec {
     unixtools.watch
     unixtools.xxd
     wget
+    xz
+    zstd
+    # keep-sorted end
   ];
 
   programs.man.enable = true;

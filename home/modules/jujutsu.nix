@@ -17,6 +17,7 @@ rec {
       hunk
 
       # fix tools
+      keep-sorted
       nixfmt
       ruff
       shfmt
