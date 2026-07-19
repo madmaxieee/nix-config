@@ -13,6 +13,7 @@ let
 in
 {
   home.file = flatMerge [
+    # keep-sorted start
     (linkScript "clip")
     (linkScript "fixquote")
     (linkScript "git-foreach")
@@ -22,6 +23,7 @@ in
     (linkScript "ns")
     (linkScript "peek")
     (linkScript "vipe")
+    # keep-sorted end
 
     (lib.optionals pkgs.stdenv.isDarwin [
       (linkScript "notify")

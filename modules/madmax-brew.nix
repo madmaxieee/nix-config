@@ -3,11 +3,14 @@
   homebrew = {
     enable = true;
     brews = [
+      # keep-sorted start
       "mas"
       "media-control"
       "tailscale"
+      # keep-sorted end
     ];
     casks = [
+      # keep-sorted start
       "1password"
       "1password-cli"
       "adobe-digital-editions"
@@ -48,6 +51,7 @@
       "thingsmacsandboxhelper"
       "visual-studio-code"
       "zen"
+      # keep-sorted end
     ];
     # masApps = {
     #   "Keymapp" = 6472865291;

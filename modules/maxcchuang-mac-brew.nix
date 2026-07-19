@@ -3,10 +3,13 @@
   homebrew = {
     enable = true;
     brews = [
+      # keep-sorted start
       "mas"
       "media-control"
+      # keep-sorted end
     ];
     casks = [
+      # keep-sorted start
       "1password"
       "1password-cli"
       "alfred"
@@ -29,6 +32,7 @@
       "thingsmacsandboxhelper"
       "visual-studio-code"
       "zen"
+      # keep-sorted end
     ];
     # masApps = {
     #   "KiteTasks" = 6759640044;
