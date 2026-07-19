@@ -1,9 +1,9 @@
-{ profile }:
 {
   config,
   pkgs,
   lib,
   sources,
+  custom,
   ...
 }:
 
@@ -11,6 +11,7 @@ let
   linkDotfile = config.lib.custom.linkDotfile;
   fff-mcp = pkgs.callPackage ../../packages/fff-mcp.nix { };
   rtk = pkgs.callPackage ../../packages/rtk.nix { };
+  profile = custom.profile;
 in
 rec {
   home.file = {

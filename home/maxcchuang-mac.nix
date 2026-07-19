@@ -121,10 +121,10 @@ in
     ./modules/web-dev.nix
 
     ./modules/fabric-ai.nix
-    (import ./modules/axon.nix { profile = "work"; })
-    (import ./modules/opencode.nix { profile = "work"; })
+    ./modules/axon.nix
+    ./modules/opencode.nix
 
-    (import ./modules/window-management.nix { profile = "work"; })
+    ./modules/window-management.nix
 
     # work related
     ./modules/adb.nix

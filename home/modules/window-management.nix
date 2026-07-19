@@ -1,9 +1,14 @@
-{ profile }:
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  custom,
+  ...
+}:
 
 let
   nixConfigPath = config.lib.custom.nixConfigPath;
   linkDotfile = config.lib.custom.linkDotfile;
+  profile = custom.profile;
 in
 {
   home.packages = with pkgs; [

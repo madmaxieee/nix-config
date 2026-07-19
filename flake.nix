@@ -268,7 +268,11 @@
             home-manager.useUserPackages = true;
             home-manager.users.madmax = import ./home/madmax-mbp.nix;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = extraSpecialArgs;
+            home-manager.extraSpecialArgs = extraSpecialArgs // {
+              custom = {
+                profile = "personal";
+              };
+            };
           }
 
           (import ./modules/madmax-dock.nix {
@@ -311,7 +315,11 @@
             home-manager.useUserPackages = true;
             home-manager.users.maxcchuang = import ./home/maxcchuang-mac.nix;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = extraSpecialArgs;
+            home-manager.extraSpecialArgs = extraSpecialArgs // {
+              custom = {
+                profile = "work";
+              };
+            };
           }
 
           (import ./modules/maxcchuang-mac-dock.nix {
@@ -333,7 +341,11 @@
           overlays = overlays;
         };
 
-        extraSpecialArgs = extraSpecialArgs;
+        extraSpecialArgs = extraSpecialArgs // {
+          custom = {
+            profile = "personal";
+          };
+        };
 
         modules = [ ./home/madmax-vps.nix ];
       };
@@ -346,7 +358,11 @@
           overlays = overlays;
         };
 
-        extraSpecialArgs = extraSpecialArgs;
+        extraSpecialArgs = extraSpecialArgs // {
+          custom = {
+            profile = "work";
+          };
+        };
 
         modules = [
           ./home/maxcchuang.nix

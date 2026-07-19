@@ -80,8 +80,8 @@ rec {
     ./modules/rust.nix
 
     ./modules/fabric-ai.nix
-    (import ./modules/axon.nix { profile = "work"; })
-    (import ./modules/opencode.nix { profile = "work"; })
+    ./modules/axon.nix
+    ./modules/opencode.nix
 
     # work related
     ./modules/adb.nix

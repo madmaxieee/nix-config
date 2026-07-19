@@ -109,9 +109,9 @@ in
     ./modules/web-dev.nix
 
     ./modules/fabric-ai.nix
-    (import ./modules/axon.nix { profile = "personal"; })
-    (import ./modules/opencode.nix { profile = "personal"; })
+    ./modules/axon.nix
+    ./modules/opencode.nix
 
-    (import ./modules/window-management.nix { profile = "personal"; })
+    ./modules/window-management.nix
   ];
 }

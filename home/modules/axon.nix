@@ -1,15 +1,16 @@
-{ profile }:
 {
   config,
   lib,
   pkgs,
   sources,
+  custom,
   ...
 }:
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
   axon = pkgs.callPackage ../../packages/axon.nix { };
+  profile = custom.profile;
 in
 {
   home.packages = with pkgs; [
