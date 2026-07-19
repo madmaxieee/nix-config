@@ -9,6 +9,7 @@
 let
   loglit = pkgs.callPackage ../../packages/loglit.nix { };
   hunk = pkgs.callPackage ../../packages/hunk.nix { };
+  mermaid-cli = pkgs.callPackage ../../packages/mermaid-cli.nix { };
 in
 rec {
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
@@ -37,6 +38,7 @@ rec {
     jq
     just
     loglit
+    mermaid-cli
     ouch
     parallel
     ripgrep-all
