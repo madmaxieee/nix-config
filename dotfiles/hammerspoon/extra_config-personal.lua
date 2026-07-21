@@ -1,5 +1,5 @@
 return {
-    ai_app = "ChatGPT",
+    ai_app = "ChatGPT Classic",
     browser = "Helium",
     message_app = "Messenger",
     terminal_app = "Ghostty",

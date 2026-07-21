@@ -773,6 +773,8 @@ return {
     [ [[Zulip]] ] = ":zulip:",
 
     -- custom
+    -- keep-sorted start
+    [ [[ChatGPT Classic]] ] = ":openai:",
     [ [[Cider V]] ] = ":code:",
     [ [[Google Calendar]] ] = ":calendar:",
     [ [[Google Tasks]] ] = ":things:",
@@ -780,4 +782,5 @@ return {
     [ [[KiteTasks]] ] = ":things:",
     [ [[Pocket Casts]] ] = ":broadcasts:",
     [ [[stremio]] ] = ":youtube:",
+    -- keep-sorted end
 }

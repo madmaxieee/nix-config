@@ -32,35 +32,36 @@ yabai -m config left_padding 3
 yabai -m config right_padding 3
 yabai -m config window_gap 3
 
-# apps to not manage (keep floating)
-yabai -m rule --add manage=off app='^Finder$'
-yabai -m rule --add manage=off app='^System Settings$'
-yabai -m rule --add manage=off app='^Messenger$'
-yabai -m rule --add manage=off app='^Google Chat$'
-yabai -m rule --add manage=off app='^LINE$'
-yabai -m rule --add manage=off app='^Telegram$'
-yabai -m rule --add manage=off app='^Heptabase$'
-yabai -m rule --add manage=off app='^Obsidian$'
-yabai -m rule --add manage=off sticky=on app='^Keymapp$'
-yabai -m rule --add manage=off app='^Archive Utility$'
-yabai -m rule --add manage=off app='^SpotMenu$'
+# apps to keep floating
+# keep-sorted start
+yabai -m rule --add manage=off app="^CleanShot X$"
 yabai -m rule --add manage=off app="^Fantastical Helper$"
 yabai -m rule --add manage=off app="^Python$"
 yabai -m rule --add manage=off app="^python3$"
-yabai -m rule --add manage=off app="^CleanShot X$"
-yabai -m rule --add manage=off app="^Script Kit$"
-yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
-yabai -m rule --add manage=off app='^Google Gemini$'
-yabai -m rule --add manage=off app='^Duckie$'
-yabai -m rule --add manage=off app='^T3 Chat$'
-yabai -m rule --add manage=off app='^ChatGPT$'
-yabai -m rule --add manage=off app='^Things$'
-yabai -m rule --add manage=off title='Google Single Sign On'
+yabai -m rule --add manage=off app='^Archive Utility$'
+yabai -m rule --add manage=off app='^ChatGPT Classic$'
+yabai -m rule --add manage=off app='^Finder$'
 yabai -m rule --add manage=off app='^Helium$' title='Picture in Picture'
+yabai -m rule --add manage=off app='^Heptabase$'
+yabai -m rule --add manage=off app='^KiteTasks$'
+yabai -m rule --add manage=off app='^LINE$'
+yabai -m rule --add manage=off app='^Messenger$'
+yabai -m rule --add manage=off app='^Obsidian$'
+yabai -m rule --add manage=off app='^System Settings$'
+yabai -m rule --add manage=off app='^T3 Chat$'
+yabai -m rule --add manage=off app='^Telegram$'
+yabai -m rule --add manage=off app='^Things$'
+# keep-sorted end
+
+# floating and sticky
+yabai -m rule --add manage=off sticky=on app="^Notes$" title!="^Notes$"
+yabai -m rule --add manage=off sticky=on app='^Keymapp$'
+
+# floating with predefined grid position
 # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-yabai -m rule --add manage=off app='^kitty$' title='^script kitty$' grid=5:3:1:1:1:2
-yabai -m rule --add manage=off app='^kitty$' title='^scratch pad$' grid=7:5:1:1:3:5
-yabai -m rule --add manage=off app='^kitty$' title='^obsidian$' grid=7:5:1:1:3:5
+yabai -m rule --add manage=off grid=5:3:1:1:1:2 app='^kitty$' title='^script kitty$'
+yabai -m rule --add manage=off grid=7:5:1:1:3:5 app='^kitty$' title='^scratch pad$'
+yabai -m rule --add manage=off grid=7:5:1:1:3:5 app='^kitty$' title='^obsidian$'
 
 yabai -m signal --add label='refresh sketchybar space apps 1' event='space_created' action='sketchybar --trigger space_apps_refresh'
 yabai -m signal --add label='refresh sketchybar space apps 2' event='space_destroyed' action='sketchybar --trigger space_apps_refresh'
