@@ -6,7 +6,7 @@
 }:
 
 let
-  version = "unstable-2026-05-01";
+  version = "unstable-2026-07-23";
 in
 buildGoModule {
   pname = "loglit";
@@ -15,8 +15,8 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "madmaxieee";
     repo = "loglit";
-    rev = "aaba086d724951aa394a982c33d388be132e5bb4";
-    hash = "sha256-LtUz+iBqj1nuiqP3dypb6Rz++U6ry+BECZ8OmquSTVY=";
+    rev = "2e880339b40f28c919e76f8f215296ba6efbb9f7";
+    hash = "sha256-wHWgA6ehZX5yh3hUfqnSwCU4c+RxQ/XEGUHva6EZHwU=";
   };
 
   vendorHash = "sha256-ixhruUAIHuG6vmLQ1TImgcgN/xVFiKMgHucD/8MJP/0=";
