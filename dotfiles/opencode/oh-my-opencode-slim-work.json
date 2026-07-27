@@ -4,55 +4,45 @@
   "presets": {
     "google": {
       "orchestrator": {
-        "model": "google/gemini-3.5-flash",
+        "model": "google/gemini-3.6-flash",
         "skills": ["*"],
         "mcps": ["*"]
       },
       "explorer": {
-        "model": "google/gemini-3.5-flash",
-        "variant": "low",
+        "model": "google/gemini-3.6-flash",
         "skills": [],
         "mcps": ["fff"]
       },
       "oracle": {
-        "model": "google/gemini-3.5-flash",
+        "model": "google/gemini-3.6-flash",
         "variant": "high",
         "skills": ["simplify"],
         "mcps": []
       },
       "librarian": {
-        "model": "google/gemini-3.5-flash",
-        "variant": "low",
+        "model": "google/gemini-3.6-flash",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
-        "model": "google/gemini-3.5-flash",
-        "variant": "medium",
+        "model": "google/gemini-3.6-flash",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "google/gemini-3.5-flash",
+        "model": "google/gemini-3.6-flash",
         "skills": [],
         "mcps": []
-      }
+      },
+      "council": { "model": "google/gemini-3.6-flash" }
     }
   },
   "council": {
-    "master": { "model": "google/gemini-3.5-flash" },
     "presets": {
       "default": {
         "alpha": { "model": "google/gemini-3.1-pro-preview" },
         "beta": { "model": "google/gemini-3-flash-preview" }
       }
     }
-  },
-  "todoContinuation": {
-    "maxContinuations": 50,
-    "cooldownMs": 3000,
-    "autoEnable": false,
-    "autoEnableThreshold": 4
-  },
-  "showStartupToast": false
+  }
 }

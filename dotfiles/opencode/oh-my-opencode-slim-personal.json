@@ -86,12 +86,5 @@
         "gamma": { "model": "openai/gpt-5.4-mini" }
       }
     }
-  },
-  "todoContinuation": {
-    "maxContinuations": 50,
-    "cooldownMs": 3000,
-    "autoEnable": false,
-    "autoEnableThreshold": 4
-  },
-  "showStartupToast": false
+  }
 }
