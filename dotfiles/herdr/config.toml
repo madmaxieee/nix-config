@@ -165,6 +165,9 @@ description = "Leave agent panes, otherwise send Ctrl-."
 # Maximum sidebar width when expanded (columns)
 # sidebar_max_width = 36
 
+# Start with the sidebar collapsed. Changes take effect on the next launch.
+# sidebar_start_collapsed = false
+
 # Collapsed sidebar presentation: "compact" keeps the narrow status rail, "hidden" uses zero width.
 sidebar_collapsed_mode = "hidden"
 
@@ -177,8 +180,8 @@ sidebar_collapsed_mode = "hidden"
 # Pane apps like lazygit and btop can still receive mouse when they request it.
 # mouse_capture = true
 
-# Copy text selected by mouse drag or double-click.
-# Set false to disable mouse text selection and copying.
+# Automatically copy text selected by mouse drag.
+# Set false to keep drag selection visible without copying; double-click still copies a word.
 # copy_on_select = true
 
 # Host cursor policy: "auto", "native", or "drawn".
@@ -205,6 +208,9 @@ sidebar_collapsed_mode = "hidden"
 # Set false to create tabs immediately with generated names.
 prompt_new_tab_name = false
 
+# Ask for a workspace name before interactive creation.
+# prompt_new_workspace_name = false
+
 # Draw borders around split panes.
 # pane_borders = true
 
@@ -225,6 +231,8 @@ prompt_new_tab_name = false
 # Expanded agent rows. Built-ins are state_icon, state_text, workspace, tab, pane, agent,
 # terminal_title, and terminal_title_stripped.
 # Custom values reported through pane metadata use a $name token.
+# A token occurrence may be styled with { token = "workspace", fg = "#89b4fa", bold = true, dim = false }.
+# Omitted style fields preserve the contextual default.
 # [ui.sidebar.agents]
 # Blank rows between agent entries. Set to 1 to restore the previous spacing.
 # row_gap = 0
@@ -235,6 +243,7 @@ prompt_new_tab_name = false
 
 # Expanded space rows. Built-ins are state_icon, state_text, workspace, branch, and git_status.
 # Custom values reported through workspace metadata use a $name token, for example $jj_status.
+# Inline token styles accept strict #RGB/#RRGGBB foregrounds plus bold and dim booleans.
 [ui.sidebar.spaces]
 # Blank rows between space entries. Set to 1 to restore the previous spacing.
 row_gap = 1
