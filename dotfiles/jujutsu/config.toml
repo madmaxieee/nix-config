@@ -9,15 +9,18 @@ conflict-marker-style = "git"
 default-command = "log"
 diff-editor = ":builtin"
 diff-formatter = ":git"
-pager = ["hunk", "pager"]
+pager = "delta"
 
 [aliases]
+# keep-sorted start
 d = ["diff"]
+dd = ["util", "exec", "--", "hunk", "diff"]
 e = ["edit"]
 fa = ["git", "fetch", "--all-remotes"]
 llog = ["log", "-T", "builtin_log_detailed"]
 rb = ["rebase"]
 w = ["workspace"]
+# keep-sorted end
 
 [working-copy]
 eol-conversion = "none"
