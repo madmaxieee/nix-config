@@ -19,6 +19,7 @@ in
 
   programs.fish = {
     enable = true;
+    generateCompletions = false;
     shellAbbrs = {
       md = lib.mkDefault "mkdir -p";
       dotdot = {

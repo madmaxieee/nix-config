@@ -5,7 +5,6 @@
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
-  hunk = pkgs.callPackage ../../packages/hunk.nix { };
 in
 rec {
   home.packages =

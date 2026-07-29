@@ -8,7 +8,6 @@
 
 let
   loglit = pkgs.callPackage ../../packages/loglit.nix { };
-  hunk = pkgs.callPackage ../../packages/hunk.nix { };
   mermaid-cli = pkgs.callPackage ../../packages/mermaid-cli.nix { };
 in
 rec {
