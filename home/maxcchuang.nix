@@ -31,10 +31,6 @@ rec {
         onVariable = "PWD";
       };
     };
-    shellAbbrs = {
-      copy = "kitten clipboard";
-      paste = "kitten clipboard -g";
-    };
     interactiveShellInit = ''
       __hg_or_git_abbr
     '';

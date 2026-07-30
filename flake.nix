@@ -10,15 +10,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.brew-src.follows = "brew-src";
+    };
+    brew-src = {
+      url = "github:Homebrew/brew";
       flake = false;
     };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
+
     # for mediosz/swipeaerospace
     mediosz-tap = {
       url = "github:mediosz/homebrew-tap";
@@ -122,6 +122,7 @@
       extraSpecialArgs = {
         inherit overlays;
         sources = {
+          inherit (inputs) brew-src;
           inherit (inputs)
             yazi-plugins
             lazygit-yazi
@@ -137,14 +138,10 @@
       };
 
       taps = {
-        "homebrew/core" = inputs.homebrew-core;
-        "homebrew/cask" = inputs.homebrew-cask;
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
       };
 
-      thirdPartyTapNames = builtins.filter (name: name != "homebrew/core" && name != "homebrew/cask") (
-        builtins.attrNames taps
-      );
+      thirdPartyTapNames = builtins.attrNames taps;
 
       brew_config =
         { username }:
@@ -155,6 +152,7 @@
             user = username;
             taps = taps;
             mutableTaps = false;
+            trust.casks = [ "mediosz/tap/swipeaerospace" ];
           };
         };
 

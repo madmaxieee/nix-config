@@ -28,7 +28,6 @@
       "ghostty"
       "google-chrome"
       "hammerspoon"
-      "heptabase"
       "iina"
       "inkscape"
       "jordanbaird-ice"
