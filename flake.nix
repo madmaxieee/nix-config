@@ -15,7 +15,7 @@
       inputs.brew-src.follows = "brew-src";
     };
     brew-src = {
-      url = "github:Homebrew/brew";
+      url = "github:Homebrew/brew/6.0.13";
       flake = false;
     };
 
