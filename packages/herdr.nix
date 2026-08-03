@@ -6,18 +6,19 @@
 }:
 
 let
-  version = "0.7.5";
+  # use pre 0.7.6 release for performance
+  version = "preview-2026-07-29-44b3adb12552";
   release =
     {
       x86_64-linux = {
         os = "linux";
         arch = "x86_64";
-        hash = "sha256-PcgyiAc+TC08Z5ow576XvMqRQcb9F9u7khkULpXFklM=";
+        hash = "sha256-LVDWSrhJw9D10NU+C+vQD6lNXtEgeXUyyPz9GmeevBk=";
       };
       aarch64-darwin = {
         os = "macos";
         arch = "aarch64";
-        hash = "sha256-NzUFRrABJVWUO5Lq+WJmXeTiZDlbrrRCJ7gBXo/1sNY=";
+        hash = "sha256-mZQbSkDoUsjyFpTH7B6W+Fq9T3ZNn2Z3V8Zfrm5LBls=";
       };
     }
     .${stdenvNoCC.hostPlatform.system} or (throw ''
@@ -29,7 +30,7 @@ stdenvNoCC.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/ogulcancelik/herdr/releases/download/v${version}/herdr-${release.os}-${release.arch}";
+    url = "https://github.com/herdrdev/herdr/releases/download/${version}/herdr-${release.os}-${release.arch}";
     hash = release.hash;
   };
 
@@ -52,7 +53,7 @@ stdenvNoCC.mkDerivation {
 
   meta = with lib; {
     description = "Agent multiplexer that lives in your terminal";
-    homepage = "https://github.com/ogulcancelik/herdr";
+    homepage = "https://github.com/herdrdev/herdr";
     license = licenses.agpl3Plus;
     mainProgram = "herdr";
     platforms = [
