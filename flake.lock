@@ -159,6 +159,22 @@
         "type": "github"
       }
     },
+    "madmaxieee-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785771915,
+        "narHash": "sha256-QqHFfXsZFAkPVqwC85xVrer/qvoKmO9NbzMmG0VTuHU=",
+        "owner": "madmaxieee",
+        "repo": "homebrew-tap",
+        "rev": "ee90f779a50ca77231edb047ab79f4a18d1cff81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "madmaxieee",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "mattpocock-skills": {
       "flake": false,
       "locked": {
@@ -361,6 +377,7 @@
         "home-manager": "home-manager",
         "jj-starship": "jj-starship",
         "lazygit-yazi": "lazygit-yazi",
+        "madmaxieee-tap": "madmaxieee-tap",
         "mattpocock-skills": "mattpocock-skills",
         "mediosz-tap": "mediosz-tap",
         "neovim-nightly-overlay": "neovim-nightly-overlay",

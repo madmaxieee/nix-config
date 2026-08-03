@@ -34,6 +34,7 @@
       "kitty"
       "kobo"
       "logi-options+"
+      "madmaxieee/tap/taigi-telex"
       "meetingbar"
       "nordvpn"
       "obsidian"

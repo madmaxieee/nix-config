@@ -19,6 +19,10 @@
       flake = false;
     };
 
+    madmaxieee-tap = {
+      url = "github:madmaxieee/homebrew-tap";
+      flake = false;
+    };
     # for mediosz/swipeaerospace
     mediosz-tap = {
       url = "github:mediosz/homebrew-tap";
@@ -138,6 +142,7 @@
       };
 
       taps = {
+        "madmaxieee/homebrew-tap" = inputs.madmaxieee-tap;
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
       };
 
@@ -152,7 +157,10 @@
             user = username;
             taps = taps;
             mutableTaps = false;
-            trust.casks = [ "mediosz/tap/swipeaerospace" ];
+            trust = {
+              casks = [ "mediosz/tap/swipeaerospace" ];
+              taps = [ "madmaxieee/tap" ];
+            };
           };
         };
 
