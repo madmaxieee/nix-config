@@ -17,15 +17,18 @@ in
 
   home.packages = with pkgs; [
     # replace darwin utils with gnu ones
+    # keep-sorted start
     coreutils
     diffutils
     findutils
-
     gawk
     gnugrep
     gnumake
     gnused
     gnutar
+    # keep-sorted end
+
+    macism
   ];
 
   xdg.configFile = {

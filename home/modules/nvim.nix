@@ -64,6 +64,7 @@ rec {
         ghostscript
       ]
       ++ (lib.optionals stdenv.isDarwin [
+        macism
         # for obsidian.nvim, ":Obsidian paste_img"
         pngpaste
       ]);
