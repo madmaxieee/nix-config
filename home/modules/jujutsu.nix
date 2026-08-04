@@ -37,6 +37,12 @@ rec {
     lj = "lazyjj";
   };
 
+  programs.git.settings = {
+    # Override system-level `feature.experimental = true` which defaults new repos to reftable on git 2.45+
+    # JJ do not work with the experimental reftable format yet
+    init.defaultRefFormat = "files";
+  };
+
   programs.zsh = {
     zsh-abbr.abbreviations = programs.fish.shellAbbrs;
   };

@@ -94,8 +94,13 @@ rec {
     diffview = ''nvim +"DiffviewOpen $@"'';
   };
 
-  programs.git.settings.alias = {
-    "dv" = "diffview";
-    "diffview" = ''! nvim +"DiffviewOpen $@"'';
+  programs.git.settings = {
+    alias = {
+      "dv" = "diffview";
+      "diffview" = ''! nvim +"DiffviewOpen $@"'';
+    };
+    # Override system-level `feature.experimental = true` which defaults new repos to reftable on git 2.45+
+    # flash.nvim do not work with the experimental reftable format yet
+    init.defaultRefFormat = "files";
   };
 }
