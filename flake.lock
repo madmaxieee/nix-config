@@ -162,11 +162,11 @@
     "madmaxieee-tap": {
       "flake": false,
       "locked": {
-        "lastModified": 1785771915,
-        "narHash": "sha256-QqHFfXsZFAkPVqwC85xVrer/qvoKmO9NbzMmG0VTuHU=",
+        "lastModified": 1786462348,
+        "narHash": "sha256-k5MymRHLtiAvrPogmgmLif7YkwjqHqkdjlo30JAWWWM=",
         "owner": "madmaxieee",
         "repo": "homebrew-tap",
-        "rev": "ee90f779a50ca77231edb047ab79f4a18d1cff81",
+        "rev": "baa3e20b2025875cc702d4d263505d4d17bfc891",
         "type": "github"
       },
       "original": {
