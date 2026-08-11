@@ -51,10 +51,13 @@ citc_list = ["util", "exec", "--", "bash", "-c", """
 """, ""]
 
 [jjd-aliases]
+# keep-sorted start
 configs = "/../configs/users/maxcchuang"
-experimental = "/experimental/users/maxcchuang"
+exp = "/experimental/users/maxcchuang"
 git = "/configs/production/gerritcodereview/prod/user/maxcchuang"
 ltp = "/wireless/android/pixel/modem/ltp/testcases/live/mss_bsp"
 ltp_legacy = "/wireless/android/pixel/modem/ltp/testcases/live/mss_functional"
 skills = "/../configs/users/maxcchuang/_agents"
+team = "/experimental/modembsp"
 test_cases_config = "/configs/production/pod/pixel-modem-tools/ltp-be/test_cases_config"
+# keep-sorted end
