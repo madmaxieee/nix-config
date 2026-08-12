@@ -20,6 +20,34 @@ rec {
 
   programs.fish = {
     functions = {
+      alert = lib.mkDefault ''
+        if test (count $argv) -eq 0
+            echo "Usage: alert <command...>"
+            return 1
+        end
+
+        set -l cmd_str (string join " " $argv)
+        $argv
+        set -l exit_code $status
+
+        set -l title "Task Succeeded"
+        set -l sound "done"
+        if test $exit_code -ne 0
+            set title "Task Failed"
+            set sound "request"
+            set cmd_str "$cmd_str (exit: $exit_code)"
+        end
+
+        if set -q HERDR_PANE_ID
+            herdr notification show "$title" --body "$cmd_str" --sound "$sound" >/dev/null 2>&1
+        else if test (uname) = "Darwin"
+            osascript -e "display notification \"$cmd_str\" with title \"$title\"" >/dev/null 2>&1
+        else
+            printf '\a'
+        end
+
+        return $exit_code
+      '';
       herdr-remote = lib.mkDefault ''
         if test (count $argv) -ne 1
             echo "Usage: herdr-remote <remote-host>"
