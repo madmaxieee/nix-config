@@ -1,16 +1,8 @@
 [general.model_aliases]
-pro = "opencode-go/deepseek-v4-pro"
-default = "opencode-go/deepseek-v4-flash"
-fast = "opencode-go/minimax-m3"
-
-gpt = "openai/gpt-5.5"
-gpt-mini = "openai/gpt-5.4-mini"
+pro = "openai/gpt-5.6-sol"
+default = "openai/gpt-5.6-terra"
+fast = "openai/gpt-5.6-luna"
 
 [[providers]]
 name = "openai"
 api_key_cmd = "pass openai/axon"
-
-[[providers]]
-name = "opencode-go"
-base_url = "https://opencode.ai/zen/go/v1"
-api_key_cmd = "pass opencode-go/axon"
