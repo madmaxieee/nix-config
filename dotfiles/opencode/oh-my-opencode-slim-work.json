@@ -4,44 +4,44 @@
   "presets": {
     "google": {
       "orchestrator": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "skills": ["*"],
         "mcps": ["*"]
       },
       "explorer": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "skills": [],
         "mcps": ["fff"]
       },
       "oracle": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "variant": "high",
         "skills": ["simplify"],
         "mcps": []
       },
       "librarian": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "designer": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "google/gemini-3.6-flash",
+        "model": "google/gemini-3.7-flash",
         "skills": [],
         "mcps": []
       },
-      "council": { "model": "google/gemini-3.6-flash" }
+      "council": { "model": "google/gemini-3.7-flash" }
     }
   },
   "council": {
     "presets": {
       "default": {
         "alpha": { "model": "google/gemini-3.1-pro-preview" },
-        "beta": { "model": "google/gemini-3-flash-preview" }
+        "beta": { "model": "google/gemini-3.5-flash-lite" }
       }
     }
   }
