@@ -10,7 +10,6 @@
 let
   linkDotfile = config.lib.custom.linkDotfile;
   fff-mcp = pkgs.callPackage ../../packages/fff-mcp.nix { };
-  rtk = pkgs.callPackage ../../packages/rtk.nix { };
   profile = custom.profile;
 in
 rec {
@@ -22,15 +21,12 @@ rec {
         export PATH="${
           lib.makeBinPath [
             fff-mcp
-            rtk
           ]
         }:$PATH"
         pnpx opencode-ai@latest "$@"
       '';
     };
   };
-
-  home.packages = [ rtk ];
 
   xdg.configFile = {
     # basic opencode config
@@ -42,7 +38,6 @@ rec {
     # plugins
     "opencode/plugins/bun-guard.ts".source = linkDotfile "opencode/plugins/bun-guard.ts";
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
-    "opencode/plugins/rtk.ts".source = linkDotfile "opencode/plugins/rtk.ts";
 
     # global skills
     "opencode/skills/improve".source = "${sources.shadcn-improve}/skills/improve";

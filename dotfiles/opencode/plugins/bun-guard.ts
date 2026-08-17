@@ -70,20 +70,6 @@ export const BunGuardPlugin: Plugin = async ({ $, client }) => {
 
       const trimmed = command.trim();
 
-      // Check for `rtk <pm> ...` pattern
-      if (trimmed.startsWith("rtk ")) {
-        const rest = trimmed.slice(4).trim();
-        for (const pm of BLOCKED) {
-          if (rest === pm || rest.startsWith(pm + " ")) {
-            throw new Error(
-              `BUN-GUARD: This project uses bun as its package manager.\n\n` +
-                `Blocked: ${trimmed}\n` +
-                `Use bun commands instead (bun install, bun run, bun add, etc.).`,
-            );
-          }
-        }
-      }
-
       // Check for direct `npm ...`, `npx ...`, `yarn ...`, `pnpm ...`
       for (const pm of BLOCKED) {
         if (trimmed === pm || trimmed.startsWith(pm + " ")) {

@@ -1,4 +1,4 @@
-import type { Plugin } from "@opencode-ai/plugin";
+import type {Plugin} from '@opencode-ai/plugin';
 
 // JJ-Guard OpenCode plugin — blocks git commands in jj repositories.
 // Throws an error with guidance so the agent sees the message and
@@ -7,24 +7,24 @@ import type { Plugin } from "@opencode-ai/plugin";
 // Also injects a system prompt line so the agent proactively uses jj.
 
 const JJ_SYSTEM_LINE = [
-  "IMPORTANT: This repository uses Jujutsu (jj) for version control, NOT git.",
-  "Use `jj` commands: `jj status`, `jj diff`, `jj log`, `jj new`, `jj edit`, `jj describe`, etc.",
-  "Do NOT run `git` commands unless the user explicitly approves it.",
-].join(" ");
+  'IMPORTANT: This repository uses Jujutsu (jj) for version control, NOT git.',
+  'Use `jj` commands: `jj status`, `jj diff`, `jj log`, `jj new`, `jj edit`, `jj describe`, etc.',
+  'Do NOT run `git` commands unless the user explicitly approves it.',
+].join(' ');
 
 // Direct 1:1 equivalents — same concept, just different command name.
 const JJ_EQUIVALENTS: Record<string, string> = {
-  bisect: "jj bisect",
-  blame: "jj file annotate <file>",
-  describe: "jj describe [revision]",
-  diff: "jj diff",
-  fetch: "jj git fetch",
-  push: "jj git push",
-  rebase: "jj rebase -s <source> -d <destination>",
-  remote: "jj git remote",
-  restore: "jj restore",
-  show: "jj show",
-  status: "jj status",
+  bisect: 'jj bisect',
+  blame: 'jj file annotate <file>',
+  describe: 'jj describe [revision]',
+  diff: 'jj diff',
+  fetch: 'jj git fetch',
+  push: 'jj git push',
+  rebase: 'jj rebase -s <source> -d <destination>',
+  remote: 'jj git remote',
+  restore: 'jj restore',
+  show: 'jj show',
+  status: 'jj status',
 };
 
 // Git-specific constructs — jj has a different model entirely.
@@ -128,53 +128,53 @@ const JJ_HELP: Record<string, string> = {
 // Git plumbing/low-level operations with no jj equivalent.
 // These require user approval to run.
 const GIT_SPECIFIC_OPS = [
-  "archive",
-  "bundle",
-  "cat-file",
-  "filter-branch",
-  "fsck",
-  "hash-object",
-  "instaweb",
-  "ls-tree",
-  "merge-base",
-  "pack-objects",
-  "reflog",
-  "rev-list",
-  "rev-parse",
-  "submodule",
-  "unpack-objects",
-  "update-ref",
+  'archive',
+  'bundle',
+  'cat-file',
+  'filter-branch',
+  'fsck',
+  'hash-object',
+  'instaweb',
+  'ls-tree',
+  'merge-base',
+  'pack-objects',
+  'reflog',
+  'rev-list',
+  'rev-parse',
+  'submodule',
+  'unpack-objects',
+  'update-ref',
 ];
 
-export const JjGuardPlugin: Plugin = async ({ $, client }) => {
+export const JjGuardPlugin: Plugin = async ({$, client}) => {
   try {
     await $`jj root`.quiet();
   } catch {
     await client.app.log({
       body: {
-        service: "jj-guard",
-        level: "info",
-        message: "Not in a jj repository — plugin disabled",
+        service: 'jj-guard',
+        level: 'info',
+        message: 'Not in a jj repository — plugin disabled',
       },
     });
     return {};
   }
 
   return {
-    "experimental.chat.system.transform": async (_input, output) => {
+    'experimental.chat.system.transform': async (_input, output) => {
       if (!output.system.includes(JJ_SYSTEM_LINE)) {
         output.system.push(JJ_SYSTEM_LINE);
       }
     },
-    "tool.execute.before": async (input, output) => {
-      const tool = String(input?.tool ?? "").toLowerCase();
-      if (tool !== "bash" && tool !== "shell") return;
+    'tool.execute.before': async (input, output) => {
+      const tool = String(input?.tool ?? '').toLowerCase();
+      if (tool !== 'bash' && tool !== 'shell') return;
 
       const args = output?.args;
-      if (!args || typeof args !== "object") return;
+      if (!args || typeof args !== 'object') return;
 
       const command = (args as Record<string, unknown>).command;
-      if (typeof command !== "string" || !command) return;
+      if (typeof command !== 'string' || !command) return;
 
       const trimmed = command.trim();
 
@@ -190,11 +190,9 @@ export const JjGuardPlugin: Plugin = async ({ $, client }) => {
       let segParts: string[] = [];
 
       for (const segment of segments) {
-        const rtkMatch = segment.startsWith("rtk git ");
-        if (segment.startsWith("git ") || segment === "git" || rtkMatch) {
+        if (segment.startsWith('git ') || segment === 'git') {
           segParts = segment.split(/\s+/);
-          // For `rtk git <cmd>`, the git subcommand is at index 2
-          gitCmd = rtkMatch ? segParts[2] || "" : segParts[1] || "";
+          gitCmd = segParts[1] || '';
           break;
         }
       }
@@ -211,8 +209,8 @@ If the user approves, they can run it with: JJ_GUARD_BYPASS=1 ${trimmed}`);
 
       // config --global/--system
       if (
-        gitCmd === "config" &&
-        (segParts.includes("--global") || segParts.includes("--system"))
+        gitCmd === 'config' &&
+        (segParts.includes('--global') || segParts.includes('--system'))
       ) {
         throw new Error(`JJ-GUARD: Global/system git config is outside the jj repository scope.
 This requires user approval. Ask the user before proceeding.
