@@ -14,24 +14,23 @@ in
     zig
   ];
 
-  # former default options
-  programs.ssh.settings."*" = {
-    forwardAgent = false;
-    addKeysToAgent = "no";
-    compression = false;
-    serverAliveInterval = 0;
-    serverAliveCountMax = 3;
-    hashKnownHosts = false;
-    userKnownHostsFile = "~/.ssh/known_hosts";
-    controlMaster = "no";
-    controlPath = "~/.ssh/master-%r@%n:%p";
-    controlPersist = "no";
-  };
-
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
     settings = {
+      # former default options
+      "*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
+      };
       "linode" = {
         hostname = "linode.kahiok.dev";
         user = "madmax";
