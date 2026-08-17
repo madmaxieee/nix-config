@@ -3,4 +3,4 @@
 "folx" = "folx"
 
 [default]
-extend-ignore-re = ["@thm_\\w+"]
+extend-ignore-re = ["@thm_\\w+", "sha256-[A-Za-z0-9+/]{43}="]
