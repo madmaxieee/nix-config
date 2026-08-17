@@ -1,0 +1,13 @@
+port = 8889
+endpoint = "https://generativelanguage.googleapis.com/v1beta/openai"
+
+[api_key]
+cmd = { run = "sh", args = ["-c", "cat \"$HOME/.config/atuin-ai/gemini_api_key\""] }
+
+default_model = "gemini-3.7-flash"
+
+[[models]]
+alias = "gemini-3.7-flash"
+name = "Gemini 3.7 Flash"
+description = "Gemini 3.7 Flash via Gemini API"
+model = "gemini-3.7-flash"

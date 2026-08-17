@@ -19,7 +19,7 @@
 
   programs.fish.functions.fabric = {
     body = ''
-      set -x GEMINI_API_KEY (pass gemini/cli 2> /dev/null)
+      set -x GEMINI_API_KEY (pass work/gemini 2> /dev/null)
       command fabric $argv
     '';
     wraps = "fabric";
