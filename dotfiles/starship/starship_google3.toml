@@ -17,9 +17,7 @@ $shell\
 $nix_shell\
 $character"""
 
-[fill]
-symbol = " "
-
+# keep-sorted start group_start_regex=['^\['] prefix_order=["[", "[env_var.", "[custom."] newline_separated=yes
 [character]
 success_symbol = "[->](bold green)"
 error_symbol = "[->](bold red)"
@@ -28,18 +26,26 @@ vimcmd_replace_one_symbol = "[<-](bold purple)"
 vimcmd_replace_symbol = "[<-](bold purple)"
 vimcmd_visual_symbol = "[<-](bold yellow)"
 
+[docker_context]
+disabled = true
+
+[fill]
+symbol = " "
+
+[gcloud]
+disabled = true
+
+[git_branch]
+disabled = true
+
+[git_commit]
+disabled = true
+
 [hostname]
 ssh_only = true
 ssh_symbol = ""
 style = "bold green"
 format = '@[$ssh_symbol$hostname]($style) in '
-
-[username]
-style_user = "bold yellow"
-format = '[$user]($style)'
-
-[docker_context]
-disabled = true
 
 [nix_shell]
 disabled = false
@@ -59,11 +65,9 @@ style = ""
 time_format = "%a %b %d  %H:%M:%S"
 format = '[$time]($style) '
 
-[git_commit]
-disabled = true
-
-[git_branch]
-disabled = true
+[username]
+style_user = "bold yellow"
+format = '[$user]($style)'
 
 [env_var.ZMX_SESSION]
 symbol = "󰬇 "
@@ -75,20 +79,22 @@ style = "bold blue"
 when = "jj-starship detect"
 shell = "jj-starship"
 format = "$output "
+# keep-sorted end
 
 # begin overridden sections
 
+# keep-sorted start group_start_regex=['^\['] prefix_order=["[", "[env_var.", "[custom."] newline_separated=yes
 [directory]
 truncate_to_repo = false
 style = "bold blue"
 
-[git_status]
+[git_metrics]
 disabled = true
 
 [git_state]
 disabled = true
 
-[git_metrics]
+[git_status]
 disabled = true
 
 [custom.citc]
@@ -99,3 +105,4 @@ when = """
 echo "$PWD" | grep -q "^/google/src/cloud/"
 """
 format = "[ ](white)[$output](bold) "
+# keep-sorted end
