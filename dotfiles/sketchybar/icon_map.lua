@@ -780,6 +780,7 @@ return {
     [ [[Google Tasks]] ] = ":things:",
     [ [[Jetski Web]] ] = ":antigravity:",
     [ [[KiteTasks]] ] = ":things:",
+    [ [[Modrinth App]] ] = ":minecraft:",
     [ [[Pocket Casts]] ] = ":broadcasts:",
     [ [[stremio]] ] = ":youtube:",
     -- keep-sorted end
