@@ -2,18 +2,16 @@
   lib,
   stdenvNoCC,
   fetchFromGitHub,
+  fetchgit,
   beamPackages,
   gleam,
   git,
-  cacert,
   makeWrapper,
-  pass,
-  gnupg,
   coreutils,
 }:
 
 let
-  version = "0.1.0-unstable-2026-03-24";
+  version = "0.1.0-unstable-2026-08-12";
   src = fetchFromGitHub {
     owner = "atuinsh";
     repo = "atuin-ai-server";
@@ -27,38 +25,61 @@ let
     hash = "sha256-KV0Ea5iPFEZbOzyoPOuk/4dG8NylBg1EZLij5mRCtA8=";
   };
 
-  gleamDeps = stdenvNoCC.mkDerivation {
-    pname = "atuin-ai-core-gleam-deps";
-    version = "0.4.0";
+  fetchGleamDeps =
+    {
+      src,
+      gitHashes ? { },
+    }:
+    let
+      manifest = builtins.fromTOML (builtins.readFile (src + "/manifest.toml"));
+      fetchPkg =
+        p:
+        if p.source == "hex" then
+          beamPackages.fetchHex {
+            pkg = p.name;
+            inherit (p) version;
+            sha256 = p.outer_checksum;
+          }
+        else if p.source == "git" then
+          fetchgit {
+            url = p.repo;
+            rev = p.commit;
+            hash = gitHashes.${p.name} or (throw "Missing gitHashes entry for git dependency ${p.name}");
+          }
+        else
+          throw "Unsupported source ${p.source} for package ${p.name}";
+
+      packagesToml = lib.concatStringsSep "\n" (
+        [ "[packages]" ] ++ map (p: "${p.name} = \"${p.version}\"") manifest.packages
+      );
+    in
+    stdenvNoCC.mkDerivation {
+      pname = "gleam-deps";
+      version = "0.4.0";
+      dontUnpack = true;
+      installPhase = ''
+        mkdir -p $out
+        cat <<'EOF' > $out/packages.toml
+        ${packagesToml}
+        EOF
+
+        ${lib.concatMapStringsSep "\n" (p: ''
+          cp -r ${fetchPkg p} $out/${p.name}
+          chmod -R u+w $out/${p.name}
+        '') manifest.packages}
+      '';
+    };
+
+  gleamDeps = fetchGleamDeps {
     src = fetchFromGitHub {
       owner = "atuinsh";
       repo = "atuin-ai-core";
       rev = "v0.4.0";
       hash = "sha256-d3YKENwm+C0jGeU/yH36nxbRkb6xcGfNej51ZT8bBCw=";
     };
-
-    nativeBuildInputs = [
-      gleam
-      git
-      cacert
-    ];
-
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
-    outputHash = "sha256-fs/3F4pcKbU/HLHQ2QUlbRIcOo9eF7poDar43qlGfjA=";
-
-    buildPhase = ''
-      export HOME="$TMPDIR"
-      export SSL_CERT_FILE="$NIX_SSL_CERT_FILE"
-      export GIT_SSL_CAINFO="$NIX_SSL_CERT_FILE"
-      gleam deps download
-    '';
-
-    installPhase = ''
-      mkdir -p $out
-      find build/packages -name ".git" -exec rm -rf {} + || true
-      cp -r build/packages/* $out/
-    '';
+    gitHashes = {
+      dream_http_client = "sha256-O2fWMlRyUXJH5+vF3aauscwiC27IlRJGwSRyjbPe8hQ=";
+    };
   };
 in
 beamPackages.mixRelease {
@@ -82,13 +103,7 @@ beamPackages.mixRelease {
 
   postFixup = ''
     wrapProgram $out/bin/atuin_ai_server \
-      --prefix PATH : ${
-        lib.makeBinPath [
-          pass
-          gnupg
-          coreutils
-        ]
-      }
+      --prefix PATH : ${lib.makeBinPath [ coreutils ]}
   '';
 
   meta = with lib; {
