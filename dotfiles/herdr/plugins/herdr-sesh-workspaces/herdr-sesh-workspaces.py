@@ -25,6 +25,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import citc
+import session_config
 
 PLUGIN_ID = "madmax.herdr-sesh-workspaces"
 PICKER_ENTRYPOINT = "picker"
@@ -43,6 +44,7 @@ class Entry:
     def display_fields(self) -> tuple[str, str]:
         colors = {
             "workspace": "\033[36m",  # cyan
+            "session": "\033[34m",  # blue
             "citc": "\033[37m",  # white
             "zoxide": "\033[33m",  # yellow
         }
@@ -193,8 +195,12 @@ def citc_entries() -> list[Entry]:
     return citc.citc_entries(Entry)
 
 
+def sesh_entries() -> list[Entry]:
+    return session_config.session_entries(Entry)
+
+
 def all_entries() -> list[Entry]:
-    return workspace_entries() + citc_entries() + zoxide_entries()
+    return workspace_entries() + sesh_entries() + citc_entries() + zoxide_entries()
 
 
 def choose_with_fzf(entries: list[Entry]) -> Entry | None:
@@ -207,6 +213,7 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
         title_part, subtitle_part = entry.display_fields()
         lines.append(f"{i}\t{title_part}\t{subtitle_part}")
 
+    script_path = str(Path(__file__).resolve())
     proc = subprocess.run(
         [
             fzf,
@@ -220,6 +227,9 @@ def choose_with_fzf(entries: list[Entry]) -> Entry | None:
             "--with-nth=2..",
             # limit search scope to the 1st field AFTER transformation, which is the original 2nd field (title)
             "--nth=1",
+            f"--preview={sys.executable} {script_path} preview {{1}}",
+            "--preview-window=right:50%:hidden",
+            "--bind=?,ctrl-/:toggle-preview",
         ],
         input="\n".join(lines),
         text=True,
@@ -256,9 +266,93 @@ def choose(entries: list[Entry]) -> Entry | None:
     return choose_numbered(entries)
 
 
+def get_current_pane_id() -> str | None:
+    data = run_json([get_herdr_bin(), "pane", "current"])
+    if not isinstance(data, dict):
+        return None
+    result = data.get("result")
+    if not isinstance(result, dict):
+        return None
+    pane = result.get("pane")
+    if not isinstance(pane, dict):
+        return None
+    return pane.get("pane_id")
+
+
+def find_workspace_by_name(name: str) -> str | None:
+    data = run_json([get_herdr_bin(), "workspace", "list"])
+    if not isinstance(data, dict):
+        return None
+    result = data.get("result")
+    if not isinstance(result, dict):
+        return None
+    workspaces = result.get("workspaces")
+    if not isinstance(workspaces, list):
+        return None
+
+    for ws in workspaces:
+        if not isinstance(ws, dict):
+            continue
+        wid = str(ws.get("workspace_id") or "")
+        label = str(ws.get("label") or "")
+        if label == name or label.endswith(f" {name}") or wid == name:
+            return wid
+    return None
+
+
 def focus_or_create(entry: Entry) -> None:
     if entry.kind == "workspace":
         run_checked([get_herdr_bin(), "workspace", "focus", entry.value])
+        return
+
+    if entry.kind == "session":
+        sessions = {s.name: s for s in session_config.load_sesh_sessions()}
+        session = sessions.get(entry.value)
+        if not session:
+            return
+
+        existing_ws = find_workspace_by_name(session.name)
+        if existing_ws:
+            run_checked([get_herdr_bin(), "workspace", "focus", existing_ws])
+            return
+
+        path = session.expanded_path
+        if not path.is_dir():
+            try:
+                path.mkdir(parents=True, exist_ok=True)
+            except OSError:
+                pass
+
+        label = f"{entry.icon} {session.name}" if entry.icon else session.name
+        res = run_json(
+            [
+                get_herdr_bin(),
+                "workspace",
+                "create",
+                "--cwd",
+                str(path),
+                "--label",
+                label,
+                "--focus",
+            ]
+        )
+
+        commands = session.get_startup_commands()
+        if commands:
+            pane_id = None
+            if isinstance(res, dict):
+                result_data = res.get("result")
+                if isinstance(result_data, dict):
+                    root_pane = result_data.get("root_pane")
+                    if isinstance(root_pane, dict):
+                        pane_id = root_pane.get("pane_id")
+
+            if not pane_id:
+                pane_id = get_current_pane_id()
+
+            if pane_id:
+                for cmd in commands:
+                    run_checked([get_herdr_bin(), "pane", "run", pane_id, cmd])
         return
 
     if entry.kind in ("zoxide", "citc"):
@@ -402,11 +496,84 @@ def picker() -> None:
     focus_or_create(selected)
 
 
+def _preview_dir(path: Path) -> None:
+    if shutil.which("eza"):
+        subprocess.run(
+            ["eza", "--color=always", "-la", "--icons=always", str(path)], check=False
+        )
+    else:
+        subprocess.run(["ls", "-la", str(path)], check=False)
+
+
+def preview(index: int) -> None:
+    entries = all_entries()
+    if not (0 <= index < len(entries)):
+        return
+    entry = entries[index]
+
+    if entry.kind == "session":
+        sessions = {s.name: s for s in session_config.load_sesh_sessions()}
+        session = sessions.get(entry.value)
+        if session:
+            if session.preview_command:
+                cwd = (
+                    str(session.expanded_path)
+                    if session.expanded_path.is_dir()
+                    else None
+                )
+                subprocess.run(
+                    session.preview_command,
+                    shell=True,
+                    cwd=cwd,
+                    check=False,
+                )
+                return
+            if session.expanded_path.is_dir():
+                _preview_dir(session.expanded_path)
+                return
+            print(
+                f"Session: {session.name}\nPath: {session.path}\nStartup: {session.startup_command}"
+            )
+            return
+
+    if entry.kind in ("zoxide", "citc"):
+        path = Path(entry.value).expanduser()
+        if path.is_dir():
+            _preview_dir(path)
+            return
+
+    if entry.kind == "workspace":
+        data = run_json([get_herdr_bin(), "pane", "list", "--workspace", entry.value])
+        if isinstance(data, dict):
+            result = data.get("result")
+            if isinstance(result, dict):
+                panes = result.get("panes")
+                if isinstance(panes, list) and panes:
+                    first_pane = panes[0].get("pane_id")
+                    if first_pane:
+                        subprocess.run(
+                            [
+                                get_herdr_bin(),
+                                "pane",
+                                "read",
+                                first_pane,
+                                "--lines",
+                                "30",
+                            ],
+                            check=False,
+                        )
+                        return
+        print(f"Workspace: {entry.title}\nID: {entry.value}")
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         description="herdr workspace picker backed by sesh zoxide"
     )
-    parser.add_argument("command", choices=["toggle", "picker", "version", "list"])
+    parser.add_argument(
+        "command", choices=["toggle", "picker", "version", "list", "preview"]
+    )
+    parser.add_argument("index", nargs="?", type=int, help="Entry index for preview")
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -418,8 +585,16 @@ def main(argv: list[str]) -> int:
     elif args.command == "list":
         for entry in all_entries():
             print(entry.line())
+    elif args.command == "preview":
+        if args.index is not None:
+            preview(args.index)
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:]))
+    try:
+        raise SystemExit(main(sys.argv[1:]))
+    except BrokenPipeError:
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, sys.stdout.fileno())
+        sys.exit(0)

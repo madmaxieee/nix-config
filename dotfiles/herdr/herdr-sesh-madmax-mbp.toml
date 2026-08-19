@@ -1,0 +1,4 @@
+[[session]]
+name = "obsidian"
+path = "~/obsidian"
+startup_command = "exec nvim"

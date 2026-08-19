@@ -56,6 +56,7 @@ in
 
   xdg.configFile = {
     "sesh/sesh.toml".source = linkDotfile "sesh/sesh-madmax-mbp.toml";
+    "herdr/herdr-sesh.toml".source = linkDotfile "herdr/herdr-sesh-madmax-mbp.toml";
   };
 
   programs.fish.shellAbbrs = {
