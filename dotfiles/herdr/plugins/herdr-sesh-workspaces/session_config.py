@@ -84,12 +84,11 @@ class SessionConfig:
 
 def find_sesh_config_path() -> Path | None:
     """Locate the sesh configuration file."""
-    # 1. Environment variables
-    for env_var in ("HERDR_SESH_CONFIG", "SESH_CONFIG_FILE", "SESH_CONFIG_PATH"):
-        if val := os.environ.get(env_var):
-            p = Path(val).expanduser()
-            if p.is_file():
-                return p
+    # 1. Environment variable
+    if val := os.environ.get("HERDR_SESH_CONFIG"):
+        p = Path(val).expanduser()
+        if p.is_file():
+            return p
 
     # 2. XDG config home or ~/.config/herdr/herdr-sesh.toml
     xdg_config = os.environ.get("XDG_CONFIG_HOME")
@@ -99,34 +98,6 @@ def find_sesh_config_path() -> Path | None:
             return p
 
     p = Path.home() / ".config" / "herdr" / "herdr-sesh.toml"
-    if p.is_file():
-        return p
-
-    # 3. Direct path in dotfiles repo (relative to plugin dir)
-    herdr_dir = Path(__file__).resolve().parent.parent.parent
-    user = os.environ.get("USER", "")
-    for candidate in (
-        "herdr-sesh.toml",
-        f"herdr-sesh-{user}-mac.toml",
-        f"herdr-sesh-{user}-mbp.toml",
-        "herdr-sesh-maxcchuang-mac.toml",
-        "herdr-sesh-madmax-mbp.toml",
-    ):
-        p = herdr_dir / candidate
-        if p.is_file():
-            return p
-
-    # 4. Fallback to ~/.config/sesh/sesh.toml or ~/.sesh.toml
-    if xdg_config:
-        p = Path(xdg_config).expanduser() / "sesh" / "sesh.toml"
-        if p.is_file():
-            return p
-
-    p = Path.home() / ".config" / "sesh" / "sesh.toml"
-    if p.is_file():
-        return p
-
-    p = Path.home() / ".sesh.toml"
     if p.is_file():
         return p
 
