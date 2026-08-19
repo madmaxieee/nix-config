@@ -82,6 +82,7 @@ rec {
       run ${herdr}/bin/herdr integration install opencode
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/herdr-sesh-workspaces
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/mru-workspace
+      run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/ram-monitor
     '';
   };
 

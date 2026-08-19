@@ -1,0 +1,15 @@
+id = "ram-monitor"
+name = "RAM Monitor"
+version = "0.1.0"
+description = "Monitors RAM usage and sends notifications when exceeding threshold"
+min_herdr_version = "0.8.0"
+platforms = ["linux", "macos"]
+
+[[startup]]
+command = ["python3", "./ram_monitor.py"]
+
+[[actions]]
+id = "check"
+name = "Check RAM Usage"
+title = "Check RAM Usage"
+command = ["python3", "./ram_monitor.py", "--once"]
