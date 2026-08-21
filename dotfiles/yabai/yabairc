@@ -51,6 +51,7 @@ yabai -m rule --add manage=off app='^System Settings$'
 yabai -m rule --add manage=off app='^T3 Chat$'
 yabai -m rule --add manage=off app='^Telegram$'
 yabai -m rule --add manage=off app='^Things$'
+yabai -m rule --add manage=off app='^Zen$' title='Picture-in-Picture'
 # keep-sorted end
 
 # floating and sticky
