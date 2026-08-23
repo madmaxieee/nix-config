@@ -29,6 +29,7 @@
       "spotify"
       "thingsmacsandboxhelper"
       "visual-studio-code"
+      "vorssaint"
       "zen"
       # keep-sorted end
     ];

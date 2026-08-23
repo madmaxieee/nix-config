@@ -24,7 +24,6 @@
       "discord"
       "espanso"
       "fantastical"
-      "finetune"
       "ghostty"
       "google-chrome"
       "hammerspoon"
@@ -50,6 +49,7 @@
       "telegram"
       "thingsmacsandboxhelper"
       "visual-studio-code"
+      "vorssaint"
       "zen"
       # keep-sorted end
     ];
