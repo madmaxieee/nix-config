@@ -9,4 +9,5 @@
     "messages_half_page_down": "ctrl+d",
     "input_newline": "shift+enter",
   },
+  "plugin": ["./herdr-tui-session.js"],
 }
