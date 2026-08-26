@@ -29,7 +29,6 @@ rec {
     # keep-sorted start
     btop
     chafa
-    entr
     fzf
     glow
     graphviz
@@ -46,6 +45,7 @@ rec {
     typos
     unixtools.watch
     unixtools.xxd
+    watchexec
     wget
     xz
     zstd
