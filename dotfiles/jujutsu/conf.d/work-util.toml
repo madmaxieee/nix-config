@@ -52,6 +52,7 @@ citc_list = ["util", "exec", "--", "bash", "-c", """
 
 [jjd-aliases]
 # keep-sorted start
+bsp_guardian = "/wireless/android/pixel/modem/mss/agents/bsp_guardian"
 configs = "/../configs/users/maxcchuang"
 exp = "/experimental/users/maxcchuang"
 git = "/configs/production/gerritcodereview/prod/user/maxcchuang"
