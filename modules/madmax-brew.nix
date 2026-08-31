@@ -24,6 +24,7 @@
       "discord"
       "espanso"
       "fantastical"
+      "gcloud-cli"
       "ghostty"
       "google-chrome"
       "hammerspoon"
