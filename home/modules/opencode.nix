@@ -23,7 +23,7 @@ rec {
             fff-mcp
           ]
         }:$PATH"
-        pnpx opencode-ai@latest "$@"
+        bunx opencode-ai@latest "$@"
       '';
     };
   };
