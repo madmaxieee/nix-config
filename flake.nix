@@ -158,8 +158,10 @@
             taps = taps;
             mutableTaps = false;
             trust = {
-              casks = [ "mediosz/tap/swipeaerospace" ];
-              taps = [ "madmaxieee/tap" ];
+              casks = [
+                "madmaxieee/tap/taigi-telex"
+                "mediosz/tap/swipeaerospace"
+              ];
             };
           };
         };
