@@ -75,9 +75,16 @@ format = "[$symbol$env_value]($style) "
 description = "zmx session name"
 style = "bold blue"
 
-[custom.jj]
+[custom.jj-starship]
+disabled = true
 when = "jj-starship detect"
 shell = "jj-starship"
+format = "$output "
+
+[custom.jj]
+description = "Jujutsu prompt module using jj CLI and Python"
+when = "jj-prompt detect"
+command = "jj-prompt"
 format = "$output "
 # keep-sorted end
 

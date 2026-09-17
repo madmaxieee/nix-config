@@ -6,7 +6,12 @@ in
 {
   programs.starship.enable = true;
 
-  home.packages = with pkgs; [ jj-starship ];
+  home.packages = with pkgs; [
+    jj-starship
+    python313
+  ];
+
+  home.file.".local/bin/jj-prompt".source = linkDotfile "starship/scripts/jj-prompt";
 
   xdg.configFile = {
     "starship.toml".source = linkDotfile "starship/starship.toml";
