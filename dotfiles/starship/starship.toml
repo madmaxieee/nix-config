@@ -74,22 +74,6 @@ symbol = "󰬇 "
 format = "[$symbol$env_value]($style) "
 description = "zmx session name"
 style = "bold blue"
-
-[custom.jj-starship]
-disabled = true
-when = "jj-starship detect"
-shell = "jj-starship"
-format = "$output "
-
-[custom.jj]
-description = "Jujutsu prompt module using jj CLI and Python"
-# `when` is mandatory for custom modules (it defaults to false), but a command
-# string costs a whole extra process per prompt. `when = true` skips that and
-# lets `jj-prompt` do its own detection, which it must do anyway. Outside a
-# repo it prints nothing, and the conditional group below then renders nothing.
-when = true
-command = "jj-prompt"
-format = "($output )"
 # keep-sorted end
 
 # begin overridden sections
@@ -115,4 +99,9 @@ staged = "[++$count](green) "
 renamed = "»$count "
 deleted = "[✘$count](red) "
 style = "green"
+
+[custom.jj-starship]
+when = "jj-starship detect"
+command = "jj-starship --jj-symbol '󱗆 '"
+format = "$output "
 # keep-sorted end
