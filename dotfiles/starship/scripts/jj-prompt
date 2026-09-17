@@ -433,11 +433,16 @@ def cached_render(args, repo_root):
 
 
 def cmd_prompt(args):
+    # Not being in a repo is the normal case, not an error: starship calls this
+    # unconditionally (when = true) so that it does not have to pay for a
+    # separate `detect` process. Print nothing and succeed; the module's
+    # conditional format group "($output )" then renders nothing at all.
     repo_root = find_repo_root()
     if repo_root is None:
-        sys.exit(1)
+        return
     out = cached_render(args, repo_root)
     if out is None:
+        # In a repo but jj failed - a real error, so stay debuggable.
         sys.exit(1)
     print(out, end="")
 
