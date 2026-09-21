@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  linkDotfile = config.lib.custom.linkDotfile;
+in
 {
   home.username = "maxcchuang";
   home.homeDirectory = "/usr/local/google/home/maxcchuang";
@@ -12,6 +15,10 @@
     minicom
     patchelf
   ];
+
+  xdg.configFile = {
+    "herdr/herdr-sesh.toml".source = linkDotfile "herdr/herdr-sesh-maxcchuang.toml";
+  };
 
   programs.fish = {
     functions = {

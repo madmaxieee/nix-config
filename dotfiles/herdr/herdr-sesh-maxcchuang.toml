@@ -1,0 +1,4 @@
+[[session]]
+name = "scratch"
+path = "/tmp"
+startup_command = "exec nvim scratch.md"
