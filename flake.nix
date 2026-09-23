@@ -33,8 +33,18 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     # for nixpkgs overlay
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    jj-starship.url = "github:dmmulroy/jj-starship";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    jj-starship = {
+      url = "github:dmmulroy/jj-starship";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sketchybar-app-font-src = {
       url = "github:madmaxieee/sketchybar-app-font";
       flake = false;
@@ -115,6 +125,9 @@
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
         inputs.jj-starship.overlays.default
+        (final: prev: {
+          hunk = inputs.hunk.packages.${prev.stdenv.hostPlatform.system}.default;
+        })
         # (final: prev: {
         # sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
         #   version = "myfork";
