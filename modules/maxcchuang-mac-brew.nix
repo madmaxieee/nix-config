@@ -6,6 +6,7 @@
       # keep-sorted start
       "mas"
       "media-control"
+      "mole"
       # keep-sorted end
     ];
     casks = [

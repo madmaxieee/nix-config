@@ -6,6 +6,7 @@
       # keep-sorted start
       "mas"
       "media-control"
+      "mole"
       "tailscale"
       # keep-sorted end
     ];
@@ -38,7 +39,6 @@
       "meetingbar"
       "nordvpn"
       "obsidian"
-      "opencode-desktop"
       "orbstack"
       "pocket-casts"
       "raindropio"
