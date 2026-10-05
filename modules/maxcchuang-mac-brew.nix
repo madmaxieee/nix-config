@@ -26,7 +26,7 @@
       "openlogi"
       "pocket-casts"
       "raindropio"
-      "raycast"
+      "scoot"
       "spotify"
       "thingsmacsandboxhelper"
       "visual-studio-code"
