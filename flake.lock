@@ -460,6 +460,7 @@
         "searchjump-yazi": "searchjump-yazi",
         "shadcn-improve": "shadcn-improve",
         "sketchybar-app-font-src": "sketchybar-app-font-src",
+        "taigikeyboard-tap": "taigikeyboard-tap",
         "tokyonight": "tokyonight",
         "tv-yazi": "tv-yazi",
         "vipe-fish": "vipe-fish",
@@ -542,6 +543,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "taigikeyboard-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790912012,
+        "narHash": "sha256-sc/Klrc+1HvcwaMt5QoiIt0+PgI7c0/Cvy5C+s+b+Ns=",
+        "owner": "taigikeyboard",
+        "repo": "homebrew-tap",
+        "rev": "042aa2f2dfb54113fd874ab5ceb9289fe852ab81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "taigikeyboard",
+        "repo": "homebrew-tap",
         "type": "github"
       }
     },

@@ -28,6 +28,10 @@
       url = "github:mediosz/homebrew-tap";
       flake = false;
     };
+    taigikeyboard-tap = {
+      url = "github:taigikeyboard/homebrew-tap";
+      flake = false;
+    };
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -157,9 +161,13 @@
       taps = {
         "madmaxieee/homebrew-tap" = inputs.madmaxieee-tap;
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
+        "taigikeyboard/homebrew-tap" = inputs.taigikeyboard-tap;
       };
 
-      thirdPartyTapNames = builtins.attrNames taps;
+      thirdPartyTapNames = map (name: {
+        inherit name;
+        trusted = true;
+      }) (builtins.attrNames taps);
 
       brew_config =
         { username }:
@@ -170,12 +178,6 @@
             user = username;
             taps = taps;
             mutableTaps = false;
-            trust = {
-              casks = [
-                "madmaxieee/tap/taigi-telex"
-                "mediosz/tap/swipeaerospace"
-              ];
-            };
           };
         };
 
