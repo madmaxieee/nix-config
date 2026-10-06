@@ -111,6 +111,7 @@ in
     ./modules/fabric-ai.nix
     ./modules/axon.nix
     ./modules/opencode.nix
+    ./modules/codex.nix
 
     ./modules/window-management.nix
   ];
