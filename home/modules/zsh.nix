@@ -13,7 +13,7 @@
       "......" = "cd ../../../../..";
       timestamp = "date +%Y-%m-%d_%H-%M-%S";
       cdn = ''
-        target_dir="$(find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
+        target_dir="$(${pkgs.findutils}/bin/find . -mindepth 1 -maxdepth 1 -type d -printf "%T@ %p\n" |
           grep -E -v '\.(git|jj)' |
           sort -n |
           tail -n1 |

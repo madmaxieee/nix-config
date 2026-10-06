@@ -5,17 +5,15 @@ threshold=${1:-60}
 case "$(uname)" in
 Darwin)
 	total_bytes=$(sysctl -n hw.memsize)
-	percentage_total_used=$(vm_stat | awk '
+	percentage_total_used=$(vm_stat | awk -v total_bytes="$total_bytes" '
 	NR==1 {
-		match($0, /([0-9]+)/, arr);
-		page_size = arr[1]
+		match($0, /[0-9]+/);
+		page_size = substr($0, RSTART, RLENGTH) + 0
 	}
 	/Pages (active|wired down)/ {
-		match($0, / +([0-9]+)/, arr);
-		used_pages += arr[1];
+		used_pages += $NF + 0;
 	}
 	END {
-		total_bytes = '"$total_bytes"'
 		total_pages = (total_bytes / page_size)
 		gb = 1024 * 1024 * 1024;
 		percentage = (used_pages / total_pages) * 100;

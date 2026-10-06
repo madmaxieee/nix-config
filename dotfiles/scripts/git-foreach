@@ -60,10 +60,10 @@ USER_CMD_STR="${USER_CMD[*]}"
 fd -0 --type d --type l --hidden -I '\.git$' "$SEARCH_DIR" |
 	xargs -0 -I{} dirname -z {} |
 	sort -z -u |
-	parallel -0 -j8 --no-notice "$(
+	PARALLEL_SHELL="$BASH" parallel -0 -j8 --no-notice "$(
 		cat <<-EOF
 			echo '>>>>>> Running command \`$USER_CMD_STR\` in {}'
-			cd "{}" && $USER_CMD_STR
+			cd {} && $USER_CMD_STR
 			EXIT_CODE=\$?
 			echo "<<<<<< Finished running in {} (exit code: \$EXIT_CODE)"
 			echo ""

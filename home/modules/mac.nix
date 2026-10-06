@@ -8,6 +8,29 @@
 
 let
   linkDotfile = config.lib.custom.linkDotfile;
+  gnuTools = pkgs.runCommand "gnu-tools-prefixed" { } ''
+    mkdir -p "$out/bin"
+    ${lib.concatMapAttrsStringSep "\n"
+      (command: package: ''
+        ln -s "${package}/bin/${command}" "$out/bin/g${command}"
+      '')
+      {
+        # keep-sorted start
+        awk = pkgs.gawk;
+        cmp = pkgs.diffutils;
+        diff = pkgs.diffutils;
+        diff3 = pkgs.diffutils;
+        find = pkgs.findutils;
+        grep = pkgs.gnugrep;
+        make = pkgs.gnumake;
+        sdiff = pkgs.diffutils;
+        sed = pkgs.gnused;
+        tar = pkgs.gnutar;
+        xargs = pkgs.findutils;
+        # keep-sorted end
+      }
+    }
+  '';
 in
 {
   home.stateVersion = "24.05";
@@ -16,18 +39,9 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    # replace darwin utils with gnu ones
-    # keep-sorted start
-    coreutils
-    diffutils
-    findutils
-    gawk
-    gnugrep
-    gnumake
-    gnused
-    gnutar
-    # keep-sorted end
-
+    # Keep native macOS command names; GNU tools are available with a g prefix.
+    coreutils-prefixed
+    gnuTools
     macism
   ];
 

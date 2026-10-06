@@ -24,7 +24,7 @@ in
       body = ''
         if string match -q "/google/src/cloud/*" "$PWD"
           set -gx STARSHIP_CONFIG ~/.config/starship_google3.toml
-        else if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not timeout 0.5s git status >/dev/null 2>&1
+        else if git rev-parse --is-inside-work-tree >/dev/null 2>&1 && not ${pkgs.coreutils}/bin/timeout 0.5s git status >/dev/null 2>&1
           set -gx STARSHIP_CONFIG ~/.config/starship_no_git_status.toml
         else
           set -gx STARSHIP_CONFIG ~/.config/starship.toml

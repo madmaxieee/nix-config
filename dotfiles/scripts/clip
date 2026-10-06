@@ -2,5 +2,5 @@
 
 # copy stdin to system clipboard with OSC 52
 
-buf="$(base64 -w 0)"
+buf="$(base64 | tr -d '\r\n')"
 printf "\e]52;c;%s\a" "$buf"

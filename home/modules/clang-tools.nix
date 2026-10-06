@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
-  home.packages = with pkgs; [
-    clang-tools
-
-    gnumake
-    cmake
-  ];
+  home.packages =
+    with pkgs;
+    [
+      clang-tools
+      cmake
+    ]
+    ++ lib.optionals stdenv.isLinux [ gnumake ];
 }
