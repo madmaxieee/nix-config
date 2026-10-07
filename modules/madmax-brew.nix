@@ -19,7 +19,6 @@
       "arc"
       "calibre"
       "chatgpt"
-      "cleanshot"
       "cloudflare-warp"
       "codex"
       "codex-app"
