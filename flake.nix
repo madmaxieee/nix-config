@@ -19,6 +19,10 @@
       flake = false;
     };
 
+    lab421-tap = {
+      url = "github:lab421/homebrew-tap";
+      flake = false;
+    };
     madmaxieee-tap = {
       url = "github:madmaxieee/homebrew-tap";
       flake = false;
@@ -159,6 +163,7 @@
       };
 
       taps = {
+        "lab421/homebrew-tap" = inputs.lab421-tap;
         "madmaxieee/homebrew-tap" = inputs.madmaxieee-tap;
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
         "taigikeyboard/homebrew-tap" = inputs.taigikeyboard-tap;

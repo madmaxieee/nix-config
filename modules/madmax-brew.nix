@@ -34,6 +34,7 @@
       "jordanbaird-ice"
       "kitty"
       "kobo"
+      "lab421/tap/forel"
       "logi-options+"
       "meetingbar"
       "nordvpn"
