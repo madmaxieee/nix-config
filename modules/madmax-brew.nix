@@ -16,6 +16,7 @@
       "1password-cli"
       "adobe-digital-editions"
       "alfred"
+      "anki"
       "arc"
       "calibre"
       "chatgpt"
