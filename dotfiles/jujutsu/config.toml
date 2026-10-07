@@ -11,8 +11,12 @@ diff-editor = ":builtin"
 diff-formatter = ":git"
 pager = "delta"
 
+[template-aliases]
+bookmark_lines = 'bookmarks.map(|b| b.name() ++ "\n").join("")'
+
 [aliases]
 # keep-sorted start
+bms = ["log", "--no-graph", "-T", "bookmark_lines"]
 d = ["diff"]
 dd = ["util", "exec", "--", "hunk", "diff"]
 e = ["edit"]
