@@ -14,7 +14,6 @@
       "1password"
       "1password-cli"
       "alfred"
-      "discord"
       "espanso"
       "ghostty"
       "hammerspoon"
