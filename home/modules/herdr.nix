@@ -8,6 +8,27 @@
 let
   herdr = pkgs.callPackage ../../packages/herdr.nix { };
   linkDotfile = config.lib.custom.linkDotfile;
+
+  agyPaneTitleHook = "${pkgs.python3}/bin/python3 ${config.lib.custom.nixConfigPath}/dotfiles/herdr/scripts/agy-pane-title.py";
+  agyPaneTitleHookInstall = pkgs.writeShellScript "agy-pane-title-hook-install" ''
+    set -eu
+    config_dir="''${ANTIGRAVITY_CLI_CONFIG_DIR:-$HOME/.gemini/config}"
+    [ -d "$config_dir" ] || exit 0
+    hooks="$config_dir/hooks.json"
+    [ -s "$hooks" ] || echo '{}' > "$hooks"
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+    ${pkgs.jq}/bin/jq --arg cmd "${agyPaneTitleHook}" '
+      ."herdr-pane-title" = {
+        "PreToolUse": [
+          { "matcher": "*",
+            "hooks": [ { "type": "command", "command": ($cmd + " pre_tool"), "timeout": 5 } ] }
+        ],
+        "Stop": [ { "type": "command", "command": ($cmd + " stop"), "timeout": 5 } ]
+      }
+    ' "$hooks" > "$tmp"
+    cat "$tmp" > "$hooks"
+  '';
 in
 rec {
   home.packages = [
@@ -75,6 +96,7 @@ rec {
 
   xdg.configFile = {
     "herdr/config.toml".source = linkDotfile "herdr/config.toml";
+    "herdr/agent-detection/agy.toml".source = linkDotfile "herdr/agent-detection/agy.toml";
   };
 
   home.activation = {
@@ -83,6 +105,14 @@ rec {
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/herdr-sesh-workspaces
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/mru-workspace
       run ${herdr}/bin/herdr plugin link ~/nix-config/dotfiles/herdr/plugins/ram-monitor
+      # apply agent-detection overrides to a running server; no-op if none is running
+      run ${herdr}/bin/herdr server reload-agent-manifests || true
+    '';
+
+    # Antigravity CLI hooks.json is shared with the herdr-managed `herdr` block,
+    # so upsert our own named block instead of symlinking the whole file.
+    agy_pane_title_hook = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${agyPaneTitleHookInstall}
     '';
   };
 
