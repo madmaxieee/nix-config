@@ -28,3 +28,6 @@ w = ["workspace"]
 
 [working-copy]
 eol-conversion = "none"
+
+[snapshot]
+auto-update-stale = true
