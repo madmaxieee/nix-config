@@ -5,16 +5,16 @@
 }:
 
 let
-  version = "v0.5.2";
+  version = "v0.11.0";
   release =
     {
       x86_64-linux = {
         target = "x86_64-unknown-linux-musl";
-        hash = "sha256-o7AoV75bm6mR4bn7nmvbA7dCEtpEe2IbuwKEN0g8NJo=";
+        hash = "sha256-0ehnH0DInERaqhcooh7AS3S+Ll+ZCRSFyuq8yX+ZrOs=";
       };
       aarch64-darwin = {
         target = "aarch64-apple-darwin";
-        hash = "sha256-RrK7HWAGrZxgNoBeG1MdY2cYqBprAQ0NwVzNKEbissk=";
+        hash = "sha256-zGBtlBjPp3ZDdtzXsyoz5kWabLmkcYvjZrAk3Kbp/q0=";
       };
     }
     .${stdenvNoCC.hostPlatform.system} or (throw ''
@@ -26,7 +26,7 @@ stdenvNoCC.mkDerivation rec {
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/dmtrKovalenko/fff.nvim/releases/download/${version}/${pname}-${release.target}";
+    url = "https://github.com/dmtrKovalenko/fff/releases/download/${version}/${pname}-${release.target}";
     hash = release.hash;
   };
 
@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation rec {
 
   meta = with lib; {
     description = "FFF MCP server";
-    homepage = "https://github.com/dmtrKovalenko/fff.nvim";
+    homepage = "https://github.com/dmtrKovalenko/fff";
     license = licenses.mit;
     mainProgram = pname;
     platforms = [

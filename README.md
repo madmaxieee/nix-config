@@ -1,5 +1,19 @@
 # my nix-darwin and home-manager config
 
+## Codex configuration
+
+Edit `dotfiles/codex/config.toml` for managed fff MCP settings and
+`dotfiles/codex/AGENTS.md` for global instructions. Home Manager links these
+files and the existing hooks, then merges only the fff MCP settings into
+`~/.codex/config.toml` on each rebuild. It also sets the `fff` MCP command to
+the absolute Nix store path of `packages/fff-mcp.nix`, shared with OpenCode.
+
+The live config stays writable for Codex's app settings, plugins, MCP servers,
+and project trust state. The first merge saves `config.toml.before-nix` beside
+it. Managed keys are reapplied on rebuild; removing a key from the managed
+file leaves its current live value in place. To reset it, remove it from both
+files. Restart Codex after rebuilding to load MCP changes.
+
 ## GNU tools on macOS
 
 Native macOS utilities keep their usual command names. GNU tools are available

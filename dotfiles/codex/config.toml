@@ -1,0 +1,5 @@
+# Only the fff MCP settings are merged into ~/.codex/config.toml on rebuild.
+[mcp_servers.fff]
+# The absolute command path is supplied by Nix.
+enabled = true
+args = ["--no-update-check"]
