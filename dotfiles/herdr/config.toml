@@ -301,10 +301,10 @@ prompt_new_tab_name = false
 # Custom values reported through pane metadata use a $name token.
 # A token occurrence may be styled with { token = "workspace", fg = "#89b4fa", bold = true, dim = false }.
 # Omitted style fields preserve the contextual default.
-# [ui.sidebar.agents]
+[ui.sidebar.agents]
 # Blank rows between agent entries. Set to 1 to restore the previous spacing.
-# row_gap = 0
-# rows = [["state_icon", "machine", "workspace", "tab"], ["agent"]]
+row_gap = 1
+rows = [["state_icon", "machine", "workspace", "tab"], ["state_text", "agent"]]
 # Optional canonical agent IDs replace the default rows for matching agents.
 # [ui.sidebar.agents.rows_by_agent]
 # claude = [["state_icon", "machine", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
