@@ -1,4 +1,5 @@
 ToggleAppScratchpad = require("scratchpad").toggle_app_scratchpad
+ToggleAppFocus = require("focus").toggle_app_focus
 
 function BundleId(hint)
     return hs.application.find(hint):bundleID()

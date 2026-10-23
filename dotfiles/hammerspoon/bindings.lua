@@ -1,6 +1,7 @@
 local path = "PATH=" .. PATH .. " "
 
 local scratchpad = require("scratchpad")
+local focus = require("focus")
 local config = require("my_config")
 
 local leader_mode = require("leader_mode")
@@ -19,9 +20,8 @@ if config.message_app then
 end
 
 if config.ai_app then
-    scratchpad.hide_on_cmd_w(config.ai_app)
     leader_bind("", "g", function()
-        scratchpad.toggle_app_scratchpad(config.ai_app)
+        focus.toggle_app_focus(config.ai_app)
     end)
 end
 
