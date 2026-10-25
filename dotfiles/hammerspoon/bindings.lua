@@ -200,3 +200,11 @@ PWAAppWatcher = hs.application.watcher.new(function(app_name, event_type, app)
     end
 end)
 PWAAppWatcher:start()
+
+-- app specific bindings:
+local app_bind = require("app_watch").app_bind
+
+app_bind("Google Chrome", { "cmd" }, "s", function(app)
+    -- expand/collapse vertical tab bar
+    hs.eventtap.keyStroke({ "cmd", "shift" }, "l", 0, app)
+end)
