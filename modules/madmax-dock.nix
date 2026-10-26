@@ -7,6 +7,7 @@
       "/Applications/Ghostty.app"
       "/Applications/Zen.app"
       "/Applications/Helium.app"
+      "/Applications/ChatGPT.app"
       "${homeDirectory}/Applications/Chrome Apps.localized/Messenger.app"
       "/Applications/Telegram.app"
       "/Applications/Spotify.app"
