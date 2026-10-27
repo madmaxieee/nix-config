@@ -167,6 +167,12 @@ type = "shell"
 command = "python3 ~/nix-config/dotfiles/herdr/scripts/agent-or-send-ctrl-period.py"
 description = "Leave agent panes, otherwise send Ctrl-."
 
+[[keys.command]]
+key = "prefix+shift+r"
+type = "shell"
+command = "python3 ~/nix-config/dotfiles/herdr/scripts/restart-agent.py"
+description = "Restart focused agent (same name and session)"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
