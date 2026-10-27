@@ -52,8 +52,6 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7"]
 9 = 'secondary'
 10 = 'secondary'
 
-on-mode-changed = []
-
 [key-mapping]
 preset = 'qwerty'
 
@@ -224,7 +222,32 @@ run = [
 ]
 
 [[on-window-detected]]
-if.app-name-regex-substring = '^(Google Chat|Google Gemini|Gemini|Google Tasks|Duckie|T3 Chat|ChatGPT|KiteTasks)$'
+# Every app ends with |; the final (?!) alternative never matches.
+# keep-sorted start skip_lines=2,-2
+if.app-name-regex-substring = """\
+    ^(\
+        Archive Utility|\
+        ChatGPT|\
+        CleanShot X|\
+        Duckie|\
+        Fantastical Helper|\
+        Gemini|\
+        Google Chat|\
+        Google Gemini|\
+        Google Tasks|\
+        Heptabase|\
+        Keymapp|\
+        KiteTasks|\
+        LINE|\
+        Messenger|\
+        Obsidian|\
+        Python|\
+        T3 Chat|\
+        Telegram|\
+        python3|\
+    (?!))$\
+"""
+# keep-sorted end
 run = [
     'layout floating',
     'exec-and-forget ~/.config/aerospace/wm-ids.sh add $AEROSPACE_WINDOW_ID',

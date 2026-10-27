@@ -307,7 +307,7 @@
             homeDirectory = "/Users/madmax";
           })
 
-          (import ./modules/window-management { wm = "yabai"; })
+          (import ./modules/window-management { wm = "aerospace"; })
 
           inputs.nix-index-database.darwinModules.nix-index
           { programs.nix-index-database.comma.enable = true; }

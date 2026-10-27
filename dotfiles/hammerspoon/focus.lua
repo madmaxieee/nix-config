@@ -1,10 +1,15 @@
 local M = {}
+local wm = require("wm")
 
 ---@type table<string, hs.window>
 local previous_windows = {}
 
 ---@param window hs.window?
 local function focus_window_space(window)
+    if wm.name ~= "yabai" then
+        return
+    end
+
     local window_id = window and window:id()
     if not window_id then
         return
