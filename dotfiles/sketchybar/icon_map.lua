@@ -904,6 +904,7 @@ return {
     -- custom
     -- keep-sorted start
     [ [[Cider V]] ] = ":code:",
+    [ [[Gemini (Dogfood)]] ] = ":gemini:",
     [ [[Google Calendar]] ] = ":calendar:",
     [ [[Google Tasks]] ] = ":things:",
     [ [[Jetski Web]] ] = ":antigravity:",

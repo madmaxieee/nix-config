@@ -1,5 +1,5 @@
 return {
-    ai_app = "Gemini",
+    ai_app = "Jetski Web",
     browser = "Google Chrome",
     message_app = "Google Chat",
     terminal_app = "Ghostty",
