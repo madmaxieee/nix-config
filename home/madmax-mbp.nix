@@ -88,6 +88,7 @@ in
     ./modules/tmux.nix
     ./modules/zellij.nix
     ./modules/herdr.nix
+    ./modules/rex.nix
 
     ./modules/scripts.nix
 
