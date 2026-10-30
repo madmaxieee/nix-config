@@ -136,12 +136,13 @@
         (final: prev: {
           hunk = inputs.hunk.packages.${prev.stdenv.hostPlatform.system}.default;
         })
-        # (final: prev: {
-        # sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
-        #   version = "myfork";
-        #   src = inputs.sketchybar-app-font-src;
-        # });
-        # })
+        (final: prev: {
+          # not for new icons, I just want nightly
+          sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
+            version = "myfork";
+            src = inputs.sketchybar-app-font-src;
+          });
+        })
       ];
 
       extraSpecialArgs = {
