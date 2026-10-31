@@ -1,11 +1,11 @@
 theme = Catppuccin Mocha
 
-font-family = MonoLisa
+font-family = MonoLisaCode
 font-style = Regular
 font-style-bold = ExtraBold
 font-style-italic = Regular Italic
 font-style-bold-italic = ExtraBold Italic
-font-feature = +liga, +calt, +ss02, +ss13
+font-feature = +dlig, +calt, +ss01, +ss08, +cv01, +cv06
 
 font-size = 13
 adjust-cell-height = 10%
