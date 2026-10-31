@@ -31,3 +31,11 @@ rex.bind("ctrl+.", function()
   local result = rex.invoke("agentmux_return")
   return result ~= nil and result.handled == true
 end)
+
+-- Quick navigation: cycle tabs, jump to the first two tabs, or open the
+-- session switcher.
+rex.bind("ctrl+space>n", "client.tab.next")
+rex.bind("ctrl+space>p", "client.tab.previous")
+rex.bind("ctrl+space>1", "client.tab.goto", { index = 1 })
+rex.bind("ctrl+space>2", "client.tab.goto", { index = 2 })
+rex.bind("ctrl+space>s", "session.switch")
