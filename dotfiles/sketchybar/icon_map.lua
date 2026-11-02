@@ -907,6 +907,7 @@ return {
     [ [[Gemini (Dogfood)]] ] = ":gemini:",
     [ [[Google Calendar]] ] = ":calendar:",
     [ [[Google Tasks]] ] = ":things:",
+    [ [[Herdr]] ] = ":herdr:",
     [ [[Jetski Web]] ] = ":antigravity:",
     [ [[KiteTasks]] ] = ":things:",
     [ [[Modrinth App]] ] = ":minecraft:",
