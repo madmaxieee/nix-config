@@ -910,6 +910,7 @@ return {
     [ [[KiteTasks]] ] = ":things:",
     [ [[Modrinth App]] ] = ":minecraft:",
     [ [[Pocket Casts]] ] = ":broadcasts:",
+    [ [[T3 Code (Beta)]] ] = ":t3_code:",
     [ [[stremio]] ] = ":youtube:",
     -- keep-sorted end
 }

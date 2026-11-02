@@ -50,6 +50,7 @@
       "responsively"
       "spotify"
       "stremio"
+      "t3-code"
       "taigikeyboard/tap/taigikeyboard"
       "tailscale-app"
       "telegram"
