@@ -54,7 +54,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sketchybar-app-font-src = {
-      url = "github:madmaxieee/sketchybar-app-font";
+      url = "github:kvndrsslr/sketchybar-app-font";
       flake = false;
     };
 
@@ -137,9 +137,8 @@
           hunk = inputs.hunk.packages.${prev.stdenv.hostPlatform.system}.default;
         })
         (final: prev: {
-          # not for new icons, I just want nightly
           sketchybar-app-font = prev.sketchybar-app-font.overrideAttrs (old: {
-            version = "myfork";
+            version = "nightly";
             src = inputs.sketchybar-app-font-src;
           });
         })
