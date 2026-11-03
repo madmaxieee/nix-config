@@ -2,6 +2,7 @@
 
 {
   xdg.configFile."rex/init.lua".source = config.lib.custom.linkDotfile "rex/init.lua";
+  xdg.configFile."rex/sesh-picker.py".source = config.lib.custom.linkDotfile "rex/sesh-picker.py";
 
   # Nix shell initialization can replace the PATH Rex supplies to terminals.
   programs.fish.interactiveShellInit = ''
