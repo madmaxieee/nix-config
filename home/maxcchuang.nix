@@ -37,6 +37,11 @@ in
         '';
         onVariable = "PWD";
       };
+      cjj = ''
+        set -l root /google/src/cloud/$LOGNAME
+        set -l ws (jj citc_list | fzf --height=50% --layout=reverse --prompt "⚡ ")
+        and cd $root/$ws
+      '';
     };
     interactiveShellInit = ''
       __hg_or_git_abbr
