@@ -22,6 +22,8 @@
       "arc"
       "calibre"
       "chatgpt"
+      "claude"
+      "claude-code"
       "cloudflare-warp"
       "codex"
       "codex-app"
