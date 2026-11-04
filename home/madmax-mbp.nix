@@ -113,6 +113,7 @@ in
     ./modules/axon.nix
     ./modules/opencode.nix
     ./modules/codex.nix
+    ./modules/claude.nix
     ./modules/antigravity.nix
 
     ./modules/window-management.nix

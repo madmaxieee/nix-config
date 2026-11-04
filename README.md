@@ -14,6 +14,21 @@ it. Managed keys are reapplied on rebuild; removing a key from the managed
 file leaves its current live value in place. To reset it, remove it from both
 files. Restart Codex after rebuilding to load MCP changes.
 
+## Claude Code configuration
+
+Edit `dotfiles/claude/settings.json` for managed settings such as hooks. Global
+instructions and the jj guard are shared with Codex: `~/.claude/CLAUDE.md` links
+`dotfiles/codex/AGENTS.md` and `~/.claude/hooks/jj_guard.py` links
+`dotfiles/codex/hooks/jj_guard.py`. The `fff` MCP server is defined in
+`home/modules/claude.nix`, using the same `packages/fff-mcp.nix`.
+
+On each rebuild, Home Manager merges the managed settings into
+`~/.claude/settings.json` and the MCP server into `~/.claude.json`, which also
+holds Claude Code's login and app state. Both stay writable, and the first merge
+saves a `.before-nix` copy beside each. Managed keys are reapplied on rebuild,
+and a managed list such as `hooks.PreToolUse` replaces the live one, so add hooks
+to the managed file. Restart Claude Code after rebuilding.
+
 ## GNU tools on macOS
 
 Native macOS utilities keep their usual command names. GNU tools are available

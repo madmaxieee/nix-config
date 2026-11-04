@@ -1,4 +1,4 @@
-"""Codex SessionStart instructions and a best-effort PreToolUse Git guard.
+"""Agent SessionStart instructions and a best-effort PreToolUse Git guard.
 
 Only inspect text and filesystem markers; never execute the pending command.
 This intentionally isn't a shell interpreter or a security boundary.
