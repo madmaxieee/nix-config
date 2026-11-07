@@ -7,6 +7,8 @@
       "mas"
       "media-control"
       "mole"
+      # dependency of the gcloud-cli cask, keeps cleanup from removing it
+      "python@3.14"
       "tailscale"
       # keep-sorted end
     ];
@@ -57,6 +59,7 @@
       "tailscale-app"
       "telegram"
       "thingsmacsandboxhelper"
+      "utm"
       "visual-studio-code"
       "vorssaint"
       "zen"
