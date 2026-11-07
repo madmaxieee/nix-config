@@ -35,7 +35,7 @@ in
     atuinAiServer
   ];
 
-  systemd.user.services = lib.mkIf (profile == "work" && pkgs.stdenv.isLinux) {
+  systemd.user.services = lib.mkIf (profile == "work" && pkgs.stdenv.hostPlatform.isLinux) {
     atuin-ai-server = {
       Unit = {
         Description = "Atuin AI Server (Work)";
@@ -56,7 +56,7 @@ in
     };
   };
 
-  launchd.agents = lib.mkIf (profile == "work" && pkgs.stdenv.isDarwin) {
+  launchd.agents = lib.mkIf (profile == "work" && pkgs.stdenv.hostPlatform.isDarwin) {
     atuin-ai-server = {
       enable = true;
       config = {

@@ -132,7 +132,7 @@ rec {
       ];
     }
 
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       ignores = [
         # General
         ".DS_Store"
@@ -161,7 +161,7 @@ rec {
       ];
     })
 
-    (lib.mkIf pkgs.stdenv.isLinux {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       ignores = [
         "*~"
         # temporary files which can be created if a process still has a handle open of a deleted file

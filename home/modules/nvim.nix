@@ -63,7 +63,7 @@ rec {
         imagemagick
         ghostscript
       ]
-      ++ (lib.optionals stdenv.isDarwin [
+      ++ (lib.optionals stdenv.hostPlatform.isDarwin [
         macism
         # for obsidian.nvim, ":Obsidian paste_img"
         pngpaste
@@ -72,7 +72,7 @@ rec {
       "--set"
       "LIBSQLITE"
       (
-        if pkgs.stdenv.isDarwin then
+        if pkgs.stdenv.hostPlatform.isDarwin then
           "${pkgs.sqlite.out}/lib/libsqlite3.dylib"
         else
           "${pkgs.sqlite.out}/lib/libsqlite3.so"

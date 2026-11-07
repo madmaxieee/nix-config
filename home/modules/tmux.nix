@@ -9,7 +9,7 @@ let
   nixConfigPath = config.lib.custom.nixConfigPath;
   linkDotfile = config.lib.custom.linkDotfile;
   defaultCommand =
-    if pkgs.stdenv.isDarwin then
+    if pkgs.stdenv.hostPlatform.isDarwin then
       ''set-option -g default-command "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.fish}/bin/fish"''
     else
       "";

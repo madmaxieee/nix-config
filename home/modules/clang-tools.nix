@@ -6,5 +6,5 @@
       clang-tools
       cmake
     ]
-    ++ lib.optionals stdenv.isLinux [ gnumake ];
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ gnumake ];
 }

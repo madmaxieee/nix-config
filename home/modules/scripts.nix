@@ -45,7 +45,7 @@ in
 
     { ".local/bin/git-foreach".source = gitForeach; }
 
-    (lib.optionals pkgs.stdenv.isDarwin [
+    (lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
       (linkScript "notify")
       (linkScript "things")
     ])

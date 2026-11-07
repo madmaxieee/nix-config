@@ -5,7 +5,7 @@
   mermaid-cli,
 }:
 
-if stdenv.isDarwin then
+if stdenv.hostPlatform.isDarwin then
   symlinkJoin {
     name = "mermaid-cli-wrapped";
     paths = [ mermaid-cli ];
