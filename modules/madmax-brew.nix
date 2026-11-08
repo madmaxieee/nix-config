@@ -22,6 +22,7 @@
       "antigravity"
       "antigravity-cli"
       "arc"
+      "blip"
       "calibre"
       "chatgpt"
       "claude"
