@@ -51,6 +51,11 @@ in
         hostname = "zeus.ee.ntu.edu.tw";
         user = "madmax";
       };
+      # zeph over Tailscale
+      "win" = {
+        hostname = "100.114.196.9";
+        user = "cmsma";
+      };
     };
   };
 
