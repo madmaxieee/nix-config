@@ -98,16 +98,6 @@
       flake = false;
     };
 
-    # agent skills
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
-    shadcn-improve = {
-      url = "github:shadcn/improve";
-      flake = false;
-    };
-
     # misc
     tokyonight = {
       url = "github:folke/tokyonight.nvim";
@@ -153,7 +143,6 @@
             tv-yazi
             ;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
-          inherit (inputs) mattpocock-skills shadcn-improve;
           inherit (inputs) tokyonight;
         };
       };

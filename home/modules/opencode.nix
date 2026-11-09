@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  sources,
   custom,
   ...
 }:
@@ -18,11 +17,7 @@ rec {
       executable = true;
       text = ''
         #!${pkgs.bash}/bin/bash
-        export PATH="${
-          lib.makeBinPath [
-            fff-mcp
-          ]
-        }:$PATH"
+        export PATH="${lib.makeBinPath [ fff-mcp ]}:$PATH"
         bunx opencode-ai@latest "$@"
       '';
     };
@@ -38,10 +33,6 @@ rec {
     # plugins
     "opencode/plugins/bun-guard.ts".source = linkDotfile "opencode/plugins/bun-guard.ts";
     "opencode/plugins/jj-guard.ts".source = linkDotfile "opencode/plugins/jj-guard.ts";
-
-    # global skills
-    "opencode/skills/improve".source = "${sources.shadcn-improve}/skills/improve";
-    "opencode/skills/productivity".source = "${sources.mattpocock-skills}/skills/productivity";
 
     # commands
     "opencode/commands/commit.md".source = linkDotfile "opencode/commands/commit.md";
