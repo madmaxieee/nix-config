@@ -67,10 +67,6 @@
       url = "github:Lil-Dank/lazygit.yazi";
       flake = false;
     };
-    searchjump-yazi = {
-      url = "github:DreamMaoMao/searchjump.yazi";
-      flake = false;
-    };
     what-size-yazi = {
       url = "github:madmaxieee/what-size.yazi";
       flake = false;
@@ -137,7 +133,6 @@
           inherit (inputs)
             yazi-plugins
             lazygit-yazi
-            searchjump-yazi
             what-size-yazi
             ouch-yazi
             tv-yazi

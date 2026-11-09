@@ -21,6 +21,8 @@ in
     "yazi/init.lua".source = linkDotfile "yazi/init.lua";
     "yazi/keymap.toml".source = linkDotfile "yazi/keymap.toml";
     "yazi/yazi.toml".source = linkDotfile "yazi/yazi.toml";
+    # vendored from github:DreamMaoMao/searchjump.yazi (unmaintained), ported to ya.emit
+    "yazi/plugins/searchjump.yazi".source = linkDotfile "yazi/plugins/searchjump.yazi";
   };
 
   programs.yazi = {
@@ -31,7 +33,6 @@ in
       smart-enter = "${sources.yazi-plugins}/smart-enter.yazi";
       types = "${sources.yazi-plugins}/types.yazi";
       lazygit = sources.lazygit-yazi;
-      searchjump = sources.searchjump-yazi;
       what-size = sources.what-size-yazi;
       ouch = sources.ouch-yazi;
       tv = sources.tv-yazi;

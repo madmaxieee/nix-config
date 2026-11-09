@@ -440,7 +440,6 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "ouch-yazi": "ouch-yazi",
-        "searchjump-yazi": "searchjump-yazi",
         "sketchybar-app-font-src": "sketchybar-app-font-src",
         "taigikeyboard-tap": "taigikeyboard-tap",
         "tokyonight": "tokyonight",
@@ -448,22 +447,6 @@
         "vipe-fish": "vipe-fish",
         "what-size-yazi": "what-size-yazi",
         "yazi-plugins": "yazi-plugins"
-      }
-    },
-    "searchjump-yazi": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1778568432,
-        "narHash": "sha256-Rt1NMP1qksYdfFIywXAG2NJHZFFp9qwqxaxw+tXQtx0=",
-        "owner": "DreamMaoMao",
-        "repo": "searchjump.yazi",
-        "rev": "8a1a785db9526414ac92eb38b4fe5d438b34376f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DreamMaoMao",
-        "repo": "searchjump.yazi",
-        "type": "github"
       }
     },
     "sketchybar-app-font-src": {
