@@ -87,8 +87,6 @@ in
     ./modules/python.nix
     ./modules/rust.nix
 
-    ./modules/fabric-ai.nix
-    ./modules/axon.nix
     ./modules/opencode.nix
 
     # work related

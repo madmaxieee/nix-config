@@ -61,22 +61,6 @@
         "type": "github"
       }
     },
-    "fabric": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780443089,
-        "narHash": "sha256-GQwLczftFoIlqkUAKyzzObMi6fyWEXK9ZZsPbQj8DV8=",
-        "owner": "danielmiessler",
-        "repo": "Fabric",
-        "rev": "29b32f9ff2ced48ff3425cd61c6e5083047f88d3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "danielmiessler",
-        "repo": "Fabric",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -458,7 +442,6 @@
       "inputs": {
         "autopair-fish": "autopair-fish",
         "brew-src": "brew-src",
-        "fabric": "fabric",
         "fzf-fish": "fzf-fish",
         "home-manager": "home-manager",
         "hunk": "hunk",

@@ -121,8 +121,6 @@ in
     ./modules/rust.nix
     ./modules/web-dev.nix
 
-    ./modules/fabric-ai.nix
-    ./modules/axon.nix
     ./modules/opencode.nix
 
     ./modules/window-management.nix

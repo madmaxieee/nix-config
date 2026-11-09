@@ -109,10 +109,6 @@
     };
 
     # misc
-    fabric = {
-      url = "github:danielmiessler/Fabric";
-      flake = false;
-    };
     tokyonight = {
       url = "github:folke/tokyonight.nvim";
       flake = false;
@@ -158,7 +154,7 @@
             ;
           inherit (inputs) autopair-fish fzf-fish vipe-fish;
           inherit (inputs) mattpocock-skills shadcn-improve;
-          inherit (inputs) fabric tokyonight;
+          inherit (inputs) tokyonight;
         };
       };
 
