@@ -289,6 +289,15 @@ local function must(result, err)
 	return result
 end
 
+-- The local directory a pane is working in, or nil. Reads the foreground
+-- process's real cwd rather than the OSC 7 report, which a remote shell can
+-- send too. For a pane running ssh, that is where ssh was started.
+local function block_dir(sid, block_id)
+	local p = block_id and rex.call("block.method", { session_id = sid, block_id = block_id, method = "process" })
+	local fg = p and (p.foreground or p.child)
+	return fg and fg.cwd
+end
+
 rex.action({
 	name = "quick_terminal",
 	title = "Toggle Quick Terminal",
@@ -327,6 +336,9 @@ rex.action({
 		end
 
 		if not quick then
+			-- Start in the focused pane's directory. Later toggles leave it
+			-- wherever it was.
+			local dir = block_dir(sid, here.focused_block_id)
 			must(rex.session.new_layer({
 				window_id = here.window_id,
 				bounds = QUICK_TERMINAL_BOUNDS,
@@ -334,6 +346,7 @@ rex.action({
 				layout = rex.layout.block({
 					flavor = "com.superlogical.terminal.shell",
 					label = QUICK_TERMINAL_LABEL,
+					options = { cwd = dir },
 				}),
 			}))
 			return
