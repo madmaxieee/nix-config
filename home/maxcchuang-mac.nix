@@ -51,6 +51,15 @@ in
         controlPersist = "yes";
         proxyCommand = "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue -dst_username=%r %h %p";
       };
+      # Rex's ssh tunnel (`ssh -N -L ...`) breaks under "*.c": with a running
+      # ControlMaster it becomes a mux client and exits 0 at once, and the
+      # 8080 LocalForward clashes with the master's. This alias doesn't match
+      # "*.c", so it gets plain, unshared connections with no extra forwards.
+      "maxcchuang.c.rex" = {
+        hostname = "maxcchuang.c.googlers.com";
+        forwardAgent = true;
+        proxyCommand = "corp-ssh-helper -relay=sup-ssh-relay.corp.google.com --proxy-mode=grue -dst_username=%r %h %p";
+      };
       "auto gcert" = {
         match = ''host *.c.googlers.com exec  "find /var/run/ccache/sso-$USER/cookie ~/.sso/cookie -mmin -1200 2>/dev/null | grep -q . && gcertstatus --check_remaining=1h --nocheck_loas2 --quiet || gcert --noloas2"'';
       };
