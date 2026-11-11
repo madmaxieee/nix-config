@@ -41,19 +41,164 @@ for index = 1, 9 do
 	rex.bind("ctrl+space>" .. index, "client.tab.goto", { index = index })
 end
 
--- Match the server's session order, including sidebar reordering.
-rex.action({
-	name = "session_goto",
-	title = "Go to Session by Number",
-	args = { index = "integer" },
-	run = function(ctx, args)
-		local listed, err = rex.call("session.list", {})
+-- ctrl+1..9 goes to the Nth session on the machine you're looking at, and
+-- ctrl+space>tab cycles to the next machine (this server, then each other host).
+--
+-- Keys are resolved by the server the app treats as home (the Mac's), even in
+-- a remote host's session, so this Lua runs on the Mac. Findings from
+-- rex_debug dumps:
+--   * In a remote session ctx.server names that host and rex.call goes there;
+--     rex.servers() lists only the other hosts, never this one.
+--   * rex.client.queue("session.select") can't select another host's
+--     session. Ask the app's client on that host instead (client.perform).
+--   * This server's own sessions are only reachable from a remote session
+--     through its rex CLI, which isn't on the server's PATH on macOS.
+local function session_ids(api)
+	local listed = api.call("session.list", {})
+	local ids = {}
+	for _, s in ipairs((listed and listed.sessions) or {}) do
+		table.insert(ids, s.session_id)
+	end
+	return ids
+end
+
+local rex_cli_path
+local function rex_cli()
+	if rex_cli_path then
+		return rex_cli_path
+	end
+	local script = [[
+for p in "$REX_BIN_DIR/rex" "$HOME/.local/bin/rex" /opt/homebrew/bin/rex /usr/local/bin/rex; do
+	[ -x "$p" ] && { echo "$p"; exit 0; }
+done
+command -v rex && exit 0
+find /Applications "$HOME/Applications" -maxdepth 6 -type f -name rex -path '*Rex*' -perm -u+x 2>/dev/null | head -n 1
+]]
+	local result = rex.exec({ "sh", "-c", script }, { timeout = 5 })
+	local path = result and result.ok and result.stdout:match("^%s*(.-)%s*$")
+	if path and path ~= "" then
+		rex_cli_path = path
+	end
+	return rex_cli_path
+end
+
+-- The app's client ID differs per host; pick the newest app client there.
+local function app_client_on(api)
+	local listed = api.call("client.list", {})
+	local best
+	for _, c in ipairs((listed and listed.clients) or {}) do
+		if c.info and c.info.kind == "app" and (not best or (c.connected_at or "") > (best.connected_at or "")) then
+			best = c
+		end
+	end
+	return best and best.client_id
+end
+
+-- Show session_id, which lives on host `server` (nil = this server).
+local function select_session(ctx, server, session_id)
+	if server then
+		local api = rex.server(server)
+		local client_id = app_client_on(api)
+		if not client_id then
+			error("no app client on " .. server, 0)
+		end
+		local _, err = api.call("client.perform", {
+			client_id = client_id,
+			action = "session.select",
+			args = { session_id = session_id },
+		})
 		if err then
 			error(err, 0)
 		end
-		local session = (listed.sessions or {})[args.index]
-		if session then
-			rex.client.queue("session.select", { session_id = session.session_id })
+	elseif ctx.server and rex_cli() then
+		-- From a remote session, go through this server's CLI to select one of
+		-- its own sessions.
+		local result, err = rex.exec(
+			{ rex_cli(), "-C", ctx.client_id, "do", "session.select", "session_id=" .. session_id },
+			{ timeout = 5 }
+		)
+		if not (result and result.ok) then
+			error(err or (result and result.stderr) or "session.select failed", 0)
+		end
+	else
+		rex.client.queue("session.select", { session_id = session_id })
+	end
+end
+
+-- The session last shown on each machine ("" = this server), so switching
+-- machines returns where you were. It also covers this server's sessions when
+-- they can't be listed from a remote session. Reset by a config reload.
+local last_session = {}
+local function remember(ctx)
+	if ctx.session_id then
+		last_session[ctx.server or ""] = ctx.session_id
+	end
+end
+
+local function host_api(server)
+	return server and rex.server(server) or rex
+end
+
+local function local_session_ids(ctx)
+	if not ctx.server then
+		return session_ids(rex)
+	end
+	local cli = rex_cli()
+	local result = cli and rex.exec({ cli, "ls", "--json", "--short=false" }, { timeout = 3 })
+	local ok, listed = pcall(rex.json.decode, result and result.ok and result.stdout or "")
+	local ids = {}
+	for _, s in ipairs((ok and listed and listed.sessions) or {}) do
+		table.insert(ids, s.session_id)
+	end
+	return ids
+end
+
+rex.action({
+	name = "session_goto",
+	title = "Go to Session by Number on This Machine",
+	args = { index = "integer" },
+	run = function(ctx, args)
+		-- rex.call already targets the session's host.
+		local session_id = session_ids(rex)[args.index]
+		if session_id then
+			remember(ctx)
+			select_session(ctx, ctx.server, session_id)
+		end
+	end,
+})
+
+rex.action({
+	name = "host_next",
+	title = "Go to Next Machine",
+	run = function(ctx)
+		remember(ctx)
+		local hosts = { false }
+		for _, label in ipairs(rex.servers and rex.servers() or {}) do
+			table.insert(hosts, label)
+		end
+		local current = 1
+		for i, host in ipairs(hosts) do
+			if host == (ctx.server or false) then
+				current = i
+			end
+		end
+		-- Try each other machine in turn, skipping ones without sessions.
+		for step = 1, #hosts - 1 do
+			local host = hosts[(current - 1 + step) % #hosts + 1] or nil
+			local ids = host and session_ids(host_api(host)) or local_session_ids(ctx)
+			local target = last_session[host or ""]
+			local known = not ids[1] -- can't list: trust the remembered one
+			for _, id in ipairs(ids) do
+				known = known or id == target
+			end
+			target = (target and known) and target or ids[1]
+			if target then
+				select_session(ctx, host, target)
+				return
+			end
+		end
+		if #hosts > 1 then
+			error("no other machine with a known session; switch from this Mac once first", 0)
 		end
 	end,
 })
@@ -61,6 +206,7 @@ rex.action({
 for index = 1, 9 do
 	rex.bind("ctrl+" .. index, "session_goto", { index = index })
 end
+rex.bind("ctrl+space>tab", "host_next")
 
 -- Show the sesh picker in a floating terminal so fzf does not cover the tab.
 rex.action({
@@ -98,8 +244,15 @@ rex.action({
 		if closed then
 			return
 		end
-		local config_home = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
-		local command = { "python3", config_home .. "/rex/sesh-picker.py" }
+		-- This Lua runs on the server that owns the keymap (the Mac's, when
+		-- the Mac app is attached to a remote host), but the layer's command
+		-- runs on the session's host. Resolve the path there, not here.
+		local command = {
+			"sh",
+			"-c",
+			'exec python3 "${XDG_CONFIG_HOME:-$HOME/.config}/rex/sesh-picker.py" "$@"',
+			"sesh-picker",
+		}
 		if ctx.client_id then
 			table.insert(command, ctx.client_id)
 		end
