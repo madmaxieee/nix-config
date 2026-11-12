@@ -29,6 +29,13 @@ saves a `.before-nix` copy beside each. Managed keys are reapplied on rebuild,
 and a managed list such as `hooks.PreToolUse` replaces the live one, so add hooks
 to the managed file. Restart Claude Code after rebuilding.
 
+## Antigravity CLI configuration
+
+Home Manager manages `~/.gemini/config/mcp_config.json` from
+`home/modules/antigravity.nix`, using the shared `packages/fff-mcp.nix` package.
+Each rebuild replaces the whole MCP config, including any temporary local edits.
+Restart agy to load MCP changes.
+
 ## GNU tools on macOS
 
 Native macOS utilities keep their usual command names. GNU tools are available
