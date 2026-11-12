@@ -399,3 +399,35 @@ rex.action({
 })
 
 rex.bind("alt+i", "quick_terminal")
+
+-- Restart the focused agent, resuming its session, like herdr's prefix+R.
+-- Rex doesn't know agent sessions, so agent hooks record them on the agent's
+-- host (agent-session-hook.py). This Lua may run on another machine (the
+-- Mac's server, for a remote session), so it only starts restart-agent.py in a
+-- detached block, which runs on the session's host and does the rest there.
+rex.action({
+	name = "restart_agent",
+	title = "Restart Focused Agent",
+	run = function(ctx)
+		if not (ctx.session_id and ctx.block_id) then
+			return
+		end
+		must(rex.call("session.new_block", {
+			session_id = ctx.session_id,
+			flavor = "com.superlogical.terminal.shell",
+			label = "Restart Agent",
+			options = {
+				command = {
+					"sh",
+					"-c",
+					'exec python3 "${XDG_CONFIG_HOME:-$HOME/.config}/rex/restart-agent.py" "$@"',
+					"restart-agent",
+					ctx.session_id,
+					ctx.block_id,
+				},
+			},
+		}))
+	end,
+})
+
+rex.bind("ctrl+space>shift+r", "restart_agent")

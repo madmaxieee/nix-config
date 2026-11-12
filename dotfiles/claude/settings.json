@@ -19,6 +19,15 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh -c 'f=\"${XDG_CONFIG_HOME:-$HOME/.config}/rex/agent-session-hook.py\"; [ -f \"$f\" ] && python3 \"$f\" claude; true'",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PreToolUse": [
