@@ -72,6 +72,15 @@ def rex(*args: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def block_label(session_id: str, block_id: str) -> str | None:
+    res = rex("block", "inspect", "-s", session_id, block_id, "--json")
+    try:
+        label = json.loads(res.stdout)["block"]["label"]
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return None
+    return label if isinstance(label, str) and label else None
+
+
 def restart(session_id: str, block_id: str) -> None:
     path = state_file(block_id)
     try:
@@ -91,6 +100,11 @@ def restart(session_id: str, block_id: str) -> None:
     split = ["split", "-s", session_id, "-b", block_id, "--split", "right"]
     if isinstance(cwd, str) and os.path.isdir(cwd):
         split += ["--cwd", cwd]
+    # Keep the label: agentmux pairs an agent with its editor through it
+    # ("agentmux:<editor block>"), which ctrl+. in init.lua and nvim rely on.
+    label = block_label(session_id, block_id)
+    if label:
+        split += ["--label", label]
     split += ["--interactive", "--json", "--", "sh", "-c", KEEP_SHELL, "sh"]
     split += resume(agent_session)
     res = rex(*split)
