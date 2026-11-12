@@ -32,6 +32,13 @@ rex.bind("ctrl+.", function()
 	return result ~= nil and result.handled == true
 end)
 
+-- Sidebar: cmd+s toggles it, cmd+/ toggles its activity list. Binding cmd+/
+-- replaces its default (sidebar toggle); cmd+. loses its default activity toggle.
+rex.unbind("cmd+/", "client.sidebar.toggle")
+rex.unbind("cmd+.", "client.sidebar.activity.toggle")
+rex.bind("cmd+s", "client.sidebar.toggle")
+rex.bind("cmd+/", "client.sidebar.activity.toggle")
+
 -- Quick navigation: cycle tabs, focus adjacent panes, jump to tabs 1-9, or
 -- zoom the focused pane.
 rex.bind("ctrl+space>n", "client.tab.next")
