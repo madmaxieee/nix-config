@@ -34,6 +34,8 @@ to the managed file. Restart Claude Code after rebuilding.
 Home Manager manages `~/.gemini/config/mcp_config.json` from
 `home/modules/antigravity.nix`, using the shared `packages/fff-mcp.nix` package.
 Each rebuild replaces the whole MCP config, including any temporary local edits.
+Global instructions at `~/.gemini/config/AGENTS.md` link the shared
+`dotfiles/codex/AGENTS.md`, including the fff file search guidance.
 Restart agy to load MCP changes.
 
 ## GNU tools on macOS
