@@ -32,10 +32,20 @@ rex.bind("ctrl+.", function()
 	return result ~= nil and result.handled == true
 end)
 
--- Quick navigation: cycle tabs, jump to tabs 1-9, or zoom the focused pane.
+-- Quick navigation: cycle tabs, focus adjacent panes, jump to tabs 1-9, or
+-- zoom the focused pane.
 rex.bind("ctrl+space>n", "client.tab.next")
 rex.bind("ctrl+space>p", "client.tab.previous")
 rex.bind("ctrl+space>z", "pane.zoom")
+
+for _, binding in ipairs({
+	{ "h", "left" },
+	{ "j", "down" },
+	{ "k", "up" },
+	{ "l", "right" },
+}) do
+	rex.bind("ctrl+space>" .. binding[1], "pane.focus", { direction = binding[2], wrap = false })
+end
 
 for index = 1, 9 do
 	rex.bind("ctrl+space>" .. index, "client.tab.goto", { index = index })
