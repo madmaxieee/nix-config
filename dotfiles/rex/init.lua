@@ -445,3 +445,79 @@ rex.action({
 })
 
 rex.bind("ctrl+space>shift+r", "restart_agent")
+
+-- Open the focused pane's scrollback buffer in $EDITOR in a full-tab floating
+-- layer, like herdr's prefix+e. Runs rex capture inside the spawned pane so
+-- remote sessions use their own host's temp file and $EDITOR.
+rex.action({
+	name = "edit_scrollback",
+	title = "Edit Scrollback in $EDITOR",
+	run = function(ctx)
+		local sid = ctx.session_id
+		if not sid then
+			return
+		end
+		local block_id = ctx.block_id
+		local window_id
+		if block_id then
+			local listed = must(rex.session.list_blocks({}))
+			for _, block in ipairs(listed.blocks or {}) do
+				if block.block_id == block_id then
+					window_id = block.window_id
+					break
+				end
+			end
+		end
+		if not window_id then
+			local view = must(rex.call("session.view", { session_id = sid }))
+			window_id = view.active_window_id
+			for _, w in ipairs(view.windows or {}) do
+				if w.window_id == window_id then
+					block_id = block_id or w.focused_block_id
+					break
+				end
+			end
+		end
+		if not (block_id and window_id) then
+			return
+		end
+		local dir = block_dir(sid, block_id)
+		local created = must(rex.session.new_layer({
+			window_id = window_id,
+			bounds = { 0, 0, 1, 1 },
+			focus = true,
+			layout = rex.layout.block({
+				flavor = "com.superlogical.terminal.shell",
+				label = "Scrollback",
+				options = {
+					cwd = dir,
+					command = {
+						"sh",
+						"-c",
+						[[
+f=$(mktemp)
+trap 'rm -f "$f"' EXIT
+PATH="${REX_BIN_DIR:+$REX_BIN_DIR:}$PATH"
+rex capture -s "$1" -b "$2" --trim --unwrap > "$f" || exit
+export TMUX_SCROLLBACK=1
+set -- ${EDITOR:-nvim}
+case "${1##*/}" in
+	vim | nvim | view | vi) "$@" '+normal G' "$f" ;;
+	*) "$@" "$f" ;;
+esac
+]],
+						"edit-scrollback",
+						sid,
+						block_id,
+					},
+				},
+			}),
+		}))
+		local editor_block = created.block_ids and created.block_ids[1]
+		if editor_block then
+			must(rex.session.focus_block({ block_id = editor_block }))
+		end
+	end,
+})
+
+rex.bind("ctrl+space>e", "edit_scrollback")
