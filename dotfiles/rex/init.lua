@@ -39,6 +39,13 @@ rex.unbind("cmd+.", "client.sidebar.activity.toggle")
 rex.bind("cmd+s", "client.sidebar.toggle")
 rex.bind("cmd+/", "client.sidebar.activity.toggle")
 
+-- Swap New Session and New Window: cmd+n creates a session, cmd+shift+n
+-- opens a window (reversing Rex's defaults).
+rex.unbind("cmd+n", "client.window.new")
+rex.unbind("cmd+shift+n", "session.new")
+rex.bind("cmd+n", "session.new")
+rex.bind("cmd+shift+n", "client.window.new")
+
 -- Quick navigation: cycle tabs, focus adjacent panes, jump to tabs 1-9, or
 -- zoom the focused pane.
 rex.bind("ctrl+space>n", "client.tab.next")
