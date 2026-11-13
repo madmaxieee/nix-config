@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+# Convert a T3 Code Git worktree into a colocated Jujutsu (jj) workspace,
+# and prune any jj workspaces whose directories were removed from disk.
+#
+# Usage:
+#   t3-jj-worktree setup [worktree_path]
+#   t3-jj-worktree prune [repo_root]
+
+set -euo pipefail
+
+prune_missing_workspaces() {
+  local root="$1"
+  [ -e "$root/.jj" ] || return 0
+  local ws_name ws_root
+  while IFS= read -r ws_name; do
+    [ -n "$ws_name" ] && [ "$ws_name" != "default" ] || continue
+    ws_root="$(jj -R "$root" --ignore-working-copy workspace root --name "$ws_name" 2>/dev/null || true)"
+    if [ -n "$ws_root" ] && [ ! -e "$ws_root/.jj" ]; then
+      jj -R "$root" workspace forget "$ws_name" >/dev/null 2>&1 || true
+    fi
+  done < <(jj -R "$root" --ignore-working-copy workspace list -T 'name ++ "\n"' 2>/dev/null || true)
+}
+
+resolve_repo_root() {
+  local wt="$1"
+  local root="${T3CODE_PROJECT_ROOT:-}"
+  if [ -z "$root" ] && [ -f "$wt/.git" ]; then
+    local common_dir
+    common_dir="$(git -C "$wt" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+    if [ -n "$common_dir" ] && [ "$(basename "$common_dir")" = ".git" ]; then
+      root="$(dirname "$common_dir")"
+    fi
+  fi
+  if [ -n "$root" ] && [ -d "$root" ]; then
+    (cd "$root" && pwd -P)
+  fi
+}
+
+cmd="${1:-setup}"
+shift || true
+
+case "$cmd" in
+  prune)
+    target="${1:-${T3CODE_PROJECT_ROOT:-${T3CODE_WORKTREE_PATH:-$PWD}}}"
+    [ -d "$target" ] || exit 0
+    root="$(resolve_repo_root "$target")"
+    [ -n "$root" ] || root="$(cd "$target" && pwd -P)"
+    prune_missing_workspaces "$root"
+    ;;
+
+  setup)
+    raw_wt="${1:-${T3CODE_WORKTREE_PATH:-$PWD}}"
+    [ -d "$raw_wt" ] || exit 0
+    wt="$(cd "$raw_wt" && pwd -P)"
+
+    # Already a jj workspace; nothing to convert.
+    if [ -e "$wt/.jj" ]; then
+      root="$(resolve_repo_root "$wt")"
+      [ -n "$root" ] && prune_missing_workspaces "$root"
+      exit 0
+    fi
+
+    root="$(resolve_repo_root "$wt")"
+    # Plain Git repository (not backed by jj): leave untouched.
+    if [ -z "$root" ] || [ ! -e "$root/.jj" ] || [ "$wt" = "$root" ]; then
+      exit 0
+    fi
+
+    lock_hash="$(printf '%s' "$wt" | shasum -a 256 | cut -c1-16)"
+    lock_dir="/tmp/t3-jj-worktree-${lock_hash}.lock"
+    acquired=0
+    for _ in $(seq 1 60); do
+      if mkdir "$lock_dir" 2>/dev/null; then
+        acquired=1
+        break
+      fi
+      sleep 0.25
+    done
+    [ "$acquired" -eq 1 ] || { echo "t3-jj-worktree: timed out waiting for lock $lock_dir" >&2; exit 1; }
+    trap 'rmdir "$lock_dir" 2>/dev/null || true' EXIT
+
+    # Re-check after acquiring lock in case a concurrent caller finished conversion.
+    [ ! -e "$wt/.jj" ] || exit 0
+
+    # Wait briefly if T3 Code's async branch namer is still renaming a temporary t3/* branch.
+    for _ in $(seq 1 20); do
+      br="$(git -C "$wt" symbolic-ref --short -q HEAD 2>/dev/null || true)"
+      case "$br" in
+        t3/*|t3-*) sleep 0.25 ;;
+        *) break ;;
+      esac
+    done
+
+    rev="$(git -C "$wt" rev-parse HEAD)"
+    br="$(git -C "$wt" symbolic-ref --short -q HEAD 2>/dev/null || true)"
+    name="$(basename "$wt")"
+
+    cd "$root"
+    prune_missing_workspaces "$root"
+    jj -R "$root" workspace forget "$name" >/dev/null 2>&1 || true
+    git -C "$root" worktree remove --force "$wt"
+    jj -R "$root" workspace add --colocate --name "$name" -r "$rev" "$wt"
+
+    if [ -n "$br" ]; then
+      jj -R "$wt" bookmark set "$br" -r @ --allow-backwards
+    fi
+
+    if [ -f "$wt/.gitmodules" ]; then
+      git -C "$wt" submodule update --init --recursive
+    fi
+    ;;
+
+  *)
+    echo "Usage: t3-jj-worktree {setup|prune} [path]" >&2
+    exit 2
+    ;;
+esac

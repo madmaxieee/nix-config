@@ -40,6 +40,7 @@ in
     (linkScript "nr")
     (linkScript "ns")
     (linkScript "peek")
+    (linkScript "t3-jj-worktree")
     (linkScript "vipe")
     # keep-sorted end
 

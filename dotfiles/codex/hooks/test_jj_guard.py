@@ -216,6 +216,117 @@ class JjGuardTests(unittest.TestCase):
         ]:
             self.assertIsNone(jj_guard.handle(payload))
 
+    def _make_linked_worktree(self, repo_root, name):
+        wt_git_dir = repo_root / ".git" / "worktrees" / name
+        wt_git_dir.mkdir(parents=True)
+        (wt_git_dir / "commondir").write_text("../..\n")
+        wt = self.base / name
+        wt.mkdir()
+        (wt / ".git").write_text(f"gitdir: {wt_git_dir}\n")
+        return wt
+
+    def test_linked_git_worktree_of_jj_repo(self):
+        jj_wt = self._make_linked_worktree(self.repo, "t3-jj-wt")
+        plain_wt = self._make_linked_worktree(self.plain, "t3-plain-wt")
+
+        # SessionStart warns that jj_wt is an unconverted Git worktree of self.repo
+        session = jj_guard.handle(
+            {"hook_event_name": "SessionStart", "cwd": str(jj_wt)}
+        )
+        self.assertIsNotNone(session)
+        ctx = session["hookSpecificOutput"]["additionalContext"]
+        self.assertIn("t3-jj-worktree", ctx)
+        self.assertIn(str(self.repo), ctx)
+
+        # Direct git commands in unconverted jj worktree are denied; setup helper is allowed
+        denied = self.hook("git status", cwd=jj_wt)
+        self.assertEqual(denied["hookSpecificOutput"]["permissionDecision"], "deny")
+        self.assertIn(
+            "t3-jj-worktree",
+            denied["hookSpecificOutput"]["permissionDecisionReason"],
+        )
+        self.assertIsNone(
+            self.hook('"$HOME/.local/bin/t3-jj-worktree" setup', cwd=jj_wt)
+        )
+
+        # Plain-Git worktrees remain untouched
+        self.assertIsNone(
+            jj_guard.handle({"hook_event_name": "SessionStart", "cwd": str(plain_wt)})
+        )
+        self.assertIsNone(self.hook("git status", cwd=plain_wt))
+
+    def test_antigravity_wire_protocol(self):
+        script = str(Path(jj_guard.__file__))
+        attachments = self.base / "attachments"
+        attachments.mkdir()
+        jj_wt = self._make_linked_worktree(self.repo, "agy-wt")
+
+        # 1. SessionStart with [attachments, jj_wt]
+        res = subprocess.run(
+            [sys.executable, script, "agy", "session_start"],
+            input=json.dumps({"workspacePaths": [str(attachments), str(jj_wt)]}),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        parsed = json.loads(res.stdout)
+        sys_msg = parsed["injectSteps"][0]["systemMessage"]["systemMessage"]
+        self.assertIn("t3-jj-worktree", sys_msg)
+        self.assertIn("Jujutsu", sys_msg)
+
+        # 2. SessionStart on plain repo emits empty stdout
+        res_plain = subprocess.run(
+            [sys.executable, script, "agy", "session_start"],
+            input=json.dumps({"workspacePaths": [str(self.plain)]}),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        self.assertEqual(res_plain.stdout, "")
+
+        # 3. PreToolUse blocks git in jj repo and unconverted worktree
+        for target_dir in (self.repo, jj_wt):
+            res_deny = subprocess.run(
+                [sys.executable, script, "agy", "pre_tool"],
+                input=json.dumps(
+                    {
+                        "workspacePaths": [str(attachments), str(target_dir)],
+                        "toolCall": {
+                            "name": "run_command",
+                            "args": {
+                                "CommandLine": "git status",
+                                "Cwd": str(target_dir),
+                            },
+                        },
+                    }
+                ),
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            deny_json = json.loads(res_deny.stdout)
+            self.assertEqual(deny_json["decision"], "deny")
+            self.assertIn("JJ-GUARD", deny_json["reason"])
+
+        # 4. PreToolUse emits strictly empty stdout (never {}) when allowed
+        for cmd in ("jj status", '"$HOME/.local/bin/t3-jj-worktree" setup'):
+            res_ok = subprocess.run(
+                [sys.executable, script, "agy", "pre_tool"],
+                input=json.dumps(
+                    {
+                        "workspacePaths": [str(attachments), str(self.repo)],
+                        "toolCall": {
+                            "name": "run_command",
+                            "args": {"CommandLine": cmd, "Cwd": str(self.repo)},
+                        },
+                    }
+                ),
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            self.assertEqual(res_ok.stdout, "")
+
 
 if __name__ == "__main__":
     unittest.main()

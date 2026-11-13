@@ -60,14 +60,84 @@ def directory(value, cwd):
     return (path if path.is_absolute() else cwd / path).resolve()
 
 
-def jj_root(cwd):
+def linked_worktree_jj_root(worktree_path):
+    """If worktree_path/.git is a Git worktree linked to a jj repo, return that jj root."""
+    git_marker = worktree_path / ".git"
+    try:
+        if not git_marker.is_file():
+            return None
+        raw = git_marker.read_text(encoding="utf-8", errors="replace").strip()
+        if not raw.startswith("gitdir:"):
+            return None
+        git_dir = (worktree_path / raw[len("gitdir:") :].strip()).resolve()
+        commondir_file = git_dir / "commondir"
+        if not commondir_file.is_file():
+            return None
+        common_rel = commondir_file.read_text(
+            encoding="utf-8", errors="replace"
+        ).strip()
+        if not common_rel:
+            return None
+        common_git_dir = (git_dir / common_rel).resolve()
+        main_repo = common_git_dir.parent
+        if (main_repo / ".jj").exists():
+            return main_repo
+    except OSError:
+        return None
+    return None
+
+
+def repo_state(cwd):
+    """Return ('jj', root, None) or ('unconverted_worktree', root, worktree) or None."""
     for path in (cwd, *cwd.parents):
         if (path / ".jj").exists():
-            return path
-        # A nested plain Git repository owns its own version-control policy.
+            return ("jj", path, None)
         if (path / ".git").exists():
+            linked_root = linked_worktree_jj_root(path)
+            if linked_root is not None:
+                return ("unconverted_worktree", linked_root, path)
+            # A nested plain Git repository owns its own version-control policy.
             return None
     return None
+
+
+def jj_root(cwd):
+    state = repo_state(cwd)
+    return state[1] if state is not None else None
+
+
+def worktree_instructions(worktree, root):
+    return (
+        f"JJ-GUARD: The checkout at {worktree} is a plain Git worktree of the "
+        f"Jujutsu (jj) repository at {root}, without a .jj workspace.\n"
+        f'Run `"$HOME/.local/bin/t3-jj-worktree" setup "{worktree}"` first to '
+        "convert it into a colocated jj workspace, then use jj commands instead of git.\n"
+    )
+
+
+def session_instructions_for(cwd):
+    state = repo_state(cwd)
+    if state is None:
+        return None
+    kind, root, worktree = state
+    if kind == "unconverted_worktree":
+        return worktree_instructions(worktree, root) + "\n" + INSTRUCTIONS
+    return INSTRUCTIONS
+
+
+def deny_reason(operation, state):
+    kind, root, worktree = state
+    guidance = GUIDANCE.get(operation, "Use jj help to find the appropriate operation.")
+    if kind == "unconverted_worktree":
+        return (
+            f"JJ-GUARD: Direct git commands are blocked in {worktree}, which is an "
+            f"unconverted Git worktree of the jj repository at {root}. "
+            f'Run \'"$HOME/.local/bin/t3-jj-worktree" setup "{worktree}"\' first to '
+            f"convert it into a colocated jj workspace, then use jj commands. {guidance}"
+        )
+    reason = f"JJ-GUARD: Direct git commands are blocked in the jj repository at {root}. {guidance}"
+    reason += " If Git is truly required, ask the user for an explicit exception; do not bypass the guard."
+    return reason
 
 
 def substitutions(text):
@@ -187,8 +257,8 @@ def inspect_segment(args, cwd, depth):
     name = Path(args[0]).name
     if name == "git":
         operation, target = git_operation(args[1:], cwd)
-        root = jj_root(target)
-        return ((operation, root) if root else None), cwd
+        state = repo_state(target)
+        return ((operation, state) if state else None), cwd
     if name == "cd":
         paths = [arg for arg in args[1:] if arg not in {"--", "-L", "-P"}]
         if paths and paths[0] != "-":
@@ -257,15 +327,84 @@ def inspect_command(command, cwd, depth=0):
     return None
 
 
-def handle(payload):
+def agy_workspace_paths(payload):
+    raw = payload.get("workspacePaths")
+    if not isinstance(raw, list):
+        return []
+    paths = []
+    for entry in raw:
+        if isinstance(entry, str) and entry:
+            try:
+                paths.append(Path(entry).resolve())
+            except OSError:
+                continue
+    return paths
+
+
+def handle_agy(payload, mode):
+    workspace_paths = agy_workspace_paths(payload)
+    if mode == "session_start":
+        messages = []
+        seen = set()
+        for ws_path in workspace_paths:
+            msg = session_instructions_for(ws_path)
+            if msg and msg not in seen:
+                seen.add(msg)
+                messages.append(msg)
+        if messages:
+            return {
+                "injectSteps": [
+                    {"systemMessage": {"systemMessage": "\n".join(messages)}}
+                ]
+            }
+        return None
+
+    if mode == "pre_tool":
+        tool_call = payload.get("toolCall")
+        if not isinstance(tool_call, dict) or tool_call.get("name") != "run_command":
+            return None
+        args = tool_call.get("args")
+        if not isinstance(args, dict):
+            return None
+        command = args.get("CommandLine")
+        if not isinstance(command, str):
+            return None
+        default_cwd = next(
+            (p for p in workspace_paths if repo_state(p) is not None),
+            workspace_paths[0] if workspace_paths else Path.cwd(),
+        )
+        raw_cwd = args.get("Cwd")
+        cwd = (
+            directory(raw_cwd, default_cwd)
+            if isinstance(raw_cwd, str) and raw_cwd
+            else default_cwd
+        )
+        blocked = inspect_command(command, cwd)
+        if blocked:
+            operation, state = blocked
+            return {
+                "decision": "deny",
+                "reason": deny_reason(operation, state),
+            }
+        # Empty stdout means "no opinion" in Antigravity; never return {} on PreToolUse.
+        return None
+
+    return None
+
+
+def handle(payload, agent=None, mode=None):
+    if agent == "agy":
+        return handle_agy(payload, mode)
+
     cwd = Path(payload.get("cwd") or os.getcwd()).resolve()
     event = payload.get("hook_event_name")
     if event == "SessionStart":
-        if jj_root(cwd):
+        instructions = session_instructions_for(cwd)
+        if instructions:
             return {
                 "hookSpecificOutput": {
                     "hookEventName": event,
-                    "additionalContext": INSTRUCTIONS,
+                    "additionalContext": instructions,
                 }
             }
     elif event == "PreToolUse" and payload.get("tool_name") in {
@@ -283,26 +422,27 @@ def handle(payload):
         cwd = directory(args.get("cwd") or args.get("workdir") or str(cwd), cwd)
         blocked = inspect_command(command, cwd)
         if blocked:
-            operation, root = blocked
-            guidance = GUIDANCE.get(
-                operation, "Use jj help to find the appropriate operation."
-            )
-            reason = f"JJ-GUARD: Direct git commands are blocked in the jj repository at {root}. {guidance}"
-            reason += " If Git is truly required, ask the user for an explicit exception; do not bypass the guard."
+            operation, state = blocked
             return {
                 "hookSpecificOutput": {
                     "hookEventName": event,
                     "permissionDecision": "deny",
-                    "permissionDecisionReason": reason,
+                    "permissionDecisionReason": deny_reason(operation, state),
                 }
             }
     return None
 
 
 def main():
+    agent = sys.argv[1] if len(sys.argv) > 1 else None
+    mode = sys.argv[2] if len(sys.argv) > 2 else None
     try:
         payload = json.load(sys.stdin)
-        output = handle(payload) if isinstance(payload, dict) else None
+        output = (
+            handle(payload, agent=agent, mode=mode)
+            if isinstance(payload, dict)
+            else None
+        )
     except (ValueError, OSError, TypeError) as error:
         # Fail open for malformed input/filesystem failures, as a best-effort hook.
         print(f"JJ-GUARD: Could not inspect hook input: {error}", file=sys.stderr)
