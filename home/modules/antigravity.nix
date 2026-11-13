@@ -38,6 +38,11 @@ let
 in
 {
   home.file = {
+    ".agents/skills/t3-model-routing" = {
+      force = true;
+      source = linkDotfile "agents/skills/t3-model-routing";
+    };
+
     # Antigravity (CLI and T3 Code ACP) discovers global skills via config/skills,
     # not config/AGENTS.md; expose shared global instructions as a skill.
     ".agents/skills/global-instructions/SKILL.md" = {

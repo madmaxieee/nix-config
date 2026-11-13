@@ -23,6 +23,10 @@ in
   # Shared with Codex so the agents can't drift apart.
   home.file = {
     ".claude/CLAUDE.md".source = linkDotfile "codex/AGENTS.md";
+    ".claude/skills/t3-model-routing" = {
+      force = true;
+      source = linkDotfile "agents/skills/t3-model-routing";
+    };
     ".claude/hooks/jj_guard.py".source = linkDotfile "codex/hooks/jj_guard.py";
   };
 
