@@ -8,7 +8,7 @@
 let
   linkDotfile = config.lib.custom.linkDotfile;
 
-  # Antigravity CLI's hooks.json is shared with herdr's managed blocks, so
+  # Antigravity CLI's hooks.json can contain other tools' managed blocks, so
   # upsert our own named block instead of symlinking the whole file. Claude
   # Code and Codex get the same hook from their dotfiles settings.
   agentSessionHook = "${pkgs.python3}/bin/python3 ${config.xdg.configHome}/rex/agent-session-hook.py";
@@ -29,8 +29,17 @@ let
   '';
 in
 {
+  home.packages = [
+    pkgs.fzf
+    pkgs.python3
+  ];
+
+  imports = [ ./zoxide.nix ];
+
   xdg.configFile."rex/init.lua".source = linkDotfile "rex/init.lua";
   xdg.configFile."rex/sesh-picker.py".source = linkDotfile "rex/sesh-picker.py";
+  xdg.configFile."rex/citc.py".source = linkDotfile "rex/citc.py";
+  xdg.configFile."rex/session_config.py".source = linkDotfile "rex/session_config.py";
   xdg.configFile."rex/agent-session-hook.py".source = linkDotfile "rex/agent-session-hook.py";
   xdg.configFile."rex/restart-agent.py".source = linkDotfile "rex/restart-agent.py";
   # Declares the rex global for lua_ls when editing ~/.config/rex/init.lua.

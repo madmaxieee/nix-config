@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Restart the agent in a Rex pane, resuming the same session.
 
-Rex counterpart of ~/nix-config/dotfiles/herdr/scripts/restart-agent.py. The
-restart_agent action in init.lua runs this in a detached block on the pane's
+The restart_agent action in init.lua runs this in a detached block on the pane's
 host, so it works in remote sessions as well. It reads what
 agent-session-hook.py recorded for the pane, splits a replacement off the
 agent pane (so it takes the old pane's slot once that closes), starts the same
@@ -22,7 +21,6 @@ from pathlib import Path
 from typing import Callable
 
 # Agent commands that resume a given session, keyed by agent kind.
-# Keep in sync with RESUME_ARGS in dotfiles/herdr/scripts/restart-agent.py.
 RESUME_COMMANDS: dict[str, Callable[[str], list[str]]] = {
     "agy": lambda session_id: ["agy", "--conversation", session_id],
     "opencode": lambda session_id: ["opencode", "--session", session_id],
@@ -30,7 +28,7 @@ RESUME_COMMANDS: dict[str, Callable[[str], list[str]]] = {
     "claude": lambda session_id: ["claude", "--resume", session_id],
 }
 
-# After the agent exits, leave a shell in the pane like herdr's restart does.
+# After the agent exits, leave a shell in the pane.
 KEEP_SHELL = '"$@"; exec "${SHELL:-/bin/sh}" -l'
 
 
@@ -67,9 +65,7 @@ def log(message: str) -> None:
 
 
 def rex(*args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["rex", *args], text=True, capture_output=True, check=False
-    )
+    return subprocess.run(["rex", *args], text=True, capture_output=True, check=False)
 
 
 def block_label(session_id: str, block_id: str) -> str | None:

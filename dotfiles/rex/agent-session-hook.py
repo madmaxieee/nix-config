@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Record which agent session runs in a Rex pane, for restart-agent.py.
 
-Rex has no agent registry like herdr's `agent get`, so agent hooks call this
-with the agent kind and the hook payload on stdin. It writes
+Agent hooks call this with the agent kind and the hook payload on stdin. It writes
 $XDG_STATE_HOME/rex/agents/<REX_BLOCK>.json on the machine the agent runs on,
 which is also where restart-agent.py runs, so it works on remote hosts too.
 

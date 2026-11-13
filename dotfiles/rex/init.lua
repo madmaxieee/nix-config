@@ -300,9 +300,8 @@ rex.bind("ctrl+alt+k", "sesh_picker")
 rex.bind("ctrl+space>t", "sesh_picker")
 rex.bind("ctrl+space>s", "sesh_picker")
 
--- Quake-style scratch terminal, one per session like the tmux __popup
--- sessions. Hiding detaches the block (the shell keeps running); showing moves
--- it into the current tab and floats it there.
+-- Quake-style scratch terminal, one per session. Hiding detaches the block
+-- (the shell keeps running); showing moves it into the current tab and floats it.
 local QUICK_TERMINAL_LABEL = "Quick Terminal"
 local QUICK_TERMINAL_BOUNDS = { 0.15, 0.15, 0.7, 0.7 }
 
@@ -414,7 +413,7 @@ rex.action({
 
 rex.bind("alt+i", "quick_terminal")
 
--- Restart the focused agent, resuming its session, like herdr's prefix+R.
+-- Restart the focused agent, resuming its session.
 -- Rex doesn't know agent sessions, so agent hooks record them on the agent's
 -- host (agent-session-hook.py). This Lua may run on another machine (the
 -- Mac's server, for a remote session), so it only starts restart-agent.py in a
@@ -447,8 +446,8 @@ rex.action({
 rex.bind("ctrl+space>shift+r", "restart_agent")
 
 -- Open the focused pane's scrollback buffer in $EDITOR in a full-tab floating
--- layer, like herdr's prefix+e. Runs rex capture inside the spawned pane so
--- remote sessions use their own host's temp file and $EDITOR.
+-- layer. Runs rex capture inside the spawned pane so remote sessions use their
+-- own host's temp file and $EDITOR.
 rex.action({
 	name = "edit_scrollback",
 	title = "Edit Scrollback in $EDITOR",

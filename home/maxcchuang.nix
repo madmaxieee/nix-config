@@ -18,6 +18,7 @@ in
 
   xdg.configFile = {
     "herdr/herdr-sesh.toml".source = linkDotfile "herdr/herdr-sesh-maxcchuang.toml";
+    "rex/sesh.toml".source = linkDotfile "rex/sesh-maxcchuang.toml";
   };
 
   programs.fish = {
