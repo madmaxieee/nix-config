@@ -140,6 +140,27 @@ def deny_reason(operation, state):
     return reason
 
 
+def submodule_warning(state):
+    _, root, _ = state
+    return (
+        f"JJ-GUARD WARNING: Allowing `git submodule` in the jj repository at {root} "
+        "because Jujutsu does not natively manage Git submodules. "
+        "Submodule checkout/state changes may not be tracked directly by jj; "
+        "continue using jj for all other version-control operations."
+    )
+
+
+def format_warnings(states):
+    messages = []
+    seen = set()
+    for state in states:
+        msg = submodule_warning(state)
+        if msg not in seen:
+            seen.add(msg)
+            messages.append(msg)
+    return "\n".join(messages)
+
+
 def substitutions(text):
     """Extract common $() and backtick forms, excluding single-quoted literals."""
     quote = None
@@ -219,7 +240,7 @@ def git_operation(args, cwd):
     return "", directory(target, cwd) if target else cwd
 
 
-def inspect_segment(args, cwd, depth):
+def _inspect_segment(args, cwd, depth):
     # Unwrap common launchers without running them or trusting bypass variables.
     while args:
         if args[0] in {"if", "then", "elif", "else", "do", "while", "until", "!"}:
@@ -235,13 +256,14 @@ def inspect_segment(args, cwd, depth):
         while args and args[0].startswith("-"):
             option = args.pop(0)
             if name == "command" and option in {"-v", "-V"}:
-                return None, cwd
+                return None, [], cwd
             if name == "env" and option in {"-C", "--chdir"} and args:
                 cwd = directory(args.pop(0), cwd)
             elif name == "env" and option.startswith("--chdir="):
                 cwd = directory(option.split("=", 1)[1], cwd)
             elif name == "env" and option in {"-S", "--split-string"} and args:
-                return inspect_command(args[0], cwd, depth + 1), cwd
+                blocked, warnings = _inspect_command(args[0], cwd, depth + 1)
+                return blocked, warnings, cwd
             elif name == "env" and option in {"-u", "--unset"} and args:
                 args.pop(0)
             elif (
@@ -253,18 +275,23 @@ def inspect_segment(args, cwd, depth):
             elif name == "sudo" and option in {"-D", "--chdir"} and args:
                 cwd = directory(args.pop(0), cwd)
     if not args:
-        return None, cwd
+        return None, [], cwd
     name = Path(args[0]).name
     if name == "git":
         operation, target = git_operation(args[1:], cwd)
         state = repo_state(target)
-        return ((operation, state) if state else None), cwd
+        if state is None:
+            return None, [], cwd
+        kind, _, _ = state
+        if operation == "submodule" and kind == "jj":
+            return None, [state], cwd
+        return (operation, state), [], cwd
     if name == "cd":
         paths = [arg for arg in args[1:] if arg not in {"--", "-L", "-P"}]
         if paths and paths[0] != "-":
-            return None, directory(paths[0], cwd)
+            return None, [], directory(paths[0], cwd)
         if not paths:
-            return None, Path.home()
+            return None, [], Path.home()
     if name in SHELLS:
         for i, arg in enumerate(args[1:], 1):
             if (
@@ -273,15 +300,17 @@ def inspect_segment(args, cwd, depth):
                 and "c" in arg
                 and i + 1 < len(args)
             ):
-                return inspect_command(args[i + 1], cwd, depth + 1), cwd
+                blocked, warnings = _inspect_command(args[i + 1], cwd, depth + 1)
+                return blocked, warnings, cwd
     if name == "eval":
-        return inspect_command(" ".join(args[1:]), cwd, depth + 1), cwd
-    return None, cwd
+        blocked, warnings = _inspect_command(" ".join(args[1:]), cwd, depth + 1)
+        return blocked, warnings, cwd
+    return None, [], cwd
 
 
-def inspect_command(command, cwd, depth=0):
+def _inspect_command(command, cwd, depth=0):
     if depth > 16:
-        return None
+        return None, []
     # Keep substitution bodies associated with their segment's working directory.
     # Mask them before tokenizing so nested operators don't split the outer shell.
     bodies = {}
@@ -303,17 +332,20 @@ def inspect_command(command, cwd, depth=0):
         tokens = masked.split()
     segment = []
     scopes = []
+    warnings = []
     for token in [*tokens, ";"]:
         if token in SEPARATORS or re.fullmatch(r"[;&|()\n]+", token):
             for argument in segment:
                 for marker, body in bodies.items():
                     if marker in argument:
-                        blocked = inspect_command(body, cwd, depth + 1)
+                        blocked, sub_warnings = _inspect_command(body, cwd, depth + 1)
+                        warnings.extend(sub_warnings)
                         if blocked:
-                            return blocked
-            blocked, cwd = inspect_segment(segment, cwd, depth)
+                            return blocked, warnings
+            blocked, seg_warnings, cwd = _inspect_segment(segment, cwd, depth)
+            warnings.extend(seg_warnings)
             if blocked:
-                return blocked
+                return blocked, warnings
             segment = []
             for char in token:
                 if char == "(":
@@ -324,7 +356,12 @@ def inspect_command(command, cwd, depth=0):
             continue
         else:
             segment.append(token)
-    return None
+    return None, warnings
+
+
+def inspect_command(command, cwd, depth=0):
+    blocked, _ = _inspect_command(command, cwd, depth)
+    return blocked
 
 
 def agy_workspace_paths(payload):
@@ -379,12 +416,17 @@ def handle_agy(payload, mode):
             if isinstance(raw_cwd, str) and raw_cwd
             else default_cwd
         )
-        blocked = inspect_command(command, cwd)
+        blocked, warnings = _inspect_command(command, cwd)
         if blocked:
             operation, state = blocked
             return {
                 "decision": "deny",
                 "reason": deny_reason(operation, state),
+            }
+        if warnings:
+            return {
+                "decision": "allow",
+                "reason": format_warnings(warnings),
             }
         # Empty stdout means "no opinion" in Antigravity; never return {} on PreToolUse.
         return None
@@ -420,7 +462,7 @@ def handle(payload, agent=None, mode=None):
         if not isinstance(command, str):
             return None
         cwd = directory(args.get("cwd") or args.get("workdir") or str(cwd), cwd)
-        blocked = inspect_command(command, cwd)
+        blocked, warnings = _inspect_command(command, cwd)
         if blocked:
             operation, state = blocked
             return {
@@ -429,6 +471,15 @@ def handle(payload, agent=None, mode=None):
                     "permissionDecision": "deny",
                     "permissionDecisionReason": deny_reason(operation, state),
                 }
+            }
+        if warnings:
+            warning = format_warnings(warnings)
+            return {
+                "systemMessage": warning,
+                "hookSpecificOutput": {
+                    "hookEventName": event,
+                    "additionalContext": warning,
+                },
             }
     return None
 

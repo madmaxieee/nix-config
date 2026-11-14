@@ -308,7 +308,50 @@ class JjGuardTests(unittest.TestCase):
             self.assertEqual(deny_json["decision"], "deny")
             self.assertIn("JJ-GUARD", deny_json["reason"])
 
-        # 4. PreToolUse emits strictly empty stdout (never {}) when allowed
+        # 4. PreToolUse allows git submodule with warning in jj repo, denies in unconverted worktree
+        res_sub = subprocess.run(
+            [sys.executable, script, "agy", "pre_tool"],
+            input=json.dumps(
+                {
+                    "workspacePaths": [str(attachments), str(self.repo)],
+                    "toolCall": {
+                        "name": "run_command",
+                        "args": {
+                            "CommandLine": "git submodule update --init --recursive",
+                            "Cwd": str(self.repo),
+                        },
+                    },
+                }
+            ),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        sub_json = json.loads(res_sub.stdout)
+        self.assertEqual(sub_json["decision"], "allow")
+        self.assertIn("JJ-GUARD WARNING", sub_json["reason"])
+
+        res_sub_wt = subprocess.run(
+            [sys.executable, script, "agy", "pre_tool"],
+            input=json.dumps(
+                {
+                    "workspacePaths": [str(attachments), str(jj_wt)],
+                    "toolCall": {
+                        "name": "run_command",
+                        "args": {
+                            "CommandLine": "git submodule status",
+                            "Cwd": str(jj_wt),
+                        },
+                    },
+                }
+            ),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        self.assertEqual(json.loads(res_sub_wt.stdout)["decision"], "deny")
+
+        # 5. PreToolUse emits strictly empty stdout (never {}) when allowed
         for cmd in ("jj status", '"$HOME/.local/bin/t3-jj-worktree" setup'):
             res_ok = subprocess.run(
                 [sys.executable, script, "agy", "pre_tool"],
@@ -326,6 +369,59 @@ class JjGuardTests(unittest.TestCase):
                 check=True,
             )
             self.assertEqual(res_ok.stdout, "")
+
+    def test_allows_git_submodule_with_warning(self):
+        for command in [
+            "git submodule",
+            "git submodule status",
+            "git submodule update --init --recursive",
+            "git -c protocol.file.allow=always submodule update",
+            "bash -lc 'git submodule status'",
+            'echo "$(git submodule status)"',
+            f'jj status && git -C "{self.repo}" submodule update --init --recursive',
+        ]:
+            with self.subTest(command=command):
+                output = self.hook(command)
+                self.assertIsNotNone(output)
+                hook_out = output["hookSpecificOutput"]
+                self.assertNotIn("permissionDecision", hook_out)
+                self.assertIn("JJ-GUARD WARNING", hook_out["additionalContext"])
+                self.assertIn(str(self.repo), hook_out["additionalContext"])
+                self.assertIn("JJ-GUARD WARNING", output["systemMessage"])
+
+        # Targeting jj repo from plain cwd also warns
+        from_plain = self.hook(
+            f'git -C "{self.repo}" submodule status', cwd=self.plain
+        )
+        self.assertIsNotNone(from_plain)
+        self.assertIn(
+            "JJ-GUARD WARNING", from_plain["hookSpecificOutput"]["additionalContext"]
+        )
+
+        # Targeting plain repo emits no warning
+        self.assertIsNone(self.hook(f'git -C "{self.plain}" submodule status'))
+        self.assertIsNone(self.hook("git submodule status", cwd=self.plain))
+
+        # Chaining with blocked git commands must still deny
+        for blocked_cmd in [
+            "git submodule status && git status",
+            "git status && git submodule status",
+            "git -c submodule.recurse=true status",
+        ]:
+            with self.subTest(blocked_cmd=blocked_cmd):
+                output = self.hook(blocked_cmd)
+                self.assertEqual(
+                    output["hookSpecificOutput"]["permissionDecision"], "deny"
+                )
+
+        # Unconverted worktree still denies git submodule until setup is run
+        jj_wt = self._make_linked_worktree(self.repo, "sub-wt")
+        denied_wt = self.hook("git submodule status", cwd=jj_wt)
+        self.assertEqual(denied_wt["hookSpecificOutput"]["permissionDecision"], "deny")
+        self.assertIn(
+            "t3-jj-worktree",
+            denied_wt["hookSpecificOutput"]["permissionDecisionReason"],
+        )
 
 
 if __name__ == "__main__":

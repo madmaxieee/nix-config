@@ -141,10 +141,70 @@ const GIT_SPECIFIC_OPS = [
   'reflog',
   'rev-list',
   'rev-parse',
-  'submodule',
   'unpack-objects',
   'update-ref',
 ];
+
+const SUBMODULE_WARNING =
+  'JJ-GUARD WARNING: Allowing `git submodule` in this jj repository because Jujutsu does not natively manage Git submodules. Submodule checkout/state changes may not be tracked directly by jj; continue using jj for all other version-control operations.';
+
+const SEGMENT_SPLIT = /\s*(?:&&|\|\||[;|])\s*/;
+const ENV_ASSIGNMENT = /^[A-Za-z_][A-Za-z_0-9]*=/;
+const GIT_VALUE_FLAGS = new Set([
+  '-C',
+  '-c',
+  '--work-tree',
+  '--git-dir',
+  '--config-env',
+  '--namespace',
+  '--exec-path',
+]);
+
+function parseGitSegment(segment: string): {gitCmd: string; segParts: string[]} | null {
+  const parts = segment.split(/\s+/).filter(Boolean);
+  while (parts.length > 0 && ENV_ASSIGNMENT.test(parts[0])) {
+    parts.shift();
+  }
+  if (parts.length === 0) return null;
+  const bin = parts[0].split('/').pop();
+  if (bin !== 'git') return null;
+
+  let i = 1;
+  while (i < parts.length) {
+    const arg = parts[i];
+    if (GIT_VALUE_FLAGS.has(arg) && i + 1 < parts.length) {
+      i += 2;
+    } else if (arg.startsWith('-')) {
+      i += 1;
+    } else {
+      return {gitCmd: arg, segParts: parts};
+    }
+  }
+  return {gitCmd: '', segParts: parts};
+}
+
+function inspectCommandSegments(command: string): {
+  blocked: {gitCmd: string; segParts: string[]} | null;
+  hasSubmodule: boolean;
+} {
+  const segments = command
+    .trim()
+    .split(SEGMENT_SPLIT)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  let hasSubmodule = false;
+  for (const segment of segments) {
+    const parsed = parseGitSegment(segment);
+    if (!parsed) continue;
+    if (parsed.gitCmd === 'submodule') {
+      hasSubmodule = true;
+      continue;
+    }
+    return {blocked: parsed, hasSubmodule};
+  }
+  return {blocked: null, hasSubmodule};
+}
 
 export const JjGuardPlugin: Plugin = async ({$, client}) => {
   try {
@@ -159,6 +219,8 @@ export const JjGuardPlugin: Plugin = async ({$, client}) => {
     });
     return {};
   }
+
+  const submoduleCalls = new Set<string>();
 
   return {
     'experimental.chat.system.transform': async (_input, output) => {
@@ -177,27 +239,25 @@ export const JjGuardPlugin: Plugin = async ({$, client}) => {
       if (typeof command !== 'string' || !command) return;
 
       const trimmed = command.trim();
+      const {blocked, hasSubmodule} = inspectCommandSegments(trimmed);
 
-      // Split compound commands by shell operators (&&, ||, ;, |)
-      // so that git commands buried in chains or pipelines are caught.
-      const SEGMENT_SPLIT = /\s*(?:&&|\|\||[;|])\s*/;
-      const segments = trimmed
-        .split(SEGMENT_SPLIT)
-        .map((s) => s.trim())
-        .filter(Boolean);
-
-      let gitCmd: string | null = null;
-      let segParts: string[] = [];
-
-      for (const segment of segments) {
-        if (segment.startsWith('git ') || segment === 'git') {
-          segParts = segment.split(/\s+/);
-          gitCmd = segParts[1] || '';
-          break;
+      if (!blocked) {
+        if (hasSubmodule) {
+          if (input?.callID) submoduleCalls.add(input.callID);
+          await client.app
+            .log({
+              body: {
+                service: 'jj-guard',
+                level: 'warn',
+                message: SUBMODULE_WARNING,
+              },
+            })
+            .catch(() => {});
         }
+        return;
       }
 
-      if (gitCmd === null) return;
+      const {gitCmd, segParts} = blocked;
 
       // Git-specific operations — ask agent to request user approval
       if (GIT_SPECIFIC_OPS.includes(gitCmd)) {
@@ -243,6 +303,28 @@ Please use jj commands instead.
 If this is a git-specific operation with no jj equivalent, ask the user for approval.
 
 If the user approves, they can run it with: JJ_GUARD_BYPASS=1 ${trimmed}`);
+    },
+    'tool.execute.after': async (input, output) => {
+      const tool = String(input?.tool ?? '').toLowerCase();
+      if (tool !== 'bash' && tool !== 'shell') return;
+
+      const tracked = input?.callID ? submoduleCalls.delete(input.callID) : false;
+      const command =
+        input?.args && typeof input.args === 'object'
+          ? (input.args as Record<string, unknown>).command
+          : undefined;
+      const matched =
+        typeof command === 'string' && command
+          ? (() => {
+              const res = inspectCommandSegments(command);
+              return !res.blocked && res.hasSubmodule;
+            })()
+          : false;
+
+      if (!tracked && !matched) return;
+      output.output = output.output
+        ? `${SUBMODULE_WARNING}\n\n${output.output}`
+        : SUBMODULE_WARNING;
     },
   };
 };
