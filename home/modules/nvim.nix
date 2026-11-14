@@ -46,7 +46,7 @@ rec {
         cargo
         go
         nodejs_24
-        python313
+        python3
         unzip
         xz
 

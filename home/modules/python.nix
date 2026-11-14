@@ -2,8 +2,8 @@
 rec {
   home.packages = with pkgs; [
     uv
-    python313
-    python313Packages.ipython
+    python3
+    python314Packages.ipython
     ruff
   ];
 

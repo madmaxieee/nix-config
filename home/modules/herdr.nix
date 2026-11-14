@@ -36,7 +36,7 @@ rec {
 
     # personal plugin dependencies
     pkgs.fzf
-    pkgs.python313
+    pkgs.python3
   ];
 
   programs.fish = {

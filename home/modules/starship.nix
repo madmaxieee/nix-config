@@ -8,7 +8,7 @@ in
 
   home.packages = with pkgs; [
     jj-starship
-    python313
+    python3
   ];
 
   home.file.".local/bin/jj-prompt".source = linkDotfile "starship/scripts/jj-prompt";
