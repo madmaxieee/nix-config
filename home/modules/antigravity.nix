@@ -36,139 +36,21 @@ let
     cat "$tmp" > "$hooks"
   '';
 
-  agySkillsMaterializePy = pkgs.writeText "antigravity-skills-materialize.py" ''
-    import os
-    import re
-    import shutil
-    from pathlib import Path
-
-
-    FM_DISABLE_RE = re.compile(
-        r"^\s*disable-model-invocation\s*:\s*true\s*(?:#.*)?$"
-    )
-
-
-    def make_writable_and_rmtree(path: Path) -> None:
-        for root, dirs, files in os.walk(path, topdown=True, followlinks=False):
-            root_path = Path(root)
-            try:
-                os.chmod(root_path, 0o755)
-            except OSError:
-                pass
-            for name in dirs:
-                d = root_path / name
-                if not d.is_symlink():
-                    try:
-                        os.chmod(d, 0o755)
-                    except OSError:
-                        pass
-            for name in files:
-                f = root_path / name
-                if not f.is_symlink():
-                    try:
-                        os.chmod(f, 0o644)
-                    except OSError:
-                        pass
-        shutil.rmtree(path)
-
-
-    def normalize_permissions(path: Path) -> None:
-        os.chmod(path, 0o755)
-        for root, dirs, files in os.walk(path, topdown=True, followlinks=False):
-            root_path = Path(root)
-            for name in dirs:
-                os.chmod(root_path / name, 0o755)
-            for name in files:
-                f = root_path / name
-                mode = f.stat().st_mode
-                os.chmod(f, 0o755 if (mode & 0o100) else 0o644)
-
-
-    def strip_disable_model_invocation(text: str) -> str:
-        lines = text.splitlines(keepends=True)
-        if not lines or lines[0].rstrip("\r\n") != "---":
-            return text
-        end_idx = None
-        for idx in range(1, len(lines)):
-            if lines[idx].rstrip("\r\n") == "---":
-                end_idx = idx
-                break
-        if end_idx is None:
-            return text
-        fm_lines = [
-            line
-            for line in lines[1:end_idx]
-            if not FM_DISABLE_RE.match(line.rstrip("\r\n"))
-        ]
-        return "".join([lines[0], *fm_lines, *lines[end_idx:]])
-
-
-    def main() -> None:
-        home = Path(os.environ["HOME"])
-        skills_src = Path(
-            os.environ.get("AGENTS_SKILLS_DIR") or str(home / ".agents" / "skills")
-        )
-        config_dir = Path(
-            os.environ.get("ANTIGRAVITY_CLI_CONFIG_DIR")
-            or str(home / ".gemini" / "config")
-        )
-        skills_dst = config_dir / "skills"
-
-        if not skills_src.is_dir():
-            return
-
-        config_dir.mkdir(parents=True, exist_ok=True)
-
-        # CRITICAL: Never traverse or delete through a symlink (e.g. old HM symlink
-        # pointing at ~/.agents/skills); unlink the symlink itself first.
-        if skills_dst.is_symlink():
-            skills_dst.unlink()
-        elif skills_dst.exists() and not skills_dst.is_dir():
-            skills_dst.unlink()
-
-        skills_dst.mkdir(exist_ok=True)
-
-        if skills_src.resolve() == skills_dst.resolve():
-            raise RuntimeError(f"Refusing to sync {skills_src} onto itself")
-
-        src_skills = {
-            entry.name: entry
-            for entry in skills_src.iterdir()
-            if not entry.name.startswith(".") and entry.is_dir()
-        }
-
-        for existing in list(skills_dst.iterdir()):
-            if existing.name not in src_skills:
-                if existing.is_symlink() or not existing.is_dir():
-                    existing.unlink()
-                else:
-                    make_writable_and_rmtree(existing)
-
-        for name, src_dir in sorted(src_skills.items()):
-            dst_dir = skills_dst / name
-            if dst_dir.is_symlink() or (dst_dir.exists() and not dst_dir.is_dir()):
-                dst_dir.unlink()
-            elif dst_dir.exists():
-                make_writable_and_rmtree(dst_dir)
-
-            shutil.copytree(src_dir, dst_dir, symlinks=False)
-            normalize_permissions(dst_dir)
-
-            skill_md = dst_dir / "SKILL.md"
-            if skill_md.is_file():
-                original = skill_md.read_text(encoding="utf-8")
-                updated = strip_disable_model_invocation(original)
-                if updated != original:
-                    skill_md.write_text(updated, encoding="utf-8")
-
-
-    if __name__ == "__main__":
-        main()
-  '';
-
+  # Antigravity denies view_file on skills whose realpath leaves its skills dir
+  # and hides disable-model-invocation skills, so give it a dereferenced copy.
   agySkillsMaterialize = pkgs.writeShellScript "antigravity-skills-materialize" ''
     set -eu
-    exec ${pkgs.python3}/bin/python3 ${agySkillsMaterializePy}
+    src="''${AGENTS_SKILLS_DIR:-$HOME/.agents/skills}"
+    dst="''${ANTIGRAVITY_CLI_CONFIG_DIR:-$HOME/.gemini/config}/skills"
+    [ -d "$src" ] || exit 0
+    if [ -L "$dst" ]; then rm "$dst"; fi
+    mkdir -p "$dst"
+    ${pkgs.rsync}/bin/rsync -rL --delete --exclude='/.*' --chmod=u+w "$src/" "$dst/"
+    for f in "$dst"/*/SKILL.md; do
+      if [ -f "$f" ] && [ "$(head -n1 "$f")" = "---" ]; then
+        ${pkgs.gnused}/bin/sed -i '2,/^---$/{/^disable-model-invocation:[[:space:]]*true/d}' "$f"
+      fi
+    done
   '';
 in
 {
