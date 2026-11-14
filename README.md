@@ -35,8 +35,11 @@ Home Manager manages `~/.gemini/config/mcp_config.json` from
 `home/modules/antigravity.nix`, using the shared `packages/fff-mcp.nix` package.
 Each rebuild replaces the whole MCP config, including any temporary local edits.
 Global instructions from `dotfiles/codex/AGENTS.md` are exposed as the
-`global-instructions` skill under `~/.agents/skills/` (linked via
-`~/.gemini/config/skills`, which both `agy` CLI and T3 Code ACP load).
+`global-instructions` skill under `~/.agents/skills/`. On rebuild,
+`~/.gemini/config/skills` is materialized from `~/.agents/skills` (dereferencing
+symlinks into regular files and stripping `disable-model-invocation: true` so
+both `agy` CLI and T3 Code ACP expose all skills within Antigravity's path
+sandbox).
 Restart agy to load MCP changes.
 
 ## GNU tools on macOS

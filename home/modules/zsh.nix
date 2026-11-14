@@ -1,10 +1,19 @@
 { pkgs, ... }:
 
+let
+  nonInteractivePager = ''
+    if [[ "$TERM" == "dumb" || ! -t 1 || -n "''${ANTIGRAVITY_AGENT-}''${CLAUDECODE-}''${CODEX_SANDBOX-}''${T3_ACP_MCP_NODE-}" ]]; then
+      export PAGER=cat GH_PAGER=cat GIT_PAGER=cat JJ_PAGER=cat
+    fi
+  '';
+in
 {
   home.shell.enableZshIntegration = true;
 
   programs.zsh = {
     enable = true;
+    envExtra = nonInteractivePager;
+    profileExtra = nonInteractivePager;
     shellAliases = {
       clear = "printf '\\n%.0s' {1..$(tput lines)}";
       "..." = "cd ../..";
