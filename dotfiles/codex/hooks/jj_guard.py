@@ -17,8 +17,10 @@ Use jj commands instead of direct git commands, including for status, diff and l
 Use jj git fetch/push for remotes and jj bookmark for named references.
 The working copy is a change; use jj describe, jj new and jj edit as appropriate.
 Do not translate Git flags mechanically: check jj help for the intended operation.
-Direct Git tool calls are blocked here. If an operation truly requires Git, ask
-the user for an explicit exception; do not evade the guard with a wrapper.
+Direct Git tool calls are blocked here, except for `git submodule` in jj repositories
+(allowed with a warning because Jujutsu does not natively manage Git submodules).
+If another operation truly requires Git, ask the user for an explicit exception;
+do not evade the guard with a wrapper.
 """
 
 GUIDANCE = {

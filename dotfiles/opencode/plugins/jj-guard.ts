@@ -9,7 +9,7 @@ import type {Plugin} from '@opencode-ai/plugin';
 const JJ_SYSTEM_LINE = [
   'IMPORTANT: This repository uses Jujutsu (jj) for version control, NOT git.',
   'Use `jj` commands: `jj status`, `jj diff`, `jj log`, `jj new`, `jj edit`, `jj describe`, etc.',
-  'Do NOT run `git` commands unless the user explicitly approves it.',
+  'Do NOT run `git` commands unless the user explicitly approves it, except `git submodule` (allowed with a warning because Jujutsu does not natively manage Git submodules).',
 ].join(' ');
 
 // Direct 1:1 equivalents — same concept, just different command name.

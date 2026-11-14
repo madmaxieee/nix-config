@@ -51,6 +51,9 @@ class JjGuardTests(unittest.TestCase):
                 self.assertIn(
                     "Jujutsu", output["hookSpecificOutput"]["additionalContext"]
                 )
+                self.assertIn(
+                    "git submodule", output["hookSpecificOutput"]["additionalContext"]
+                )
                 self.assertEqual(
                     output["hookSpecificOutput"]["hookEventName"], "SessionStart"
                 )
