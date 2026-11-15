@@ -26,7 +26,7 @@
       "calibre"
       "chatgpt"
       "claude"
-      "claude-code"
+      "claude-code@latest"
       "cloudflare-warp"
       "codex"
       "codex-app"
