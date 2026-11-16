@@ -28,8 +28,11 @@ RESUME_COMMANDS: dict[str, Callable[[str], list[str]]] = {
     "claude": lambda session_id: ["claude", "--resume", session_id],
 }
 
-# After the agent exits, leave a shell in the pane.
-KEEP_SHELL = '"$@"; exec "${SHELL:-/bin/sh}" -l'
+# After the agent exits, leave a shell in the pane. `set -m` runs the agent as
+# its own foreground process group: Rex reports the group leader as the pane's
+# program (and picks the icon from its name), so without it Rex sees this `sh`
+# instead of e.g. the agy wrapper.
+KEEP_SHELL = 'set -m; "$@"; exec "${SHELL:-/bin/sh}" -l'
 
 
 def setup_path() -> None:
