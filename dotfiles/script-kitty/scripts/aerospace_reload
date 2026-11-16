@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-~/nix-config/dotfiles/aerospace/wm-ids.sh clear
 aerospace reload-config

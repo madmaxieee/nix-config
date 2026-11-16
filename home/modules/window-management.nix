@@ -11,10 +11,7 @@ let
   profile = custom.profile;
 in
 {
-  home.packages = with pkgs; [
-    jq
-    sqlite
-  ];
+  home.packages = with pkgs; [ jq ];
 
   home.sessionPath = [ "${nixConfigPath}/dotfiles/script-kitty" ];
 

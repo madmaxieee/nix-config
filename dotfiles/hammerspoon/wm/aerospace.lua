@@ -64,24 +64,28 @@ function M.setup()
     end)
 end
 
+---@param win_id number|string?
+---@return boolean
 function M.is_managed(win_id)
-    local win = hs.window.get(win_id)
-    if not win then
+    local target_id = tonumber(win_id)
+    if not target_id then
         return true
     end
 
-    local output = hs.execute(
-        ([[PATH=%s ~/.config/aerospace/wm-ids.sh has %d]]):format(
-            PATH,
-            win:id()
-        )
-    )
-
-    if output == "0\n" then
-        return true
-    else
+    local output, ok =
+        aerospace("list-windows --all --format '%{window-id} %{window-layout}'")
+    if not ok or not output then
         return false
     end
+
+    for line in output:gmatch("[^\r\n]+") do
+        local id_str, layout = line:match("^(%d+)%s+(%S+)$")
+        if id_str and tonumber(id_str) == target_id then
+            return layout ~= "floating"
+        end
+    end
+
+    return false
 end
 
 ---@param window hs.window
