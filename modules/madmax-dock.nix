@@ -3,7 +3,7 @@
 {
   system.defaults.dock = {
     persistent-apps = [
-      "/System/Applications/Launchpad.app"
+      "/System/Applications/Apps.app"
       "/Applications/Rex Beta.app"
       "/Applications/Ghostty.app"
       "/Applications/Zen.app"
