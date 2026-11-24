@@ -446,6 +446,7 @@
         "tv-yazi": "tv-yazi",
         "vipe-fish": "vipe-fish",
         "what-size-yazi": "what-size-yazi",
+        "xcodesorg-made": "xcodesorg-made",
         "yazi-plugins": "yazi-plugins"
       }
     },
@@ -594,6 +595,22 @@
       "original": {
         "owner": "madmaxieee",
         "repo": "what-size.yazi",
+        "type": "github"
+      }
+    },
+    "xcodesorg-made": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795535007,
+        "narHash": "sha256-mvr0aKcKXU6DidjVL9Jo54mXpovLk3vORK58c6FrmSQ=",
+        "owner": "XcodesOrg",
+        "repo": "homebrew-made",
+        "rev": "8605550d90ab0216ef6db683febfc093bcb745b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "XcodesOrg",
+        "repo": "homebrew-made",
         "type": "github"
       }
     },

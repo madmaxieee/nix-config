@@ -4,12 +4,14 @@
     enable = true;
     brews = [
       # keep-sorted start
+      "aria2"
       "mas"
       "media-control"
       "mole"
       # dependency of the gcloud-cli cask, keeps cleanup from removing it
       "python@3.14"
       "tailscale"
+      "xcodesorg/made/xcodes"
       # keep-sorted end
     ];
     casks = [
@@ -75,7 +77,7 @@
     # };
     onActivation = {
       cleanup = "zap";
-      upgrade = true;
+      # upgrade = true;
     };
   };
 }

@@ -36,6 +36,10 @@
       url = "github:taigikeyboard/homebrew-tap";
       flake = false;
     };
+    xcodesorg-made = {
+      url = "github:XcodesOrg/homebrew-made";
+      flake = false;
+    };
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -147,6 +151,7 @@
         "madmaxieee/homebrew-tap" = inputs.madmaxieee-tap;
         "mediosz/homebrew-tap" = inputs.mediosz-tap;
         "taigikeyboard/homebrew-tap" = inputs.taigikeyboard-tap;
+        "xcodesorg/homebrew-made" = inputs.xcodesorg-made;
       };
 
       thirdPartyTapNames = map (name: {
