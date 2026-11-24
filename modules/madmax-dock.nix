@@ -6,7 +6,7 @@
       "/System/Applications/Apps.app"
       "/Applications/Rex Beta.app"
       "/Applications/Ghostty.app"
-      "/Applications/Zen.app"
+      "/Applications/Ardia.app"
       "/Applications/Helium.app"
       "/Applications/T3 Code (Beta).app"
       "/Applications/ChatGPT.app"
