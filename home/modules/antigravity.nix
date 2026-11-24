@@ -60,22 +60,8 @@ in
       source = linkDotfile "agents/skills/t3-model-routing";
     };
 
-    # Antigravity (CLI and T3 Code ACP) discovers global skills via config/skills,
-    # not config/AGENTS.md; expose shared global instructions as a skill.
-    ".agents/skills/global-instructions/SKILL.md" = {
-      force = true;
-      text = ''
-        ---
-        name: global-instructions
-        description: Jujutsu (jj) version control and workspace rules, T3 Code worktree setup and handoff, and fff MCP file search. Use when working in a .jj repository or linked Git worktree, creating or handing off to a workspace or worktree, running VCS commands, or searching files when fff MCP tools are available.
-        ---
-
-      ''
-      + builtins.readFile ../../dotfiles/codex/AGENTS.md
-      + ''
-        - In T3 Code on Antigravity, when `t3_worktree_status` reports `attached: false` and the task needs an isolated workspace, run the work via `delegate_task` with `isolation: "worktree"` (having the child rebase onto `trunk()` when independent work is expected) or `t3_thread_launch` with `workspaceStrategy` when asked for a new thread; never call `t3_worktree_handoff` on Antigravity (detaching the live ACP session mid-turn wedges the active run) or `jj workspace add` outside `workspacePaths` (blocked by Antigravity's path sandbox).
-      '';
-    };
+    # Both Antigravity CLI and T3 Code's Antigravity ACP profile load ~/.gemini/AGENTS.md.
+    ".gemini/AGENTS.md".source = linkDotfile "codex/AGENTS.md";
 
     ".gemini/config/hooks/jj_guard.py".source = linkDotfile "codex/hooks/jj_guard.py";
 
