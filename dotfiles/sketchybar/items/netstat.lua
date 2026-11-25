@@ -5,12 +5,12 @@ local M = {}
 
 local function formatBytes(bytes)
     if bytes == 0 then
-        return "0 b"
+        return "0 B"
     end
 
-    local k = 1024
+    local k = 1000
     local dm = 1
-    local sizes = { "b", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb" }
+    local sizes = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" }
 
     local i = math.floor(math.log(bytes) / math.log(k))
 
